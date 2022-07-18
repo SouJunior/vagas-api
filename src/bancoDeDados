@@ -1,0 +1,11 @@
+const vagas = [
+   { id: 1, nomeDoCargo: 'desensolvedor', stack: 'frontend' },
+   { id: 2, nomeDoCargo: 'desensolvedor', stack: 'backend' },
+   { id: 3, nomeDoCargo: 'desensolvedor', stack: 'fullstack' },
+   { id: 4, nomeDoCargo: 'outros', stack: 'outros' },
+   { id: 5, nomeDoCargo: 'desensolvedor', stack: 'frontend' },
+   { id: 6, nomeDoCargo: 'desensolvedor', stack: 'backend' },
+   { id: 7, nomeDoCargo: 'desensolvedor', stack: 'fullstack' }
+];
+
+module.exports = vagas;
