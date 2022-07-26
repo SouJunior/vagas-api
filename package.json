@@ -1,20 +1,19 @@
 {
-  "name": "soujunior",
+  "name": "nodejs_pg",
   "version": "1.0.0",
-  "description": "Projeto open source da equipe soujunior",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon ./src/index.js"
   },
-  "author": "Equipe backend soujunior",
+  "keywords": [],
+  "author": "",
   "license": "ISC",
-  "dependencies": {
-    "axios": "^0.27.2",
-    "express": "^4.18.1",
-    "linkedin-jobs-scraper": "^12.0.3",
-    "lodash": "^4.17.21"
-  },
   "devDependencies": {
     "nodemon": "^2.0.19"
+  },
+  "dependencies": {
+    "express": "^4.18.1",
+    "pg": "^8.7.3"
   }
 }
