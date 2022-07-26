@@ -1,14 +1,10 @@
-const express = require ('express');
-
-const {filtrarVagas} = require('./controladores/vagas');
+const express = require('express');
+const rotas = require('./rotas');
 
 const app = express();
 
-app.get('/', (req,res) => {
-   res.send('Página inicial');
-});
+app.use(express.json());
 
-app.get('/vagas', filtrarVagas);
+app.use(rotas);
 
 app.listen(3000);
-
