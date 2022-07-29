@@ -2,9 +2,7 @@
 
 # linkedin-backend
 
-<h1 align="center"> Seu título aqui </h1>
-
-## Índice 
+<h1 align="center"> SouJunior </h1>
 
 * [Título e Imagem de capa](#Título-e-Imagem-de-capa)
 
@@ -36,20 +34,21 @@
  |[<img src="https://avatars.githubusercontent.com/u/88730176?v=4" width=115><br><sub>Bruno</sub>](https://github.com/brunodev21) | [<img src="https://avatars.githubusercontent.com/u/100945408?v=4" width=115><br><sub>Jhonny Freitas</sub>](https://github.com/Jhonny-Freitas) | [<img src="https://avatars.githubusercontent.com/u/96137175?s=96&v=4" width=115><br><sub>Leonardo Reis</sub>](https://github.com/LeonardoReis86)
 | :---: | :---: | :---: |
 
-* [Pessoas Desenvolvedoras do Projeto](#pessoas-desenvolvedoras)
+* [Colaboradores do Projeto](#pessoas-desenvolvedoras)
+
+
+
+
+[<img src="https://avatars.githubusercontent.com/u/287287?v=4" width=115><br><sub>wouerner</sub>](https://github.com/wouerner)
 
 * [Licença](#licença)
-
-
 
 
 Título e Imagem de capa; obs => fazer uma capa ou logo do projeto para colocar após o título.
 Badges; => Licença, Versão da ferramenta de gerenciamento de dependências, Data da última versão do projeto.
 
 
-https://avatars.githubusercontent.com/u/88730176?v=4
 
-
-
+https://github.com/wouerner
 
 
