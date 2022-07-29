@@ -1,6 +1,7 @@
 {
-  "name": "nodejs_pg",
+  "name": "soujunior",
   "version": "1.0.0",
+  "lockfileVersion": 2,
   "description": "",
   "main": "index.js",
   "scripts": {
