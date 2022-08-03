@@ -31,8 +31,8 @@
 
 ## Autores
 
- |[<img src="https://avatars.githubusercontent.com/u/88730176?v=4" width=115><br><sub>Bruno</sub>](https://github.com/brunodev21) | [<img src="https://avatars.githubusercontent.com/u/100945408?v=4" width=115><br><sub>Jhonny Freitas</sub>](https://github.com/Jhonny-Freitas) | [<img src="https://avatars.githubusercontent.com/u/96137175?s=96&v=4" width=115><br><sub>Leonardo Reis</sub>](https://github.com/LeonardoReis86)
-| :---: | :---: | :---: |
+ [<img src="https://avatars.githubusercontent.com/u/95653155?s=96&v=4" width=115><br><sub>Joana D'arc</sub>](https://github.com/Joanadarknes) |[<img src="https://avatars.githubusercontent.com/u/88730176?v=4" width=115><br><sub>Bruno</sub>](https://github.com/brunodev21) | [<img src="https://avatars.githubusercontent.com/u/100945408?v=4" width=115><br><sub>Jhonny Freitas</sub>](https://github.com/Jhonny-Freitas) | [<img src="https://avatars.githubusercontent.com/u/96137175?s=96&v=4" width=115><br><sub>Leonardo Reis</sub>](https://github.com/LeonardoReis86) 
+| :---: | :---: | :---: | :---: |
 
 * [Colaboradores do Projeto](#pessoas-desenvolvedoras)
 
