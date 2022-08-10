@@ -1,95 +1,107 @@
-let { vagas, identificadorVaga } = require('../bancodedados');
+const conexao = require('../conexao');
 
-const listar = (req, res) => {
-   return res.status(200).json(vagas);
+const listar = async (req, res) => {
+   try {
+      const{ rows : vagas } = await conexao.query('select * from vagas');
+      return res.status(200).json(vagas);
+   } catch(error) {
+      return res.status(400).json(error.message);
+   }
 }
 
-const obter = (req, res) => {
-   const {id} = req.params;
+const obterVaga = async (req, res) => {
+   const{ id } = req.params;
+   try {
+      const{ rows : vagas } = await conexao.query('select * from vagas where id = $1', [id]);
 
-   const vaga = vagas.find((vaga) => {
-      return vaga.id === Number(id);
-   });
+      if (vagas.rowCount === 0) {
+         return res.status(404).json('Vaga não encontrada');
+      }
 
-   if (!vaga) {
-      return res.status(404).json({mensagem:'vaga não encontrada.'});      
+      return res.status(200).json(vagas.rows[0]);
+   } catch(error) {
+      return res.status(400).json(error.message);
    }
-   return res.status(200).json(vaga)
 }
 
-const cadastrar = (req, res) => {
-   const { titulo_da_vaga, descricao, tipo_de_vaga } = req.body;
-   if (!titulo_da_vaga) {
-      return res.status(400).json({mensagem: "É obrigatório o preenchimento do campo titulo_da_vaga"});      
-   }
-   if (!descricao) {
-      return res.status(400).json({mensagem: "É obrigatório o preenchimento do campo descricao"});      
-   }
-   if (!tipo_de_vaga) {
-      return res.status(400).json({mensagem: "É obrigatório o preenchimento do campo tipo_de_vaga"});      
-   }
-   
-   const vaga = {
-      id: identificadorVaga++,
-      titulo_da_vaga,
-      descricao,
-      tipo_de_vaga,     
+const cadastrar = async (req, res) => {   
+   const {titulo_vaga, descricao, tipo } = req.body;
+
+   if (!titulo_vaga || !descricao || !tipo) {
+      return res.status(400).json("Favor preencher campos obrigatórios");
+   } 
+
+   try {
+      const query = 'insert into vagas (titulo, descricao, tipo) values ($1, $2, $3)';
+      const vaga = await conexao.query (query, [titulo_vaga, descricao, tipo ] );
+
+   if (vaga.rowCount === 0) {
+      return res.status(400).json("não foi possível cadastrar vaga");      
    }
 
-   vagas.push(vaga);
+   return res.status(200).json("Vaga cadastrada com sucesso.");
 
-   return res.status(201).json(vaga);
+   } catch (error) {
+      return res.status(400).json( "mensagem de erro");
+   }
 }
 
-const editar = (req, res) => {
-   const {id} = req.params;
-   const {titulo_da_vaga, descricao, tipo_de_vaga} = req.body;
-   if (!titulo_da_vaga) {
-      return res.status(400).json({mensagem: "É obrigatório o preenchimento do campo titulo_da_vaga"});      
-   }
-   if (!descricao) {
-      return res.status(400).json({mensagem: "É obrigatório o preenchimento do campo descricao"});      
-   }
-   if (!tipo_de_vaga) {
-      return res.status(400).json({mensagem: "É obrigatório o preenchimento do campo tipo_de_vaga"});      
-   }
-   const vaga = vagas.find((vaga) => {
-      return vaga.id === Number(id);
-   });
-
-   if (!vaga) {
-      return res.status(404).json({mensagem:'vaga não encontrada.'});      
-   }
-
-   vaga.titulo_da_vaga = titulo_da_vaga;
-   vagas.descricao = descricao;
-   vaga.tipo_de_vaga = tipo_de_vaga;
-   
-   return res.status(204).json({mensagem: 'vaga editada com sucesso'});
-}
-
-const excluir = (req, res) => {
+const editar = async (req, res) => {
    const { id } = req.params;
+   const { titulo_vaga, descricao, tipo } = req.body;
+   try {
+      const{ rows : vagas } = await conexao.query('select * from vagas where id = $1', [id]);
 
-   const vaga = vagas.find((vaga) => {
-      return vaga.id === Number(id);
-   });
+      if (vagas.rowCount === 0) {
+         return res.status(404).json('Vaga não encontrada');
+      }
 
-   if (!vaga) {
-      return res.status(404).json({mensagem: 'Vaga não existe.'});
+      if (!titulo_vaga || !descricao || !tipo) {
+         return res.status(400).json("Favor preencher campos obrigatórios");
+      } 
+
+      const vagaAtualizada = await conexao.query('update vagas set titulo_vaga = $1, descricao = $2, tipo = $3 where id = $4', [titulo_vaga, descricao, tipo, id ]);
+
+      if (vagaAtualizada.rowCount === 0) {
+         return res.status(404).json('Vaga não atualizada');
+      }
+
+      if (!titulo_vaga || !descricao || !tipo) {
+      return res.status(400).json("Favor preencher campos obrigatórios");
+   } 
+      return res.status(200).json('Vaga Atualizada com sucesso');
+   } catch(error) {
+      return res.status(400).json(error.message);
    }
-
-   vagas = vagas.filter((vaga) => {
-      return vaga.id !== Number(id);
-   });
-
-   return res.status(204).send();   
 }
 
-module.exports = {
+const excluir = async (req, res )=> {
+   const { id } = req.params;
+   
+   try {
+      const{ rows : vagas } = await conexao.query('select * from vagas where id = $1', [id]);
+
+      if (vagas.rowCount === 0) {
+         return res.status(404).json('Vaga não encontrada');
+      }
+      
+      const vagaExcluida = await conexao.query('delete from vagas where id = $1', [ id ]);
+
+      if (vagaExcluida.rowCount === 0) {
+         return res.status(404).json('Não foi possível exclui vaga');
+      }
+      
+      return res.status(200).json('Vaga Excluída');
+   } catch(error) {
+      return res.status(400).json(error.message);
+   }
+
+}
+
+module.exports = {    
    listar,
    obter,
    cadastrar,
    editar,
-   excluir   
+   excluir  
 }
