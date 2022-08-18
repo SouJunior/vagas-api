@@ -7,10 +7,10 @@ rotas.get('/', (req,res) => {
    return res.send('servidor funcionando');
 });
 
-rotas.get('/vagas', vagas.listar);
-rotas.get('/vagas/:id', vagas.obter);
-rotas.post('/vagas', vagas.cadastrar);
-rotas.put('/vagas/:id', vagas.editar);
-rotas.delete('/vagas/:id', vagas.excluir); 
+rotas.get('/vagas', vagas.ListAll);
+rotas.get('/vagas/:id', vagas.ListOne);
+rotas.post('/vagas', vagas.register);
+//rotas.put('/vagas/:id', vagas.editar);
+rotas.delete('/vagas/:id', vagas.Delete); 
 
 module.exports = rotas;

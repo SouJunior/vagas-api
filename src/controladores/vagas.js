@@ -1,107 +1,102 @@
 const conexao = require('../conexao');
 
-const listar = async (req, res) => {
+const ListAll = async (req, res) => {
    try {
-      const{ rows : vagas } = await conexao.query('select * from vagas');
+      const{ rows: vagas } = await conexao.pool.query('select * from "Vagas"');
       return res.status(200).json(vagas);
    } catch(error) {
       return res.status(400).json(error.message);
    }
 }
 
-const obterVaga = async (req, res) => {
+const ListOne = async (req, res) => {
    const{ id } = req.params;
    try {
-      const{ rows : vagas } = await conexao.query('select * from vagas where id = $1', [id]);
+      const { rows: vagas } = await conexao.pool.query('select * from "Vagas" where id = $1', [id]);
 
-      if (vagas.rowCount === 0) {
+      if (vagas.length === 0) {
          return res.status(404).json('Vaga não encontrada');
       }
 
-      return res.status(200).json(vagas.rows[0]);
+      return res.status(200).json(vagas[0]);
    } catch(error) {
       return res.status(400).json(error.message);
    }
 }
 
-const cadastrar = async (req, res) => {   
-   const {titulo_vaga, descricao, tipo } = req.body;
-
-   if (!titulo_vaga || !descricao || !tipo) {
-      return res.status(400).json("Favor preencher campos obrigatórios");
-   } 
-
-   try {
-      const query = 'insert into vagas (titulo, descricao, tipo) values ($1, $2, $3)';
-      const vaga = await conexao.query (query, [titulo_vaga, descricao, tipo ] );
-
-   if (vaga.rowCount === 0) {
-      return res.status(400).json("não foi possível cadastrar vaga");      
-   }
-
-   return res.status(200).json("Vaga cadastrada com sucesso.");
-
-   } catch (error) {
-      return res.status(400).json( "mensagem de erro");
-   }
-}
-
-const editar = async (req, res) => {
-   const { id } = req.params;
-   const { titulo_vaga, descricao, tipo } = req.body;
-   try {
-      const{ rows : vagas } = await conexao.query('select * from vagas where id = $1', [id]);
-
-      if (vagas.rowCount === 0) {
-         return res.status(404).json('Vaga não encontrada');
-      }
-
-      if (!titulo_vaga || !descricao || !tipo) {
-         return res.status(400).json("Favor preencher campos obrigatórios");
-      } 
-
-      const vagaAtualizada = await conexao.query('update vagas set titulo_vaga = $1, descricao = $2, tipo = $3 where id = $4', [titulo_vaga, descricao, tipo, id ]);
-
-      if (vagaAtualizada.rowCount === 0) {
-         return res.status(404).json('Vaga não atualizada');
-      }
-
-      if (!titulo_vaga || !descricao || !tipo) {
-      return res.status(400).json("Favor preencher campos obrigatórios");
-   } 
-      return res.status(200).json('Vaga Atualizada com sucesso');
-   } catch(error) {
-      return res.status(400).json(error.message);
-   }
-}
-
-const excluir = async (req, res )=> {
-   const { id } = req.params;
+const register = async (req, res) => {   
    
-   try {
-      const{ rows : vagas } = await conexao.query('select * from vagas where id = $1', [id]);
+   const {title, description, type} = req.body;
 
-      if (vagas.rowCount === 0) {
+   try {
+      conexao.pool.query('insert into "Vagas" (title, description, type) values ($1, $2, $3)', [title, description, type], (error) => {
+          if (error) {
+            console.log("Error", error)
+             console.log(error) 
+          }
+       });
+       return res.status(200).json('Vaga cadastrada com sucesso');
+    } catch(error) {
+       return res.status(400).json(error.message);
+    }
+ }
+
+// const editar = async (req, res) => {
+//    const { id } = req.params;
+//    const { titulo_vaga, descricao, tipo } = req.body;
+//    try {
+//       const{ rows : vagas } = await conexao.query('select * from vagas where id = $1', [id]);
+
+//       if (vagas.rowCount === 0) {
+//          return res.status(404).json('Vaga não encontrada');
+//       }
+
+//       if (!titulo_vaga || !descricao || !tipo) {
+//          return res.status(400).json("Favor preencher campos obrigatórios");
+//       } 
+
+//       const vagaAtualizada = await conexao.query('update vagas set titulo_vaga = $1, descricao = $2, tipo = $3 where id = $4', [titulo_vaga, descricao, tipo, id ]);
+
+//       if (vagaAtualizada.rowCount === 0) {
+//          return res.status(404).json('Vaga não atualizada');
+//       }
+
+//       if (!titulo_vaga || !descricao || !tipo) {
+//       return res.status(400).json("Favor preencher campos obrigatórios");
+//    } 
+//       return res.status(200).json('Vaga Atualizada com sucesso');
+//    } catch(error) {
+//       return res.status(400).json(error.message);
+//    }
+// }
+
+const Delete = async (req, res )=> {
+   const { id } = req.params;
+
+   try {
+      const { rows: vagas } = await conexao.pool.query('select * from "Vagas" where id = $1', [id]);
+
+      if (vagas.length === 0) {
          return res.status(404).json('Vaga não encontrada');
       }
-      
-      const vagaExcluida = await conexao.query('delete from vagas where id = $1', [ id ]);
+
+      const vagaExcluida = await conexao.pool.query('delete from "Vagas" where id = $1', [ id ]);
 
       if (vagaExcluida.rowCount === 0) {
-         return res.status(404).json('Não foi possível exclui vaga');
+         return res.status(404).json('Não foi possível excluir vaga');
       }
-      
+
       return res.status(200).json('Vaga Excluída');
    } catch(error) {
       return res.status(400).json(error.message);
    }
 
-}
+}    
 
 module.exports = {    
-   listar,
-   obter,
-   cadastrar,
-   editar,
-   excluir  
+   ListAll,
+   ListOne,
+   register,
+   //editar,
+   Delete  
 }
