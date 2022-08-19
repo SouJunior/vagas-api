@@ -9,8 +9,8 @@ rotas.get('/', (req,res) => {
 
 rotas.get('/vagas', vagas.ListAll);
 rotas.get('/vagas/:id', vagas.ListOne);
-rotas.post('/vagas', vagas.register);
-//rotas.put('/vagas/:id', vagas.editar);
+rotas.post('/vagas', vagas.Register);
+//rotas.put('/vagas/:id', vagas.Update);
 rotas.delete('/vagas/:id', vagas.Delete); 
 
 module.exports = rotas;

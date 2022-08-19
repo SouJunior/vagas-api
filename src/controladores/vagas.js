@@ -24,7 +24,7 @@ const ListOne = async (req, res) => {
    }
 }
 
-const register = async (req, res) => {   
+const Register = async (req, res) => {   
    
    const {title, description, type} = req.body;
 
@@ -40,30 +40,20 @@ const register = async (req, res) => {
        return res.status(400).json(error.message);
     }
  }
-
-// const editar = async (req, res) => {
+//  const Update = async (req, res) => {
 //    const { id } = req.params;
-//    const { titulo_vaga, descricao, tipo } = req.body;
+//    const { title, description, type } = req.body;
 //    try {
-//       const{ rows : vagas } = await conexao.query('select * from vagas where id = $1', [id]);
+//       const{ rows : vagas } = await conexao.pool.query('select * from "Vagas" where id = $1', [id]);
 
 //       if (vagas.rowCount === 0) {
 //          return res.status(404).json('Vaga não encontrada');
 //       }
-
-//       if (!titulo_vaga || !descricao || !tipo) {
-//          return res.status(400).json("Favor preencher campos obrigatórios");
-//       } 
-
-//       const vagaAtualizada = await conexao.query('update vagas set titulo_vaga = $1, descricao = $2, tipo = $3 where id = $4', [titulo_vaga, descricao, tipo, id ]);
+//       const vagaAtualizada = await conexao.pool.query('update "Vagas" set title = $1, description = $2, type = $3 where id = $4', [title, description, type, id ]);
 
 //       if (vagaAtualizada.rowCount === 0) {
 //          return res.status(404).json('Vaga não atualizada');
 //       }
-
-//       if (!titulo_vaga || !descricao || !tipo) {
-//       return res.status(400).json("Favor preencher campos obrigatórios");
-//    } 
 //       return res.status(200).json('Vaga Atualizada com sucesso');
 //    } catch(error) {
 //       return res.status(400).json(error.message);
@@ -96,7 +86,7 @@ const Delete = async (req, res )=> {
 module.exports = {    
    ListAll,
    ListOne,
-   register,
-   //editar,
+   Register,
+   //Update,
    Delete  
 }
