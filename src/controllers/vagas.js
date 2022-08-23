@@ -1,16 +1,16 @@
-import conexao from '../configs/conexao.js'
+import pool from "../configs/conexao.js";
 
 class VagasController {
-  async listar() {
+  async listar(req, res) {
     try {
-      const { rows: vagas } = await conexao.query("select * from vagas");
+      const { rows: vagas } = await query("select * from vagas");
       return res.status(200).json(vagas);
     } catch (error) {
       return res.status(400).json(error.message);
     }
   }
 
-  async obterVaga() {
+  async obterVaga(req, res) {
     const { id } = req.params;
     try {
       const { rows: vagas } = await conexao.query(
@@ -28,7 +28,7 @@ class VagasController {
     }
   }
 
-  async cadastrar() {
+  async cadastrar(req, res) {
     const { titulo_vaga, descricao, tipo } = req.body;
 
     if (!titulo_vaga || !descricao || !tipo) {
@@ -37,8 +37,8 @@ class VagasController {
 
     try {
       const query =
-        "insert into vagas (titulo, descricao, tipo) values ($1, $2, $3)";
-      const vaga = await conexao.query(query, [titulo_vaga, descricao, tipo]);
+        "insert into vagas (title, description, usuario_id) values ($1, $2, $3)";
+      const vaga = await pool(query, [titulo_vaga, descricao, tipo]);
 
       if (vaga.rowCount === 0) {
         return res.status(400).json("não foi possível cadastrar vaga");
@@ -46,11 +46,13 @@ class VagasController {
 
       return res.status(200).json("Vaga cadastrada com sucesso.");
     } catch (error) {
-      return res.status(400).json("mensagem de erro");
+      return res
+        .status(400)
+        .send({ message: "Erro ao cadastrar uma nova vaga", error:error });
     }
   }
 
-  async editar() {
+  async editar(req, res) {
     const { id } = req.params;
     const { titulo_vaga, descricao, tipo } = req.body;
     try {
@@ -85,7 +87,7 @@ class VagasController {
     }
   }
 
-  async excluir() {
+  async excluir(req, res) {
     const { id } = req.params;
 
     try {
