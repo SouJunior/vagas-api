@@ -11,8 +11,8 @@ const pool = new Pool({
   database: process.env.PGDATABASE,
 });
 
-// const query = (text, params) => {
-//   return pool.query(text, params);
-// };
+const conection = (text, params) => {
+  return pool.query(text, params);
+};
 
-export default pool;
+export default conection;

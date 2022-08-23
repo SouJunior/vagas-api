@@ -1,9 +1,9 @@
-import pool from "../configs/conexao.js";
+import conection from "../configs/conexao.js";
 
 class VagasController {
   async listar(req, res) {
     try {
-      const { rows: vagas } = await query("select * from vagas");
+      const { rows: vagas } = await conection("select * from vagas");
       return res.status(200).json(vagas);
     } catch (error) {
       return res.status(400).json(error.message);
@@ -13,7 +13,7 @@ class VagasController {
   async obterVaga(req, res) {
     const { id } = req.params;
     try {
-      const { rows: vagas } = await conexao.query(
+      const { rows: vagas } = await conection(
         "select * from vagas where id = $1",
         [id]
       );
@@ -37,8 +37,8 @@ class VagasController {
 
     try {
       const query =
-        "insert into vagas (title, description, usuario_id) values ($1, $2, $3)";
-      const vaga = await pool(query, [titulo_vaga, descricao, tipo]);
+        "insert into Vagas (Vagas.title, Vagas.description,Vagas.usuario_id) values ($1, $2, $3)";
+      const vaga = await conection(query, [titulo_vaga, descricao, tipo]);
 
       if (vaga.rowCount === 0) {
         return res.status(400).json("não foi possível cadastrar vaga");
@@ -56,7 +56,7 @@ class VagasController {
     const { id } = req.params;
     const { titulo_vaga, descricao, tipo } = req.body;
     try {
-      const { rows: vagas } = await conexao.query(
+      const { rows: vagas } = await conection(
         "select * from vagas where id = $1",
         [id]
       );
@@ -69,7 +69,7 @@ class VagasController {
         return res.status(400).json("Favor preencher campos obrigatórios");
       }
 
-      const vagaAtualizada = await conexao.query(
+      const vagaAtualizada = await conection(
         "update vagas set titulo_vaga = $1, descricao = $2, tipo = $3 where id = $4",
         [titulo_vaga, descricao, tipo, id]
       );
@@ -91,7 +91,7 @@ class VagasController {
     const { id } = req.params;
 
     try {
-      const { rows: vagas } = await conexao.query(
+      const { rows: vagas } = await conection(
         "select * from vagas where id = $1",
         [id]
       );
@@ -100,7 +100,7 @@ class VagasController {
         return res.status(404).json("Vaga não encontrada");
       }
 
-      const vagaExcluida = await conexao.query(
+      const vagaExcluida = await conection(
         "delete from vagas where id = $1",
         [id]
       );
