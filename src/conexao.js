@@ -1,15 +1,11 @@
-// const { Pool } = require("pg");
+const { Pool } = require("pg");
 
-// const pool = new Pool({
-//   user: "postgres",
-//   password: "postgres",
-//   host: "localhost",
-//   port: 5432,
-//   database: "vagas_cadastradas"
-// });
+const pool = new Pool({
+  user: "soujunior",
+  password: "soujunior",
+  host: "localhost",
+  port: 5432,
+  database: "soujunior"
+});
 
-// const query = (text, params) => {
-//   return pool.query(text, params);
-// };
-
-// module.exports = { query };
+module.exports = { pool };

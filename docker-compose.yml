@@ -13,7 +13,6 @@ services:
       - "3000:3000"
     depends_on:
       - db_soujunior 
-
   db_soujunior:
     container_name: db_soujunior 
     image: postgres:14
@@ -29,7 +28,6 @@ services:
     networks:
       - postgres
     restart: unless-stopped
-
 networks:
   postgres:
     driver: bridge
