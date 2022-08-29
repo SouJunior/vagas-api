@@ -1,11 +1,11 @@
 ![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=2088f2&style=for-the-badge)
 
-# Seja bem vindo(a) no linkedin-backend <img src=https://github.com/TheDudeThatCode/TheDudeThatCode/blob/master/Assets/Earth.gif width="30">   <img alingn="center" src="https://profile-counter.glitch.me/SouJunior/count.svg" /></p>
+#  <h1 align="center"> [![Typing SVG](https://readme-typing-svg.herokuapp.com/?color=ffffff&size=35&center=true&vCenter=true&width=1000&lines=Seja+bem+vindo(a)+no+linkedin-backend!)](https://git.io/typing-svg) </h1>
 
 <img width=150% src="https://capsule-render.vercel.app/api?type=waving&width=150%&color=2088f2&fontColor=ffffff&height=300&section=header&text=Sou%20Junior&fontSize=90&animation=fadeIn&fontAlignY=38&desc=Projeto%20Opensource%20para%20melhorar%20o%20match%20entre%20os%20profissionais%20Juniors%20e%20Empresas!&descAlignY=61&descAlign=52" />
 
 
-
+##  <p align="center">   Visitantes: <img alingn="center"  src="https://profile-counter.glitch.me/SouJunior/count.svg" /></p>
 
 
  
@@ -89,15 +89,21 @@ Link para baixar: https://insomnia.rest/download
   
 
 
-## Autor(es) 🙎🏻‍♂️🙎🏻
+## Devs 🙎🏻‍♂️🙎🏻
 
- |[<img src="https://avatars.githubusercontent.com/u/88730176?v=4" width=115><br><sub>Bruno</sub>](https://github.com/brunodev21) | [<img src="https://avatars.githubusercontent.com/u/100945408?v=4" width=115><br><sub>Jhonny Freitas</sub>](https://github.com/Jhonny-Freitas) | [<img src="https://avatars.githubusercontent.com/u/95653155?s=96&v=4" width=115><br><sub>Joana D'arc</sub>](https://github.com/Joanadarknes) | [<img src="https://avatars.githubusercontent.com/u/96137175?s=96&v=4" width=115><br><sub>Leonardo Reis</sub>](https://github.com/LeonardoReis86)
-| :---: | :---: | :---: |:---: |
+ |[<img src="https://avatars.githubusercontent.com/u/88730176?v=4" width=115><br><sub>Bruno</sub>](https://github.com/brunodev21) | [<img src="https://avatars.githubusercontent.com/u/100945408?v=4" width=115><br><sub>Jhonny Freitas</sub>](https://github.com/Jhonny-Freitas) | [<img src="https://avatars.githubusercontent.com/u/96137175?s=96&v=4" width=115><br><sub>Leonardo Reis</sub>](https://github.com/LeonardoReis86)
+| :---: | :---: | :---: |
+
+## Mentores 🙎🏻‍♂️🙎🏻
+
+| [<img src="https://avatars.githubusercontent.com/u/95653155?s=96&v=4" width=115><br><sub>Joana D'arc</sub>](https://github.com/Joanadarknes) | [<img src="https://avatars.githubusercontent.com/u/75804508?v=4" width=115><br><sub>Leonardo Monteiro</sub>](https://github.com/lmmagalhaes)
+| :---: | :---: | 
 
 
 ## Idealizador do projeto 🙎🏻‍♂️
 
 [<img src="https://avatars.githubusercontent.com/u/287287?v=4" width=115><br><sub>wouerner</sub>](https://github.com/wouerner)
+| :---: |
 
 ## Feedback
 
