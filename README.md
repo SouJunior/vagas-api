@@ -1,12 +1,13 @@
-![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge)
+![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=2088f2&style=for-the-badge)
 
-# linkedin-backend
+# Seja bem vindo(a) no linkedin-backend <img src=https://github.com/TheDudeThatCode/TheDudeThatCode/blob/master/Assets/Earth.gif width="30">   <img alingn="center" src="https://profile-counter.glitch.me/SouJunior/count.svg" /></p>
+
+<img width=150% src="https://capsule-render.vercel.app/api?type=waving&width=150%&color=2088f2&fontColor=ffffff&height=300&section=header&text=Sou%20Junior&fontSize=90&animation=fadeIn&fontAlignY=38&desc=Projeto%20Opensource%20para%20melhorar%20o%20match%20entre%20os%20profissionais%20Juniors%20e%20Empresas!&descAlignY=61&descAlign=52" />
 
 
 
- [Projeto Opensource que visa melhorar o match entre os profissionais Juniors e Empresas.](#Título-e-Imagem-de-capa)
- 
- ![Logo](https://raw.githubusercontent.com/SouJunior/ui-ux/main/Identidade%20Visual/logo%20desk%20soujunior.png)
+
+
  
  ## Como instalar o Git Bash  <img align="center" width="20px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" />
  
