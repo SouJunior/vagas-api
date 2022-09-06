@@ -11,7 +11,7 @@ import { v4 as uuidV4 } from 'uuid';
 type JobsTypes = 'Estagio' | 'Trainner' | 'Junior';
 
 @Entity('jobs')
-export class Job {
+export class JobEntity {
   @PrimaryColumn()
   id: string;
 

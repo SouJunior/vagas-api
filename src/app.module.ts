@@ -8,7 +8,6 @@ import 'dotenv/config';
 
 @Module({
   imports: [
-    JobsModule,
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
       type: 'postgres',
@@ -22,6 +21,7 @@ import 'dotenv/config';
       entities: ['dist/entities/*.entity.js'],
       migrations: ['dist/migrations/*.js', 'dist/migrations/seeds/*.js'],
     }),
+    JobsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
