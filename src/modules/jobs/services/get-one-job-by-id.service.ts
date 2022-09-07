@@ -1,0 +1,21 @@
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { JobRepository } from '../repository/job.resository';
+
+@Injectable()
+export class GetOneJobByIdService {
+  constructor(private jobRepository: JobRepository) {}
+
+  async execute(id: number) {
+    if (!id) {
+      throw new BadRequestException('Id not provider');
+    }
+
+    const jobExists = await this.jobRepository.findOneById(id);
+
+    if (!jobExists) {
+      throw new BadRequestException('Job not found');
+    }
+
+    return jobExists;
+  }
+}

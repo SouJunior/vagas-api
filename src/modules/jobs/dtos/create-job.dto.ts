@@ -1,6 +1,5 @@
-import { IsIn, IsNotEmpty, IsString } from 'class-validator';
-
-type JobTypeDto = 'Estagio' | 'Trainner' | 'Junior';
+import { IsNotEmpty, IsString } from 'class-validator';
+import { JobsTypes } from './enum-job-types';
 
 export class CreateJobDto {
   @IsNotEmpty()
@@ -12,7 +11,5 @@ export class CreateJobDto {
   description: string;
 
   @IsNotEmpty()
-  @IsString()
-  @IsIn(['Estagio', 'Trainner', 'Junior'])
-  type: JobTypeDto;
+  type: JobsTypes;
 }
