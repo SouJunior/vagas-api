@@ -12,8 +12,8 @@ import { UserController } from './user.controller';
 
 @Module({
   imports: [TypeOrmModule.forFeature([UserRepository])],
-  controllers: [
-    UserController,
+  controllers: [UserController],
+  providers: [
     CreateUserService,
     FindOneUserService,
     FindAllUsersService,

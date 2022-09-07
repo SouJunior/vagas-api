@@ -10,11 +10,17 @@ export class UserRepository extends Repository<UserEntity> {
   }
 
   async getAllUsers(): Promise<CreateUserDto[]> {
-    return this.find();
+    return this.find({
+      select: ['id', 'name', 'email', 'created_at'],
+    });
   }
 
   async findOneById(id: number): Promise<CreateUserDto> {
     return this.findOne(id);
+  }
+
+  async findOneByEmail(email: string): Promise<CreateUserDto> {
+    return this.findOne({ email });
   }
 
   async updateUser(id: number, data: UpdateUserDto) {

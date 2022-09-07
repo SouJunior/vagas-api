@@ -11,12 +11,16 @@ export class UpdateUserService {
       throw new BadRequestException('Id not provided');
     }
 
-    const jobExists = await this.userRepository.findOneById(id);
+    const userExists = await this.userRepository.findOneById(id);
 
-    if (!jobExists) {
-      throw new BadRequestException('Job not found');
+    if (!userExists) {
+      throw new BadRequestException('User not found');
     }
 
-    return this.userRepository.updateUser(id, data);
+    const userUpdated = await this.userRepository.updateUser(id, data);
+
+    delete userUpdated.password;
+
+    return userUpdated;
   }
 }

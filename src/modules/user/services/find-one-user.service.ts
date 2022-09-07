@@ -16,6 +16,8 @@ export class FindOneUserService {
       throw new BadRequestException('User not found');
     }
 
+    delete userExists.password;
+
     return userExists;
   }
 }

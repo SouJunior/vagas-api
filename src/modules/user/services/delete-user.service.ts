@@ -10,9 +10,9 @@ export class DeleteUserService {
       throw new BadRequestException('Id not provided');
     }
 
-    const jobExists = await this.userRepository.findOneById(id);
+    const userExists = await this.userRepository.findOneById(id);
 
-    if (!jobExists) {
+    if (!userExists) {
       throw new BadRequestException('User not found');
     }
 
