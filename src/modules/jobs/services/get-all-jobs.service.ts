@@ -9,7 +9,7 @@ export class GetAllJobsService {
     const jobs = await this.jobRepository.getAllJobs();
 
     if (jobs.length <= 0) {
-      return 'Jobs is empty';
+      return { message: 'Jobs is empty' };
     }
 
     return jobs;

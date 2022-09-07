@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { JobsModule } from './modules/jobs/jobs.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
+import { UserModule } from './modules/user/user.module';
 import 'dotenv/config';
 
 @Module({
@@ -26,6 +27,7 @@ import 'dotenv/config';
       ],
     }),
     JobsModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],
