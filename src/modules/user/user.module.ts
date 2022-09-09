@@ -20,6 +20,5 @@ import { UserController } from './user.controller';
     UpdateUserService,
     DeleteUserService,
   ],
-  exports: [UserRepository],
 })
 export class UserModule {}

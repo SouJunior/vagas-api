@@ -19,7 +19,7 @@ export class AuthLoginService {
       throw new UnauthorizedException('Invalid email or password');
     }
 
-    const passwordIsValid = bcrypt.compare(password, userExists.password);
+    const passwordIsValid = await bcrypt.compare(password, userExists.password);
 
     if (!passwordIsValid) {
       throw new UnauthorizedException('Invalid email or password');
