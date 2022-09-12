@@ -1,3 +1,5 @@
+<a id="linkedin_backend"></a>
+
 ![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=2088f2&style=for-the-badge)
 
 # <h1 align="center"> [![Typing SVG](<https://readme-typing-svg.herokuapp.com/?color=ffffff&size=35&center=true&vCenter=true&width=1000&lines=Seja+bem+vindo(a)+no+linkedin-backend!>)](https://git.io/typing-svg) </h1>
@@ -6,9 +8,37 @@
 
 ## <p align="center"> Visitantes: <img alingn="center"  src="https://profile-counter.glitch.me/SouJunior/count.svg" /></p>
 
+---
+
+## Menu
+
+### [Como Instalar o git bash](#como_instalar_o_git_bash)
+
+### [Abrir e rodar o projeto](#abrir_e_rodar_o_projeto)
+
+### [Acesso ao projeto](#acesso_ao_projeto)
+
+### [Rodando Localmente](#rodando_localmente)
+
+### [Rodando com Docker](#rodando_com_docker)
+
+### [Instalando o Insomnia](#instalando_o_insomnia)
+
+### [Stack Utilizada](#stack_utilizada)
+
+### [Equipe Responsáveis](#equipe_do_backend)
+
+---
+
+<a id="como_instalar_o_git_bash"></a>
+
 ## Como instalar o Git Bash <img align="center" width="20px" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" />
 
 O Git Bash faz parte do pacote Git for Windows, que é oferecido no próprio site oficial do Git, em: https://git-scm.com/download/win
+
+---
+
+<a id="abrir_e_rodar_o_projeto"></a>
 
 ## 🛠️ Abrir e rodar o projeto
 
@@ -27,6 +57,10 @@ Clone o projeto na janela que abriu com o seguinte comando:
 
 Após isso pode fechar a janela!
 
+---
+
+<a id="acesso_ao_projeto"></a>
+
 ## 📁 Acesso ao projeto
 
 Entre na pasta do projeto pelo Visual Studio, Abra o terminal do visual Studio e
@@ -39,16 +73,24 @@ vá para o diretório do projeto com o comando:
 Instale as dependências
 
 ```bash
-  npm install
+  npm i
 ```
+
+---
+
+<a id="rodando_localmente"></a>
 
 ## 🌐 Rodando localmente
 
 Inicie o servidor
 
 ```bash
-  npm run dev
+  npm run start:dev
 ```
+
+---
+
+<a id="instalando_o_insomnia"></a>
 
 ## 🛠️ Instalando o insomnia
 
@@ -64,34 +106,43 @@ Link para baixar: https://insomnia.rest/download
 
 ## ❗ Atenção, É valido lembrar que a porta do link vai se basear no computador e na porta que o navegador está usando!
 
+---
+
+<a id="stack_utilizada"></a>
+
 ## Stack utilizada ⚙
 
 **Linguagens:**
-<img align="center" alt="java script" src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
+<img align="center" alt="TypeScript" src="https://img.shields.io/badge/-Typescript-blue?style=for-the-badge&logo=typescript&message=TypeScript&color=blue&logoColor=white">
 
 **Frameworks:**
-<img align="center" alt="node js" src="https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white"> <img align="center" src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white"> <img align="center" alt="express js" src="https://img.shields.io/badge/Express.js-404D59?style=for-the-badge">
+<img align="center" alt="node js" src="https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white"> <img align="center" alt="Nestjs" src="https://img.shields.io/badge/-NestJS-pink?style=for-the-badge&logo=nestjs&message=NestJs&color=rgb(238,%2058,%2084)"> <img align="center" src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white">
 
 **Ferramentas:**
 <img align="center" src="https://insomnia.rest/images/run.svg" alt="Run in Insomnia">
 <img align="center" src="https://img.shields.io/badge/Visual_Studio_Code-0078D4?style=for-the-badge&logo=visual%20studio%20code&logoColor=white" alt="Visual Studio">
-<img align="center" src="https://img.shields.io/badge/-DBeaver%20-9cf" alt="DBaver">
-<img align="center" src="https://img.shields.io/badge/-Docker-blue" alt="docker">
+<img align="center" src="https://img.shields.io/badge/-Docker-blue?style=for-the-badge&logo=docker&logoColor=white" alt="docker">
+
+---
+
+<a id="equipe_do_backend"></a>
 
 ## Devs 🙎🏻‍♂️🙎🏻
 
-| [<img src="https://avatars.githubusercontent.com/u/88730176?v=4" width=115><br><sub>Bruno</sub>](https://github.com/brunodev21) | [<img src="https://avatars.githubusercontent.com/u/100945408?v=4" width=115><br><sub>Jhonny Freitas</sub>](https://github.com/Jhonny-Freitas) | [<img src="https://avatars.githubusercontent.com/u/96137175?s=96&v=4" width=115><br><sub>Leonardo Reis</sub>](https://github.com/LeonardoReis86) |
-| :-----------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------: |
+| [<img src="https://avatars.githubusercontent.com/u/88730176?v=4" width=115><br><sub>Bruno</sub>](https://github.com/brunodev21) | [<img src="https://avatars.githubusercontent.com/u/100945408?v=4" width=115><br><sub>Jhonny Freitas</sub>](https://github.com/Jhonny-Freitas) | [<img src="https://avatars.githubusercontent.com/u/96137175?s=96&v=4" width=115><br><sub>Leonardo Reis</sub>](https://github.com/LeonardoReis86) | [<img src="https://avatars.githubusercontent.com/u/81826043?s=96&v=4" width=115><br><sub>Wanderson Santos</sub>](https://github.com/wandersonDeve) |
+| :-----------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------: |
 
 ## Mentores 🙎🏻‍♂️🙎🏻
 
-| [<img src="https://avatars.githubusercontent.com/u/95653155?s=96&v=4" width=115><br><sub>Joana D'arc</sub>](https://github.com/Joanadarknes) | [<img src="https://avatars.githubusercontent.com/u/75804508?v=4" width=115><br><sub>Leonardo Monteiro</sub>](https://github.com/lmmagalhaes) |
-| :------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------: |
+| [<img src="https://avatars.githubusercontent.com/u/95653155?s=96&v=4" width=115><br><sub>Joana D'arc</sub>](https://github.com/Joanadarknes) | [<img src="https://avatars.githubusercontent.com/u/75804508?v=4" width=115><br><sub>Leonardo Monteiro</sub>](https://github.com/lmmagalhaes) | [<img src="https://avatars.githubusercontent.com/u/51898473?v=4" width=115><br><sub>Odilon Lima</sub>](https://github.com/OdilonLimaNeto) |
+| :------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------: |
 
 ## Idealizador do projeto 🙎🏻‍♂️
 
-[<img src="https://avatars.githubusercontent.com/u/287287?v=4" width=115><br><sub>wouerner</sub>](https://github.com/wouerner)
-| :---: |
+| [<img src="https://avatars.githubusercontent.com/u/287287?v=4" width=115><br><sub>Wouerner</sub>](https://github.com/wouerner) |
+| :----------------------------------------------------------------------------------------------------------------------------: |
+
+---
 
 ## Feedback
 
@@ -107,4 +158,6 @@ Veja `contribuindo.md` para saber como começar.
 
 Esse projeto é usado pela [SouJunior](https://github.com/SouJunior).
 
-[Voltar ao 🔝](#linkedin-backend)
+---
+
+### [Voltar ao 🔝](#linkedin_backend)
