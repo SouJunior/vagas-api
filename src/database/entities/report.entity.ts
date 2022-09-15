@@ -1,4 +1,4 @@
-import { Column } from 'typeorm';
+import { Column, JoinColumn, ManyToOne } from 'typeorm';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -13,10 +13,18 @@ export class ReportEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @OneToOne(() => JobEntity, (job) => job.id)
+  @ManyToOne(() => JobEntity)
+  @JoinColumn({ name: 'job_id' })
+  job: JobEntity;
+
+  @Column()
   job_id: number;
 
-  @OneToOne(() => UserEntity, (user) => user.id)
+  @ManyToOne(() => UserEntity)
+  @JoinColumn({ name: 'user_id' })
+  user: UserEntity;
+
+  @Column()
   user_id: number;
 
   @Column()
