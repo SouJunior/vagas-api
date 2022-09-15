@@ -26,7 +26,7 @@
 
 ### [Stack Utilizada](#stack_utilizada)
 
-### [Equipe Responsáveis](#equipe_do_backend)
+### [Equipe Back-end](#equipe_do_backend)
 
 ---
 
@@ -162,6 +162,11 @@ Link para baixar: https://insomnia.rest/download
 
 | [<img src="https://avatars.githubusercontent.com/u/95653155?s=96&v=4" width=115><br><sub>Joana D'arc</sub>](https://github.com/Joanadarknes) | [<img src="https://avatars.githubusercontent.com/u/75804508?v=4" width=115><br><sub>Leonardo Monteiro</sub>](https://github.com/lmmagalhaes) | [<img src="https://avatars.githubusercontent.com/u/51898473?v=4" width=115><br><sub>Odilon Lima</sub>](https://github.com/OdilonLimaNeto) |
 | :------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------: |
+
+## Ex contribuidores 🙎🏻‍♂️
+
+| [<img src="https://avatars.githubusercontent.com/u/96137175?v=4" width=115><br><sub>Leonardo Reis</sub>](https://github.com/LeonardoReis86) |
+| :----------------------------------------------------------------------------------------------------------------------------: |
 
 ## Idealizador do projeto 🙎🏻‍♂️
 
