@@ -26,7 +26,7 @@
 
 ### [Stack Utilizada](#stack_utilizada)
 
-### [Equipe Responsáveis](#equipe_do_backend)
+### [Equipe Back-end](#equipe_do_backend)
 
 ---
 
