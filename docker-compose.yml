@@ -1,0 +1,34 @@
+
+version: "3.9"
+
+services:
+  database_soujunior: 
+    image: postgres
+    container_name: database_soujunior
+    restart: always
+    ports: 
+      - 5005:5432
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=ignite
+      - POSTGRES_DB=linkedin_backend
+    volumes:
+      - pgdata:/data/postgres
+  app:
+    build: .
+    container_name: linkedIn_Backend
+    restart: always
+    ports:
+      - 5007:5007
+      - 8000:8000
+    volumes: 
+      - .:/usr/app
+    links: 
+      - database_soujunior
+    depends_on:
+      - database_soujunior
+
+
+volumes:
+  pgdata:
+    driver: local

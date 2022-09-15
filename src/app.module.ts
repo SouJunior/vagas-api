@@ -6,10 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './modules/user/user.module';
 import { AuthModule } from './modules/auth/auth.module';
-<<<<<<< Updated upstream
-=======
 import { ReportsModule } from './modules/reports/reports.module';
->>>>>>> Stashed changes
 import 'dotenv/config';
 
 @Module({
@@ -34,10 +31,7 @@ import 'dotenv/config';
     JobsModule,
     UserModule,
     AuthModule,
-<<<<<<< Updated upstream
-=======
     ReportsModule,
->>>>>>> Stashed changes
   ],
   controllers: [AppController],
   providers: [AppService],
