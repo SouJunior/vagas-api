@@ -27,7 +27,7 @@ export class JobRepository extends Repository<JobEntity> {
   }
 
   async deleteJobById(id: number): Promise<object> {
-    this.delete(id);
+    await this.delete(id);
 
     return { message: 'Job deleted successfully' };
   }
