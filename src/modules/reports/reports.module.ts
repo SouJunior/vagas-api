@@ -9,6 +9,7 @@ import {
   DeleteReportService,
   FindAllReportsService,
   FindReportByIdService,
+  UpdateReportService,
 } from './services';
 
 @Module({
@@ -21,6 +22,7 @@ import {
     FindAllReportsService,
     FindReportByIdService,
     DeleteReportService,
+    UpdateReportService,
   ],
 })
 export class ReportsModule {}
