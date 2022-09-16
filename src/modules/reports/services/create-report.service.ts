@@ -25,6 +25,15 @@ export class CreateReportService {
       throw new BadRequestException('Job not found');
     }
 
+    const reportExists = await this.reportRepository.findByParams({
+      user_id,
+      job_id,
+    });
+
+    if (reportExists) {
+      throw new BadRequestException('You have already reported this job');
+    }
+
     const response = await this.reportRepository.createReport({
       user_id,
       job_id,

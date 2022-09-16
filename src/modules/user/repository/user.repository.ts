@@ -33,7 +33,7 @@ export class UserRepository extends Repository<UserEntity> {
   }
 
   async deleteUserById(id: number): Promise<object> {
-    this.delete(id);
+    await this.delete(id);
 
     return { message: 'User deleted successfully' };
   }

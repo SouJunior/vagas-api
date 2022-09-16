@@ -4,13 +4,23 @@ import { JobRepository } from '../jobs/repository/job.resository';
 import { UserRepository } from '../user/repository/user.repository';
 import { ReportsController } from './reports.controller';
 import { ReportRepository } from './repository/reports.repository';
-import { CreateReportService } from './services';
+import {
+  CreateReportService,
+  DeleteReportService,
+  FindAllReportsService,
+  FindReportByIdService,
+} from './services';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([ReportRepository, UserRepository, JobRepository]),
   ],
   controllers: [ReportsController],
-  providers: [CreateReportService],
+  providers: [
+    CreateReportService,
+    FindAllReportsService,
+    FindReportByIdService,
+    DeleteReportService,
+  ],
 })
 export class ReportsModule {}
