@@ -18,7 +18,7 @@ services:
     container_name: linkedIn_Backend
     restart: always
     ports:
-      - 5007:5007
+      - 3000:3000
     volumes:
       - .:/usr/app
     links:
