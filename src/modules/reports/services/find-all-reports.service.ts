@@ -9,7 +9,7 @@ export class FindAllReportsService {
     const reports = await this.reportRepository.findAllRepots();
 
     if (reports.length <= 0) {
-      return 'Reports is empty';
+      return { message: 'Reports is empty' };
     }
 
     return reports;
