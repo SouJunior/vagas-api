@@ -1,10 +1,5 @@
 import { Column, JoinColumn, ManyToOne } from 'typeorm';
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  CreateDateColumn,
-  OneToOne,
-} from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, CreateDateColumn } from 'typeorm';
 import { JobEntity } from './jobs.entity';
 import { UserEntity } from './users.entity';
 
