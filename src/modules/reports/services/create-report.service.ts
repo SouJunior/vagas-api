@@ -1,6 +1,6 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
-import { JobRepository } from 'src/modules/jobs/repository/job.resository';
-import { UserRepository } from 'src/modules/user/repository/user.repository';
+import { JobRepository } from '../../../modules/jobs/repository/job.resository';
+import { UserRepository } from '../../../modules/user/repository/user.repository';
 import { CreateReportDto } from '../dtos/create-report.dto';
 import { ReportRepository } from '../repository/reports.repository';
 
