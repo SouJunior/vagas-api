@@ -7,6 +7,7 @@ import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './modules/user/user.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { ReportsModule } from './modules/reports/reports.module';
+import { CompanyModule } from './modules/company/company.module';
 import 'dotenv/config';
 
 @Module({
@@ -32,6 +33,7 @@ import 'dotenv/config';
     UserModule,
     AuthModule,
     ReportsModule,
+    CompanyModule,
   ],
   controllers: [AppController],
   providers: [AppService],
