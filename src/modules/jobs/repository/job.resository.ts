@@ -1,4 +1,4 @@
-import { JobEntity } from 'src/database/entities/jobs.entity';
+import { JobEntity } from '../../../database/entities/jobs.entity';
 import { EntityRepository, Repository } from 'typeorm';
 import { CreateJobDto } from '../dtos/create-job.dto';
 import { UpdateJobDto } from '../dtos/update-job.dto';

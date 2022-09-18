@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { UserRepository } from 'src/modules/user/repository/user.repository';
+import { UserRepository } from '../../../modules/user/repository/user.repository';
 import { CreateCompanyDto } from '../dtos/create-company.dto';
 import { CompanyRepository } from '../repository/company-repository';
 
