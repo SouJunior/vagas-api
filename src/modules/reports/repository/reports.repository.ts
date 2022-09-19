@@ -1,4 +1,4 @@
-import { ReportEntity } from 'src/database/entities/report.entity';
+import { ReportEntity } from '../../../database/entities/report.entity';
 import { EntityRepository, Repository } from 'typeorm';
 import { CreateReportDto } from '../dtos/create-report.dto';
 import { UpdateReportDto } from '../dtos/update-report.dto';

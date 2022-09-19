@@ -1,4 +1,4 @@
-import { UserEntity } from 'src/database/entities/users.entity';
+import { UserEntity } from '../../../database/entities/users.entity';
 import { EntityRepository, Repository } from 'typeorm';
 import { CreateUserDto } from '../dtos/create-user.dto';
 import { UpdateUserDto } from '../dtos/update-user.dto';

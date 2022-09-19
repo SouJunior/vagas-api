@@ -1,19 +1,13 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-import {
-  FastifyAdapter,
-  NestFastifyApplication,
-} from '@nestjs/platform-fastify';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import { ValidationPipe } from '@nestjs/common';
 
+import { AppModule } from './app.module';
+
 async function bootstrap() {
-  const app = await NestFactory.create<NestFastifyApplication>(
-    AppModule,
-    new FastifyAdapter(),
-    {
-      cors: true,
-    },
-  );
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+    cors: true,
+  });
 
   app.useGlobalPipes(
     new ValidationPipe({

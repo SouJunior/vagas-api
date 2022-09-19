@@ -18,20 +18,17 @@ services:
     container_name: linkedIn_Backend
     restart: always
     ports:
-      - 5007:5007
+      - 3000:3000
     volumes:
       - .:/usr/app
     links:
       - database_soujunior
     depends_on:
       - database_soujunior
+    env_file:
+      - .env
     environment:
-      - TYPEORM_CONNECTION=postgres
       - TYPEORM_HOST=database_soujunior
-      - TYPEORM_PORT=5432
-      - TYPEORM_USERNAME=docker
-      - TYPEORM_PASSWORD=ignite
-      - TYPEORM_DATABASE=linkedin_backend
 
 volumes:
   pgdata:
