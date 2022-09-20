@@ -20,7 +20,7 @@
 
 ### [Rodando Localmente](#rodando_localmente)
 
-### [Rodando com Docker](#rodando_com_docker)
+### [Rodando com Docker](#instalando_o_docker)
 
 ### [Instalando o Insomnia](#instalando_o_insomnia)
 
@@ -107,6 +107,31 @@ Inicie o servidor
   npm run start:dev
 ```
 
+---
+  
+  <a id="instalando_o_docker"></a>
+
+## 🐳  Instalando o Docker
+
+1.Install Docker Desktop on Mac: https://docs.docker.com/desktop/install/mac-install/
+
+2.Install Docker Desktop on Windows: https://docs.docker.com/desktop/install/windows-install/
+
+3.Install Docker Desktop on Linux: https://docs.docker.com/desktop/install/linux-install/
+
+Agora você pode instalar tudo o que precisa para executar o Windows Subsystem for Linux (WSL) inserindo este comando em um PowerShell administrador ou Windows Command Prompt e, em seguida, reiniciando sua máquina.
+  
+`wsl --install`
+
+Após a instalação do Wsl, vamos até a pasta do projeto e rodar o comando
+
+`docker-compose up -d`
+
+
+O projeto vai estar rodando em:
+
+`localhost:3000`
+  
 ---
 
 <a id="instalando_o_insomnia"></a>
