@@ -1,9 +1,18 @@
 import { UpdateCompanyDto } from './dtos/update-company.sto';
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { CompanyIdDto } from './dtos/company-id.dto';
 import { CreateCompanyDto } from './dtos/create-company.dto';
 import {
   CreateCompanyService,
+  DeleteCompanyService,
   FindAllCompanyService,
   FindCompanyById,
   UpdateCompanyService,
@@ -16,6 +25,7 @@ export class CompanyController {
     private findAllCompanyService: FindAllCompanyService,
     private findCompanyById: FindCompanyById,
     private updateCompanyService: UpdateCompanyService,
+    private deleteCompanyService: DeleteCompanyService,
   ) {}
 
   @Post()
@@ -39,5 +49,10 @@ export class CompanyController {
     @Body() data: UpdateCompanyDto,
   ) {
     return this.updateCompanyService.execute(+id, data);
+  }
+
+  @Delete(':id')
+  async deleteCompanyById(@Param() { id }: CompanyIdDto) {
+    return this.deleteCompanyService.execute(+id);
   }
 }

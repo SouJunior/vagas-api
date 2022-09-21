@@ -5,6 +5,7 @@ import { CompanyController } from './company.controller';
 import { CompanyRepository } from './repository/company-repository';
 import {
   CreateCompanyService,
+  DeleteCompanyService,
   FindAllCompanyService,
   FindCompanyById,
   UpdateCompanyService,
@@ -18,6 +19,7 @@ import {
     FindAllCompanyService,
     FindCompanyById,
     UpdateCompanyService,
+    DeleteCompanyService,
   ],
 })
 export class CompanyModule {}

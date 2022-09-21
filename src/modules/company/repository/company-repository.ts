@@ -25,4 +25,10 @@ export class CompanyRepository extends Repository<CompanyEntity> {
       ...data,
     });
   }
+
+  async deleteCompanyById(id: number): Promise<object> {
+    this.delete(id);
+
+    return { message: 'Company deleted successfully' };
+  }
 }
