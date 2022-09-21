@@ -3,11 +3,15 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserRepository } from '../user/repository/user.repository';
 import { CompanyController } from './company.controller';
 import { CompanyRepository } from './repository/company-repository';
-import { CreateCompanyService } from './services';
+import {
+  CreateCompanyService,
+  FindAllCompanyService,
+  FindCompanyById,
+} from './services';
 
 @Module({
   imports: [TypeOrmModule.forFeature([CompanyRepository, UserRepository])],
   controllers: [CompanyController],
-  providers: [CreateCompanyService],
+  providers: [CreateCompanyService, FindAllCompanyService, FindCompanyById],
 })
 export class CompanyModule {}

@@ -10,13 +10,18 @@ export class createTableCompanies1663465863149 implements MigrationInterface {
     Promise.all([
       await queryRunner.createTable(
         new Table({
-          name: 'company',
+          name: 'companies',
           columns: [
             {
               name: 'id',
               type: 'integer',
               isPrimary: true,
               isGenerated: true,
+            },
+            {
+              name: 'company_name',
+              type: 'varchar',
+              isNullable: false,
             },
             {
               name: 'email',
@@ -68,7 +73,7 @@ export class createTableCompanies1663465863149 implements MigrationInterface {
       ),
 
       await queryRunner.createForeignKey(
-        'company',
+        'companies',
         new TableForeignKey({
           columnNames: ['user_id'],
           referencedColumnNames: ['id'],
@@ -81,7 +86,7 @@ export class createTableCompanies1663465863149 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropForeignKey('company', 'user_id');
-    await queryRunner.dropTable('company');
+    await queryRunner.dropForeignKey('companies', 'user_id');
+    await queryRunner.dropTable('companies');
   }
 }
