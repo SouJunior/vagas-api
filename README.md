@@ -59,6 +59,101 @@ Após isso pode fechar a janela!
 
 ---
 
+ <a id="instalando_o_docker"></a>
+
+## 🐳  Instalando o Docker
+
+1.Install Docker Desktop on Mac: https://docs.docker.com/desktop/install/mac-install/
+
+2.Install Docker Desktop on Windows: https://docs.docker.com/desktop/install/windows-install/
+
+3.Install Docker Desktop on Linux: https://docs.docker.com/desktop/install/linux-install/
+
+Agora você pode instalar tudo o que precisa para executar o Windows Subsystem for Linux (WSL) inserindo este comando em um PowerShell administrador ou Windows Command Prompt e, em seguida, reiniciando sua máquina.
+  
+`wsl --install`
+
+Após a instalação do Wsl, vamos até a pasta do projeto e rodar o comando
+
+`docker-compose up -d`
+
+
+O projeto vai estar rodando em:
+
+`localhost:3000`
+
+agora basta seguir para [Instalando o Insomnia](#instalando_o_insomnia)
+
+---
+
+## 🐳 Como instalar o PostgreSQL no Windows
+
+1.Para começar a instalação do PostgreSQL faremos o download diretamente do site oficial, a partir desse link.
+
+Link: https://www.postgresql.org/download/windows/
+
+
+2.Feito o download, em seguida abra o instalador e verá a seguinte tela:
+![image](https://user-images.githubusercontent.com/95653155/191254605-8d8ef061-6f28-48a7-912b-7e7b5586d27a.png)
+
+Clique em “Next” e na tela seguinte escolha o local onde a instalação será feita:
+
+3.Atenção! Se você escolher um local diferente do padrão será preciso criar uma pasta e selecioná-la, pois a instalação deve ser feita em uma pasta vazia.
+
+![image](https://user-images.githubusercontent.com/95653155/191254739-a78bcc9b-2e5e-486b-98ba-ccfb009ab638.png)
+
+Feito isso, basta clicar em “Next” e então na tela seguinte faremos a seleção de componentes. Recomendo deixar tudo marcado mesmo, sem problemas aqui.
+
+![image](https://user-images.githubusercontent.com/95653155/191254964-43073f6c-25b8-4dff-a070-b1b3a714338a.png)
+
+Em seguida, iremos para a tela de seleção da pasta onde os banco de dados ficarão armazenados. É uma pasta diferente da pasta de instalação. Você pode colocar dentro da pasta de instalação, mas em outra pasta separada lá dentro, como é feito por padrão.
+
+Após clicar em “Next”, veremos a tela de seleção de senha do superuser do banco. Lembre-se de anotar essa senha para não perder ou esquecer!
+
+![image](https://user-images.githubusercontent.com/95653155/191255081-197c3561-49e7-4c6c-adae-5fecdc2e244d.png)
+
+Após clicar em “Next”, na próxima tela você vai decidir qual porta padrão o servidor do banco vai usar. Você pode usar a porta padrão, mas pode escolher outra, desde que não entre em conflito com outras portas que estejam sendo usadas na sua máquina.
+
+![image](https://user-images.githubusercontent.com/95653155/191255191-f60810ff-d24f-4c62-9799-f127f9c9a283.png)
+
+Após clicar em “Next”, você será perguntado sobre o Cluster do Banco. Se você não sabe exatamente o que isso significa, fique tranquilo, basta deixar no Default e clicar em “Next”.
+
+![image](https://user-images.githubusercontent.com/95653155/191255244-8b2bed49-fa27-4267-b869-554b03eb8b3f.png)
+
+Nessa tela e na próxima, teremos apenas um resumo das configurações feitas até aqui. Basta clicar em “Next” e prosseguir com a instalação.
+
+Ao concluir a instalação, vai aparecer a opção para abrir o Stack Builder, para baixar quaisquer conteúdos adicionais. Por enquanto isso não é necessário, então eu desmarquei a opção.
+
+![image](https://user-images.githubusercontent.com/95653155/191255468-fceb0d98-026e-471e-887f-52794a010b0c.png)
+
+Pronto, instalação do PostgreSQL finalizada com sucesso!
+
+
+<a id="instalando_o_insomnia"></a>
+
+## 🛠️ Instalando o insomnia
+
+Link para baixar: https://insomnia.rest/download
+
+1. Agora basta importar o arquivo `Documentação_Sou_Junior.json` que esta na raiz do projeto que você terá acesso a todos as rotas.
+
+![image](https://user-images.githubusercontent.com/81826043/190295195-7b4ced82-7677-49f3-a789-c3f6a6f7e108.png)
+
+
+2. Após fazer a importação, colar o link do navegador no local mostrado:
+
+3. Agora basta navegar entre as pastas com as rotas do nossa API
+
+![image](https://user-images.githubusercontent.com/81826043/190295785-4318101f-b890-444c-a007-526cdc55aa95.png)
+
+4. Para editar a porta da url basta seguir os passos abaixo
+
+![image](https://user-images.githubusercontent.com/81826043/190295982-87514dd1-3ad2-4496-a077-d35b413bf310.png)
+
+## ❗ Atenção, É valido lembrar que a porta do link vai se basear no computador e na porta que o navegador está usando!
+
+---
+
 <a id="acesso_ao_projeto"></a>
 
 ## 📁 Acesso ao projeto
@@ -132,31 +227,6 @@ O projeto vai estar rodando em:
 
 `localhost:3000`
   
----
-
-<a id="instalando_o_insomnia"></a>
-
-## 🛠️ Instalando o insomnia
-
-Link para baixar: https://insomnia.rest/download
-
-1. Agora basta importar o arquivo `Documentação_Sou_Junior.json` que esta na raiz do projeto que você terá acesso a todos as rotas.
-
-![image](https://user-images.githubusercontent.com/81826043/190295195-7b4ced82-7677-49f3-a789-c3f6a6f7e108.png)
-
-
-2. Após fazer a importação, colar o link do navegador no local mostrado:
-
-3. Agora basta navegar entre as pastas com as rotas do nossa API
-
-![image](https://user-images.githubusercontent.com/81826043/190295785-4318101f-b890-444c-a007-526cdc55aa95.png)
-
-4. Para editar a porta da url basta seguir os passos abaixo
-
-![image](https://user-images.githubusercontent.com/81826043/190295982-87514dd1-3ad2-4496-a077-d35b413bf310.png)
-
-## ❗ Atenção, É valido lembrar que a porta do link vai se basear no computador e na porta que o navegador está usando!
-
 ---
 
 <a id="stack_utilizada"></a>
