@@ -1,6 +1,7 @@
 import { CompanyEntity } from '../../../database/entities/company.entity';
 import { EntityRepository, Repository } from 'typeorm';
 import { CreateCompanyDto } from '../dtos/create-company.dto';
+import { UpdateCompanyDto } from '../dtos/update-company.sto';
 
 @EntityRepository(CompanyEntity)
 export class CompanyRepository extends Repository<CompanyEntity> {
@@ -14,5 +15,14 @@ export class CompanyRepository extends Repository<CompanyEntity> {
 
   async findCompanyById(id: number): Promise<CompanyEntity> {
     return this.findOne(id);
+  }
+
+  async UpdateCompanyById(id: number, data: UpdateCompanyDto) {
+    const company = await this.findOne(id);
+
+    return this.save({
+      ...company,
+      ...data,
+    });
   }
 }

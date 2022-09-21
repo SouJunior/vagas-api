@@ -7,11 +7,17 @@ import {
   CreateCompanyService,
   FindAllCompanyService,
   FindCompanyById,
+  UpdateCompanyService,
 } from './services';
 
 @Module({
   imports: [TypeOrmModule.forFeature([CompanyRepository, UserRepository])],
   controllers: [CompanyController],
-  providers: [CreateCompanyService, FindAllCompanyService, FindCompanyById],
+  providers: [
+    CreateCompanyService,
+    FindAllCompanyService,
+    FindCompanyById,
+    UpdateCompanyService,
+  ],
 })
 export class CompanyModule {}
