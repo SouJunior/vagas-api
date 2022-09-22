@@ -5,6 +5,7 @@ import { UserRepository } from '../user/repository/user.repository';
 import { CommentController } from './comment.controller';
 import { CommentRepository } from './repository/comment.repository';
 import { CreateCommentService, GetAllCommentsService } from './services';
+import { GetCommentByIdService } from './services/get-comment-by-id.service';
 
 @Module({
   imports: [
@@ -15,6 +16,10 @@ import { CreateCommentService, GetAllCommentsService } from './services';
     ]),
   ],
   controllers: [CommentController],
-  providers: [CreateCommentService, GetAllCommentsService],
+  providers: [
+    CreateCommentService,
+    GetAllCommentsService,
+    GetCommentByIdService,
+  ],
 })
 export class CommentModule {}

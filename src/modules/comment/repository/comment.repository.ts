@@ -11,4 +11,8 @@ export class CommentRepository extends Repository<CommentEntity> {
   async getAllComments(): Promise<CommentEntity[]> {
     return this.find();
   }
+
+  async getCommentById(id: number): Promise<CommentEntity> {
+    return this.findOne(id);
+  }
 }
