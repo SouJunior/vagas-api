@@ -10,11 +10,11 @@ export class CommentRepository extends Repository<CommentEntity> {
   }
 
   async getAllComments(): Promise<CommentEntity[]> {
-    return this.find();
+    return this.find({ desativated_at: null });
   }
 
   async getCommentById(id: number): Promise<CommentEntity> {
-    return this.findOne(id);
+    return this.findOne(id, { where: { desativated_at: null } });
   }
 
   async updateComment(id: number, data: UpdateCommentDto) {
@@ -24,5 +24,11 @@ export class CommentRepository extends Repository<CommentEntity> {
       ...comment,
       ...data,
     });
+  }
+
+  async deleteComment(id: number): Promise<object> {
+    await this.update(id, { desativated_at: new Date() });
+
+    return { message: 'Comment deleted successfully' };
   }
 }

@@ -1,9 +1,18 @@
 import { UpdateCommentDto } from './dtos/update-comment.dto';
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { CommentIdDto } from './dtos/comment-id.dto';
 import { CreateCommentDto } from './dtos/create-comment.dto';
 import {
   CreateCommentService,
+  DeleteCommentService,
   GetAllCommentsService,
   GetCommentByIdService,
   UpdateCommentService,
@@ -16,6 +25,7 @@ export class CommentController {
     private getAllCommentsService: GetAllCommentsService,
     private getCommentByIdService: GetCommentByIdService,
     private updateCommentService: UpdateCommentService,
+    private deleteCommentService: DeleteCommentService,
   ) {}
 
   @Post()
@@ -39,5 +49,10 @@ export class CommentController {
     @Body() data: UpdateCommentDto,
   ) {
     return this.updateCommentService.execute(+id, data);
+  }
+
+  @Delete(':id')
+  async deleteComment(@Param() { id }: CommentIdDto) {
+    return this.deleteCommentService.execute(+id);
   }
 }

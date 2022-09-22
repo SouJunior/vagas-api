@@ -6,6 +6,7 @@ import { CommentController } from './comment.controller';
 import { CommentRepository } from './repository/comment.repository';
 import {
   CreateCommentService,
+  DeleteCommentService,
   GetAllCommentsService,
   GetCommentByIdService,
   UpdateCommentService,
@@ -25,6 +26,7 @@ import {
     GetAllCommentsService,
     GetCommentByIdService,
     UpdateCommentService,
+    DeleteCommentService,
   ],
 })
 export class CommentModule {}
