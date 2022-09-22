@@ -4,8 +4,12 @@ import { JobRepository } from '../jobs/repository/job.resository';
 import { UserRepository } from '../user/repository/user.repository';
 import { CommentController } from './comment.controller';
 import { CommentRepository } from './repository/comment.repository';
-import { CreateCommentService, GetAllCommentsService } from './services';
-import { GetCommentByIdService } from './services/get-comment-by-id.service';
+import {
+  CreateCommentService,
+  GetAllCommentsService,
+  GetCommentByIdService,
+  UpdateCommentService,
+} from './services';
 
 @Module({
   imports: [
@@ -20,6 +24,7 @@ import { GetCommentByIdService } from './services/get-comment-by-id.service';
     CreateCommentService,
     GetAllCommentsService,
     GetCommentByIdService,
+    UpdateCommentService,
   ],
 })
 export class CommentModule {}

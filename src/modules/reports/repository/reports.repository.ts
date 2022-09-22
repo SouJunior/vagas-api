@@ -23,10 +23,10 @@ export class ReportRepository extends Repository<ReportEntity> {
   }
 
   async updateReport(id: number, data: UpdateReportDto) {
-    const user = await this.findOne(id);
+    const report = await this.findOne(id);
 
     return this.save({
-      ...user,
+      ...report,
       ...data,
     });
   }
