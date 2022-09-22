@@ -1,5 +1,4 @@
 import {
-  BeforeRemove,
   BeforeUpdate,
   Column,
   CreateDateColumn,
