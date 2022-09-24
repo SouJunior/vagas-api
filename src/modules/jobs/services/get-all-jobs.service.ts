@@ -1,17 +1,17 @@
 import { Injectable } from '@nestjs/common';
+import { PageDto, PageOptionsDto } from 'src/shared/pagination';
+import { CreateJobDto } from '../dtos/create-job.dto';
 import { JobRepository } from '../repository/job.resository';
 
 @Injectable()
 export class GetAllJobsService {
   constructor(private jobRepository: JobRepository) {}
 
-  async execute() {
-    const jobs = await this.jobRepository.getAllJobs();
+  async execute(
+    pageOptionsDto: PageOptionsDto,
+  ): Promise<PageDto<CreateJobDto>> {
+    const query = await this.jobRepository.getAllJobs(pageOptionsDto);
 
-    if (jobs.length <= 0) {
-      return { message: 'Jobs is empty' };
-    }
-
-    return jobs;
+    return query;
   }
 }
