@@ -6,7 +6,9 @@ import {
   Param,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
+import { PageOptionsDto } from 'src/shared/pagination';
 import { CreateJobDto } from './dtos/create-job.dto';
 import { UpdateJobDto } from './dtos/update-job.dto';
 import {
@@ -33,8 +35,8 @@ export class JobsController {
   }
 
   @Get()
-  async getAllJobs() {
-    return this.getAllJobsService.execute();
+  async getAllJobs(@Query() pageOptionsDto: PageOptionsDto) {
+    return this.getAllJobsService.execute(pageOptionsDto);
   }
 
   @Get(':id')

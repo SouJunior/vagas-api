@@ -2,6 +2,7 @@ import { JobEntity } from '../../../database/entities/jobs.entity';
 import { EntityRepository, Repository } from 'typeorm';
 import { CreateJobDto } from '../dtos/create-job.dto';
 import { UpdateJobDto } from '../dtos/update-job.dto';
+import { PageDto, PageMetaDto, PageOptionsDto } from 'src/shared/pagination';
 
 @EntityRepository(JobEntity)
 export class JobRepository extends Repository<JobEntity> {
@@ -9,8 +10,22 @@ export class JobRepository extends Repository<JobEntity> {
     return this.save(data);
   }
 
-  async getAllJobs(): Promise<CreateJobDto[]> {
-    return this.find();
+  async getAllJobs(
+    pageOptionsDto: PageOptionsDto,
+  ): Promise<PageDto<JobEntity>> {
+    const queryBuilder = this.createQueryBuilder('jobs');
+
+    queryBuilder
+      .orderBy(`jobs.${pageOptionsDto.orderByColumn}`, pageOptionsDto.order)
+      .skip(pageOptionsDto.skip)
+      .take(pageOptionsDto.take);
+
+    const itemCount = await queryBuilder.getCount();
+    const { entities } = await queryBuilder.getRawAndEntities();
+
+    const pageMetaDto = new PageMetaDto({ itemCount, pageOptionsDto });
+
+    return new PageDto(entities, pageMetaDto);
   }
 
   async findOneById(id: number): Promise<CreateJobDto> {
