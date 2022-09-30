@@ -15,6 +15,10 @@ export class UserRepository extends Repository<UserEntity> {
     });
   }
 
+  async searchUserByName(name: string): Promise<UserEntity[]> {
+    return this.find({ where: { name } });
+  }
+
   async findOneById(id: number): Promise<UserEntity> {
     return this.findOne(id);
   }
