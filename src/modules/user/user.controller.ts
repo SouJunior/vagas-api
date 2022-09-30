@@ -10,15 +10,17 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { UserEntity } from 'src/database/entities/users.entity';
+import { LoggedAdmin } from '../auth/decorator/logged-admin.decorator';
+
 import { LoggedUser } from '../auth/decorator/logged-user.decorator';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
 import {
   CreateUserService,
-  FindOneUserService,
-  FindAllUsersService,
-  UpdateUserService,
   DeleteUserService,
+  FindAllUsersService,
+  FindOneUserService,
+  UpdateUserService,
 } from './services';
 
 @Controller('user')
@@ -38,7 +40,7 @@ export class UserController {
 
   @Get()
   @UseGuards(AuthGuard())
-  async getAllJobs(@LoggedUser() user: UserEntity) {
+  async getAllJobs(@LoggedAdmin() user: UserEntity) {
     return this.findAllUsersService.execute();
   }
 
