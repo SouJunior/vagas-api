@@ -1,17 +1,18 @@
 import { Injectable } from '@nestjs/common';
+import { CompanyEntity } from 'src/database/entities/company.entity';
+import { PageDto, PageOptionsDto } from 'src/shared/pagination';
+
 import { CompanyRepository } from '../repository/company-repository';
 
 @Injectable()
 export class FindAllCompanyService {
   constructor(private companyRepository: CompanyRepository) {}
 
-  async execute() {
-    const companies = await this.companyRepository.findAllCompany();
+  async execute(
+    pageOptionsDto: PageOptionsDto,
+  ): Promise<PageDto<CompanyEntity>> {
+    const query = await this.companyRepository.findAllCompany(pageOptionsDto);
 
-    if (companies.length <= 0) {
-      return { message: 'Companies is empty' };
-    }
-
-    return companies;
+    return query;
   }
 }

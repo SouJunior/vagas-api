@@ -7,6 +7,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { CompanyIdDto } from './dtos/company-id.dto';
 import { CreateCompanyDto } from './dtos/create-company.dto';
@@ -17,6 +18,7 @@ import {
   FindCompanyById,
   UpdateCompanyService,
 } from './services';
+import { PageOptionsDto } from 'src/shared/pagination';
 
 @Controller('company')
 export class CompanyController {
@@ -34,8 +36,8 @@ export class CompanyController {
   }
 
   @Get()
-  async getAllCompanies() {
-    return this.findAllCompanyService.execute();
+  async getAllCompanies(@Query() pageOptionsDto: PageOptionsDto) {
+    return this.findAllCompanyService.execute(pageOptionsDto);
   }
 
   @Get(':id')
