@@ -17,6 +17,7 @@ export class FindOneUserService {
     }
 
     delete userExists.password;
+    delete userExists.type;
 
     return userExists;
   }

@@ -6,15 +6,21 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { UserEntity } from 'src/database/entities/users.entity';
+import { LoggedAdmin } from '../auth/decorator/logged-admin.decorator';
+
+import { LoggedUser } from '../auth/decorator/logged-user.decorator';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
 import {
   CreateUserService,
-  FindOneUserService,
-  FindAllUsersService,
-  UpdateUserService,
   DeleteUserService,
+  FindAllUsersService,
+  FindOneUserService,
+  UpdateUserService,
 } from './services';
 
 @Controller('user')
@@ -33,22 +39,30 @@ export class UserController {
   }
 
   @Get()
-  async getAllJobs() {
+  @UseGuards(AuthGuard())
+  async getAllJobs(@LoggedAdmin() user: UserEntity) {
     return this.findAllUsersService.execute();
   }
 
   @Get(':id')
-  async getOneJob(@Param('id') id: string) {
+  @UseGuards(AuthGuard())
+  async getOneJob(@Param('id') id: string, @LoggedUser() user: UserEntity) {
     return this.findOneUserService.execute(+id);
   }
 
   @Put(':id')
-  async updateJob(@Param('id') id: string, @Body() data: UpdateUserDto) {
+  @UseGuards(AuthGuard())
+  async updateJob(
+    @Param('id') id: string,
+    @Body() data: UpdateUserDto,
+    @LoggedUser() user: UserEntity,
+  ) {
     return this.updateUserService.execute(+id, data);
   }
 
   @Delete(':id')
-  async deleteJob(@Param('id') id: string) {
+  @UseGuards(AuthGuard())
+  async deleteJob(@Param('id') id: string, @LoggedUser() user: UserEntity) {
     return this.deleteUserService.execute(+id);
   }
 }
