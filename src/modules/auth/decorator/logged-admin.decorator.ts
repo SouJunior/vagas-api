@@ -10,7 +10,6 @@ export const LoggedAdmin = createParamDecorator((_, ctx: ExecutionContext) => {
   const userObject = request.user;
 
   if (userObject.type === UserRole.ADMIN) {
-
     return userObject;
   } else {
     throw new UnauthorizedException(
