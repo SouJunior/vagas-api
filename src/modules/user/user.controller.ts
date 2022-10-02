@@ -6,10 +6,12 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { UserEntity } from 'src/database/entities/users.entity';
+import { PageOptionsDto } from 'src/shared/pagination';
 import { LoggedAdmin } from '../auth/decorator/logged-admin.decorator';
 
 import { LoggedUser } from '../auth/decorator/logged-user.decorator';
@@ -40,8 +42,11 @@ export class UserController {
 
   @Get()
   @UseGuards(AuthGuard())
-  async getAllJobs(@LoggedAdmin() user: UserEntity) {
-    return this.findAllUsersService.execute();
+  async getAllJobs(
+    @LoggedAdmin() user: UserEntity,
+    @Query() pageOptionsDto: PageOptionsDto,
+  ) {
+    return this.findAllUsersService.execute(pageOptionsDto);
   }
 
   @Get(':id')
