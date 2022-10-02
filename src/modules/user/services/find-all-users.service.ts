@@ -1,17 +1,16 @@
 import { Injectable } from '@nestjs/common';
+import { UserEntity } from 'src/database/entities/users.entity';
+import { PageDto, PageOptionsDto } from 'src/shared/pagination';
+
 import { UserRepository } from '../repository/user.repository';
 
 @Injectable()
 export class FindAllUsersService {
   constructor(private userRepository: UserRepository) {}
 
-  async execute() {
-    const users = await this.userRepository.getAllUsers();
+  async execute(pageOptionsDto: PageOptionsDto): Promise<PageDto<UserEntity>> {
+    const query = await this.userRepository.getAllUsers(pageOptionsDto);
 
-    if (users.length <= 0) {
-      return { message: 'Users is empty' };
-    }
-
-    return users;
+    return query;
   }
 }
