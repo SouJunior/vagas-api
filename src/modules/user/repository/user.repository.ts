@@ -3,6 +3,7 @@ import { EntityRepository, Repository } from 'typeorm';
 import { CreateUserDto } from '../dtos/create-user.dto';
 import { UpdateUserDto } from '../dtos/update-user.dto';
 import { PageOptionsDto, PageDto, PageMetaDto } from 'src/shared/pagination';
+import { handleError } from 'src/shared/utils/handle-error.util';
 
 @EntityRepository(UserEntity)
 export class UserRepository extends Repository<UserEntity> {
@@ -21,7 +22,7 @@ export class UserRepository extends Repository<UserEntity> {
       .skip(pageOptionsDto.skip)
       .take(pageOptionsDto.take);
 
-    const itemCount = await queryBuilder.getCount();
+    const itemCount = await queryBuilder.getCount().catch(handleError);
     const { entities } = await queryBuilder.getRawAndEntities();
 
     const pageMetaDto = new PageMetaDto({ itemCount, pageOptionsDto });
@@ -30,28 +31,28 @@ export class UserRepository extends Repository<UserEntity> {
   }
 
   async searchUserByName(name: string): Promise<UserEntity[]> {
-    return this.find({ where: { name } });
+    return this.find({ where: { name } }).catch(handleError);
   }
 
   async findOneById(id: number): Promise<UserEntity> {
-    return this.findOne(id);
+    return this.findOne(id).catch(handleError);
   }
 
   async findOneByEmail(email: string): Promise<UserEntity> {
-    return this.findOne({ email });
+    return this.findOne({ email }).catch(handleError);
   }
 
   async updateUser(id: number, data: UpdateUserDto) {
-    const user = await this.findOne(id);
+    const user = await this.findOne(id).catch(handleError);
 
     return this.save({
       ...user,
       ...data,
-    });
+    }).catch(handleError);
   }
 
   async deleteUserById(id: number): Promise<object> {
-    await this.delete(id);
+    await this.delete(id).catch(handleError);
 
     return { message: 'User deleted successfully' };
   }
