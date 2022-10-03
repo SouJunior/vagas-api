@@ -1,4 +1,6 @@
 import { Module } from '@nestjs/common';
+import { APP_GUARD } from '@nestjs/core';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { JobRepository } from '../jobs/repository/job.resository';
 import { UserRepository } from '../user/repository/user.repository';
@@ -19,6 +21,10 @@ import {
       JobRepository,
       UserRepository,
     ]),
+    ThrottlerModule.forRoot({
+      ttl: 10,
+      limit: 4,
+    }),
   ],
   controllers: [CommentController],
   providers: [
@@ -27,6 +33,10 @@ import {
     GetCommentByIdService,
     UpdateCommentService,
     DeleteCommentService,
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
   ],
 })
 export class CommentModule {}

@@ -13,7 +13,6 @@ import { AuthGuard } from '@nestjs/passport';
 import { UserEntity } from 'src/database/entities/users.entity';
 import { PageOptionsDto } from 'src/shared/pagination';
 import { LoggedAdmin } from '../auth/decorator/logged-admin.decorator';
-
 import { LoggedUser } from '../auth/decorator/logged-user.decorator';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';

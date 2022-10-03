@@ -10,8 +10,6 @@ export const LoggedUser = createParamDecorator((_, ctx: ExecutionContext) => {
   const userObject = request.user;
 
   if (userObject.type === UserRole.USER || userObject.type === UserRole.ADMIN) {
-    delete userObject.passwordHash;
-
     return userObject;
   } else {
     throw new UnauthorizedException(

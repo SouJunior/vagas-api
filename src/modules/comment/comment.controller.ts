@@ -17,6 +17,7 @@ import {
   GetCommentByIdService,
   UpdateCommentService,
 } from './services';
+import { Throttle } from '@nestjs/throttler';
 
 @Controller('comment')
 export class CommentController {
@@ -28,6 +29,7 @@ export class CommentController {
     private deleteCommentService: DeleteCommentService,
   ) {}
 
+  @Throttle(2, 30)
   @Post()
   async createComment(@Body() data: CreateCommentDto) {
     return this.createCommentService.execute(data);

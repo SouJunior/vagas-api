@@ -3,9 +3,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { CompanyEntity } from './company.entity';
 
 export enum JobsTypes {
   ESTAGIARIO = 'Estágio',
@@ -29,6 +32,13 @@ export class JobEntity {
     enum: JobsTypes,
   })
   type: JobsTypes;
+
+  @OneToOne(() => CompanyEntity)
+  @JoinColumn({ name: 'company_id' })
+  company: CompanyEntity;
+
+  @Column()
+  company_id: number;
 
   @CreateDateColumn()
   created_at: Date;
