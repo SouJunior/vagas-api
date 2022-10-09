@@ -27,7 +27,7 @@ export class CommentEntity {
   @Column()
   user_id: number;
 
-  @ManyToOne(() => JobEntity)
+  @ManyToOne(() => JobEntity, (job) => job.comments)
   @JoinColumn({ name: 'job_id' })
   job: JobEntity;
 

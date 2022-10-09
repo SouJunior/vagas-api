@@ -5,9 +5,11 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { CommentEntity } from './comment.entity';
 import { UserEntity } from './users.entity';
 
 @Entity('companies')

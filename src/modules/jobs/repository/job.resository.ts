@@ -29,9 +29,9 @@ export class JobRepository extends Repository<JobEntity> {
     return new PageDto(entities, pageMetaDto);
   }
 
-  async findOneById(id: number): Promise<JobEntity> {
+  async findOneById(id: number): Promise<any> {
     return this.findOne({
-      relations: ['comments'],
+      relations: ['comments', 'comments.user'],
       where: { id },
     }).catch(handleError);
   }
