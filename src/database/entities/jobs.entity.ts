@@ -4,7 +4,7 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
-  OneToOne,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -33,7 +33,7 @@ export class JobEntity {
   })
   type: JobsTypes;
 
-  @OneToOne(() => CompanyEntity)
+  @ManyToOne(() => CompanyEntity)
   @JoinColumn({ name: 'company_id' })
   company: CompanyEntity;
 
