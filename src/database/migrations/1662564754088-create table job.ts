@@ -15,7 +15,6 @@ export class createTableJob1662564754088 implements MigrationInterface {
           {
             name: 'title',
             type: 'varchar',
-            enum: ['Estágio', 'Trainner', 'Júnior'],
           },
           {
             name: 'description',
@@ -23,7 +22,9 @@ export class createTableJob1662564754088 implements MigrationInterface {
           },
           {
             name: 'type',
-            type: 'varchar',
+            type: 'enum',
+            enum: ['ESTAGIARIO', 'TRAINNER', 'JUNIOR'],
+            default: `'JUNIOR'`,
           },
           {
             name: 'created_at',

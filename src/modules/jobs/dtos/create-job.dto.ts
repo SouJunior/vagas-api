@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 import { JobsTypes } from './enum-job-types';
 
 export class CreateJobDto {
@@ -15,5 +15,6 @@ export class CreateJobDto {
   company_id: number;
 
   @IsNotEmpty()
-  type: JobsTypes;
+  @IsEnum(JobsTypes)
+  type: string;
 }

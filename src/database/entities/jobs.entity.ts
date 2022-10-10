@@ -4,16 +4,18 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
-  OneToOne,
+  ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { CommentEntity } from './comment.entity';
 import { CompanyEntity } from './company.entity';
 
-export enum JobsTypes {
-  ESTAGIARIO = 'Estágio',
-  TRAINNER = 'Trainner',
-  JUNIOR = 'Júnior',
+enum JobsTypes {
+  ESTAGIARIO = 'ESTAGIARIO',
+  TRAINNER = 'TRAINNER',
+  JUNIOR = 'JUNIOR',
 }
 
 @Entity('jobs')
@@ -29,16 +31,22 @@ export class JobEntity {
 
   @Column({
     type: 'enum',
-    enum: JobsTypes,
+    enum: ['ESTAGIARIO', 'TRAINNER', 'JUNIOR'],
+    default: JobsTypes.JUNIOR,
   })
-  type: JobsTypes;
+  type: string;
 
-  @OneToOne(() => CompanyEntity)
+  @ManyToOne(() => CompanyEntity)
   @JoinColumn({ name: 'company_id' })
   company: CompanyEntity;
 
   @Column()
   company_id: number;
+
+  @OneToMany(() => CommentEntity, (comment) => comment.job, {
+    cascade: true,
+  })
+  comments: CommentEntity[];
 
   @CreateDateColumn()
   created_at: Date;
