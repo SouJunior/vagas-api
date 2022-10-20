@@ -2,8 +2,12 @@ import { UserEntity } from '../../../database/entities/users.entity';
 import { EntityRepository, Repository } from 'typeorm';
 import { CreateUserDto } from '../dtos/create-user.dto';
 import { UpdateUserDto } from '../dtos/update-user.dto';
-import { PageOptionsDto, PageDto, PageMetaDto } from 'src/shared/pagination';
-import { handleError } from 'src/shared/utils/handle-error.util';
+import {
+  PageOptionsDto,
+  PageDto,
+  PageMetaDto,
+} from '../../../shared/pagination';
+import { handleError } from '../../../shared/utils/handle-error.util';
 
 @EntityRepository(UserEntity)
 export class UserRepository extends Repository<UserEntity> {

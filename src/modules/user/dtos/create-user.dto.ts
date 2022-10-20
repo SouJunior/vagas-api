@@ -1,5 +1,5 @@
 import { IsNotEmpty, IsString, IsOptional, IsEnum } from 'class-validator';
-import { UserRole } from 'src/shared/utils/userRole/userRole';
+import { UserRole } from '../../../shared/utils/userRole/userRole';
 
 export class CreateUserDto {
   @IsNotEmpty()

@@ -18,7 +18,7 @@ import {
   FindCompanyById,
   UpdateCompanyService,
 } from './services';
-import { PageOptionsDto } from 'src/shared/pagination';
+import { PageOptionsDto } from '../../shared/pagination';
 
 @Controller('company')
 export class CompanyController {

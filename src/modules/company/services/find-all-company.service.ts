@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { CompanyEntity } from 'src/database/entities/company.entity';
-import { PageDto, PageOptionsDto } from 'src/shared/pagination';
+import { CompanyEntity } from '../../../database/entities/company.entity';
+import { PageDto, PageOptionsDto } from '../../../shared/pagination';
 
 import { CompanyRepository } from '../repository/company-repository';
 
