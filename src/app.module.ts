@@ -24,7 +24,7 @@ import { UserModule } from './modules/user/user.module';
       database: process.env.TYPEORM_DATABASE,
       logging: true,
       migrationsRun: true,
-      synchronize: true,
+      synchronize: false,
       entities: ['dist/database/entities/*.entity.js'],
       migrations: [
         'dist/database/migrations/*.js',

@@ -1,4 +1,3 @@
-import { PassportModule } from '@nestjs/passport';
 import { Test, TestingModule } from '@nestjs/testing';
 import { CreateUserDto } from '../../dtos/create-user.dto';
 import { UserRepository } from '../../repository/user.repository';
@@ -38,7 +37,7 @@ describe('CreateUserService', () => {
   });
 
   describe('execute', () => {
-    it('should be able to create a user', async () => {
+    it('should not be able to create a user when email allready exists', async () => {
       enum UserRole {
         ADMIN = 'ADMIN',
         USER = 'USER',
@@ -51,11 +50,11 @@ describe('CreateUserService', () => {
         type: UserRole.USER,
       };
 
-      userRepository.createUser(user);
+      service.execute(user);
 
-      const result = userRepository.findOneByEmail(user.email);
+      const result = service.execute(user);
 
-      expect(result).toContain(result.data.email);
+      expect(result).not.toEqual(user);
     });
   });
 });
