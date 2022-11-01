@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { UserEntity } from 'src/database/entities/users.entity';
+import { UserEntity } from '../../database/entities/users.entity';
 import { LoggedUser } from './decorator/logged-user.decorator';
 import { UserLoginDto } from './dtos/user-login.dto';
 import { AuthLoginService } from './services/auth-login.service';

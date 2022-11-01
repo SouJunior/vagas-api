@@ -7,7 +7,7 @@ import {
   PageDto,
   PageMetaDto,
 } from '../../../shared/pagination';
-import { handleError } from 'src/shared/utils/handle-error.util';
+import { handleError } from '../../../shared/utils/handle-error.util';
 
 @EntityRepository(UserEntity)
 export class UserRepository extends Repository<UserEntity> {

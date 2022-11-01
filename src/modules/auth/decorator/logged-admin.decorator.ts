@@ -3,7 +3,7 @@ import {
   ExecutionContext,
   UnauthorizedException,
 } from '@nestjs/common';
-import { UserRole } from 'src/shared/utils/userRole/userRole';
+import { UserRole } from '../../../shared/utils/userRole/userRole';
 
 export const LoggedAdmin = createParamDecorator((_, ctx: ExecutionContext) => {
   const request = ctx.switchToHttp().getRequest();

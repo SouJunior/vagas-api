@@ -3,7 +3,7 @@ import { EntityRepository, Repository } from 'typeorm';
 import { CreateReportDto } from '../dtos/create-report.dto';
 import { UpdateReportDto } from '../dtos/update-report.dto';
 import { ReportParamsType } from '../types/find-by-params.type';
-import { handleError } from 'src/shared/utils/handle-error.util';
+import { handleError } from '../../../shared/utils/handle-error.util';
 
 @EntityRepository(ReportEntity)
 export class ReportRepository extends Repository<ReportEntity> {
