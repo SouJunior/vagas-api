@@ -55,7 +55,7 @@ describe('UpdateUserService', () => {
     expect(service).toBeDefined();
   });
 
-  describe('should not be able to update when user not exist.', () => {
+  test('should not be able to update when user not exist.', () => {
     it('should', async () => {
       const newUser = await userRepository.createUser(user1);
       const data = {
