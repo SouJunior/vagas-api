@@ -2,8 +2,12 @@ import { JobEntity } from '../../../database/entities/jobs.entity';
 import { EntityRepository, Repository } from 'typeorm';
 import { CreateJobDto } from '../dtos/create-job.dto';
 import { UpdateJobDto } from '../dtos/update-job.dto';
-import { PageDto, PageMetaDto, PageOptionsDto } from 'src/shared/pagination';
-import { handleError } from 'src/shared/utils/handle-error.util';
+import {
+  PageDto,
+  PageMetaDto,
+  PageOptionsDto,
+} from '../../../shared/pagination';
+import { handleError } from '../../../shared/utils/handle-error.util';
 
 @EntityRepository(JobEntity)
 export class JobRepository extends Repository<JobEntity> {

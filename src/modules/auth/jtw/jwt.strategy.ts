@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import { handleError } from 'src/shared/utils/handle-error.util';
+import { handleError } from '../../../shared/utils/handle-error.util';
 import { UserRepository } from '../../../modules/user/repository/user.repository';
 
 @Injectable()

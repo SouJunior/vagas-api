@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PageDto, PageOptionsDto } from 'src/shared/pagination';
+import { PageDto, PageOptionsDto } from '../../../shared/pagination';
 import { CreateJobDto } from '../dtos/create-job.dto';
 import { JobRepository } from '../repository/job.resository';
 

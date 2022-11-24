@@ -10,8 +10,8 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { UserEntity } from 'src/database/entities/users.entity';
-import { PageOptionsDto } from 'src/shared/pagination';
+import { UserEntity } from '../../database/entities/users.entity';
+import { PageOptionsDto } from '../../shared/pagination';
 import { LoggedAdmin } from '../auth/decorator/logged-admin.decorator';
 import { LoggedUser } from '../auth/decorator/logged-user.decorator';
 import { CreateUserDto } from './dtos/create-user.dto';
@@ -35,13 +35,13 @@ export class UserController {
   ) {}
 
   @Post()
-  async createNewJob(@Body() data: CreateUserDto) {
+  async createNewUser(@Body() data: CreateUserDto) {
     return this.createUserService.execute(data);
   }
 
   @Get()
   @UseGuards(AuthGuard())
-  async getAllJobs(
+  async getAllUsers(
     @LoggedAdmin() user: UserEntity,
     @Query() pageOptionsDto: PageOptionsDto,
   ) {
@@ -50,13 +50,13 @@ export class UserController {
 
   @Get(':id')
   @UseGuards(AuthGuard())
-  async getOneJob(@Param('id') id: string, @LoggedUser() user: UserEntity) {
+  async getOneUser(@Param('id') id: string, @LoggedUser() user: UserEntity) {
     return this.findOneUserService.execute(+id);
   }
 
   @Put(':id')
   @UseGuards(AuthGuard())
-  async updateJob(
+  async updateUser(
     @Param('id') id: string,
     @Body() data: UpdateUserDto,
     @LoggedUser() user: UserEntity,
@@ -66,7 +66,7 @@ export class UserController {
 
   @Delete(':id')
   @UseGuards(AuthGuard())
-  async deleteJob(@Param('id') id: string, @LoggedUser() user: UserEntity) {
+  async deleteUser(@Param('id') id: string, @LoggedUser() user: UserEntity) {
     return this.deleteUserService.execute(+id);
   }
 }

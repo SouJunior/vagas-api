@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { UserEntity } from 'src/database/entities/users.entity';
-import { PageDto, PageOptionsDto } from 'src/shared/pagination';
+import { UserEntity } from '../../../database/entities/users.entity';
+import { PageDto, PageOptionsDto } from '../../../shared/pagination';
 
 import { UserRepository } from '../repository/user.repository';
 
