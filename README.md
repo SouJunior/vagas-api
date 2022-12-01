@@ -248,19 +248,27 @@ O projeto vai estar rodando em:
 
 <a id="equipe_do_backend"></a>
 
+## Head 🙎🏻
+| [<img src="https://avatars.githubusercontent.com/u/95653155?s=96&v=4" width=115><br><sub>Joana D'arc</sub>](https://github.com/Joanadarknes) |
+| :----------------------------------------------------------------------------------------------------------------------------: |
+
+## Team lead 🙎🏻
+| [<img src="https://cdn.discordapp.com/attachments/1011231850351558686/1047250060309712936/6E06CCD2-C5D1-445E-B9DE-F06FF1E797F7.png" width=115><br><sub>Amanda Fontes</sub>](#) |
+| :----------------------------------------------------------------------------------------------------------------------------: |
+
 ## Devs 👨‍💻👨‍💻
 
-| [<img src="https://avatars.githubusercontent.com/u/88730176?v=4" width=115><br><sub>Bruno</sub>](https://github.com/brunodev21) | [<img src="https://avatars.githubusercontent.com/u/81826043?s=96&v=4" width=115><br><sub>Wanderson Santos</sub>](https://github.com/wandersonDeve) |
-| :-----------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------: |
+| [<img src="https://avatars.githubusercontent.com/u/88730176?v=4" width=115><br><sub>Bruno</sub>](https://github.com/brunodev21)| [<img src="https://avatars.githubusercontent.com/u/81826043?s=96&v=4" width=115><br><sub>Wanderson Santos</sub>](https://github.com/wandersonDeve)| [<img src="https://avatars.githubusercontent.com/u/96137175?v=4" width=115><br><sub>Leonardo Reis</sub>](https://github.com/LeonardoReis86) | [<img src="https://avatars.githubusercontent.com/u/95504029?v=4" width=115><br><sub>Daniel Vinhas</sub>](https://github.com/vinhas93) | [<img src="https://avatars.githubusercontent.com/u/88009922?v=4" width=115><br><sub>Amaro Francisco</sub>](https://github.com/Amaro13)
+| :-----------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------: | --------------------------------------------------------------------------------------------------------------: |  --------------------------------------------------------------------------------------------------------------: |  --------------------------------------------------------------------------------------------------------------: |
 
 ## Mentores 🙎🏻‍♂️🙎🏻
 
-| [<img src="https://avatars.githubusercontent.com/u/95653155?s=96&v=4" width=115><br><sub>Joana D'arc</sub>](https://github.com/Joanadarknes) | [<img src="https://avatars.githubusercontent.com/u/75804508?v=4" width=115><br><sub>Leonardo Monteiro</sub>](https://github.com/lmmagalhaes) | [<img src="https://avatars.githubusercontent.com/u/51898473?v=4" width=115><br><sub>Odilon Lima</sub>](https://github.com/OdilonLimaNeto) |
-| :------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------: |
+| [<img src="https://avatars.githubusercontent.com/u/95653155?s=96&v=4" width=115><br><sub>Joana D'arc</sub>](https://github.com/Joanadarknes) | [<img src="https://media-exp1.licdn.com/dms/image/C4E03AQHQo3q7TQBveQ/profile-displayphoto-shrink_800_800/0/1663098222518?e=1675296000&v=beta&t=o4m83tO5REwfUJdYLlKDe6ExI_1jvkKtdkGxDp5gxKY" width=115><br><sub>Audinéia Carmo</sub>](#) | [<img src="https://media-exp1.licdn.com/dms/image/C4E03AQHcYVE3ctR6mQ/profile-displayphoto-shrink_800_800/0/1661880374425?e=1675296000&v=beta&t=y-5-fJ-8CWyB8kGOGn-PE2EFJFJ8hiN90fJfDSfVwoc" width=115><br><sub>Thiago Rodrigues</sub>](#) | 
+| :-----------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------: | --------------------------------------------------------------------------------------------------------------: |  
 
 ## Ex contribuidores 🙎🏻‍♂️
 
-| [<img src="https://avatars.githubusercontent.com/u/96137175?v=4" width=115><br><sub>Leonardo Reis</sub>](https://github.com/LeonardoReis86) |
+| [<img src="https://avatars.githubusercontent.com/u/75804508?v=4" width=115><br><sub>Leonardo Monteiro</sub>](https://github.com/lmmagalhaes) |
 | :----------------------------------------------------------------------------------------------------------------------------: |
 
 ## Idealizador do projeto 🙎🏻‍♂️

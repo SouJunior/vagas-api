@@ -2,11 +2,7 @@ import { CompanyEntity } from '../../../database/entities/company.entity';
 import { EntityRepository, Repository } from 'typeorm';
 import { CreateCompanyDto } from '../dtos/create-company.dto';
 import { UpdateCompanyDto } from '../dtos/update-company.sto';
-import {
-  PageOptionsDto,
-  PageDto,
-  PageMetaDto,
-} from '../../../shared/pagination';
+import { PageOptionsDto, PageDto, PageMetaDto } from 'src/shared/pagination';
 import { handleError } from '../../../shared/utils/handle-error.util';
 
 @EntityRepository(CompanyEntity)
