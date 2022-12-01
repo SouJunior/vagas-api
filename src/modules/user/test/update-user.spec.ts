@@ -1,3 +1,4 @@
+import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { UserEntity } from 'src/database/entities/users.entity';
 import { UpdateUserDto } from '../dtos/update-user.dto';
@@ -62,11 +63,43 @@ describe('UpdateUserService', () => {
     expect(userRepository).toBeDefined();
   });
 
-  it('should be able to update an user with correct data.', async () => {
+  it('should be able to Update an user with correct Data', async () => {
     userRepository.findOneById = jest.fn().mockResolvedValueOnce(testUser);
     userRepository.updateUser = jest.fn().mockResolvedValueOnce(testUser);
 
     const result = await service.execute(testUser.id, testUpdatedData);
-    expect(result).toEqual(testUser);
+    expect(result).toBe(testUser);
+  });
+
+  it('should not return user password when updated.', async () => {
+    userRepository.findOneById = jest.fn().mockResolvedValueOnce(testUser);
+    userRepository.updateUser = jest.fn().mockResolvedValueOnce(testUser);
+
+    const result = await service.execute(testUser.id, testUpdatedData);
+    expect(result).toEqual(
+      expect.not.objectContaining({ password: expect.any(String) }),
+    );
+  });
+
+  it('should throw if id is missing', async () => {
+    expect(async () => {
+      const invalidId = undefined;
+
+      await service.execute(invalidId, testUpdatedData);
+    }).rejects.toThrow(new BadRequestException('Id not provided'));
+  });
+
+  it('should throw if id is not valid', async () => {
+    expect(async () => {
+      const invalidId = -1;
+
+      await service.execute(invalidId, testUpdatedData);
+    }).rejects.toThrow(new BadRequestException('Invalid Id'));
+  });
+
+  it('should throw if user does not exist', async () => {
+    expect(async () => {
+      await service.execute(testUser.id, testUpdatedData);
+    }).rejects.toThrow(new NotFoundException('User not found'));
   });
 });
