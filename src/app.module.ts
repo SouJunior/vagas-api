@@ -23,8 +23,8 @@ import { UserModule } from './modules/user/user.module';
       password: process.env.TYPEORM_PASSWORD,
       database: process.env.TYPEORM_DATABASE,
       logging: true,
-      migrationsRun: false,
-      synchronize: true,
+      migrationsRun: true,
+      synchronize: false,
       entities: ['dist/database/entities/*.entity.js'],
       migrations: [
         'dist/database/migrations/*.js',
