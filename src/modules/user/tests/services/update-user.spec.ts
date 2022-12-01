@@ -1,9 +1,9 @@
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { UserEntity } from 'src/database/entities/users.entity';
-import { UpdateUserDto } from '../dtos/update-user.dto';
-import { UserRepository } from '../repository/user.repository';
-import { UpdateUserService } from '../services/update-user.service';
+import { UpdateUserDto } from '../../dtos/update-user.dto';
+import { UserRepository } from '../../repository/user.repository';
+import { UpdateUserService } from '../../services/update-user.service';
 
 enum UserRole {
   ADMIN = 'ADMIN',

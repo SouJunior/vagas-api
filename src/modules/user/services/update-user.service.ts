@@ -24,7 +24,6 @@ export class UpdateUserService {
     if (!userExists) {
       throw new NotFoundException('User not found');
     }
-
     if (data.password) {
       data.password = await bcrypt.hash(data.password, 10);
     }
