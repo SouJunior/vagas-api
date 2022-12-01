@@ -12,8 +12,8 @@ enum UserRole {
 const newUser = [
   {
     id: 1,
-    name: 'Wanderson',
-    email: 'teste@teste.com',
+    name: 'nomeTeste',
+    email: 'emailTeste@teste.com',
     password: '123456',
     type: UserRole.USER,
     created_at: new Date(),
@@ -66,8 +66,8 @@ describe('CreateUserService', () => {
       }
 
       const user: CreateUserDto = {
-        name: 'Wanderson',
-        email: 'wanderson@teste.com',
+        name: 'nomeTeste',
+        email: 'emailTeste@teste.com',
         password: '123456',
         type: UserRole.USER,
       };
@@ -86,15 +86,15 @@ describe('CreateUserService', () => {
       }
 
       const user: CreateUserDto = {
-        name: 'Wanderson',
-        email: 'teste@teste.com',
+        name: 'nomeTeste2',
+        email: 'emailTeste2@teste.com',
         password: '123456',
         type: UserRole.USER,
       };
 
       await service.execute(user);
     }).rejects.toThrow(
-      new BadRequestException(`Email teste@teste.com already exists`),
+      new BadRequestException(`Email emailTeste2@teste.com already exists`),
     );
   });
 });
