@@ -33,14 +33,14 @@ export class JobRepository extends Repository<JobEntity> {
     return new PageDto(entities, pageMetaDto);
   }
 
-  async findOneById(id: number): Promise<any> {
+  async findOneById(id: string): Promise<any> {
     return this.findOne({
       relations: ['comments', 'comments.user'],
       where: { id },
     }).catch(handleError);
   }
 
-  async updateJob(id: number, data: UpdateJobDto) {
+  async updateJob(id: string, data: UpdateJobDto) {
     const job = await this.findOne(id).catch(handleError);
 
     return this.save({
@@ -49,7 +49,7 @@ export class JobRepository extends Repository<JobEntity> {
     }).catch(handleError);
   }
 
-  async deleteJobById(id: number): Promise<object> {
+  async deleteJobById(id: string): Promise<object> {
     await this.delete(id).catch(handleError);
 
     return { message: 'Job deleted successfully' };

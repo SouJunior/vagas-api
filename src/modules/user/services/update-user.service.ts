@@ -6,7 +6,7 @@ import { UserRepository } from '../repository/user.repository';
 export class UpdateUserService {
   constructor(private userRepository: UserRepository) {}
 
-  async execute(id: number, data: UpdateUserDto) {
+  async execute(id: string, data: UpdateUserDto) {
     if (!id) {
       throw new BadRequestException('Id not provided');
     }

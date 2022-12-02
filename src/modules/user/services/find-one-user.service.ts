@@ -5,7 +5,7 @@ import { UserRepository } from '../repository/user.repository';
 export class FindOneUserService {
   constructor(public userRepository: UserRepository) {}
 
-  async execute(id: number) {
+  async execute(id: string) {
     if (!id) {
       throw new BadRequestException('Id not provider');
     }

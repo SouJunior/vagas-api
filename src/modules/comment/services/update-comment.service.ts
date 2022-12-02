@@ -6,7 +6,7 @@ import { UpdateCommentDto } from '../dtos/update-comment.dto';
 export class UpdateCommentService {
   constructor(private commentRepository: CommentRepository) {}
 
-  async execute(id: number, data: UpdateCommentDto) {
+  async execute(id: string, data: UpdateCommentDto) {
     const commentExists = await this.commentRepository.getCommentById(id);
 
     if (!commentExists) {

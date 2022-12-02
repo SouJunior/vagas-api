@@ -5,7 +5,7 @@ import { CommentRepository } from '../repository/comment.repository';
 export class GetCommentByIdService {
   constructor(private commentRepository: CommentRepository) {}
 
-  async execute(id: number) {
+  async execute(id: string) {
     const commentExists = await this.commentRepository.getCommentById(id);
 
     if (!commentExists) {

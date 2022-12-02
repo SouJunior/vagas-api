@@ -14,8 +14,8 @@ import { UserEntity } from './users.entity';
 
 @Entity('comments')
 export class CommentEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column({ length: 500 })
   comment: string;
@@ -25,14 +25,14 @@ export class CommentEntity {
   user: UserEntity;
 
   @Column()
-  user_id: number;
+  user_id: string;
 
   @ManyToOne(() => JobEntity, (job) => job.comments)
   @JoinColumn({ name: 'job_id' })
   job: JobEntity;
 
   @Column()
-  job_id: number;
+  job_id: string;
 
   @CreateDateColumn()
   created_at: Date;

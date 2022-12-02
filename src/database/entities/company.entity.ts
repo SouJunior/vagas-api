@@ -12,8 +12,8 @@ import { UserEntity } from './users.entity';
 
 @Entity('companies')
 export class CompanyEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column()
   company_name: string;
@@ -35,7 +35,7 @@ export class CompanyEntity {
   user: UserEntity;
 
   @Column()
-  user_id: number;
+  user_id: string;
 
   @Column()
   owner_name: string;

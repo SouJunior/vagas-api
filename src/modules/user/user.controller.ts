@@ -51,7 +51,7 @@ export class UserController {
   @Get(':id')
   @UseGuards(AuthGuard())
   async getOneUser(@Param('id') id: string, @LoggedUser() user: UserEntity) {
-    return this.findOneUserService.execute(+id);
+    return this.findOneUserService.execute(id);
   }
 
   @Put(':id')
@@ -61,12 +61,12 @@ export class UserController {
     @Body() data: UpdateUserDto,
     @LoggedUser() user: UserEntity,
   ) {
-    return this.updateUserService.execute(+id, data);
+    return this.updateUserService.execute(id, data);
   }
 
   @Delete(':id')
   @UseGuards(AuthGuard())
   async deleteUser(@Param('id') id: string, @LoggedUser() user: UserEntity) {
-    return this.deleteUserService.execute(+id);
+    return this.deleteUserService.execute(id);
   }
 }

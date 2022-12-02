@@ -6,7 +6,7 @@ import { JobRepository } from '../repository/job.resository';
 export class UpdateJobService {
   constructor(private jobRepository: JobRepository) {}
 
-  async execute(id: number, data: UpdateJobDto) {
+  async execute(id: string, data: UpdateJobDto) {
     if (!id) {
       throw new BadRequestException('Id not provided');
     }

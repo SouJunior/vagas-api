@@ -42,7 +42,7 @@ export class CompanyController {
 
   @Get(':id')
   async getcompanyById(@Param() { id }: CompanyIdDto) {
-    return this.findCompanyById.execute(+id);
+    return this.findCompanyById.execute(id);
   }
 
   @Put(':id')
@@ -50,11 +50,11 @@ export class CompanyController {
     @Param() { id }: CompanyIdDto,
     @Body() data: UpdateCompanyDto,
   ) {
-    return this.updateCompanyService.execute(+id, data);
+    return this.updateCompanyService.execute(id, data);
   }
 
   @Delete(':id')
   async deleteCompanyById(@Param() { id }: CompanyIdDto) {
-    return this.deleteCompanyService.execute(+id);
+    return this.deleteCompanyService.execute(id);
   }
 }

@@ -19,11 +19,11 @@ export class ReportRepository extends Repository<ReportEntity> {
     return this.find().catch(handleError);
   }
 
-  async findReportById(id: number): Promise<ReportEntity> {
+  async findReportById(id: string): Promise<ReportEntity> {
     return this.findOne(id).catch(handleError);
   }
 
-  async updateReport(id: number, data: UpdateReportDto) {
+  async updateReport(id: string, data: UpdateReportDto) {
     const report = await this.findOne(id).catch(handleError);
 
     return this.save({
@@ -32,7 +32,7 @@ export class ReportRepository extends Repository<ReportEntity> {
     }).catch(handleError);
   }
 
-  async deleteReportById(id: number): Promise<object> {
+  async deleteReportById(id: string): Promise<object> {
     await this.delete(id).catch(handleError);
 
     return {
