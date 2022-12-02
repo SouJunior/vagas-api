@@ -1,4 +1,4 @@
 export type ReportParamsType = {
-  user_id: number;
-  job_id: number;
+  user_id: string;
+  job_id: string;
 };

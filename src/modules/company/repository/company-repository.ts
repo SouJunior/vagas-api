@@ -32,11 +32,11 @@ export class CompanyRepository extends Repository<CompanyEntity> {
     return new PageDto(entities, pageMetaDto);
   }
 
-  async findCompanyById(id: number): Promise<CompanyEntity> {
+  async findCompanyById(id: string): Promise<CompanyEntity> {
     return this.findOne(id).catch(handleError);
   }
 
-  async UpdateCompanyById(id: number, data: UpdateCompanyDto) {
+  async UpdateCompanyById(id: string, data: UpdateCompanyDto) {
     const company = await this.findOne(id).catch(handleError);
 
     return this.save({
@@ -45,7 +45,7 @@ export class CompanyRepository extends Repository<CompanyEntity> {
     }).catch(handleError);
   }
 
-  async deleteCompanyById(id: number): Promise<object> {
+  async deleteCompanyById(id: string): Promise<object> {
     this.delete(id).catch(handleError);
 
     return { message: 'Company deleted successfully' };

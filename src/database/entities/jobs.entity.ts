@@ -1,3 +1,4 @@
+import { StringDecoder } from 'string_decoder';
 import {
   BeforeUpdate,
   Column,
@@ -20,8 +21,8 @@ enum JobsTypes {
 
 @Entity('jobs')
 export class JobEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column()
   title: string;
@@ -41,7 +42,7 @@ export class JobEntity {
   company: CompanyEntity;
 
   @Column()
-  company_id: number;
+  company_id: string;
 
   @OneToMany(() => CommentEntity, (comment) => comment.job, {
     cascade: true,

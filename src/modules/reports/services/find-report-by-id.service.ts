@@ -7,7 +7,7 @@ export class FindReportByIdService {
   constructor(private reportRepository: ReportRepository) {}
 
   async execute({ id }: ReportIdDto) {
-    const reportExists = await this.reportRepository.findReportById(+id);
+    const reportExists = await this.reportRepository.findReportById(id);
 
     if (!reportExists) {
       throw new BadRequestException('Report not found');

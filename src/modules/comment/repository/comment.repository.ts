@@ -14,13 +14,13 @@ export class CommentRepository extends Repository<CommentEntity> {
     return this.find({ desativated_at: null }).catch(handleError);
   }
 
-  async getCommentById(id: number): Promise<CommentEntity> {
+  async getCommentById(id: string): Promise<CommentEntity> {
     return this.findOne(id, { where: { desativated_at: null } }).catch(
       handleError,
     );
   }
 
-  async updateComment(id: number, data: UpdateCommentDto) {
+  async updateComment(id: string, data: UpdateCommentDto) {
     const comment = await this.findOne(id).catch(handleError);
 
     return this.save({
@@ -29,7 +29,7 @@ export class CommentRepository extends Repository<CommentEntity> {
     }).catch(handleError);
   }
 
-  async deleteComment(id: number): Promise<object> {
+  async deleteComment(id: string): Promise<object> {
     await this.update(id, { desativated_at: new Date() }).catch(handleError);
 
     return { message: 'Comment deleted successfully' };
