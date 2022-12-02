@@ -24,9 +24,6 @@ const testUser = new UserEntity({
   type: UserRole.USER,
   created_at: new Date(),
   updated_at: new Date(),
-  updateTimestamp() {
-    this.updated_at = new Date();
-  },
 });
 
 class UserRepositoryMock {
