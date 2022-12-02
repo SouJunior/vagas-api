@@ -1,6 +1,6 @@
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { UserEntity } from 'src/database/entities/users.entity';
+import { UserEntity } from '../../../../database/entities/users.entity';
 import { UpdateUserDto } from '../../dtos/update-user.dto';
 import { UserRepository } from '../../repository/user.repository';
 import { UpdateUserService } from '../../services/update-user.service';
@@ -16,7 +16,7 @@ const testUpdatedData: UpdateUserDto = {
   password: 'any_password',
   type: UserRole.USER,
 };
-const testUser: UserEntity = {
+const testUser = new UserEntity({
   id: 1,
   email: 'any_email@mail.com',
   name: 'any_name',
@@ -27,7 +27,7 @@ const testUser: UserEntity = {
   updateTimestamp() {
     this.updated_at = new Date();
   },
-};
+});
 
 class UserRepositoryMock {
   createUser = jest.fn();
