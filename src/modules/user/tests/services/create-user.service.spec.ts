@@ -11,7 +11,7 @@ enum UserRole {
 
 const newUser = [
   {
-    id: 1,
+    id: 'any-id-string',
     name: 'nomeTeste',
     email: 'emailTeste@teste.com',
     password: '123456',
