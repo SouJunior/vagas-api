@@ -47,13 +47,9 @@ export class UserRepository extends Repository<UserEntity> {
   }
 
   async updateUser(id: number, data: UpdateUserDto) {
-    const user = await this.findOne(id).catch(handleError);
-    data.email ? (user.email = data.email) : user.email;
-    data.name ? (user.name = data.name) : user.name;
-    data.password ? (user.password = data.password) : user.password;
-    data.type ? (user.type = data.type) : user.type;
+    await this.update(id, data).catch(handleError);
 
-    return this.save(user).catch(handleError);
+    return this.findOne(id).catch(handleError);
   }
 
   async deleteUserById(id: number): Promise<object> {
