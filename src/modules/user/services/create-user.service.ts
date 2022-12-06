@@ -1,4 +1,4 @@
-import { UserRepository } from './../repository/user.repository';
+import { UserRepository } from '../repository/user.repository';
 import { CreateUserDto } from '../dtos/create-user.dto';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';

@@ -23,6 +23,7 @@
     "migration:create": "npx typeorm migration:create -d src/database/migrations -n"
   },
   "dependencies": {
+    "@nestjs-modules/mailer": "^1.8.1",
     "@nestjs/common": "^8.0.0",
     "@nestjs/config": "^2.0.0",
     "@nestjs/core": "^8.0.0",

@@ -6,23 +6,29 @@ import {
   Param,
   Post,
   Put,
+  Patch,
+  Res,
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
 import { UserEntity } from '../../database/entities/users.entity';
 import { PageOptionsDto } from '../../shared/pagination';
 import { LoggedAdmin } from '../auth/decorator/logged-admin.decorator';
 import { LoggedUser } from '../auth/decorator/logged-user.decorator';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
+import { EmailUserDto } from './dtos/email-user.dto';
 import {
   CreateUserService,
   DeleteUserService,
   FindAllUsersService,
   FindOneUserService,
   UpdateUserService,
+  RecoveryPasswordByEmail,
+  UpdatePasswordByEmailService,
 } from './services';
+import { CreatePasswordHashDto } from './dtos/update-my-password.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('user')
 export class UserController {
@@ -32,6 +38,8 @@ export class UserController {
     private findAllUsersService: FindAllUsersService,
     private updateUserService: UpdateUserService,
     private deleteUserService: DeleteUserService,
+    private recoveryPasswordByEmail: RecoveryPasswordByEmail,
+    private updatePasswordByEmailService: UpdatePasswordByEmailService,
   ) {}
 
   @Post()
@@ -68,5 +76,20 @@ export class UserController {
   @UseGuards(AuthGuard())
   async deleteUser(@Param('id') id: string, @LoggedUser() user: UserEntity) {
     return this.deleteUserService.execute(id);
+  }
+
+  @Patch('recovery-password')
+  async recoveryPasswordSendEmail(
+    @Body() { email }: EmailUserDto, // @Res() res: Response,
+  ) {
+    // const { status, data } = await this.recoveryPasswordByEmail.execute(email);
+
+    // return res.status(status).send(data);
+    return this.recoveryPasswordByEmail.execute(email);
+  }
+
+  @Patch('update_password')
+  updatePassword(@Body() updatePassword: CreatePasswordHashDto) {
+    return this.updatePasswordByEmailService.execute(updatePassword);
   }
 }

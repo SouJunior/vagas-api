@@ -43,4 +43,7 @@ export class UserEntity {
   updateTimestamp() {
     this.updated_at = new Date();
   }
+
+  @Column()
+  recoverPasswordToken?: string;
 }
