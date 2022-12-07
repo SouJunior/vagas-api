@@ -6,7 +6,7 @@ import { CompanyRepository } from '../repository/company-repository';
 export class UpdateCompanyService {
   constructor(private companyRepository: CompanyRepository) {}
 
-  async execute(id: number, data: UpdateCompanyDto) {
+  async execute(id: string, data: UpdateCompanyDto) {
     const companyExists = await this.companyRepository.findCompanyById(id);
 
     if (!companyExists) {

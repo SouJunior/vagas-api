@@ -5,7 +5,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 export class DeleteUserService {
   constructor(private userRepository: UserRepository) {}
 
-  async execute(id: number) {
+  async execute(id: string) {
     if (!id) {
       throw new BadRequestException('Id not provided');
     }

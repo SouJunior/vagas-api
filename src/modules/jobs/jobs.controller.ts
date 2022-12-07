@@ -41,16 +41,16 @@ export class JobsController {
 
   @Get(':id')
   async getOneJob(@Param('id') id: string) {
-    return this.getOneJobByIdService.execute(+id);
+    return this.getOneJobByIdService.execute(id);
   }
 
   @Put(':id')
   async updateJob(@Param('id') id: string, @Body() data: UpdateJobDto) {
-    return this.updateJobService.execute(+id, data);
+    return this.updateJobService.execute(id, data);
   }
 
   @Delete(':id')
   async deleteJob(@Param('id') id: string) {
-    return this.deleteJobService.execute(+id);
+    return this.deleteJobService.execute(id);
   }
 }

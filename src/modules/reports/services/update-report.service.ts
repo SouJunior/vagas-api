@@ -8,12 +8,12 @@ export class UpdateReportService {
   constructor(private reportRepository: ReportRepository) {}
 
   async execute({ id }: ReportIdDto, data: UpdateReportDto) {
-    const reportExists = await this.reportRepository.findReportById(+id);
+    const reportExists = await this.reportRepository.findReportById(id);
 
     if (!reportExists) {
       throw new BadRequestException('Report not found');
     }
 
-    return this.reportRepository.updateReport(+id, data);
+    return this.reportRepository.updateReport(id, data);
   }
 }

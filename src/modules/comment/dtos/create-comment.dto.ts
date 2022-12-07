@@ -6,11 +6,11 @@ export class CreateCommentDto {
   @MaxLength(500)
   comment: string;
 
-  @IsNumber()
+  @IsString()
   @IsNotEmpty()
-  job_id: number;
+  job_id: string;
 
-  @IsNumber()
+  @IsString()
   @IsNotEmpty()
-  user_id: number;
+  user_id: string;
 }

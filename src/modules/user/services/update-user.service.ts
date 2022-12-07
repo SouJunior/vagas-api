@@ -11,7 +11,7 @@ import * as bcrypt from 'bcrypt';
 export class UpdateUserService {
   constructor(private userRepository: UserRepository) {}
 
-  async execute(id: number, data: UpdateUserDto) {
+  async execute(id: string, data: UpdateUserDto) {
     if (!id) {
       throw new BadRequestException('Id not provided');
     }

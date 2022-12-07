@@ -42,7 +42,7 @@ export class CommentController {
 
   @Get(':id')
   async getCommentById(@Param() { id }: CommentIdDto) {
-    return this.getCommentByIdService.execute(+id);
+    return this.getCommentByIdService.execute(id);
   }
 
   @Put(':id')
@@ -50,11 +50,11 @@ export class CommentController {
     @Param() { id }: CommentIdDto,
     @Body() data: UpdateCommentDto,
   ) {
-    return this.updateCommentService.execute(+id, data);
+    return this.updateCommentService.execute(id, data);
   }
 
   @Delete(':id')
   async deleteComment(@Param() { id }: CommentIdDto) {
-    return this.deleteCommentService.execute(+id);
+    return this.deleteCommentService.execute(id);
   }
 }

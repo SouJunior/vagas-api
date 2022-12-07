@@ -5,7 +5,7 @@ import { JobRepository } from '../repository/job.resository';
 export class GetOneJobByIdService {
   constructor(private jobRepository: JobRepository) {}
 
-  async execute(id: number) {
+  async execute(id: string) {
     if (!id) {
       throw new BadRequestException('Id not provider');
     }

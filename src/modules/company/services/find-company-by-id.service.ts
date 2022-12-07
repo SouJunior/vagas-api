@@ -5,7 +5,7 @@ import { CompanyRepository } from '../repository/company-repository';
 export class FindCompanyById {
   constructor(private companyRepository: CompanyRepository) {}
 
-  async execute(id: number) {
+  async execute(id: string) {
     const companyExists = await this.companyRepository.findCompanyById(id);
 
     if (!companyExists) {

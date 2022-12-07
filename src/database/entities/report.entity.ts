@@ -5,22 +5,22 @@ import { UserEntity } from './users.entity';
 
 @Entity('report')
 export class ReportEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @ManyToOne(() => JobEntity)
   @JoinColumn({ name: 'job_id' })
   job: JobEntity;
 
   @Column()
-  job_id: number;
+  job_id: string;
 
   @ManyToOne(() => UserEntity)
   @JoinColumn({ name: 'user_id' })
   user: UserEntity;
 
   @Column()
-  user_id: number;
+  user_id: string;
 
   @Column()
   description: string;
