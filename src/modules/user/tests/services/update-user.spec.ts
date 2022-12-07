@@ -17,7 +17,7 @@ const testUpdatedData: UpdateUserDto = {
   type: UserRole.USER,
 };
 const testUser = new UserEntity({
-  id: 1,
+  id: 'any_id',
   email: 'any_email@mail.com',
   name: 'any_name',
   password: 'any_password',
@@ -84,14 +84,6 @@ describe('UpdateUserService', () => {
 
       await service.execute(invalidId, testUpdatedData);
     }).rejects.toThrow(new BadRequestException('Id not provided'));
-  });
-
-  it('should throw if id is not valid', async () => {
-    expect(async () => {
-      const invalidId = -1;
-
-      await service.execute(invalidId, testUpdatedData);
-    }).rejects.toThrow(new BadRequestException('Invalid Id'));
   });
 
   it('should throw if user does not exist', async () => {
