@@ -17,7 +17,7 @@ const testUpdatedData: UpdateUserDto = {
   type: UserRole.USER,
 };
 const testUser = new UserEntity({
-  id: 1,
+  id: 'any_id',
   email: 'any_email@mail.com',
   name: 'any_name',
   password: 'any_password',
