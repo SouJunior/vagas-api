@@ -86,14 +86,6 @@ describe('UpdateUserService', () => {
     }).rejects.toThrow(new BadRequestException('Id not provided'));
   });
 
-  it('should throw if id is not valid', async () => {
-    expect(async () => {
-      const invalidId = -1;
-
-      await service.execute(invalidId, testUpdatedData);
-    }).rejects.toThrow(new BadRequestException('Invalid Id'));
-  });
-
   it('should throw if user does not exist', async () => {
     expect(async () => {
       await service.execute(testUser.id, testUpdatedData);
