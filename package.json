@@ -31,18 +31,21 @@
     "@nestjs/mapped-types": "^1.1.0",
     "@nestjs/passport": "^9.0.0",
     "@nestjs/platform-express": "^8.0.0",
+    "@nestjs/swagger": "^6.1.4",
     "@nestjs/throttler": "^3.0.0",
     "@nestjs/typeorm": "8.0.0",
     "bcrypt": "^5.0.1",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
+    "passport": "^0.6.0",
     "passport-jwt": "^4.0.0",
     "pg": "^8.8.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
     "typeorm": "^0.2.45",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "webpack": "^5.75.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",

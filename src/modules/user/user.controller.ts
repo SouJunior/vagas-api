@@ -29,7 +29,9 @@ import {
 } from './services';
 import { CreatePasswordHashDto } from './dtos/update-my-password.dto';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('user')
 @Controller('user')
 export class UserController {
   constructor(
@@ -43,12 +45,19 @@ export class UserController {
   ) {}
 
   @Post()
+  @ApiOperation({
+    summary: 'Criar um usuário!',
+  })
   async createNewUser(@Body() data: CreateUserDto) {
     return this.createUserService.execute(data);
   }
 
   @Get()
+  @ApiOperation({
+    summary: 'Visualizar todos os usuários pelo ID',
+  })
   @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   async getAllUsers(
     @LoggedAdmin() user: UserEntity,
     @Query() pageOptionsDto: PageOptionsDto,
@@ -57,13 +66,18 @@ export class UserController {
   }
 
   @Get(':id')
+  @ApiOperation({
+    summary: 'Visualizar um usuário pelo ID',
+  })
   @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   async getOneUser(@Param('id') id: string, @LoggedUser() user: UserEntity) {
     return this.findOneUserService.execute(id);
   }
 
   @Put(':id')
   @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   async updateUser(
     @Param('id') id: string,
     @Body() data: UpdateUserDto,
@@ -73,12 +87,19 @@ export class UserController {
   }
 
   @Delete(':id')
+  @ApiOperation({
+    summary: 'Deletar um usuário pelo ID',
+  })
   @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   async deleteUser(@Param('id') id: string, @LoggedUser() user: UserEntity) {
     return this.deleteUserService.execute(id);
   }
 
   @Patch('recovery-password')
+  @ApiOperation({
+    summary: 'Enviar e-mail para recuperar senha para e-mail',
+  })
   async recoveryPasswordSendEmail(
     @Body() { email }: EmailUserDto, // @Res() res: Response,
   ) {
@@ -89,6 +110,9 @@ export class UserController {
   }
 
   @Patch('update_password')
+  @ApiOperation({
+    summary: 'Resetar senha utilizando do token',
+  })
   updatePassword(@Body() updatePassword: CreatePasswordHashDto) {
     return this.updatePasswordByEmailService.execute(updatePassword);
   }

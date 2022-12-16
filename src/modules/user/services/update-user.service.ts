@@ -15,9 +15,9 @@ export class UpdateUserService {
     if (!id) {
       throw new BadRequestException('Id not provided');
     }
-    if (id < 1) {
-      throw new BadRequestException('Invalid Id');
-    }
+    // if (id < 1) {
+    //   throw new BadRequestException('Invalid Id');
+    // }
 
     const userExists = await this.userRepository.findOneById(id);
 

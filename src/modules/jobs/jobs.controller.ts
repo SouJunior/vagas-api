@@ -8,6 +8,7 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { PageOptionsDto } from '../../shared/pagination';
 import { CreateJobDto } from './dtos/create-job.dto';
 import { UpdateJobDto } from './dtos/update-job.dto';
@@ -19,6 +20,7 @@ import {
   UpdateJobService,
 } from './services';
 
+@ApiTags('job')
 @Controller('job')
 export class JobsController {
   constructor(

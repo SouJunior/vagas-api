@@ -19,7 +19,9 @@ import {
   UpdateCompanyService,
 } from './services';
 import { PageOptionsDto } from '../../shared/pagination';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('company')
 @Controller('company')
 export class CompanyController {
   constructor(

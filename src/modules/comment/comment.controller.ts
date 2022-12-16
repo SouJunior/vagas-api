@@ -7,6 +7,7 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { CommentIdDto } from './dtos/comment-id.dto';
 import { CreateCommentDto } from './dtos/create-comment.dto';
@@ -18,7 +19,10 @@ import {
   UpdateCommentService,
 } from './services';
 import { Throttle } from '@nestjs/throttler';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 
+@ApiTags('comment')
 @Controller('comment')
 export class CommentController {
   constructor(
