@@ -22,7 +22,13 @@ export class UserRepository extends Repository<UserEntity> {
 
     queryBuilder
       .orderBy(`users.${pageOptionsDto.orderByColumn}`, pageOptionsDto.order)
-      .select(['users.id', 'users.name', 'users.email', 'users.created_at'])
+      .select([
+        'users.id',
+        'users.name',
+        'users.email',
+        'users.created_at',
+        'users.cpf',
+      ])
       .skip(pageOptionsDto.skip)
       .take(pageOptionsDto.take);
 
@@ -44,6 +50,10 @@ export class UserRepository extends Repository<UserEntity> {
 
   async findOneByEmail(email: string): Promise<UserEntity> {
     return this.findOne({ email }).catch(handleError);
+  }
+
+  async findOneByCpf(cpf: string): Promise<UserEntity> {
+    return this.findOne({ cpf }).catch(handleError);
   }
 
   async updateUser(id: string, data: UpdateUserDto) {
