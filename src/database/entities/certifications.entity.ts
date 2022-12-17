@@ -3,9 +3,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { PersonalDataEntity } from './personal-data.entity';
 
 @Entity('certifications')
 export class CertificationEntity {
@@ -20,6 +23,13 @@ export class CertificationEntity {
 
   @Column()
   description: string;
+
+  @ManyToOne(() => PersonalDataEntity)
+  @JoinColumn({ name: 'personal_data_id' })
+  personal_data: PersonalDataEntity;
+
+  @Column()
+  personal_data_id: string;
 
   @CreateDateColumn()
   created_at: Date;
@@ -37,6 +47,7 @@ export class CertificationEntity {
     this.name = certification?.name;
     this.institution = certification?.institution;
     this.description = certification?.description;
+    this.personal_data_id = certification?.personal_data_id;
     this.created_at = certification?.created_at;
     this.updated_at = certification?.updated_at;
   }

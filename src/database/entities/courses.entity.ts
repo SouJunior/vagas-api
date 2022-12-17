@@ -3,9 +3,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { PersonalDataEntity } from './personal-data.entity';
 
 enum CourseTypeEnum {
   GRADUATION = 'GRADUATION',
@@ -66,6 +69,13 @@ export class CourseEntity {
   @Column({ nullable: true })
   description: string;
 
+  @ManyToOne(() => PersonalDataEntity)
+  @JoinColumn({ name: 'personal_data_id' })
+  personal_data: PersonalDataEntity;
+
+  @Column()
+  personal_data_id: string;
+
   @CreateDateColumn()
   created_at: Date;
 
@@ -87,6 +97,7 @@ export class CourseEntity {
     this.status = course?.status;
     this.end_date = course?.end_date;
     this.description = course?.description;
+    this.personal_data_id = course?.personal_data_id;
     this.created_at = course?.created_at;
     this.updated_at = course?.updated_at;
   }

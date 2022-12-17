@@ -3,9 +3,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { PersonalDataEntity } from './personal-data.entity';
 
 @Entity('work_experiences')
 export class WorkExperienceEntity {
@@ -30,6 +33,13 @@ export class WorkExperienceEntity {
   @Column({ nullable: true })
   description: string;
 
+  @ManyToOne(() => PersonalDataEntity)
+  @JoinColumn({ name: 'personal_data_id' })
+  personal_data: PersonalDataEntity;
+
+  @Column()
+  personal_data_id: string;
+
   @CreateDateColumn()
   created_at: Date;
 
@@ -49,6 +59,7 @@ export class WorkExperienceEntity {
     this.start_date = workExperience?.start_date;
     this.end_date = workExperience?.end_date;
     this.description = workExperience?.description;
+    this.personal_data_id = workExperience?.personal_data_id;
     this.created_at = workExperience?.created_at;
     this.updated_at = workExperience?.updated_at;
   }

@@ -3,9 +3,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { PersonalDataEntity } from './personal-data.entity';
 
 enum ProficenceEnum {
   BASIC = 'BASIC',
@@ -50,6 +53,13 @@ export class LanguageEntity {
   })
   speaking: string;
 
+  @ManyToOne(() => PersonalDataEntity)
+  @JoinColumn({ name: 'personal_data_id' })
+  personal_data: PersonalDataEntity;
+
+  @Column()
+  personal_data_id: string;
+
   @CreateDateColumn()
   created_at: Date;
 
@@ -68,6 +78,7 @@ export class LanguageEntity {
     this.reading = language?.reading;
     this.listening = language?.listening;
     this.speaking = language?.speaking;
+    this.personal_data_id = language?.personal_data_id;
     this.created_at = language?.created_at;
     this.updated_at = language?.updated_at;
   }
