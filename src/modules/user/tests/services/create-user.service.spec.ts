@@ -16,6 +16,7 @@ const newUser = [
     email: 'emailTeste@teste.com',
     password: '123456',
     type: UserRole.USER,
+    cpf: 'cpfTeste',
     created_at: new Date(),
     updated_at: new Date(),
   },
@@ -23,10 +24,11 @@ const newUser = [
 
 class UserRepositoryMock {
   createUser = jest.fn();
-  getAllUsers = jest.fn().mockReturnValueOnce(newUser);
+  getAllUsers = jest.fn();
   searchUserByName = jest.fn();
   findOneById = jest.fn();
-  findOneByEmail = jest.fn().mockResolvedValueOnce(newUser[0]);
+  findOneByEmail = jest.fn();
+  findOneByCpf = jest.fn();
   updateUser = jest.fn();
   deleteUserById = jest.fn();
 }
@@ -57,7 +59,6 @@ describe('CreateUserService', () => {
 
   describe('execute', () => {
     it('should be able to create a new user', async () => {
-      userRepository.findOneByEmail = jest.fn();
       userRepository.createUser = jest.fn().mockResolvedValueOnce(newUser[0]);
 
       enum UserRole {
@@ -69,6 +70,7 @@ describe('CreateUserService', () => {
         name: 'nomeTeste',
         email: 'emailTeste@teste.com',
         password: '123456',
+        cpf: 'cpfTeste',
         type: UserRole.USER,
       };
 
@@ -79,6 +81,7 @@ describe('CreateUserService', () => {
   });
 
   it('should not be able to create a new user when email already exists', () => {
+    userRepository.findOneByEmail = jest.fn().mockResolvedValueOnce(newUser[0]);
     expect(async () => {
       enum UserRole {
         ADMIN = 'ADMIN',
@@ -89,6 +92,7 @@ describe('CreateUserService', () => {
         name: 'nomeTeste2',
         email: 'emailTeste2@teste.com',
         password: '123456',
+        cpf: 'cpfTeste',
         type: UserRole.USER,
       };
 
@@ -96,5 +100,25 @@ describe('CreateUserService', () => {
     }).rejects.toThrow(
       new BadRequestException(`Email emailTeste2@teste.com already exists`),
     );
+  });
+
+  it('should not be able to create a new user when CPF already exists', () => {
+    userRepository.findOneByCpf = jest.fn().mockResolvedValueOnce(newUser[0]);
+    expect(async () => {
+      enum UserRole {
+        ADMIN = 'ADMIN',
+        USER = 'USER',
+      }
+
+      const user: CreateUserDto = {
+        name: 'nomeTeste2',
+        email: 'emailTeste2@teste.com',
+        password: '123456',
+        cpf: 'cpfTeste',
+        type: UserRole.USER,
+      };
+
+      await service.execute(user);
+    }).rejects.toThrow(new BadRequestException(`This CPF is already in use`));
   });
 });
