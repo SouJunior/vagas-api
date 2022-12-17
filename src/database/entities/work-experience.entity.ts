@@ -7,7 +7,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-@Entity('certifications')
+@Entity('work_experiences')
 export class WorkExperienceEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
