@@ -1,4 +1,4 @@
-import { CompanyEntity } from '../../../database/entities/company.entity';
+import { CompanyEntity } from '../../../database/entities/companies.entity';
 import { EntityRepository, Repository } from 'typeorm';
 import { CreateCompanyDto } from '../dtos/create-company.dto';
 import { UpdateCompanyDto } from '../dtos/update-company.sto';

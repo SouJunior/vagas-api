@@ -1,5 +1,5 @@
 import { CreateCommentDto } from './../dtos/create-comment.dto';
-import { CommentEntity } from '../../../database/entities/comment.entity';
+import { CommentEntity } from '../../../database/entities/comments.entity';
 import { EntityRepository, Repository } from 'typeorm';
 import { UpdateCommentDto } from '../dtos/update-comment.dto';
 import { handleError } from '../../../shared/utils/handle-error.util';

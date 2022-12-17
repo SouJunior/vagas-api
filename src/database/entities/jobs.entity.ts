@@ -10,8 +10,8 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { CommentEntity } from './comment.entity';
-import { CompanyEntity } from './company.entity';
+import { CommentEntity } from './comments.entity';
+import { CompanyEntity } from './companies.entity';
 
 enum JobsTypes {
   ESTAGIARIO = 'ESTAGIARIO',
