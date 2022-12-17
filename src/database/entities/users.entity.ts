@@ -3,9 +3,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { PersonalDataEntity } from './personal-data.entity';
 
 enum RolesEnum {
   ADMIN = 'ADMIN',
@@ -23,6 +26,9 @@ export class UserEntity {
   @Column({ unique: true })
   email: string;
 
+  @Column({ unique: true })
+  cpf: string;
+
   @Column()
   password: string;
 
@@ -32,6 +38,10 @@ export class UserEntity {
     default: RolesEnum.USER,
   })
   type: string;
+
+  @OneToOne(() => PersonalDataEntity)
+  @JoinColumn()
+  personal_data: PersonalDataEntity;
 
   @CreateDateColumn()
   created_at: Date;
