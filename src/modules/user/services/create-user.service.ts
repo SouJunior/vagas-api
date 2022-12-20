@@ -8,7 +8,11 @@ export class CreateUserService {
   constructor(private userRepository: UserRepository) {}
 
   async execute(data: CreateUserDto) {
-    const { email, password, cpf } = data;
+    const { email, password, cpf, policies } = data;
+
+    if (!policies) {
+      throw new BadRequestException('Unacceptable Policies');
+    }
 
     const emailAlreadyInUse = await this.userRepository.findOneByEmail(email);
 

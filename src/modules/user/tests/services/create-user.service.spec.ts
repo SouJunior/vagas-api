@@ -17,6 +17,7 @@ const newUser = [
     password: '123456',
     type: UserRole.USER,
     cpf: 'cpfTeste',
+    policies: true,
     created_at: new Date(),
     updated_at: new Date(),
   },
@@ -71,6 +72,7 @@ describe('CreateUserService', () => {
         email: 'emailTeste@teste.com',
         password: '123456',
         cpf: 'cpfTeste',
+        policies: true,
         type: UserRole.USER,
       };
 
@@ -93,6 +95,7 @@ describe('CreateUserService', () => {
         email: 'emailTeste2@teste.com',
         password: '123456',
         cpf: 'cpfTeste',
+        policies: true,
         type: UserRole.USER,
       };
 
@@ -115,6 +118,7 @@ describe('CreateUserService', () => {
         email: 'emailTeste2@teste.com',
         password: '123456',
         cpf: 'cpfTeste',
+        policies: true,
         type: UserRole.USER,
       };
 

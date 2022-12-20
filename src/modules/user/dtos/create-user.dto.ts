@@ -1,13 +1,22 @@
-import { IsNotEmpty, IsString, IsOptional, IsEnum } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsString,
+  IsOptional,
+  IsEnum,
+  IsBoolean,
+  MaxLength,
+  IsEmail,
+} from 'class-validator';
 import { UserRole } from '../../../shared/utils/userRole/userRole';
 
 export class CreateUserDto {
   @IsNotEmpty()
+  @MaxLength(30)
   @IsString()
   name: string;
 
   @IsNotEmpty()
-  @IsString()
+  @IsEmail()
   email: string;
 
   @IsNotEmpty()
@@ -17,6 +26,10 @@ export class CreateUserDto {
   @IsNotEmpty()
   @IsString()
   cpf: string;
+
+  @IsNotEmpty()
+  @IsBoolean()
+  policies: boolean;
 
   @IsOptional()
   @IsEnum(UserRole)

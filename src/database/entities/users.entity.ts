@@ -32,6 +32,9 @@ export class UserEntity {
   @Column()
   password: string;
 
+  @Column()
+  policies: boolean;
+
   @Column({
     type: 'enum',
     enum: ['ADMIN', 'USER'],
