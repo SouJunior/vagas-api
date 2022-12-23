@@ -44,7 +44,7 @@ export class UserEntity {
     this.updated_at = new Date();
   }
 
-  @Column()
+  @Column({ nullable: true })
   recoverPasswordToken?: string;
 
   // constructor(user?: Partial<UserEntity>) {

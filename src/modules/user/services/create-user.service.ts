@@ -21,6 +21,7 @@ export class CreateUserService {
     const response = await this.userRepository.createUser(data);
 
     delete response.password;
+    delete response.recoverPasswordToken;
 
     return response;
   }

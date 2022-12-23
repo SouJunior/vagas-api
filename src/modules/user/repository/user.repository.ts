@@ -9,10 +9,11 @@ import {
   PageMetaDto,
 } from '../../../shared/pagination';
 import { handleError } from '../../../shared/utils/handle-error.util';
+import { EmailUserDto } from '../dtos/email-user.dto';
 
 @EntityRepository(UserEntity)
 export class UserRepository extends Repository<UserEntity> {
-  async createUser(data: CreateUserDto): Promise<CreateUserDto> {
+  async createUser(data: CreateUserDto): Promise<UserEntity> {
     return this.save(data);
   }
 
@@ -44,7 +45,7 @@ export class UserRepository extends Repository<UserEntity> {
   }
 
   async findOneByEmail(email: string): Promise<UserEntity> {
-    return this.findOne(email).catch(handleError);
+    return this.findOne({ where: { email } }).catch(handleError);
   }
 
   async updateUser(id: string, data: UpdateUserDto) {
