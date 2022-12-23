@@ -76,6 +76,9 @@ export class UserController {
   }
 
   @Put(':id')
+  @ApiOperation({
+    summary: 'Atualizar um usuário pelo ID',
+  })
   @UseGuards(AuthGuard())
   @ApiBearerAuth()
   async updateUser(

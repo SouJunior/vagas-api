@@ -19,7 +19,7 @@ import {
   UpdateCompanyService,
 } from './services';
 import { PageOptionsDto } from '../../shared/pagination';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('company')
 @Controller('company')
@@ -33,21 +33,33 @@ export class CompanyController {
   ) {}
 
   @Post()
+  @ApiOperation({
+    summary: 'Cadastrar uma empresa.',
+  })
   async createCompany(@Body() data: CreateCompanyDto) {
     return this.createCompanyService.execute(data);
   }
 
   @Get()
+  @ApiOperation({
+    summary: 'Buscar todas as empresas.',
+  })
   async getAllCompanies(@Query() pageOptionsDto: PageOptionsDto) {
     return this.findAllCompanyService.execute(pageOptionsDto);
   }
 
   @Get(':id')
+  @ApiOperation({
+    summary: 'Buscar uma empresa por id.',
+  })
   async getcompanyById(@Param() { id }: CompanyIdDto) {
     return this.findCompanyById.execute(id);
   }
 
   @Put(':id')
+  @ApiOperation({
+    summary: 'Atualizar uma empresa por id.',
+  })
   async updatecompanyById(
     @Param() { id }: CompanyIdDto,
     @Body() data: UpdateCompanyDto,
@@ -56,6 +68,9 @@ export class CompanyController {
   }
 
   @Delete(':id')
+  @ApiOperation({
+    summary: 'Excluir uma empresa por id.',
+  })
   async deleteCompanyById(@Param() { id }: CompanyIdDto) {
     return this.deleteCompanyService.execute(id);
   }

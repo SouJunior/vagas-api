@@ -8,7 +8,7 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { PageOptionsDto } from '../../shared/pagination';
 import { CreateJobDto } from './dtos/create-job.dto';
 import { UpdateJobDto } from './dtos/update-job.dto';
@@ -32,26 +32,41 @@ export class JobsController {
   ) {}
 
   @Post()
+  @ApiOperation({
+    summary: 'Cadastrar um emprego.',
+  })
   async createNewJob(@Body() data: CreateJobDto) {
     return this.createJobService.execute(data);
   }
 
   @Get()
+  @ApiOperation({
+    summary: 'Buscar todos os empregos.',
+  })
   async getAllJobs(@Query() pageOptionsDto: PageOptionsDto) {
     return this.getAllJobsService.execute(pageOptionsDto);
   }
 
   @Get(':id')
+  @ApiOperation({
+    summary: 'Buscar um emprego por id.',
+  })
   async getOneJob(@Param('id') id: string) {
     return this.getOneJobByIdService.execute(id);
   }
 
   @Put(':id')
+  @ApiOperation({
+    summary: 'Atualizar um emprego por id.',
+  })
   async updateJob(@Param('id') id: string, @Body() data: UpdateJobDto) {
     return this.updateJobService.execute(id, data);
   }
 
   @Delete(':id')
+  @ApiOperation({
+    summary: 'Excluir um emprego por id.',
+  })
   async deleteJob(@Param('id') id: string) {
     return this.deleteJobService.execute(id);
   }
