@@ -2,16 +2,18 @@ import { UserEntity } from '../../../database/entities/users.entity';
 import { EntityRepository, Repository } from 'typeorm';
 import { CreateUserDto } from '../dtos/create-user.dto';
 import { UpdateUserDto } from '../dtos/update-user.dto';
+import { UpdateMyPasswordDto } from '../dtos/update-my-password.dto';
 import {
   PageOptionsDto,
   PageDto,
   PageMetaDto,
 } from '../../../shared/pagination';
 import { handleError } from '../../../shared/utils/handle-error.util';
+import { EmailUserDto } from '../dtos/email-user.dto';
 
 @EntityRepository(UserEntity)
 export class UserRepository extends Repository<UserEntity> {
-  async createUser(data: CreateUserDto): Promise<CreateUserDto> {
+  async createUser(data: CreateUserDto): Promise<UserEntity> {
     return this.save(data);
   }
 
@@ -43,7 +45,7 @@ export class UserRepository extends Repository<UserEntity> {
   }
 
   async findOneByEmail(email: string): Promise<UserEntity> {
-    return this.findOne({ email }).catch(handleError);
+    return this.findOne({ where: { email } }).catch(handleError);
   }
 
   async updateUser(id: string, data: UpdateUserDto) {
@@ -56,5 +58,44 @@ export class UserRepository extends Repository<UserEntity> {
     await this.delete(id).catch(handleError);
 
     return { message: 'User deleted successfully' };
+  }
+
+  async updateMyPassword(updateMyPasswordDto: UpdateMyPasswordDto, id) {
+    const data = { ...updateMyPasswordDto };
+    const user = await this.findOne(id).catch(handleError);
+
+    return this.save({
+      ...user,
+      ...data,
+    }).catch(handleError);
+  }
+
+  async updateRecoveryPassword(id, recoverPasswordToken) {
+    const user = await this.findOne(id).catch(handleError);
+    const data = { ...recoverPasswordToken };
+
+    return this.save({
+      ...user,
+      ...data,
+    }).catch(handleError);
+  }
+
+  async findByToken(recoverPasswordToken: string): Promise<UserEntity> {
+    return this.findOne({ where: { recoverPasswordToken } }).catch(handleError);
+  }
+
+  async updatePassword(id, password: string): Promise<UserEntity> {
+    const user = await this.findOne(id).catch(handleError);
+    const data = {
+      recoverPasswordToken: null,
+      password,
+    };
+
+    delete user.password;
+
+    return this.save({
+      ...user,
+      ...data,
+    }).catch(handleError);
   }
 }
