@@ -57,13 +57,16 @@ export class UserEntity {
     this.updated_at = new Date();
   }
 
-  constructor(user?: Partial<UserEntity>) {
-    this.id = user?.id;
-    this.name = user?.name;
-    this.email = user?.email;
-    this.password = user?.password;
-    this.type = user?.type;
-    this.created_at = user?.created_at;
-    this.updated_at = user?.updated_at;
-  }
+  @Column({ nullable: true })
+  recoverPasswordToken?: string;
+
+  // constructor(user?: Partial<UserEntity>) {
+  //   this.id = user?.id;
+  //   this.name = user?.name;
+  //   this.email = user?.email;
+  //   this.password = user?.password;
+  //   this.type = user?.type;
+  //   this.created_at = user?.created_at;
+  //   this.updated_at = user?.updated_at;
+  // }
 }
