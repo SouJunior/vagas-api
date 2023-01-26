@@ -7,7 +7,6 @@ import {
   CreateCompanyService,
   DeleteCompanyService,
   FindAllCompanyService,
-  FindCompanyById,
   UpdateCompanyService,
 } from './services';
 
@@ -17,7 +16,6 @@ import {
   providers: [
     CreateCompanyService,
     FindAllCompanyService,
-    FindCompanyById,
     UpdateCompanyService,
     DeleteCompanyService,
   ],

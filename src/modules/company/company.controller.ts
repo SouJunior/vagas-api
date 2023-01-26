@@ -1,4 +1,3 @@
-import { UpdateCompanyDto } from './dtos/update-company.sto';
 import {
   Body,
   Controller,
@@ -9,17 +8,19 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { CompanyEntity } from 'src/database/entities/company.entity';
+import GetEntity from 'src/shared/pipes/pipe-entity.pipe';
+import { PageOptionsDto } from '../../shared/pagination';
 import { CompanyIdDto } from './dtos/company-id.dto';
 import { CreateCompanyDto } from './dtos/create-company.dto';
+import { UpdateCompanyDto } from './dtos/update-company.sto';
 import {
   CreateCompanyService,
   DeleteCompanyService,
   FindAllCompanyService,
-  FindCompanyById,
   UpdateCompanyService,
 } from './services';
-import { PageOptionsDto } from '../../shared/pagination';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('company')
 @Controller('company')
@@ -27,7 +28,6 @@ export class CompanyController {
   constructor(
     private createCompanyService: CreateCompanyService,
     private findAllCompanyService: FindAllCompanyService,
-    private findCompanyById: FindCompanyById,
     private updateCompanyService: UpdateCompanyService,
     private deleteCompanyService: DeleteCompanyService,
   ) {}
@@ -52,8 +52,11 @@ export class CompanyController {
   @ApiOperation({
     summary: 'Buscar uma empresa por id.',
   })
-  async getcompanyById(@Param() { id }: CompanyIdDto) {
-    return this.findCompanyById.execute(id);
+  async getcompanyById(
+    @Param('id', new GetEntity(CompanyEntity))
+    company: CompanyEntity,
+  ) {
+    return company;
   }
 
   @Put(':id')

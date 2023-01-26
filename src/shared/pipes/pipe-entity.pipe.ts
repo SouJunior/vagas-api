@@ -35,7 +35,7 @@ export default class GetEntity<Model> implements PipeTransform {
   constructor(
     private readonly entity: EntityTarget<Model>,
     relations?: EntityRelations<Model> | EntityRelations<Model>[],
-    private readonly field = 'uuid',
+    private readonly field = 'id',
   ) {
     this.relations = typeof relations === 'string' ? [relations] : relations;
   }
