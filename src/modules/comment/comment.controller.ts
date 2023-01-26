@@ -7,6 +7,7 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { CommentIdDto } from './dtos/comment-id.dto';
 import { CreateCommentDto } from './dtos/create-comment.dto';
@@ -18,7 +19,10 @@ import {
   UpdateCommentService,
 } from './services';
 import { Throttle } from '@nestjs/throttler';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 
+@ApiTags('comment')
 @Controller('comment')
 export class CommentController {
   constructor(
@@ -31,21 +35,33 @@ export class CommentController {
 
   @Throttle(2, 30)
   @Post()
+  @ApiOperation({
+    summary: 'Cadastrar um comentário.',
+  })
   async createComment(@Body() data: CreateCommentDto) {
     return this.createCommentService.execute(data);
   }
 
   @Get()
+  @ApiOperation({
+    summary: 'Encontrar todos os comentários.',
+  })
   async getAllComments() {
     return this.getAllCommentsService.execute();
   }
 
   @Get(':id')
+  @ApiOperation({
+    summary: 'Buscar um comentário por id.',
+  })
   async getCommentById(@Param() { id }: CommentIdDto) {
     return this.getCommentByIdService.execute(id);
   }
 
   @Put(':id')
+  @ApiOperation({
+    summary: 'Atualizar um comentário por id.',
+  })
   async updateComment(
     @Param() { id }: CommentIdDto,
     @Body() data: UpdateCommentDto,
@@ -54,6 +70,9 @@ export class CommentController {
   }
 
   @Delete(':id')
+  @ApiOperation({
+    summary: 'Excluir um comentário por id.',
+  })
   async deleteComment(@Param() { id }: CommentIdDto) {
     return this.deleteCommentService.execute(id);
   }
