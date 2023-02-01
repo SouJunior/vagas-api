@@ -18,7 +18,7 @@ enum ProficenceEnum {
 }
 
 @Entity('languages')
-export class LanguageEntity {
+export class LanguagesEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -66,7 +66,7 @@ export class LanguageEntity {
   @UpdateDateColumn({ update: true })
   updated_at: Timestamp;
 
-  constructor(language?: Partial<LanguageEntity>) {
+  constructor(language?: Partial<LanguagesEntity>) {
     this.id = language?.id;
     this.language = language?.language;
     this.writing = language?.writing;

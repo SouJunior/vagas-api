@@ -29,7 +29,7 @@ enum CourseDurationEnum {
   LONG = 'LONG',
 }
 @Entity('courses')
-export class CourseEntity {
+export class CoursesEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -82,7 +82,7 @@ export class CourseEntity {
   @UpdateDateColumn({ update: true })
   updated_at: Timestamp;
 
-  constructor(course?: Partial<CourseEntity>) {
+  constructor(course?: Partial<CoursesEntity>) {
     this.id = course?.id;
     this.name = course?.name;
     this.type = course?.type;

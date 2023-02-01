@@ -16,7 +16,7 @@ enum RolesEnum {
 }
 
 @Entity('users')
-export class UserEntity {
+export class UsersEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -55,7 +55,7 @@ export class UserEntity {
   @Column({ nullable: true })
   recoverPasswordToken?: string;
 
-  constructor(user?: Partial<UserEntity>) {
+  constructor(user?: Partial<UsersEntity>) {
     this.id = user?.id;
     this.name = user?.name;
     this.email = user?.email;

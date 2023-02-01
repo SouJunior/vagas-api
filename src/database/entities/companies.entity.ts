@@ -8,10 +8,10 @@ import {
   Timestamp,
   UpdateDateColumn,
 } from 'typeorm';
-import { UserEntity } from './users.entity';
+import { UsersEntity } from './users.entity';
 
 @Entity('companies')
-export class CompanyEntity {
+export class CompaniesEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -30,9 +30,9 @@ export class CompanyEntity {
   @Column()
   address: string;
 
-  @ManyToOne(() => UserEntity)
+  @ManyToOne(() => UsersEntity)
   @JoinColumn({ name: 'user_id' })
-  user: UserEntity;
+  user: UsersEntity;
 
   @Column()
   user_id: string;

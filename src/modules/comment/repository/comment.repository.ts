@@ -1,20 +1,20 @@
 import { CreateCommentDto } from './../dtos/create-comment.dto';
-import { CommentEntity } from '../../../database/entities/comments.entity';
+import { CommentsEntity } from '../../../database/entities/comments.entity';
 import { EntityRepository, Repository } from 'typeorm';
 import { UpdateCommentDto } from '../dtos/update-comment.dto';
 import { handleError } from '../../../shared/utils/handle-error.util';
 
-@EntityRepository(CommentEntity)
-export class CommentRepository extends Repository<CommentEntity> {
-  async createComment(data: CreateCommentDto): Promise<CommentEntity> {
+@EntityRepository(CommentsEntity)
+export class CommentRepository extends Repository<CommentsEntity> {
+  async createComment(data: CreateCommentDto): Promise<CommentsEntity> {
     return this.save(data).catch(handleError);
   }
 
-  async getAllComments(): Promise<CommentEntity[]> {
+  async getAllComments(): Promise<CommentsEntity[]> {
     return this.find({ desativated_at: null }).catch(handleError);
   }
 
-  async getCommentById(id: string): Promise<CommentEntity> {
+  async getCommentById(id: string): Promise<CommentsEntity> {
     return this.findOne(id, { where: { desativated_at: null } }).catch(
       handleError,
     );

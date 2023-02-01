@@ -7,10 +7,10 @@ import {
   Timestamp,
   UpdateDateColumn,
 } from 'typeorm';
-import { CertificationEntity } from './certifications.entity';
-import { CourseEntity } from './courses.entity';
-import { LanguageEntity } from './languages.entity';
-import { WorkExperienceEntity } from './work-experiences.entity';
+import { CertificationsEntity } from './certifications.entity';
+import { CoursesEntity } from './courses.entity';
+import { LanguagesEntity } from './languages.entity';
+import { WorkExperiencesEntity } from './work-experiences.entity';
 
 enum GenderEnum {
   CIS_MALE = 'CIS_MALE',
@@ -48,23 +48,23 @@ export class PersonalDataEntity {
   @Column()
   region: string;
 
-  @OneToMany(() => CourseEntity, (course) => course.personal_data)
-  courses: CourseEntity[];
+  @OneToMany(() => CoursesEntity, (course) => course.personal_data)
+  courses: CoursesEntity[];
 
   @OneToMany(
-    () => WorkExperienceEntity,
+    () => WorkExperiencesEntity,
     (workExperience) => workExperience.personal_data,
   )
-  workExperiences: WorkExperienceEntity[];
+  workExperiences: WorkExperiencesEntity[];
 
-  @OneToMany(() => LanguageEntity, (language) => language.personal_data)
-  languages: LanguageEntity[];
+  @OneToMany(() => LanguagesEntity, (language) => language.personal_data)
+  languages: LanguagesEntity[];
 
   @OneToMany(
-    () => CertificationEntity,
+    () => CertificationsEntity,
     (certification) => certification.personal_data,
   )
-  certifications: CertificationEntity[];
+  certifications: CertificationsEntity[];
 
   @CreateDateColumn()
   created_at: Date;

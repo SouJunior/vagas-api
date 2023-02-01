@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { UserEntity } from '../../database/entities/users.entity';
+import { UsersEntity } from '../../database/entities/users.entity';
 import { LoggedUser } from './decorator/logged-user.decorator';
 import { UserLoginDto } from './dtos/user-login.dto';
 import { AuthLoginService } from './services/auth-login.service';
@@ -34,7 +34,7 @@ export class AuthController {
     summary: 'Retorna usuário logado',
   })
   @ApiBearerAuth()
-  async userLogged(@LoggedUser() user: UserEntity) {
+  async userLogged(@LoggedUser() user: UsersEntity) {
     return user;
   }
 }

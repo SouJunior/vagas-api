@@ -11,7 +11,7 @@ import {
 import { PersonalDataEntity } from './personal-data.entity';
 
 @Entity('certifications')
-export class CertificationEntity {
+export class CertificationsEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -37,7 +37,7 @@ export class CertificationEntity {
   @UpdateDateColumn({ update: true })
   updated_at: Timestamp;
 
-  constructor(certification?: Partial<CertificationEntity>) {
+  constructor(certification?: Partial<CertificationsEntity>) {
     this.id = certification?.id;
     this.name = certification?.name;
     this.institution = certification?.institution;

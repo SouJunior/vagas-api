@@ -1,6 +1,6 @@
 import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable } from '@nestjs/common';
-import { UserEntity } from '../../database/entities/users.entity';
+import { UsersEntity } from '../../database/entities/users.entity';
 
 type DataResponse = {
   local: string;
@@ -11,7 +11,7 @@ type DataResponse = {
 export class MailService {
   constructor(private mailerService: MailerService) {}
 
-  async sendUserConfirmation(user: UserEntity) {
+  async sendUserConfirmation(user: UsersEntity) {
     const { email, name, recoverPasswordToken } = user;
 
     const url =

@@ -8,24 +8,24 @@ import {
   Timestamp,
   UpdateDateColumn,
 } from 'typeorm';
-import { JobEntity } from './jobs.entity';
-import { UserEntity } from './users.entity';
+import { JobsEntity } from './jobs.entity';
+import { UsersEntity } from './users.entity';
 
 @Entity('report')
-export class ReportEntity {
+export class ReportsEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(() => JobEntity)
+  @ManyToOne(() => JobsEntity)
   @JoinColumn({ name: 'job_id' })
-  job: JobEntity;
+  job: JobsEntity;
 
   @Column()
   job_id: string;
 
-  @ManyToOne(() => UserEntity)
+  @ManyToOne(() => UsersEntity)
   @JoinColumn({ name: 'user_id' })
-  user: UserEntity;
+  user: UsersEntity;
 
   @Column()
   user_id: string;

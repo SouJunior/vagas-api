@@ -11,7 +11,7 @@ import {
 import { PersonalDataEntity } from './personal-data.entity';
 
 @Entity('work_experiences')
-export class WorkExperienceEntity {
+export class WorkExperiencesEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -46,7 +46,7 @@ export class WorkExperienceEntity {
   @UpdateDateColumn({ update: true })
   updated_at: Timestamp;
 
-  constructor(workExperience?: Partial<WorkExperienceEntity>) {
+  constructor(workExperience?: Partial<WorkExperiencesEntity>) {
     this.id = workExperience?.id;
     this.name = workExperience?.name;
     this.institution = workExperience?.institution;
