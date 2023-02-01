@@ -1,5 +1,4 @@
 import {
-  BeforeUpdate,
   Column,
   CreateDateColumn,
   DeleteDateColumn,
@@ -7,6 +6,7 @@ import {
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
+  Timestamp,
   UpdateDateColumn,
 } from 'typeorm';
 import { JobEntity } from './jobs.entity';
@@ -37,14 +37,9 @@ export class CommentEntity {
   @CreateDateColumn()
   created_at: Date;
 
-  @UpdateDateColumn()
-  updated_at: Date;
+  @UpdateDateColumn({ update: true })
+  updated_at: Timestamp;
 
   @DeleteDateColumn()
   desativated_at: Date;
-
-  @BeforeUpdate()
-  updateTimestamp() {
-    this.updated_at = new Date();
-  }
 }

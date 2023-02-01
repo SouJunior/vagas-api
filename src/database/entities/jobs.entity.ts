@@ -1,6 +1,4 @@
-import { StringDecoder } from 'string_decoder';
 import {
-  BeforeUpdate,
   Column,
   CreateDateColumn,
   Entity,
@@ -8,6 +6,7 @@ import {
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
+  Timestamp,
   UpdateDateColumn,
 } from 'typeorm';
 import { CommentEntity } from './comments.entity';
@@ -52,11 +51,6 @@ export class JobEntity {
   @CreateDateColumn()
   created_at: Date;
 
-  @UpdateDateColumn()
-  updated_at: Date;
-
-  @BeforeUpdate()
-  updateTimestamp() {
-    this.updated_at = new Date();
-  }
+  @UpdateDateColumn({ update: true })
+  updated_at: Timestamp;
 }

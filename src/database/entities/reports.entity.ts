@@ -1,5 +1,13 @@
-import { Column, JoinColumn, ManyToOne } from 'typeorm';
-import { Entity, PrimaryGeneratedColumn, CreateDateColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  Timestamp,
+  UpdateDateColumn,
+} from 'typeorm';
 import { JobEntity } from './jobs.entity';
 import { UserEntity } from './users.entity';
 
@@ -27,4 +35,7 @@ export class ReportEntity {
 
   @CreateDateColumn()
   created_at: Date;
+
+  @UpdateDateColumn({ update: true })
+  updated_at: Timestamp;
 }

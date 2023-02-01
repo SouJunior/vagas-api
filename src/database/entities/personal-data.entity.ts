@@ -1,10 +1,10 @@
 import {
-  BeforeUpdate,
   Column,
   CreateDateColumn,
   Entity,
   OneToMany,
   PrimaryGeneratedColumn,
+  Timestamp,
   UpdateDateColumn,
 } from 'typeorm';
 import { CertificationEntity } from './certifications.entity';
@@ -69,13 +69,8 @@ export class PersonalDataEntity {
   @CreateDateColumn()
   created_at: Date;
 
-  @UpdateDateColumn()
-  updated_at: Date;
-
-  @BeforeUpdate()
-  updateTimestamp() {
-    this.updated_at = new Date();
-  }
+  @UpdateDateColumn({ update: true })
+  updated_at: Timestamp;
 
   constructor(personalData?: Partial<PersonalDataEntity>) {
     this.id = personalData?.id;

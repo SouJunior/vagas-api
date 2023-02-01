@@ -1,11 +1,11 @@
 import {
-  BeforeUpdate,
   Column,
   CreateDateColumn,
   Entity,
   JoinColumn,
   OneToOne,
   PrimaryGeneratedColumn,
+  Timestamp,
   UpdateDateColumn,
 } from 'typeorm';
 import { PersonalDataEntity } from './personal-data.entity';
@@ -49,24 +49,19 @@ export class UserEntity {
   @CreateDateColumn()
   created_at: Date;
 
-  @UpdateDateColumn()
-  updated_at: Date;
-
-  @BeforeUpdate()
-  updateTimestamp() {
-    this.updated_at = new Date();
-  }
+  @UpdateDateColumn({ update: true })
+  updated_at: Timestamp;
 
   @Column({ nullable: true })
   recoverPasswordToken?: string;
 
-  // constructor(user?: Partial<UserEntity>) {
-  //   this.id = user?.id;
-  //   this.name = user?.name;
-  //   this.email = user?.email;
-  //   this.password = user?.password;
-  //   this.type = user?.type;
-  //   this.created_at = user?.created_at;
-  //   this.updated_at = user?.updated_at;
-  // }
+  constructor(user?: Partial<UserEntity>) {
+    this.id = user?.id;
+    this.name = user?.name;
+    this.email = user?.email;
+    this.password = user?.password;
+    this.type = user?.type;
+    this.created_at = user?.created_at;
+    this.updated_at = user?.updated_at;
+  }
 }
