@@ -54,7 +54,7 @@ export class UserController {
 
   @Get()
   @ApiOperation({
-    summary: 'Visualizar todos os usuários pelo ID',
+    summary: 'Visualizar todos os usuários',
   })
   @UseGuards(AuthGuard())
   @ApiBearerAuth()
@@ -97,26 +97,5 @@ export class UserController {
   @ApiBearerAuth()
   async deleteUser(@Param('id') id: string, @LoggedUser() user: UserEntity) {
     return this.deleteUserService.execute(id);
-  }
-
-  @Patch('recovery-password')
-  @ApiOperation({
-    summary: 'Enviar e-mail para recuperar senha para e-mail',
-  })
-  async recoveryPasswordSendEmail(
-    @Body() { email }: EmailUserDto, // @Res() res: Response,
-  ) {
-    // const { status, data } = await this.recoveryPasswordByEmail.execute(email);
-
-    // return res.status(status).send(data);
-    return this.recoveryPasswordByEmail.execute(email);
-  }
-
-  @Patch('update_password')
-  @ApiOperation({
-    summary: 'Resetar senha utilizando do token',
-  })
-  updatePassword(@Body() updatePassword: CreatePasswordHashDto) {
-    return this.updatePasswordByEmailService.execute(updatePassword);
   }
 }

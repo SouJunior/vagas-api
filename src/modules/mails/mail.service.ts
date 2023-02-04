@@ -22,7 +22,7 @@ export class MailService {
     await this.mailerService.sendMail({
       to: email,
       from: process.env.MAIL_FROM,
-      subject: 'I Art',
+      subject: 'Password Recover',
       template: './send.hbs',
       context: {
         name,
