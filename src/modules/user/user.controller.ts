@@ -30,6 +30,7 @@ import {
 import { CreatePasswordHashDto } from './dtos/update-my-password.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Response } from 'express';
 
 @ApiTags('user')
 @Controller('user')
@@ -67,7 +68,7 @@ export class UserController {
 
   @Get(':id')
   @ApiOperation({
-    summary: 'Visualizar um usuário pelo ID',
+    summary: 'Visualizar um usuário pelo ID (precisa ser adm)',
   })
   @UseGuards(AuthGuard())
   @ApiBearerAuth()
@@ -97,5 +98,26 @@ export class UserController {
   @ApiBearerAuth()
   async deleteUser(@Param('id') id: string, @LoggedUser() user: UserEntity) {
     return this.deleteUserService.execute(id);
+  }
+
+  @Patch('recovery-password')
+  @ApiOperation({
+    summary: 'Send email to recovery password.',
+  })
+  async recoveryPasswordSendEmail(
+    @Body() { email }: EmailUserDto,
+    @Res() res: Response,
+  ) {
+    const { status, data } = await this.recoveryPasswordByEmail.execute(email);
+
+    return res.status(status).send(data);
+  }
+
+  @Patch('update_password')
+  @ApiOperation({
+    summary: 'User update password.',
+  })
+  updatePassword(@Body() updatePassword: CreatePasswordHashDto) {
+    return this.updatePasswordByEmailService.execute(updatePassword);
   }
 }

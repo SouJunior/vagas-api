@@ -3,6 +3,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  Generated,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -44,7 +45,8 @@ export class UserEntity {
     this.updated_at = new Date();
   }
 
-  @Column({ nullable: true })
+  @Column()
+  @Generated('uuid')
   recoverPasswordToken?: string;
 
   // constructor(user?: Partial<UserEntity>) {
