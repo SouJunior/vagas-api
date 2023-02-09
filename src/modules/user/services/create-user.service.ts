@@ -8,12 +8,22 @@ export class CreateUserService {
   constructor(private userRepository: UserRepository) {}
 
   async execute(data: CreateUserDto) {
-    const { email, password } = data;
+    const { email, password, cpf, policies } = data;
 
-    const userAllreadyExists = await this.userRepository.findOneByEmail(email);
+    if (!policies) {
+      throw new BadRequestException('Unacceptable Policies');
+    }
 
-    if (userAllreadyExists) {
+    const emailAlreadyInUse = await this.userRepository.findOneByEmail(email);
+
+    if (emailAlreadyInUse) {
       throw new BadRequestException(`Email ${email} already exists`);
+    }
+
+    const cpfAlreadyInUse = await this.userRepository.findOneByCpf(cpf);
+
+    if (cpfAlreadyInUse) {
+      throw new BadRequestException(`This CPF is already in use`);
     }
 
     data.password = await bcrypt.hash(password, 10);

@@ -1,5 +1,4 @@
 import {
-  BeforeUpdate,
   Column,
   CreateDateColumn,
   DeleteDateColumn,
@@ -7,29 +6,30 @@ import {
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
+  Timestamp,
   UpdateDateColumn,
 } from 'typeorm';
-import { JobEntity } from './jobs.entity';
-import { UserEntity } from './users.entity';
+import { JobsEntity } from './jobs.entity';
+import { UsersEntity } from './users.entity';
 
 @Entity('comments')
-export class CommentEntity {
+export class CommentsEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column({ length: 500 })
   comment: string;
 
-  @ManyToOne(() => UserEntity)
+  @ManyToOne(() => UsersEntity)
   @JoinColumn({ name: 'user_id' })
-  user: UserEntity;
+  user: UsersEntity;
 
   @Column()
   user_id: string;
 
-  @ManyToOne(() => JobEntity, (job) => job.comments)
+  @ManyToOne(() => JobsEntity, (job) => job.comments)
   @JoinColumn({ name: 'job_id' })
-  job: JobEntity;
+  job: JobsEntity;
 
   @Column()
   job_id: string;
@@ -37,14 +37,9 @@ export class CommentEntity {
   @CreateDateColumn()
   created_at: Date;
 
-  @UpdateDateColumn()
-  updated_at: Date;
+  @UpdateDateColumn({ update: true })
+  updated_at: Timestamp;
 
   @DeleteDateColumn()
   desativated_at: Date;
-
-  @BeforeUpdate()
-  updateTimestamp() {
-    this.updated_at = new Date();
-  }
 }

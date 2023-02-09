@@ -12,14 +12,13 @@ export class MailService {
 
     await this.mailerService.sendMail({
       to: email,
-      // from: '"Support Team" <support@example.com>', // override default from
       subject: 'Reset Password!',
-      template: './send', // `.hbs` extension is appended automatically
+      template: './send', 
       context: {
-        // ✏️ filling curly brackets with content
         name: name,
         url,
       },
     });
   }
 }
+

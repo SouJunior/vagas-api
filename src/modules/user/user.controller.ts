@@ -11,7 +11,7 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { UserEntity } from '../../database/entities/users.entity';
+import { UsersEntity } from '../../database/entities/users.entity';
 import { PageOptionsDto } from '../../shared/pagination';
 import { LoggedAdmin } from '../auth/decorator/logged-admin.decorator';
 import { LoggedUser } from '../auth/decorator/logged-user.decorator';
@@ -60,7 +60,7 @@ export class UserController {
   @UseGuards(AuthGuard())
   @ApiBearerAuth()
   async getAllUsers(
-    @LoggedAdmin() user: UserEntity,
+    @LoggedAdmin() user: UsersEntity,
     @Query() pageOptionsDto: PageOptionsDto,
   ) {
     return this.findAllUsersService.execute(pageOptionsDto);
@@ -72,7 +72,7 @@ export class UserController {
   })
   @UseGuards(AuthGuard())
   @ApiBearerAuth()
-  async getOneUser(@Param('id') id: string, @LoggedUser() user: UserEntity) {
+  async getOneUser(@Param('id') id: string, @LoggedUser() user: UsersEntity) {
     return this.findOneUserService.execute(id);
   }
 
@@ -85,7 +85,7 @@ export class UserController {
   async updateUser(
     @Param('id') id: string,
     @Body() data: UpdateUserDto,
-    @LoggedUser() user: UserEntity,
+    @LoggedUser() user: UsersEntity,
   ) {
     return this.updateUserService.execute(id, data);
   }
@@ -96,7 +96,7 @@ export class UserController {
   })
   @UseGuards(AuthGuard())
   @ApiBearerAuth()
-  async deleteUser(@Param('id') id: string, @LoggedUser() user: UserEntity) {
+  async deleteUser(@Param('id') id: string, @LoggedUser() user: UsersEntity) {
     return this.deleteUserService.execute(id);
   }
 

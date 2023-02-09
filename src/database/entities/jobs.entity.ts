@@ -1,6 +1,4 @@
-import { StringDecoder } from 'string_decoder';
 import {
-  BeforeUpdate,
   Column,
   CreateDateColumn,
   Entity,
@@ -8,10 +6,11 @@ import {
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
+  Timestamp,
   UpdateDateColumn,
 } from 'typeorm';
-import { CommentEntity } from './comment.entity';
-import { CompanyEntity } from './company.entity';
+import { CommentsEntity } from './comments.entity';
+import { CompaniesEntity } from './companies.entity';
 
 enum JobsTypes {
   ESTAGIARIO = 'ESTAGIARIO',
@@ -20,7 +19,7 @@ enum JobsTypes {
 }
 
 @Entity('jobs')
-export class JobEntity {
+export class JobsEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -37,26 +36,21 @@ export class JobEntity {
   })
   type: string;
 
-  @ManyToOne(() => CompanyEntity)
+  @ManyToOne(() => CompaniesEntity)
   @JoinColumn({ name: 'company_id' })
-  company: CompanyEntity;
+  company: CompaniesEntity;
 
   @Column()
   company_id: string;
 
-  @OneToMany(() => CommentEntity, (comment) => comment.job, {
+  @OneToMany(() => CommentsEntity, (comment) => comment.job, {
     cascade: true,
   })
-  comments: CommentEntity[];
+  comments: CommentsEntity[];
 
   @CreateDateColumn()
   created_at: Date;
 
-  @UpdateDateColumn()
-  updated_at: Date;
-
-  @BeforeUpdate()
-  updateTimestamp() {
-    this.updated_at = new Date();
-  }
+  @UpdateDateColumn({ update: true })
+  updated_at: Timestamp;
 }
