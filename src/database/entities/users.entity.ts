@@ -1,11 +1,14 @@
 import {
-  BeforeUpdate,
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  OneToOne,
   PrimaryGeneratedColumn,
+  Timestamp,
   UpdateDateColumn,
 } from 'typeorm';
+import { PersonalDataEntity } from './personal-data.entity';
 
 enum RolesEnum {
   ADMIN = 'ADMIN',
@@ -13,7 +16,7 @@ enum RolesEnum {
 }
 
 @Entity('users')
-export class UserEntity {
+export class UsersEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -23,8 +26,14 @@ export class UserEntity {
   @Column({ unique: true })
   email: string;
 
+  @Column({ unique: true })
+  cpf: string;
+
   @Column()
   password: string;
+
+  @Column()
+  policies: boolean;
 
   @Column({
     type: 'enum',
@@ -33,27 +42,26 @@ export class UserEntity {
   })
   type: string;
 
+  @OneToOne(() => PersonalDataEntity)
+  @JoinColumn()
+  personal_data: PersonalDataEntity;
+
   @CreateDateColumn()
   created_at: Date;
 
-  @UpdateDateColumn()
-  updated_at: Date;
-
-  @BeforeUpdate()
-  updateTimestamp() {
-    this.updated_at = new Date();
-  }
+  @UpdateDateColumn({ update: true })
+  updated_at: Timestamp;
 
   @Column({ nullable: true })
   recoverPasswordToken?: string;
 
-  // constructor(user?: Partial<UserEntity>) {
-  //   this.id = user?.id;
-  //   this.name = user?.name;
-  //   this.email = user?.email;
-  //   this.password = user?.password;
-  //   this.type = user?.type;
-  //   this.created_at = user?.created_at;
-  //   this.updated_at = user?.updated_at;
-  // }
+  constructor(user?: Partial<UsersEntity>) {
+    this.id = user?.id;
+    this.name = user?.name;
+    this.email = user?.email;
+    this.password = user?.password;
+    this.type = user?.type;
+    this.created_at = user?.created_at;
+    this.updated_at = user?.updated_at;
+  }
 }

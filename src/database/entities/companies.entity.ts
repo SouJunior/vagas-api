@@ -1,17 +1,17 @@
 import {
-  BeforeUpdate,
   Column,
   CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
+  Timestamp,
   UpdateDateColumn,
 } from 'typeorm';
-import { UserEntity } from './users.entity';
+import { UsersEntity } from './users.entity';
 
 @Entity('companies')
-export class CompanyEntity {
+export class CompaniesEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -30,9 +30,9 @@ export class CompanyEntity {
   @Column()
   address: string;
 
-  @ManyToOne(() => UserEntity)
+  @ManyToOne(() => UsersEntity)
   @JoinColumn({ name: 'user_id' })
-  user: UserEntity;
+  user: UsersEntity;
 
   @Column()
   user_id: string;
@@ -46,11 +46,6 @@ export class CompanyEntity {
   @CreateDateColumn()
   created_at: Date;
 
-  @UpdateDateColumn()
-  updated_at: Date;
-
-  @BeforeUpdate()
-  updateTimestamp() {
-    this.updated_at = new Date();
-  }
+  @UpdateDateColumn({ update: true })
+  updated_at: Timestamp;
 }
