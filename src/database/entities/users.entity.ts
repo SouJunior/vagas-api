@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  Generated,
   JoinColumn,
   OneToOne,
   PrimaryGeneratedColumn,
@@ -52,7 +53,8 @@ export class UsersEntity {
   @UpdateDateColumn({ update: true })
   updated_at: Timestamp;
 
-  @Column({ nullable: true })
+  @Column()
+  @Generated('uuid')
   recoverPasswordToken?: string;
 
   constructor(user?: Partial<UsersEntity>) {
@@ -61,6 +63,7 @@ export class UsersEntity {
     this.email = user?.email;
     this.password = user?.password;
     this.type = user?.type;
+    this.recoverPasswordToken = user?.recoverPasswordToken;
     this.created_at = user?.created_at;
     this.updated_at = user?.updated_at;
   }
