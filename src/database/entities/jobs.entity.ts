@@ -38,7 +38,7 @@ enum JobsContractTimeENum {
   indeterminado = 'Tempo indeterminado',
 }
 
-@Entity('jobs')
+@Entity('tb_jobs')
 export class JobsEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;

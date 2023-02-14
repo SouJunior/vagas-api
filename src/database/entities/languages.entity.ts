@@ -17,7 +17,7 @@ enum ProficenceEnum {
   FLUENT = 'FLUENT',
 }
 
-@Entity('languages')
+@Entity('tb_languages')
 export class LanguagesEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;

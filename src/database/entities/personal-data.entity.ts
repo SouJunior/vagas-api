@@ -21,7 +21,7 @@ enum GenderEnum {
   NO_ANSWER = 'NO_ANSWER',
 }
 
-@Entity('personal_data')
+@Entity('tb_personal_data')
 export class PersonalDataEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;

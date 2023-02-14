@@ -16,7 +16,7 @@ enum RolesEnum {
   USER = 'USER',
 }
 
-@Entity('users')
+@Entity('tb_users')
 export class UsersEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
