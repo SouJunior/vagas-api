@@ -3,8 +3,9 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { MailService } from './mail.service';
 import { ConfigService } from '@nestjs/config';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+import { join } from 'path';
 
-@Global()
+@Global() // 👈 global module
 @Module({
   imports: [
     MailerModule.forRootAsync({
@@ -12,17 +13,17 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
         transport: {
           host: config.get('MAIL_HOST'),
           port: config.get('MAIL_PORT'),
-          secure: false,
+          secure: true,
           auth: {
             user: config.get('MAIL_USER'),
             pass: config.get('MAIL_PASSWORD'),
           },
         },
         defaults: {
-          from: 'no-reply <no-reply@iarte.com>',
+          from: `no-reply <no-reply@vagas-backend.com>`,
         },
         template: {
-          dir: __dirname + '../../../../templates',
+          dir: join(__dirname, 'templates'),
           adapter: new HandlebarsAdapter(),
           options: {
             strict: true,

@@ -4,12 +4,16 @@ import {
   IsString,
   IsOptional,
   IsEnum,
+  IsBoolean,
+  MaxLength,
+  IsEmail,
   Matches,
 } from 'class-validator';
 import { UserRole } from '../../../shared/utils/userRole/userRole';
 
 export class CreateUserDto {
   @IsNotEmpty()
+  @MaxLength(30)
   @IsString()
   @ApiProperty({
     description: 'Nome do usuário.',
@@ -18,6 +22,7 @@ export class CreateUserDto {
   name: string;
 
   @IsNotEmpty()
+  @IsEmail()
   @IsString()
   @ApiProperty({
     description: 'E-mail do usuário.',
@@ -35,6 +40,14 @@ export class CreateUserDto {
     example: 'Abcd@1234',
   })
   password: string;
+
+  @IsNotEmpty()
+  @IsString()
+  cpf: string;
+
+  @IsNotEmpty()
+  @IsBoolean()
+  policies: boolean;
 
   @IsOptional()
   @IsEnum(UserRole)

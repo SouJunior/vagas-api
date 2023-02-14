@@ -8,7 +8,7 @@ export class CreateUserService {
   constructor(private userRepository: UserRepository) {}
 
   async execute(data: CreateUserDto) {
-    const { email, password } = data;
+    const { email, password, cpf, policies } = data;
 
     const userAlreadyExists = await this.userRepository.findOneByEmail(email);
 
@@ -23,6 +23,12 @@ export class CreateUserService {
           message: 'Email already exists',
         },
       };
+    }
+
+    const cpfAlreadyInUse = await this.userRepository.findOneByCpf(cpf);
+
+    if (cpfAlreadyInUse) {
+      throw new BadRequestException(`This CPF is already in use`);
     }
 
     data.password = await bcrypt.hash(password, 10);

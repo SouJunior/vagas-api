@@ -5,15 +5,15 @@ import { handleError } from '../../../shared/utils/handle-error.util';
 import { CreateCompanyDto } from '../dtos/create-company.dto';
 import { UpdateCompanyDto } from '../dtos/update-company.sto';
 
-@EntityRepository(CompanyEntity)
-export class CompanyRepository extends Repository<CompanyEntity> {
-  async createCompany(data: CreateCompanyDto): Promise<CompanyEntity> {
+@EntityRepository(CompaniesEntity)
+export class CompanyRepository extends Repository<CompaniesEntity> {
+  async createCompany(data: CreateCompanyDto): Promise<CompaniesEntity> {
     return this.save(data).catch(handleError);
   }
 
   async findAllCompany(
     pageOptionsDto: PageOptionsDto,
-  ): Promise<PageDto<CompanyEntity>> {
+  ): Promise<PageDto<CompaniesEntity>> {
     const queryBuilder = this.createQueryBuilder('companies');
 
     queryBuilder
@@ -32,7 +32,7 @@ export class CompanyRepository extends Repository<CompanyEntity> {
     return new PageDto(entities, pageMetaDto);
   }
 
-  async findCompanyById(id: string): Promise<CompanyEntity> {
+  async findCompanyById(id: string): Promise<CompaniesEntity> {
     return this.findOne(id).catch(handleError);
   }
 
