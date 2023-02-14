@@ -1,6 +1,6 @@
+import { CompaniesEntity } from 'src/database/entities/companies.entity';
 import { PageDto, PageMetaDto, PageOptionsDto } from 'src/shared/pagination';
 import { EntityRepository, Repository } from 'typeorm';
-import { CompanyEntity } from '../../../database/entities/company.entity';
 import { handleError } from '../../../shared/utils/handle-error.util';
 import { CreateCompanyDto } from '../dtos/create-company.dto';
 import { UpdateCompanyDto } from '../dtos/update-company.sto';
@@ -36,7 +36,7 @@ export class CompanyRepository extends Repository<CompaniesEntity> {
     return this.findOne(id).catch(handleError);
   }
 
-  async UpdateCompanyById(company: CompanyEntity, data: UpdateCompanyDto) {
+  async UpdateCompanyById(company: CompaniesEntity, data: UpdateCompanyDto) {
     return this.save({
       ...company,
       ...data,

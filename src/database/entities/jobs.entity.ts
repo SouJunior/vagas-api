@@ -94,7 +94,7 @@ export class JobsEntity {
   @Column()
   affirmative_type: string;
 
-  @ManyToOne(() => CompanyEntity)
+  @ManyToOne(() => CompaniesEntity)
   @JoinColumn({ name: 'company_id' })
   company: CompaniesEntity;
 

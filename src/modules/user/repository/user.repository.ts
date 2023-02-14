@@ -1,15 +1,14 @@
-import { UsersEntity } from '../../../database/entities/users.entity';
 import { EntityRepository, Repository } from 'typeorm';
-import { CreateUserDto } from '../dtos/create-user.dto';
-import { UpdateUserDto } from '../dtos/update-user.dto';
-import { UpdateMyPasswordDto } from '../dtos/update-my-password.dto';
+import { UsersEntity } from '../../../database/entities/users.entity';
 import {
-  PageOptionsDto,
   PageDto,
   PageMetaDto,
+  PageOptionsDto,
 } from '../../../shared/pagination';
 import { handleError } from '../../../shared/utils/handle-error.util';
-import { EmailUserDto } from '../dtos/email-user.dto';
+import { CreateUserDto } from '../dtos/create-user.dto';
+import { UpdateMyPasswordDto } from '../dtos/update-my-password.dto';
+import { UpdateUserDto } from '../dtos/update-user.dto';
 
 @EntityRepository(UsersEntity)
 export class UserRepository extends Repository<UsersEntity> {
