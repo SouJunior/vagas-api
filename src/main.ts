@@ -32,5 +32,7 @@ async function bootstrap() {
   console.info(
     `Documentation running on http://localhost:${process.env.PORT}/api 🚀🚀`,
   );
+  const databse = process.env.ISLOCAL == 'true' ? 'do DOCKER' : 'da NUVEM';
+  console.info(`Você esta usando o banco de dados ${databse}`);
 }
 bootstrap();
