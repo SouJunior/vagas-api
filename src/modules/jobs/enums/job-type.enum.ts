@@ -1,0 +1,6 @@
+export enum JobsTypes {
+  ESTAGIARIO = 'ESTAGIARIO',
+  TRAINNER = 'TRAINNER',
+  JUNIOR = 'JUNIOR',
+  ANALISTA = 'ANALISTA',
+}

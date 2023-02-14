@@ -1,4 +1,3 @@
-import { StringDecoder } from 'string_decoder';
 import {
   BeforeUpdate,
   Column,
@@ -13,10 +12,30 @@ import {
 import { CommentEntity } from './comment.entity';
 import { CompanyEntity } from './company.entity';
 
-enum JobsTypes {
+enum JobsTypeENum {
   ESTAGIARIO = 'ESTAGIARIO',
   TRAINNER = 'TRAINNER',
   JUNIOR = 'JUNIOR',
+  ANALISTA = 'ANALISTA',
+}
+
+enum JobsTypeContractENum {
+  CLT = 'CLT',
+  PJ = 'PJ',
+  FREELANCE = 'FREELANCE',
+}
+
+enum JobsModalityENum {
+  REMOTO = 'REMOTO',
+  HIBRIDO = 'HIBRIDO',
+  PRESENCIAL = 'PRESENCIAL',
+}
+
+enum JobsContractTimeENum {
+  'até 6 meses' = 'até 6 meses',
+  '6 meses - 1 ano' = '6 meses - 1 ano',
+  '1 ano - 2 anos' = '1 ano - 2 anos',
+  indeterminado = 'Tempo indeterminado',
 }
 
 @Entity('jobs')
@@ -30,12 +49,50 @@ export class JobEntity {
   @Column()
   description: string;
 
+  @Column()
+  prerequisites: string;
+
+  @Column()
+  benefits: string;
+
   @Column({
     type: 'enum',
-    enum: ['ESTAGIARIO', 'TRAINNER', 'JUNIOR'],
-    default: JobsTypes.JUNIOR,
+    enum: ['ESTAGIARIO', 'TRAINNER', 'JUNIOR', 'ANALISTA'],
+    default: JobsTypeENum.JUNIOR,
   })
   type: string;
+
+  @Column({
+    type: 'enum',
+    enum: ['CLT', 'PJ', 'FREELANCE'],
+    default: JobsTypeContractENum.CLT,
+  })
+  type_contract: string;
+
+  @Column()
+  salary: number;
+
+  @Column({
+    type: 'enum',
+    enum: ['REMOTO', 'HIBRIDO', 'PRESENCIAL'],
+    default: JobsModalityENum.REMOTO,
+  })
+  modality: string;
+
+  @Column()
+  headquarters: string;
+
+  @Column({
+    type: 'enum',
+    enum: ['até 6 meses', '6 meses - 1 ano', '1 ano - 2 anos', 'indeterminado'],
+  })
+  contract_time: string;
+
+  @Column({ default: false })
+  affirmative: boolean;
+
+  @Column()
+  affirmative_type: string;
 
   @ManyToOne(() => CompanyEntity)
   @JoinColumn({ name: 'company_id' })

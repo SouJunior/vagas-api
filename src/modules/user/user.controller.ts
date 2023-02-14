@@ -4,32 +4,33 @@ import {
   Delete,
   Get,
   Param,
+  Patch,
   Post,
   Put,
-  Patch,
-  Res,
   Query,
+  Res,
   UseGuards,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Response } from 'express';
 import { UserEntity } from '../../database/entities/users.entity';
 import { PageOptionsDto } from '../../shared/pagination';
 import { LoggedAdmin } from '../auth/decorator/logged-admin.decorator';
 import { LoggedUser } from '../auth/decorator/logged-user.decorator';
 import { CreateUserDto } from './dtos/create-user.dto';
-import { UpdateUserDto } from './dtos/update-user.dto';
 import { EmailUserDto } from './dtos/email-user.dto';
+import { CreatePasswordHashDto } from './dtos/update-my-password.dto';
+import { UpdateUserDto } from './dtos/update-user.dto';
 import {
   CreateUserService,
   DeleteUserService,
   FindAllUsersService,
   FindOneUserService,
-  UpdateUserService,
   RecoveryPasswordByEmail,
   UpdatePasswordByEmailService,
+  UpdateUserService,
 } from './services';
-import { CreatePasswordHashDto } from './dtos/update-my-password.dto';
-import { AuthGuard } from '@nestjs/passport';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('user')
 @Controller('user')
@@ -48,8 +49,10 @@ export class UserController {
   @ApiOperation({
     summary: 'Criar um usuário!',
   })
-  async createNewUser(@Body() data: CreateUserDto) {
-    return this.createUserService.execute(data);
+  async createNewUser(@Body() createUser: CreateUserDto, @Res() res: Response) {
+    const { data, status } = await this.createUserService.execute(createUser);
+
+    return res.status(status).send(data);
   }
 
   @Get()

@@ -10,7 +10,7 @@ export class DeleteJobService {
       throw new BadRequestException('Id not provided');
     }
 
-    const jobExists = await this.jobRepository.findOne(id);
+    const jobExists = await this.jobRepository.findOneById(id);
 
     if (!jobExists) {
       throw new BadRequestException('Job not found');

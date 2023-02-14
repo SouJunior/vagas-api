@@ -30,7 +30,7 @@ export type EntityRelations<Entity> = {
 
 @Injectable()
 export default class GetEntity<Model> implements PipeTransform {
-  private readonly relations;
+  private readonly relations: any;
 
   constructor(
     private readonly entity: EntityTarget<Model>,
