@@ -8,6 +8,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { CommentModule } from './modules/comment/comment.module';
 import { CompanyModule } from './modules/company/company.module';
 import { JobsModule } from './modules/jobs/jobs.module';
+import { MailModule } from './modules/mails/mail.module';
 import { ReportsModule } from './modules/reports/reports.module';
 import { UserModule } from './modules/user/user.module';
 
@@ -34,6 +35,7 @@ import { UserModule } from './modules/user/user.module';
     JobsModule,
     UserModule,
     AuthModule,
+    MailModule,
     ReportsModule,
     CompanyModule,
     CommentModule,

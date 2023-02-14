@@ -1,4 +1,4 @@
-import { JobEntity } from '../../../database/entities/jobs.entity';
+import { JobsEntity } from '../../../database/entities/jobs.entity';
 import { EntityRepository, Repository } from 'typeorm';
 import { CreateJobDto } from '../dtos/create-job.dto';
 import { UpdateJobDto } from '../dtos/update-job.dto';
@@ -9,15 +9,15 @@ import {
 } from '../../../shared/pagination';
 import { handleError } from '../../../shared/utils/handle-error.util';
 
-@EntityRepository(JobEntity)
-export class JobRepository extends Repository<JobEntity> {
+@EntityRepository(JobsEntity)
+export class JobRepository extends Repository<JobsEntity> {
   async createNewJob(data: CreateJobDto): Promise<CreateJobDto> {
     return this.save(data).catch(handleError);
   }
 
   async getAllJobs(
     pageOptionsDto: PageOptionsDto,
-  ): Promise<PageDto<JobEntity>> {
+  ): Promise<PageDto<JobsEntity>> {
     const queryBuilder = this.createQueryBuilder('jobs');
 
     queryBuilder

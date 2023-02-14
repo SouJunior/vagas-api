@@ -9,8 +9,8 @@ import {
   Query,
 } from '@nestjs/common';
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
-import { CompanyEntity } from 'src/database/entities/company.entity';
-import GetEntity from 'src/shared/pipes/pipe-entity.pipe';
+import { CompaniesEntity } from 'src/database/entities/companies.entity';
+import GetEntity from '../../shared/pipes/pipe-entity.pipe';
 import { PageOptionsDto } from '../../shared/pagination';
 import { CompanyIdDto } from './dtos/company-id.dto';
 import { CreateCompanyDto } from './dtos/create-company.dto';
@@ -57,8 +57,8 @@ export class CompanyController {
     summary: 'Buscar uma empresa por id.',
   })
   async getcompanyById(
-    @Param('id', new GetEntity(CompanyEntity))
-    company: CompanyEntity,
+    @Param('id', new GetEntity(CompaniesEntity))
+    company: CompaniesEntity,
   ) {
     return company;
   }
@@ -72,8 +72,8 @@ export class CompanyController {
     summary: 'Atualizar uma empresa por id.',
   })
   async updatecompanyById(
-    @Param('id', new GetEntity(CompanyEntity))
-    company: CompanyEntity,
+    @Param('id', new GetEntity(CompaniesEntity))
+    company: CompaniesEntity,
     @Body() data: UpdateCompanyDto,
   ) {
     return this.updateCompanyService.execute(company, data);

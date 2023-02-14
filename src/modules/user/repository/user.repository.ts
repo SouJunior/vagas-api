@@ -1,30 +1,35 @@
-import { UserEntity } from '../../../database/entities/users.entity';
 import { EntityRepository, Repository } from 'typeorm';
-import { CreateUserDto } from '../dtos/create-user.dto';
-import { UpdateUserDto } from '../dtos/update-user.dto';
-import { UpdateMyPasswordDto } from '../dtos/update-my-password.dto';
+import { UsersEntity } from '../../../database/entities/users.entity';
 import {
-  PageOptionsDto,
   PageDto,
   PageMetaDto,
+  PageOptionsDto,
 } from '../../../shared/pagination';
 import { handleError } from '../../../shared/utils/handle-error.util';
-import { EmailUserDto } from '../dtos/email-user.dto';
+import { CreateUserDto } from '../dtos/create-user.dto';
+import { UpdateMyPasswordDto } from '../dtos/update-my-password.dto';
+import { UpdateUserDto } from '../dtos/update-user.dto';
 
-@EntityRepository(UserEntity)
-export class UserRepository extends Repository<UserEntity> {
-  async createUser(data: CreateUserDto): Promise<UserEntity> {
+@EntityRepository(UsersEntity)
+export class UserRepository extends Repository<UsersEntity> {
+  async createUser(data: CreateUserDto): Promise<UsersEntity> {
     return this.save(data);
   }
 
   async getAllUsers(
     pageOptionsDto: PageOptionsDto,
-  ): Promise<PageDto<UserEntity>> {
+  ): Promise<PageDto<UsersEntity>> {
     const queryBuilder = this.createQueryBuilder('users');
 
     queryBuilder
       .orderBy(`users.${pageOptionsDto.orderByColumn}`, pageOptionsDto.order)
-      .select(['users.id', 'users.name', 'users.email', 'users.created_at'])
+      .select([
+        'users.id',
+        'users.name',
+        'users.email',
+        'users.created_at',
+        'users.cpf',
+      ])
       .skip(pageOptionsDto.skip)
       .take(pageOptionsDto.take);
 
@@ -36,16 +41,20 @@ export class UserRepository extends Repository<UserEntity> {
     return new PageDto(entities, pageMetaDto);
   }
 
-  async searchUserByName(name: string): Promise<UserEntity[]> {
+  async searchUserByName(name: string): Promise<UsersEntity[]> {
     return this.find({ where: { name } }).catch(handleError);
   }
 
-  async findOneById(id: string): Promise<UserEntity> {
+  async findOneById(id: string): Promise<UsersEntity> {
     return this.findOne(id).catch(handleError);
   }
 
-  async findOneByEmail(email: string): Promise<UserEntity> {
+  async findOneByEmail(email: string): Promise<UsersEntity> {
     return this.findOne({ where: { email } }).catch(handleError);
+  }
+
+  async findOneByCpf(cpf: string): Promise<UsersEntity> {
+    return this.findOne({ cpf }).catch(handleError);
   }
 
   async updateUser(id: string, data: UpdateUserDto) {
@@ -80,11 +89,11 @@ export class UserRepository extends Repository<UserEntity> {
     }).catch(handleError);
   }
 
-  async findByToken(recoverPasswordToken: string): Promise<UserEntity> {
+  async findByToken(recoverPasswordToken: string): Promise<UsersEntity> {
     return this.findOne({ where: { recoverPasswordToken } }).catch(handleError);
   }
 
-  async updatePassword(id, password: string): Promise<UserEntity> {
+  async updatePassword(id, password: string): Promise<UsersEntity> {
     const user = await this.findOne(id).catch(handleError);
     const data = {
       recoverPasswordToken: null,

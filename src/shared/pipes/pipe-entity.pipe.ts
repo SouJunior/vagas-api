@@ -4,21 +4,30 @@ import {
   NotFoundException,
   PipeTransform,
 } from '@nestjs/common';
-import { validate as isValidUUID } from 'uuid';
-
-import { CommentEntity } from 'src/database/entities/comment.entity';
-import { CompanyEntity } from 'src/database/entities/company.entity';
-import { JobEntity } from 'src/database/entities/jobs.entity';
-import { ReportEntity } from 'src/database/entities/report.entity';
-import { UserEntity } from 'src/database/entities/users.entity';
 import { EntityTarget, getRepository } from 'typeorm';
+import { validate as isValidUUID } from 'uuid';
+import { CertificationsEntity } from '../../database/entities/certifications.entity';
+import { CommentsEntity } from '../../database/entities/comments.entity';
+import { CompaniesEntity } from '../../database/entities/companies.entity';
+import { CoursesEntity } from '../../database/entities/courses.entity';
+import { JobsEntity } from '../../database/entities/jobs.entity';
+import { LanguagesEntity } from '../../database/entities/languages.entity';
+import { PersonalDataEntity } from '../../database/entities/personal-data.entity';
+import { ReportsEntity } from '../../database/entities/reports.entity';
+import { UsersEntity } from '../../database/entities/users.entity';
+import { WorkExperiencesEntity } from '../../database/entities/work-experiences.entity';
 
 type Entities =
-  | CommentEntity
-  | CompanyEntity
-  | JobEntity
-  | ReportEntity
-  | UserEntity;
+  | CertificationsEntity
+  | CommentsEntity
+  | CompaniesEntity
+  | CoursesEntity
+  | JobsEntity
+  | LanguagesEntity
+  | PersonalDataEntity
+  | ReportsEntity
+  | UsersEntity
+  | WorkExperiencesEntity;
 
 export type EntityRelations<Entity> = {
   [Key in keyof Entity]: Entity[Key] extends Entities

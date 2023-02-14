@@ -1,11 +1,15 @@
 import {
-  BeforeUpdate,
   Column,
   CreateDateColumn,
   Entity,
+  Generated,
+  JoinColumn,
+  OneToOne,
   PrimaryGeneratedColumn,
+  Timestamp,
   UpdateDateColumn,
 } from 'typeorm';
+import { PersonalDataEntity } from './personal-data.entity';
 
 enum RolesEnum {
   ADMIN = 'ADMIN',
@@ -13,7 +17,7 @@ enum RolesEnum {
 }
 
 @Entity('users')
-export class UserEntity {
+export class UsersEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -23,8 +27,14 @@ export class UserEntity {
   @Column({ unique: true })
   email: string;
 
+  @Column({ unique: true })
+  cpf: string;
+
   @Column()
   password: string;
+
+  @Column()
+  policies: boolean;
 
   @Column({
     type: 'enum',
@@ -33,17 +43,17 @@ export class UserEntity {
   })
   type: string;
 
+  @OneToOne(() => PersonalDataEntity)
+  @JoinColumn()
+  personal_data: PersonalDataEntity;
+
   @CreateDateColumn()
   created_at: Date;
 
-  @UpdateDateColumn()
-  updated_at: Date;
+  @UpdateDateColumn({ update: true })
+  updated_at: Timestamp;
 
-  @BeforeUpdate()
-  updateTimestamp() {
-    this.updated_at = new Date();
-  }
-
-  @Column({ nullable: true })
+  @Column()
+  @Generated('uuid')
   recoverPasswordToken?: string;
 }

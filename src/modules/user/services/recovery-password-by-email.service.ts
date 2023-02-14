@@ -12,7 +12,6 @@ export class RecoveryPasswordByEmail {
 
   async execute(email: string) {
     const userExists = await this.userRepository.findOneByEmail(email);
-
     if (!userExists) {
       return {
         status: 200,
