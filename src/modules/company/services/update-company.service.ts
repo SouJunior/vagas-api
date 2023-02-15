@@ -1,5 +1,4 @@
-import { Injectable } from '@nestjs/common';
-import { CompaniesEntity } from '../../../database/entities/companies.entity';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { UpdateCompanyDto } from '../dtos/update-company.sto';
 import { CompanyRepository } from '../repository/company-repository';
 
@@ -7,7 +6,13 @@ import { CompanyRepository } from '../repository/company-repository';
 export class UpdateCompanyService {
   constructor(private companyRepository: CompanyRepository) {}
 
-  async execute(company: CompaniesEntity, data: UpdateCompanyDto) {
-    return this.companyRepository.UpdateCompanyById(company, data);
+  async execute(id: string, data: UpdateCompanyDto) {
+    const companyExists = await this.companyRepository.findCompanyById(id);
+
+    if (!companyExists) {
+      throw new BadRequestException('Company not found');
+    }
+
+    return this.companyRepository.UpdateCompanyById(id, data);
   }
 }

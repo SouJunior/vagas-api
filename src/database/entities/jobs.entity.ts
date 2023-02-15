@@ -32,10 +32,10 @@ enum JobsModalityENum {
 }
 
 enum JobsContractTimeENum {
-  'até 6 meses' = 'até 6 meses',
-  '6 meses - 1 ano' = '6 meses - 1 ano',
-  '1 ano - 2 anos' = '1 ano - 2 anos',
-  indeterminado = 'Tempo indeterminado',
+  SixMonth = '6m',
+  SixMonthToOneYear = '6m - 1a',
+  OneYearToTwoYear = '1a - 2a',
+  Indeterminado = 'Indeterminado',
 }
 
 @Entity('tb_jobs')
@@ -84,7 +84,12 @@ export class JobsEntity {
 
   @Column({
     type: 'enum',
-    enum: ['até 6 meses', '6 meses - 1 ano', '1 ano - 2 anos', 'indeterminado'],
+    enum: [
+      JobsContractTimeENum.Indeterminado,
+      JobsContractTimeENum.OneYearToTwoYear,
+      JobsContractTimeENum.SixMonth,
+      JobsContractTimeENum.SixMonthToOneYear,
+    ],
   })
   contract_time: string;
 

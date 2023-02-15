@@ -36,7 +36,9 @@ export class CompanyRepository extends Repository<CompaniesEntity> {
     return this.findOne(id).catch(handleError);
   }
 
-  async UpdateCompanyById(company: CompaniesEntity, data: UpdateCompanyDto) {
+  async UpdateCompanyById(id: string, data: UpdateCompanyDto) {
+    const company = await this.findOne(id).catch(handleError);
+
     return this.save({
       ...company,
       ...data,

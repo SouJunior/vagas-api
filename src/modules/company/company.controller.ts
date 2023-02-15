@@ -64,19 +64,14 @@ export class CompanyController {
   }
 
   @Put(':id')
-  @ApiParam({
-    name: 'id',
-    type: 'string',
-  })
   @ApiOperation({
     summary: 'Atualizar uma empresa por id.',
   })
   async updatecompanyById(
-    @Param('id', new GetEntity(CompaniesEntity))
-    company: CompaniesEntity,
+    @Param() { id }: CompanyIdDto,
     @Body() data: UpdateCompanyDto,
   ) {
-    return this.updateCompanyService.execute(company, data);
+    return this.updateCompanyService.execute(id, data);
   }
 
   @Delete(':id')
