@@ -12,30 +12,30 @@ import {
 import { CommentsEntity } from './comments.entity';
 import { CompaniesEntity } from './companies.entity';
 
-enum JobsTypeENum {
+enum JobsTypeEnum {
   ESTAGIARIO = 'ESTAGIARIO',
   TRAINNER = 'TRAINNER',
   JUNIOR = 'JUNIOR',
   ANALISTA = 'ANALISTA',
 }
 
-enum JobsTypeContractENum {
+enum JobsTypeContractEnum {
   CLT = 'CLT',
   PJ = 'PJ',
   FREELANCE = 'FREELANCE',
 }
 
-enum JobsModalityENum {
+enum JobsModalityEnum {
   REMOTO = 'REMOTO',
   HIBRIDO = 'HIBRIDO',
   PRESENCIAL = 'PRESENCIAL',
 }
 
-enum JobsContractTimeENum {
+enum JobsContractTimeEnum {
   SixMonth = '6m',
   SixMonthToOneYear = '6m - 1a',
   OneYearToTwoYear = '1a - 2a',
-  Indeterminado = 'Indeterminado',
+  Indeterminate = 'indeterminate',
 }
 
 @Entity('tb_jobs')
@@ -58,14 +58,14 @@ export class JobsEntity {
   @Column({
     type: 'enum',
     enum: ['ESTAGIARIO', 'TRAINNER', 'JUNIOR', 'ANALISTA'],
-    default: JobsTypeENum.JUNIOR,
+    default: JobsTypeEnum.JUNIOR,
   })
   type: string;
 
   @Column({
     type: 'enum',
     enum: ['CLT', 'PJ', 'FREELANCE'],
-    default: JobsTypeContractENum.CLT,
+    default: JobsTypeContractEnum.CLT,
   })
   type_contract: string;
 
@@ -75,7 +75,7 @@ export class JobsEntity {
   @Column({
     type: 'enum',
     enum: ['REMOTO', 'HIBRIDO', 'PRESENCIAL'],
-    default: JobsModalityENum.REMOTO,
+    default: JobsModalityEnum.REMOTO,
   })
   modality: string;
 
@@ -85,10 +85,10 @@ export class JobsEntity {
   @Column({
     type: 'enum',
     enum: [
-      JobsContractTimeENum.Indeterminado,
-      JobsContractTimeENum.OneYearToTwoYear,
-      JobsContractTimeENum.SixMonth,
-      JobsContractTimeENum.SixMonthToOneYear,
+      JobsContractTimeEnum.Indeterminate,
+      JobsContractTimeEnum.OneYearToTwoYear,
+      JobsContractTimeEnum.SixMonth,
+      JobsContractTimeEnum.SixMonthToOneYear,
     ],
   })
   contract_time: string;

@@ -55,7 +55,7 @@ export class CreateJobDto {
       JobsTypes.JUNIOR,
       JobsTypes.TRAINNER,
     ],
-    example: 'JUNIOR',
+    example: JobsTypes.JUNIOR,
   })
   type: string;
 
@@ -63,7 +63,12 @@ export class CreateJobDto {
   @IsEnum(JobsTypeContractEnum)
   @ApiProperty({
     description: 'Tipo de contrato do trabalho',
-    example: 'CLT',
+    example: JobsTypeContractEnum.CLT,
+    enum: [
+      JobsTypeContractEnum.CLT,
+      JobsTypeContractEnum.FREELANCE,
+      JobsTypeContractEnum.PJ,
+    ],
   })
   type_contract: string;
 
@@ -79,7 +84,12 @@ export class CreateJobDto {
   @IsEnum(JobsModalityEnum)
   @ApiProperty({
     description: 'Modalidade do trabalho',
-    example: 'REMOTO',
+    example: JobsModalityEnum.REMOTO,
+    enum: [
+      JobsModalityEnum.HIBRIDO,
+      JobsModalityEnum.PRESENCIAL,
+      JobsModalityEnum.REMOTO,
+    ],
   })
   modality: string;
 
@@ -96,7 +106,13 @@ export class CreateJobDto {
   @IsEnum(JobsContractTimeEnum)
   @ApiProperty({
     description: 'Tempo de contrato de trabalho',
-    example: 'até 6 meses',
+    example: JobsContractTimeEnum.Indeterminate,
+    enum: [
+      JobsContractTimeEnum.Indeterminate,
+      JobsContractTimeEnum.OneYearToTwoYear,
+      JobsContractTimeEnum.SixMonth,
+      JobsContractTimeEnum.SixMonthToOneYear,
+    ],
   })
   contract_time: string;
 
