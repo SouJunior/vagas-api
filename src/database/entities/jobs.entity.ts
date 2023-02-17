@@ -35,7 +35,7 @@ enum JobsContractTimeEnum {
   SixMonth = '6m',
   SixMonthToOneYear = '6m - 1a',
   OneYearToTwoYear = '1a - 2a',
-  Indeterminate = 'indeterminate',
+  undetermined = 'undetermined',
 }
 
 @Entity('tb_jobs')
@@ -85,7 +85,7 @@ export class JobsEntity {
   @Column({
     type: 'enum',
     enum: [
-      JobsContractTimeEnum.Indeterminate,
+      JobsContractTimeEnum.undetermined,
       JobsContractTimeEnum.OneYearToTwoYear,
       JobsContractTimeEnum.SixMonth,
       JobsContractTimeEnum.SixMonthToOneYear,

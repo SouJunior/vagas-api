@@ -106,9 +106,9 @@ export class CreateJobDto {
   @IsEnum(JobsContractTimeEnum)
   @ApiProperty({
     description: 'Tempo de contrato de trabalho',
-    example: JobsContractTimeEnum.Indeterminate,
+    example: JobsContractTimeEnum.Undetermined,
     enum: [
-      JobsContractTimeEnum.Indeterminate,
+      JobsContractTimeEnum.Undetermined,
       JobsContractTimeEnum.OneYearToTwoYear,
       JobsContractTimeEnum.SixMonth,
       JobsContractTimeEnum.SixMonthToOneYear,
