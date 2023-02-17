@@ -1,5 +1,5 @@
 export enum JobsModalityEnum {
-  REMOTO = 'REMOTO',
-  HIBRIDO = 'HIBRIDO',
-  PRESENCIAL = 'PRESENCIAL',
+  REMOTE = 'REMOTE',
+  HYBRID = 'HYBRID',
+  IN_PERSON = 'IN_PERSON',
 }

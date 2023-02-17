@@ -13,10 +13,9 @@ import { CommentsEntity } from './comments.entity';
 import { CompaniesEntity } from './companies.entity';
 
 enum JobsTypeEnum {
-  ESTAGIARIO = 'ESTAGIARIO',
-  TRAINNER = 'TRAINNER',
+  TRAINEE = 'TRAINEE',
   JUNIOR = 'JUNIOR',
-  ANALISTA = 'ANALISTA',
+  ANALYST = 'ANALYST',
 }
 
 enum JobsTypeContractEnum {
@@ -26,9 +25,9 @@ enum JobsTypeContractEnum {
 }
 
 enum JobsModalityEnum {
-  REMOTO = 'REMOTO',
-  HIBRIDO = 'HIBRIDO',
-  PRESENCIAL = 'PRESENCIAL',
+  REMOTE = 'REMOTE',
+  HYBRID = 'HYBRID',
+  IN_PERSON = 'IN_PERSON',
 }
 
 enum JobsContractTimeEnum {
@@ -57,14 +56,18 @@ export class JobsEntity {
 
   @Column({
     type: 'enum',
-    enum: ['ESTAGIARIO', 'TRAINNER', 'JUNIOR', 'ANALISTA'],
+    enum: [JobsTypeEnum.ANALYST, JobsTypeEnum.JUNIOR, JobsTypeEnum.TRAINEE],
     default: JobsTypeEnum.JUNIOR,
   })
   type: string;
 
   @Column({
     type: 'enum',
-    enum: ['CLT', 'PJ', 'FREELANCE'],
+    enum: [
+      JobsTypeContractEnum.CLT,
+      JobsTypeContractEnum.FREELANCE,
+      JobsTypeContractEnum.PJ,
+    ],
     default: JobsTypeContractEnum.CLT,
   })
   type_contract: string;
@@ -74,8 +77,12 @@ export class JobsEntity {
 
   @Column({
     type: 'enum',
-    enum: ['REMOTO', 'HIBRIDO', 'PRESENCIAL'],
-    default: JobsModalityEnum.REMOTO,
+    enum: [
+      JobsModalityEnum.HYBRID,
+      JobsModalityEnum.IN_PERSON,
+      JobsModalityEnum.REMOTE,
+    ],
+    default: JobsModalityEnum.REMOTE,
   })
   modality: string;
 

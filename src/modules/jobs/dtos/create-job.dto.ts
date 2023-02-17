@@ -49,12 +49,7 @@ export class CreateJobDto {
   @IsEnum(JobsTypes)
   @ApiProperty({
     description: 'Senioridade da vaga',
-    enum: [
-      JobsTypes.ANALISTA,
-      JobsTypes.ESTAGIARIO,
-      JobsTypes.JUNIOR,
-      JobsTypes.TRAINNER,
-    ],
+    enum: [JobsTypes.ANALYST, JobsTypes.JUNIOR, JobsTypes.TRAINEE],
     example: JobsTypes.JUNIOR,
   })
   type: string;
@@ -84,11 +79,11 @@ export class CreateJobDto {
   @IsEnum(JobsModalityEnum)
   @ApiProperty({
     description: 'Modalidade do trabalho',
-    example: JobsModalityEnum.REMOTO,
+    example: JobsModalityEnum.REMOTE,
     enum: [
-      JobsModalityEnum.HIBRIDO,
-      JobsModalityEnum.PRESENCIAL,
-      JobsModalityEnum.REMOTO,
+      JobsModalityEnum.HYBRID,
+      JobsModalityEnum.IN_PERSON,
+      JobsModalityEnum.REMOTE,
     ],
   })
   modality: string;
