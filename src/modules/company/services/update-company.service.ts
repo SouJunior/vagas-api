@@ -13,10 +13,6 @@ export class UpdateCompanyService {
       throw new BadRequestException('Company not found');
     }
 
-    if (data.user_id) {
-      delete data.user_id;
-    }
-
     return this.companyRepository.UpdateCompanyById(id, data);
   }
 }

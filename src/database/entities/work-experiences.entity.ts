@@ -10,7 +10,7 @@ import {
 } from 'typeorm';
 import { PersonalDataEntity } from './personal-data.entity';
 
-@Entity('work_experiences')
+@Entity('tb_work_experiences')
 export class WorkExperiencesEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;

@@ -12,19 +12,33 @@ import { MailModule } from './modules/mails/mail.module';
 import { ReportsModule } from './modules/reports/reports.module';
 import { UserModule } from './modules/user/user.module';
 
+const {
+  ISLOCAL,
+  TYPEORM_HOST,
+  TYPEORM_PORT,
+  TYPEORM_PASSWORD,
+  TYPEORM_USERNAME,
+  TYPEORM_DATABASE,
+  TYPEORM_DOCKER_HOST,
+  TYPEORM_DOCKER_PORT,
+  TYPEORM_DOCKER_USERNAME,
+  TYPEORM_DOCKER_PASSWORD,
+  TYPEORM_DOCKER_DATABASE,
+} = process.env;
+
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
 
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: process.env.TYPEORM_HOST,
-      port: parseInt(process.env.TYPEORM_PORT),
-      username: process.env.TYPEORM_USERNAME,
-      password: process.env.TYPEORM_PASSWORD,
-      database: process.env.TYPEORM_DATABASE,
+      host: ISLOCAL == 'true' ? TYPEORM_DOCKER_HOST : TYPEORM_HOST,
+      port: ISLOCAL == 'true' ? +TYPEORM_DOCKER_PORT : +TYPEORM_PORT,
+      username: ISLOCAL == 'true' ? TYPEORM_DOCKER_USERNAME : TYPEORM_USERNAME,
+      password: ISLOCAL == 'true' ? TYPEORM_DOCKER_PASSWORD : TYPEORM_PASSWORD,
+      database: ISLOCAL == 'true' ? TYPEORM_DOCKER_DATABASE : TYPEORM_DATABASE,
       logging: true,
-      migrationsRun: false,
+      migrationsRun: true,
       synchronize: true,
       entities: ['dist/database/entities/*.entity.js'],
       migrations: [

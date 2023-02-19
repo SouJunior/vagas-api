@@ -11,7 +11,7 @@ import {
 import { JobsEntity } from './jobs.entity';
 import { UsersEntity } from './users.entity';
 
-@Entity('report')
+@Entity('tb_reports')
 export class ReportsEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;

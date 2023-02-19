@@ -28,7 +28,7 @@ enum CourseDurationEnum {
   MEDIUM = 'MEDIUM',
   LONG = 'LONG',
 }
-@Entity('courses')
+@Entity('tb_courses')
 export class CoursesEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;

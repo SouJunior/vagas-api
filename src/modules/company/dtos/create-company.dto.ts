@@ -42,28 +42,4 @@ export class CreateCompanyDto {
     example: 'Empresa de pipocas',
   })
   description: string;
-
-  @IsString()
-  @IsNotEmpty()
-  @ApiProperty({
-    description: 'Nome do dono',
-    example: 'Julio Cesar',
-  })
-  owner_name: string;
-
-  @IsString()
-  @IsNotEmpty()
-  @ApiProperty({
-    description: 'telefone do dono',
-    example: '12345-6789',
-  })
-  owner_phone: string;
-
-  @IsString()
-  @IsNotEmpty()
-  @ApiProperty({
-    description: 'ID do usuário',
-    example: 'be02e7b0-238a-44c2-b9db-ccb339d63fc9',
-  })
-  user_id: string;
 }
