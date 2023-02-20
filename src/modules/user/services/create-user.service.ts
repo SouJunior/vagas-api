@@ -1,8 +1,8 @@
-import { UserRepository } from '../repository/user.repository';
-import { CreateUserDto } from '../dtos/create-user.dto';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { MailService } from 'src/modules/mails/mail.service';
+import { CreateUserDto } from '../dtos/create-user.dto';
+import { UserRepository } from '../repository/user.repository';
 
 @Injectable()
 export class CreateUserService {
@@ -12,16 +12,21 @@ export class CreateUserService {
   ) {}
 
   async execute(data: CreateUserDto) {
-    const { email, password, cpf, policies } = data;
+    const { email, password, cpf } = data;
 
-    if (!policies) {
-      throw new BadRequestException('Unacceptable Policies');
-    }
+    const userAlreadyExists = await this.userRepository.findOneByEmail(email);
 
-    const emailAlreadyInUse = await this.userRepository.findOneByEmail(email);
+    // if (userAlreadyExists) {
+    //   throw new BadRequestException(`Email ${email} already exists`);
+    // }
 
-    if (emailAlreadyInUse) {
-      throw new BadRequestException(`Email ${email} already exists`);
+    if (userAlreadyExists) {
+      return {
+        status: 404,
+        data: {
+          message: 'Email already exists',
+        },
+      };
     }
 
     const cpfAlreadyInUse = await this.userRepository.findOneByCpf(cpf);
@@ -39,6 +44,9 @@ export class CreateUserService {
 
     await this.mailService.sendUserCreationConfirmation(response);
 
-    return response;
+    return {
+      status: 201,
+      data: response,
+    };
   }
 }

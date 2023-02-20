@@ -1,8 +1,8 @@
-import { CreateCommentDto } from './../dtos/create-comment.dto';
-import { CommentsEntity } from '../../../database/entities/comments.entity';
 import { EntityRepository, Repository } from 'typeorm';
-import { UpdateCommentDto } from '../dtos/update-comment.dto';
+import { CommentsEntity } from '../../../database/entities/comments.entity';
 import { handleError } from '../../../shared/utils/handle-error.util';
+import { UpdateCommentDto } from '../dtos/update-comment.dto';
+import { CreateCommentDto } from './../dtos/create-comment.dto';
 
 @EntityRepository(CommentsEntity)
 export class CommentRepository extends Repository<CommentsEntity> {

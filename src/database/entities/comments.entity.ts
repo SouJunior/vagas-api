@@ -12,7 +12,7 @@ import {
 import { JobsEntity } from './jobs.entity';
 import { UsersEntity } from './users.entity';
 
-@Entity('comments')
+@Entity('tb_comments')
 export class CommentsEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;

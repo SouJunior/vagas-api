@@ -2,16 +2,12 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  Generated,
-  JoinColumn,
-  ManyToOne,
   PrimaryGeneratedColumn,
   Timestamp,
   UpdateDateColumn,
 } from 'typeorm';
-import { UsersEntity } from './users.entity';
 
-@Entity('companies')
+@Entity('tb_companies')
 export class CompaniesEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -30,19 +26,6 @@ export class CompaniesEntity {
 
   @Column()
   address: string;
-
-  @ManyToOne(() => UsersEntity)
-  @JoinColumn({ name: 'user_id' })
-  user: UsersEntity;
-
-  @Column()
-  user_id: string;
-
-  @Column()
-  owner_name: string;
-
-  @Column()
-  owner_phone: string;
 
   @CreateDateColumn()
   created_at: Date;

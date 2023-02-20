@@ -1,4 +1,3 @@
-import { UpdateCompanyDto } from './dtos/update-company.sto';
 import {
   Body,
   Controller,
@@ -11,19 +10,19 @@ import {
   Query,
   Res,
 } from '@nestjs/common';
+import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import { CompaniesEntity } from 'src/database/entities/companies.entity';
+import GetEntity from '../../shared/pipes/pipe-entity.pipe';
+import { PageOptionsDto } from '../../shared/pagination';
 import { CompanyIdDto } from './dtos/company-id.dto';
 import { CreateCompanyDto } from './dtos/create-company.dto';
+import { UpdateCompanyDto } from './dtos/update-company.sto';
 import {
   CreateCompanyService,
   DeleteCompanyService,
   FindAllCompanyService,
-  FindCompanyById,
   UpdateCompanyService,
 } from './services';
-import { PageOptionsDto } from '../../shared/pagination';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { EmailDto } from '../user/dtos/email-user.dto';
-import { CreatePasswordHashDto } from '../user/dtos/update-my-password.dto';
 import { RecoveryPasswordByEmail } from './services/recovery-password-by-email.service';
 import { UpdatePasswordByEmailService } from './services/update-password-by-email.service';
 
@@ -33,7 +32,6 @@ export class CompanyController {
   constructor(
     private createCompanyService: CreateCompanyService,
     private findAllCompanyService: FindAllCompanyService,
-    private findCompanyById: FindCompanyById,
     private updateCompanyService: UpdateCompanyService,
     private deleteCompanyService: DeleteCompanyService,
     private recoveryPasswordByEmail: RecoveryPasswordByEmail,
@@ -57,11 +55,18 @@ export class CompanyController {
   }
 
   @Get(':id')
+  @ApiParam({
+    name: 'id',
+    type: 'string',
+  })
   @ApiOperation({
     summary: 'Buscar uma empresa por id.',
   })
-  async getcompanyById(@Param() { id }: CompanyIdDto) {
-    return this.findCompanyById.execute(id);
+  async getcompanyById(
+    @Param('id', new GetEntity(CompaniesEntity))
+    company: CompaniesEntity,
+  ) {
+    return company;
   }
 
   @Put(':id')
