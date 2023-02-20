@@ -9,7 +9,6 @@ import {
   PageMetaDto,
 } from '../../../shared/pagination';
 import { handleError } from '../../../shared/utils/handle-error.util';
-import { EmailUserDto } from '../dtos/email-user.dto';
 
 @EntityRepository(UsersEntity)
 export class UserRepository extends Repository<UsersEntity> {

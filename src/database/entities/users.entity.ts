@@ -61,6 +61,7 @@ export class UsersEntity {
     this.id = user?.id;
     this.name = user?.name;
     this.email = user?.email;
+    this.cpf = user?.cpf;
     this.password = user?.password;
     this.type = user?.type;
     this.recoverPasswordToken = user?.recoverPasswordToken;

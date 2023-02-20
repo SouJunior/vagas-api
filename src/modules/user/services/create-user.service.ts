@@ -2,10 +2,14 @@ import { UserRepository } from '../repository/user.repository';
 import { CreateUserDto } from '../dtos/create-user.dto';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
+import { MailService } from 'src/modules/mails/mail.service';
 
 @Injectable()
 export class CreateUserService {
-  constructor(private userRepository: UserRepository) {}
+  constructor(
+    private userRepository: UserRepository,
+    private mailService: MailService,
+  ) {}
 
   async execute(data: CreateUserDto) {
     const { email, password, cpf, policies } = data;
@@ -32,6 +36,8 @@ export class CreateUserService {
 
     delete response.password;
     delete response.recoverPasswordToken;
+
+    await this.mailService.sendUserCreationConfirmation(response);
 
     return response;
   }
