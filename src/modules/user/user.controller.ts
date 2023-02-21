@@ -19,9 +19,10 @@ import { PageOptionsDto } from '../../shared/pagination';
 import { LoggedAdmin } from '../auth/decorator/logged-admin.decorator';
 import { LoggedUser } from '../auth/decorator/logged-user.decorator';
 import { CreateUserDto } from './dtos/create-user.dto';
-import { EmailUserDto } from './dtos/email-user.dto';
-import { CreatePasswordHashDto } from './dtos/update-my-password.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
+import { EmailDto } from './dtos/email-user.dto';
+import { CreatePasswordHashDto } from './dtos/update-my-password.dto';
+
 import {
   CreateUserService,
   DeleteUserService,
@@ -107,7 +108,7 @@ export class UserController {
     summary: 'Send email to recovery password.',
   })
   async recoveryPasswordSendEmail(
-    @Body() { email }: EmailUserDto,
+    @Body() { email }: EmailDto,
     @Res() res: Response,
   ) {
     const { status, data } = await this.recoveryPasswordByEmail.execute(email);
