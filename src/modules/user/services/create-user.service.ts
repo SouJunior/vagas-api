@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from '../dtos/create-user.dto';
 import { UserRepository } from '../repository/user.repository';
@@ -12,10 +12,6 @@ export class CreateUserService {
 
     const userAlreadyExists = await this.userRepository.findOneByEmail(email);
 
-    // if (userAlreadyExists) {
-    //   throw new BadRequestException(`Email ${email} already exists`);
-    // }
-
     if (userAlreadyExists) {
       return {
         status: 404,
@@ -28,7 +24,12 @@ export class CreateUserService {
     const cpfAlreadyInUse = await this.userRepository.findOneByCpf(cpf);
 
     if (cpfAlreadyInUse) {
-      throw new BadRequestException(`This CPF is already in use`);
+      return {
+        status: 404,
+        data: {
+          message: `This CPF is already in use`,
+        },
+      };
     }
 
     data.password = await bcrypt.hash(password, 10);
