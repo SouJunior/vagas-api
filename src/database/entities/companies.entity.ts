@@ -31,7 +31,7 @@ export class CompaniesEntity {
   created_at: Date;
 
   @UpdateDateColumn({ update: true })
-  updated_at: Timestamp;
+  updated_at: Date;
 
   // @Column()
   // @Generated('uuid')

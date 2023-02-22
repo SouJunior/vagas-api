@@ -4,16 +4,14 @@ import {
   Delete,
   Get,
   Param,
-  Patch,
   Post,
   Put,
   Query,
-  Res,
 } from '@nestjs/common';
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { CompaniesEntity } from 'src/database/entities/companies.entity';
-import GetEntity from '../../shared/pipes/pipe-entity.pipe';
 import { PageOptionsDto } from '../../shared/pagination';
+import GetEntity from '../../shared/pipes/pipe-entity.pipe';
 import { CompanyIdDto } from './dtos/company-id.dto';
 import { CreateCompanyDto } from './dtos/create-company.dto';
 import { UpdateCompanyDto } from './dtos/update-company.sto';
