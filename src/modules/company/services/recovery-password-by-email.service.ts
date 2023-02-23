@@ -4,7 +4,7 @@ import { MailService } from '../../mails/mail.service';
 import { CompanyRepository } from '../repository/company-repository';
 
 @Injectable()
-export class RecoveryPasswordByEmail {
+export class RecoveryCompanyPasswordByEmail {
   constructor(
     private companyRepository: CompanyRepository,
     private mailService: MailService,

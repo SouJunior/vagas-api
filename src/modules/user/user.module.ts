@@ -30,5 +30,6 @@ import { UserController } from './user.controller';
     RecoveryPasswordByEmail,
     UpdatePasswordByEmailService,
   ],
+  exports: [RecoveryPasswordByEmail],
 })
 export class UserModule {}

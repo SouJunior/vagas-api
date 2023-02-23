@@ -23,7 +23,7 @@ import {
   FindAllCompanyService,
   UpdateCompanyService,
 } from './services';
-import { RecoveryPasswordByEmail } from './services/recovery-password-by-email.service';
+import { RecoveryCompanyPasswordByEmail } from './services/recovery-password-by-email.service';
 import { UpdatePasswordByEmailService } from './services/update-password-by-email.service';
 
 @ApiTags('company')
@@ -34,7 +34,7 @@ export class CompanyController {
     private findAllCompanyService: FindAllCompanyService,
     private updateCompanyService: UpdateCompanyService,
     private deleteCompanyService: DeleteCompanyService,
-    private recoveryPasswordByEmail: RecoveryPasswordByEmail,
+    private recoveryPasswordByEmail: RecoveryCompanyPasswordByEmail,
     private updatePasswordByEmailService: UpdatePasswordByEmailService,
   ) {}
 
