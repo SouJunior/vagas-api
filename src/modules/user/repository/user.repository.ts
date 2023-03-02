@@ -81,12 +81,18 @@ export class UserRepository extends Repository<UsersEntity> {
 
   async updateRecoveryPassword(id, recoverPasswordToken) {
     const user = await this.findOne(id).catch(handleError);
-    const data = { ...recoverPasswordToken };
 
-    return this.save({
-      ...user,
-      ...data,
-    }).catch(handleError);
+    user.recoverPasswordToken = recoverPasswordToken;
+
+    return this.save(user);
+  }
+
+  async activateUser(id) {
+    const user = await this.findOne(id).catch(handleError);
+
+    user.mailconfirm = true;
+
+    return this.save(user);
   }
 
   async findByToken(recoverPasswordToken: string): Promise<UsersEntity> {

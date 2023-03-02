@@ -23,30 +23,49 @@ export class MailService {
   }
 
   async sendUserCreationConfirmation(user: UsersEntity) {
-    const { email, name } = user;
+    const { email, name, id } = user;
+
+    const url = `http://localhost:3333/userconfirmation?id=${id}`;
 
     await this.mailerService.sendMail({
       to: email,
       subject: 'User Created!',
-      template: './createuser',
+      template: './create',
       context: {
         name: name,
+        url,
       },
     });
   }
 
-  // async sendCompanyConfirmation(company: CompaniesEntity) {
-  //   const { email, company_name, recoverPasswordToken } = company;
-  //   const url = `http://localhost:3333/recovery-password?token=${recoverPasswordToken}`;
+  async sendCompanyConfirmation(company: CompaniesEntity) {
+    const { email, company_name, recoverPasswordToken } = company;
+    const url = `http://localhost:3333/recovery-password?token=${recoverPasswordToken}`;
 
-  //   await this.mailerService.sendMail({
-  //     to: email,
-  //     subject: 'Reset Password!',
-  //     template: './send',
-  //     context: {
-  //       name: company_name,
-  //       url,
-  //     },
-  //   });
-  // }
+    await this.mailerService.sendMail({
+      to: email,
+      subject: 'Reset Password!',
+      template: './send',
+      context: {
+        name: company_name,
+        url,
+      },
+    });
+  }
+
+  async sendCompanyCreationConfirmation(company: CompaniesEntity) {
+    const { email, company_name, id } = company;
+
+    const url = `http://localhost:3333/companyconfirmation?id=${id}`;
+
+    await this.mailerService.sendMail({
+      to: email,
+      subject: 'Company Created!',
+      template: './create',
+      context: {
+        name: company_name,
+        url,
+      },
+    });
+  }
 }

@@ -10,6 +10,7 @@ import {
   FindAllCompanyService,
   UpdateCompanyService,
 } from './services';
+import { ActivateCompanyService } from './services/activate-company.service';
 import { RecoveryCompanyPasswordByEmail } from './services/recovery-password-by-email.service';
 import { UpdatePasswordByEmailService } from './services/update-password-by-email.service';
 
@@ -23,6 +24,7 @@ import { UpdatePasswordByEmailService } from './services/update-password-by-emai
     DeleteCompanyService,
     RecoveryCompanyPasswordByEmail,
     UpdatePasswordByEmailService,
+    ActivateCompanyService,
   ],
 })
 export class CompanyModule {}

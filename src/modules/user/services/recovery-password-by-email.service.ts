@@ -16,7 +16,7 @@ export class RecoveryPasswordByEmail {
       return {
         status: 200,
         data: {
-          message: 'If email exists a email to recovery password was send',
+          message: 'Email not found!',
         },
       };
     }
@@ -35,7 +35,7 @@ export class RecoveryPasswordByEmail {
     return {
       status: 200,
       data: {
-        message: 'If email exists a email to recovery password was send',
+        message: 'If email exists, a email to recovery password was send',
       },
     };
   }

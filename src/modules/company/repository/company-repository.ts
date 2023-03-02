@@ -4,6 +4,7 @@ import { EntityRepository, Repository } from 'typeorm';
 import { handleError } from '../../../shared/utils/handle-error.util';
 import { CreateCompanyDto } from '../dtos/create-company.dto';
 import { UpdateCompanyDto } from '../dtos/update-company.sto';
+import { UpdateMyPasswordDto } from '../dtos/update-my-password.dto';
 
 @EntityRepository(CompaniesEntity)
 export class CompanyRepository extends Repository<CompaniesEntity> {
@@ -53,14 +54,38 @@ export class CompanyRepository extends Repository<CompaniesEntity> {
     return this.findOne({ where: { recoverPasswordToken } }).catch(handleError);
   }
 
-  async updateRecoveryPassword(id, recoverPasswordToken) {
+  async findOneById(id: string): Promise<CompaniesEntity> {
+    return this.findOne(id).catch(handleError);
+  }
+
+  async findOneByCnpj(cnpj: string): Promise<CompaniesEntity> {
+    return this.findOne({ cnpj }).catch(handleError);
+  }
+
+  async updateMyPassword(updateMyPasswordDto: UpdateMyPasswordDto, id) {
     const company = await this.findOne(id).catch(handleError);
-    const data = { ...recoverPasswordToken };
+    const data = { ...updateMyPasswordDto };
 
     return this.save({
       ...company,
       ...data,
     }).catch(handleError);
+  }
+
+  async updateRecoveryPassword(id, recoverPasswordToken) {
+    const company = await this.findOne(id).catch(handleError);
+
+    company.recoverPasswordToken = recoverPasswordToken;
+
+    return this.save(company);
+  }
+
+  async activateCompany(id) {
+    const company = await this.findOne(id).catch(handleError);
+
+    company.mailconfirm = true;
+
+    return this.save(company);
   }
 
   async updatePassword(id, password: string): Promise<CompaniesEntity> {
@@ -69,6 +94,8 @@ export class CompanyRepository extends Repository<CompaniesEntity> {
       recoverPasswordToken: null,
       password,
     };
+
+    delete company.password;
 
     return this.save({
       ...company,

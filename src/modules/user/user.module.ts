@@ -12,6 +12,7 @@ import {
   RecoveryPasswordByEmail,
   UpdatePasswordByEmailService,
 } from './services';
+import { ActivateUserService } from './services/activate-user.service';
 import { UserController } from './user.controller';
 
 @Module({
@@ -29,6 +30,7 @@ import { UserController } from './user.controller';
     DeleteUserService,
     RecoveryPasswordByEmail,
     UpdatePasswordByEmailService,
+    ActivateUserService,
   ],
   exports: [RecoveryPasswordByEmail],
 })

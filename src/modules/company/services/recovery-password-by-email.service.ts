@@ -16,7 +16,7 @@ export class RecoveryCompanyPasswordByEmail {
       return {
         status: 200,
         data: {
-          message: 'If email exists a email to recovery password was send',
+          message: 'Email not found!',
         },
       };
     }
@@ -30,7 +30,7 @@ export class RecoveryCompanyPasswordByEmail {
       recoverPasswordToken,
     );
 
-    // await this.mailService.sendCompanyConfirmation(companyUpdated);
+    await this.mailService.sendCompanyConfirmation(companyUpdated);
 
     return {
       status: 200,

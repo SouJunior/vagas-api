@@ -43,10 +43,18 @@ export class CreateUserDto {
 
   @IsNotEmpty()
   @IsString()
+  @ApiProperty({
+    description: 'CPF do usuário',
+    example: '1234567890',
+  })
   cpf: string;
 
   @IsNotEmpty()
   @IsBoolean()
+  @ApiProperty({
+    description: 'É um boolean que serve para algo.',
+    example: true,
+  })
   policies: boolean;
 
   @IsOptional()
