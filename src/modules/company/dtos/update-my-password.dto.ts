@@ -8,8 +8,9 @@ export class UpdateMyPasswordDto {
 
   @IsString()
   @IsNotEmpty()
+  @Length(8, 50)
   @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
-    message: 'Senha muito fraca',
+    message: 'Inserir senha com os critérios informados',
   })
   @ApiProperty({
     description: 'Senha de Login',
@@ -19,8 +20,9 @@ export class UpdateMyPasswordDto {
 
   @IsString()
   @IsNotEmpty()
+  @Length(8, 50)
   @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
-    message: 'Senha muito fraca',
+    message: 'Inserir senha com os critérios informados',
   })
   @ApiProperty({
     description: 'Senha de Login',
@@ -33,7 +35,7 @@ export class CreatePasswordHashDto {
   @IsString()
   @Length(8, 50)
   @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
-    message: 'Senha muito fraca',
+    message: 'Inserir senha com os critérios informados',
   })
   @ApiProperty({
     description: 'Senha de Login',
@@ -42,8 +44,9 @@ export class CreatePasswordHashDto {
   password: string;
 
   @IsString()
+  @Length(8, 50)
   @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
-    message: 'Senha muito fraca',
+    message: 'Inserir senha com os critérios informados',
   })
   @ApiProperty({
     description: 'Confirmação de senha de Login',

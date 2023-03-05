@@ -1,11 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
+import { MailService } from 'src/modules/mails/mail.service';
 import { CreatePasswordHashDto } from '../dtos/update-my-password.dto';
 import { CompanyRepository } from '../repository/company-repository';
 
 @Injectable()
 export class UpdatePasswordByEmailService {
-  constructor(private companyRepository: CompanyRepository) {}
+  constructor(
+    private companyRepository: CompanyRepository,
+    private mailService: MailService,
+  ) {}
 
   async execute({
     recoverPasswordToken,
@@ -19,14 +23,14 @@ export class UpdatePasswordByEmailService {
     if (!company) {
       return {
         status: 400,
-        data: { message: 'Company not found' },
+        data: { message: 'Empresa não encontrada!' },
       };
     }
 
     if (password != confirmPassword) {
       return {
         status: 400,
-        data: { message: 'Password mismatch' },
+        data: { message: 'As senhas não conferem!' },
       };
     }
     const passwordHash = await bcrypt.hash(password, 10);
@@ -36,9 +40,11 @@ export class UpdatePasswordByEmailService {
       passwordHash,
     );
 
+    await this.mailService.sendCompanyConfirmation(companyUpdated);
+
     return {
       status: 200,
-      data: companyUpdated,
+      data: { message: 'Senha redefinida com sucesso!' },
     };
   }
 }

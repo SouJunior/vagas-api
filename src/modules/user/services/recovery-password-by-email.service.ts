@@ -16,7 +16,7 @@ export class RecoveryPasswordByEmail {
       return {
         status: 200,
         data: {
-          message: 'Email not found!',
+          message: 'Email não encontrado!',
         },
       };
     }
@@ -35,7 +35,8 @@ export class RecoveryPasswordByEmail {
     return {
       status: 200,
       data: {
-        message: 'If email exists, a email to recovery password was send',
+        message:
+          'Se o e-mail existir no nosso banco será enviado um email com o link para recuperação da senha.',
       },
     };
   }

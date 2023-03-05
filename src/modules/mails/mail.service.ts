@@ -11,15 +11,27 @@ export class MailService {
     const { email, name, recoverPasswordToken } = user;
     const url = `http://localhost:3333/recovery-password?token=${recoverPasswordToken}`;
 
-    await this.mailerService.sendMail({
-      to: email,
-      subject: 'Reset Password!',
-      template: './send',
-      context: {
-        name: name,
-        url,
-      },
-    });
+    if (recoverPasswordToken) {
+      await this.mailerService.sendMail({
+        to: email,
+        subject: 'Recuperação de Senha!',
+        template: './send',
+        context: {
+          name: name,
+          url,
+        },
+      });
+    } else {
+      await this.mailerService.sendMail({
+        to: email,
+        subject: 'Senha alterada com Sucesso!',
+        template: './passwordupdate',
+        context: {
+          name: name,
+          url,
+        },
+      });
+    }
   }
 
   async sendUserCreationConfirmation(user: UsersEntity) {
@@ -29,7 +41,7 @@ export class MailService {
 
     await this.mailerService.sendMail({
       to: email,
-      subject: 'User Created!',
+      subject: 'Usuário criado!',
       template: './create',
       context: {
         name: name,
@@ -42,15 +54,26 @@ export class MailService {
     const { email, company_name, recoverPasswordToken } = company;
     const url = `http://localhost:3333/recovery-password?token=${recoverPasswordToken}`;
 
-    await this.mailerService.sendMail({
-      to: email,
-      subject: 'Reset Password!',
-      template: './send',
-      context: {
-        name: company_name,
-        url,
-      },
-    });
+    if (recoverPasswordToken) {
+      await this.mailerService.sendMail({
+        to: email,
+        subject: 'Recuperação de Senha!',
+        template: './send',
+        context: {
+          name: company_name,
+          url,
+        },
+      });
+    } else {
+      await this.mailerService.sendMail({
+        to: email,
+        subject: 'Senha alterada com Sucesso!',
+        template: './passwordupdate',
+        context: {
+          name: company_name,
+        },
+      });
+    }
   }
 
   async sendCompanyCreationConfirmation(company: CompaniesEntity) {
@@ -60,7 +83,7 @@ export class MailService {
 
     await this.mailerService.sendMail({
       to: email,
-      subject: 'Company Created!',
+      subject: 'Empresa criado!',
       template: './create',
       context: {
         name: company_name,
