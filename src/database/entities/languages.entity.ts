@@ -64,7 +64,7 @@ export class LanguagesEntity {
   created_at: Date;
 
   @UpdateDateColumn({ update: true })
-  updated_at: Timestamp;
+  updated_at: Date;
 
   constructor(language?: Partial<LanguagesEntity>) {
     this.id = language?.id;

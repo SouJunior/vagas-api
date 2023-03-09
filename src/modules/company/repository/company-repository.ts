@@ -45,6 +45,37 @@ export class CompanyRepository extends Repository<CompaniesEntity> {
     }).catch(handleError);
   }
 
+  async findOneByEmail(email: string): Promise<CompaniesEntity> {
+    return this.findOne({ where: { email } }).catch(handleError);
+  }
+
+  async findByToken(recoverPasswordToken: string): Promise<CompaniesEntity> {
+    return this.findOne({ where: { recoverPasswordToken } }).catch(handleError);
+  }
+
+  async updateRecoveryPassword(id, recoverPasswordToken) {
+    const company = await this.findOne(id).catch(handleError);
+    const data = { ...recoverPasswordToken };
+
+    return this.save({
+      ...company,
+      ...data,
+    }).catch(handleError);
+  }
+
+  async updatePassword(id, password: string): Promise<CompaniesEntity> {
+    const company = await this.findOne(id).catch(handleError);
+    const data = {
+      recoverPasswordToken: null,
+      password,
+    };
+
+    return this.save({
+      ...company,
+      ...data,
+    }).catch(handleError);
+  }
+
   async deleteCompanyById(id: string): Promise<object> {
     this.delete(id).catch(handleError);
 

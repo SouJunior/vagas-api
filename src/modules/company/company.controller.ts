@@ -10,8 +10,8 @@ import {
 } from '@nestjs/common';
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { CompaniesEntity } from 'src/database/entities/companies.entity';
-import GetEntity from '../../shared/pipes/pipe-entity.pipe';
 import { PageOptionsDto } from '../../shared/pagination';
+import GetEntity from '../../shared/pipes/pipe-entity.pipe';
 import { CompanyIdDto } from './dtos/company-id.dto';
 import { CreateCompanyDto } from './dtos/create-company.dto';
 import { UpdateCompanyDto } from './dtos/update-company.sto';
@@ -21,6 +21,8 @@ import {
   FindAllCompanyService,
   UpdateCompanyService,
 } from './services';
+import { RecoveryPasswordByEmail } from './services/recovery-password-by-email.service';
+import { UpdatePasswordByEmailService } from './services/update-password-by-email.service';
 
 @ApiTags('company')
 @Controller('company')
@@ -30,6 +32,8 @@ export class CompanyController {
     private findAllCompanyService: FindAllCompanyService,
     private updateCompanyService: UpdateCompanyService,
     private deleteCompanyService: DeleteCompanyService,
+    private recoveryPasswordByEmail: RecoveryPasswordByEmail,
+    private updatePasswordByEmailService: UpdatePasswordByEmailService,
   ) {}
 
   @Post()
@@ -81,4 +85,25 @@ export class CompanyController {
   async deleteCompanyById(@Param() { id }: CompanyIdDto) {
     return this.deleteCompanyService.execute(id);
   }
+
+  // @Patch('recovery-password')
+  // @ApiOperation({
+  //   summary: 'Send email to recovery password.',
+  // })
+  // async recoveryPasswordSendEmail(
+  //   @Body() { email }: EmailDto,
+  //   @Res() res: Response,
+  // ) {
+  //   const { status, data } = await this.recoveryPasswordByEmail.execute(email);
+
+  //   return res.status(status).send(data);
+  // }
+
+  // @Patch('update_password')
+  // @ApiOperation({
+  //   summary: 'User update password.',
+  // })
+  // updatePassword(@Body() updatePassword: CreatePasswordHashDto) {
+  //   return this.updatePasswordByEmailService.execute(updatePassword);
+  // }
 }

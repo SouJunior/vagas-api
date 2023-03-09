@@ -80,7 +80,7 @@ export class CoursesEntity {
   created_at: Date;
 
   @UpdateDateColumn({ update: true })
-  updated_at: Timestamp;
+  updated_at: Date;
 
   constructor(course?: Partial<CoursesEntity>) {
     this.id = course?.id;

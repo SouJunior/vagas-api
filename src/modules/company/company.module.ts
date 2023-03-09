@@ -9,6 +9,8 @@ import {
   FindAllCompanyService,
   UpdateCompanyService,
 } from './services';
+import { RecoveryPasswordByEmail } from './services/recovery-password-by-email.service';
+import { UpdatePasswordByEmailService } from './services/update-password-by-email.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([CompanyRepository, UserRepository])],
@@ -18,6 +20,8 @@ import {
     FindAllCompanyService,
     UpdateCompanyService,
     DeleteCompanyService,
+    RecoveryPasswordByEmail,
+    UpdatePasswordByEmailService,
   ],
 })
 export class CompanyModule {}

@@ -1,18 +1,16 @@
-import { Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
-import { CreatePasswordHashDto } from '../dtos/update-my-password.dto';
-import { UserRepository } from '../repository/user.repository';
+import { CreatePasswordHashDto } from 'src/modules/user/dtos/update-my-password.dto';
+import { CompanyRepository } from '../repository/company-repository';
 
-@Injectable()
 export class UpdatePasswordByEmailService {
-  constructor(private userRepository: UserRepository) {}
-
   async execute({
     recoverPasswordToken,
     password,
     confirmPassword,
   }: CreatePasswordHashDto) {
-    const user = await this.userRepository.findByToken(recoverPasswordToken);
+    const companyRepository = new CompanyRepository();
+
+    const user = await companyRepository.findByToken(recoverPasswordToken);
 
     if (!user) {
       return {
@@ -29,7 +27,7 @@ export class UpdatePasswordByEmailService {
     }
     const passwordHash = await bcrypt.hash(password, 10);
 
-    const userUpdated = await this.userRepository.updatePassword(
+    const userUpdated = await companyRepository.updatePassword(
       user.id,
       passwordHash,
     );
