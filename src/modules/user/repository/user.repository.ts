@@ -1,3 +1,4 @@
+import { NotFoundException } from '@nestjs/common';
 import { EntityRepository, Repository } from 'typeorm';
 import { UsersEntity } from '../../../database/entities/users.entity';
 import {
@@ -13,7 +14,10 @@ import { UpdateUserDto } from '../dtos/update-user.dto';
 @EntityRepository(UsersEntity)
 export class UserRepository extends Repository<UsersEntity> {
   async createUser(data: CreateUserDto): Promise<UsersEntity> {
-    return this.save(data);
+    const newUser = this.create(data);
+    return this.update(newUser.id, data)
+      .then(() => newUser)
+      .catch(handleError);
   }
 
   async getAllUsers(
@@ -70,13 +74,17 @@ export class UserRepository extends Repository<UsersEntity> {
   }
 
   async updateMyPassword(updateMyPasswordDto: UpdateMyPasswordDto, id) {
-    const data = { ...updateMyPasswordDto };
     const user = await this.findOne(id).catch(handleError);
 
-    return this.save({
-      ...user,
-      ...data,
-    }).catch(handleError);
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    return this.update(id, updateMyPasswordDto)
+      .then(() => {
+        return this.findOne(id);
+      })
+      .catch(handleError);
   }
 
   async updateRecoveryPassword(id, recoverPasswordToken) {
@@ -84,7 +92,7 @@ export class UserRepository extends Repository<UsersEntity> {
 
     user.recoverPasswordToken = recoverPasswordToken;
 
-    return this.save(user);
+    return this.update(id, user);
   }
 
   async activateUser(id) {
@@ -92,7 +100,7 @@ export class UserRepository extends Repository<UsersEntity> {
 
     user.mailconfirm = true;
 
-    return this.save(user);
+    return this.update(id, user);
   }
 
   async findByToken(recoverPasswordToken: string): Promise<UsersEntity> {
@@ -108,9 +116,11 @@ export class UserRepository extends Repository<UsersEntity> {
 
     delete user.password;
 
-    return this.save({
+    await this.update(id, {
       ...user,
       ...data,
     }).catch(handleError);
+
+    return this.findOne(id).catch(handleError);
   }
 }
