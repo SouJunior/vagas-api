@@ -38,7 +38,7 @@ export class CommentsEntity {
   created_at: Date;
 
   @UpdateDateColumn({ update: true })
-  updated_at: Timestamp;
+  updated_at: Date;
 
   @DeleteDateColumn()
   desativated_at: Date;

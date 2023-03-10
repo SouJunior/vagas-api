@@ -7,7 +7,7 @@ import { UsersEntity } from 'src/database/entities/users.entity';
 export class MailService {
   constructor(private mailerService: MailerService) {}
 
-  async sendUserConfirmation(user: UsersEntity) {
+  async sendUserConfirmation(user: UsersEntity): Promise<void> {
     const { email, name, recoverPasswordToken } = user;
     const url = `http://localhost:3333/recovery-password?token=${recoverPasswordToken}`;
 
@@ -48,6 +48,8 @@ export class MailService {
         url,
       },
     });
+
+    return;
   }
 
   async sendCompanyConfirmation(company: CompaniesEntity) {

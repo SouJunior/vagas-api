@@ -1,4 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { MailService } from '../../../../src/modules/mails/mail.service';
 import { UserRepository } from '../../../../src/modules/user/repository/user.repository';
 import { CreateUserService } from '../../../../src/modules/user/services';
 import { createUserMock } from '../../../mocks/user/create-user.mock';
@@ -10,9 +11,14 @@ class UserRepositoryMock {
   findOneByCpf = jest.fn();
 }
 
+class MailServiceMock {
+  sendUserCreationConfirmation = jest.fn();
+}
+
 describe('CreateUserService', () => {
   let service: CreateUserService;
   let userRepository: UserRepositoryMock;
+  let mailService: MailServiceMock;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -22,11 +28,16 @@ describe('CreateUserService', () => {
           provide: UserRepository,
           useClass: UserRepositoryMock,
         },
+        {
+          provide: MailService,
+          useClass: MailServiceMock,
+        },
       ],
     }).compile();
 
     service = module.get(CreateUserService);
     userRepository = module.get(UserRepository);
+    mailService = module.get(MailService);
   });
 
   it('should be defined', () => {
@@ -38,6 +49,10 @@ describe('CreateUserService', () => {
       userRepository.findOneByEmail = jest
         .fn()
         .mockResolvedValue(createUserMock());
+      const sendUserConfirmationSpy = jest.spyOn(
+        mailService,
+        'sendUserCreationConfirmation',
+      );
       const findOneByEmailSpy = jest.spyOn(userRepository, 'findOneByEmail');
       const findOneByCpfSpy = jest.spyOn(userRepository, 'findOneByCpf');
       const createUserSpy = jest.spyOn(userRepository, 'createUser');
@@ -51,6 +66,7 @@ describe('CreateUserService', () => {
       expect(findOneByEmailSpy).toBeCalledTimes(1);
       expect(findOneByCpfSpy).not.toBeCalled();
       expect(createUserSpy).not.toBeCalled();
+      expect(sendUserConfirmationSpy).not.toBeCalled();
     });
 
     it('should be able to return a error when cpf exists', async () => {
@@ -58,6 +74,10 @@ describe('CreateUserService', () => {
       userRepository.findOneByCpf = jest
         .fn()
         .mockResolvedValue(createUserMock());
+      const sendUserConfirmationSpy = jest.spyOn(
+        mailService,
+        'sendUserCreationConfirmation',
+      );
       const findOneByEmailSpy = jest.spyOn(userRepository, 'findOneByEmail');
       const findOneByCpfSpy = jest.spyOn(userRepository, 'findOneByCpf');
       const createUserSpy = jest.spyOn(userRepository, 'createUser');
@@ -72,12 +92,20 @@ describe('CreateUserService', () => {
       expect(findOneByCpfSpy).toBeCalled();
       expect(findOneByCpfSpy).toBeCalledTimes(1);
       expect(createUserSpy).not.toBeCalled();
+      expect(sendUserConfirmationSpy).not.toBeCalled();
     });
 
     it('should be able to create an user', async () => {
       userRepository.findOneByEmail = jest.fn().mockResolvedValue('');
       userRepository.findOneByCpf = jest.fn().mockResolvedValue('');
       userRepository.createUser = jest.fn().mockResolvedValue(userMock());
+      mailService.sendUserCreationConfirmation = jest
+        .fn()
+        .mockResolvedValue('');
+      const sendUserConfirmationSpy = jest.spyOn(
+        mailService,
+        'sendUserCreationConfirmation',
+      );
       const findOneByEmailSpy = jest.spyOn(userRepository, 'findOneByEmail');
       const findOneByCpfSpy = jest.spyOn(userRepository, 'findOneByCpf');
       const createUserSpy = jest.spyOn(userRepository, 'createUser');
@@ -91,6 +119,8 @@ describe('CreateUserService', () => {
       expect(findOneByCpfSpy).toBeCalledTimes(1);
       expect(createUserSpy).toBeCalled();
       expect(createUserSpy).toBeCalledTimes(1);
+      expect(sendUserConfirmationSpy).toBeCalled();
+      expect(sendUserConfirmationSpy).toBeCalledTimes(1);
     });
   });
 });

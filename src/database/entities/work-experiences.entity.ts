@@ -44,7 +44,7 @@ export class WorkExperiencesEntity {
   created_at: Date;
 
   @UpdateDateColumn({ update: true })
-  updated_at: Timestamp;
+  updated_at: Date;
 
   constructor(workExperience?: Partial<WorkExperiencesEntity>) {
     this.id = workExperience?.id;

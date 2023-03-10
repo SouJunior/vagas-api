@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
-import { MailService } from 'src/modules/mails/mail.service';
+import { MailService } from '../../../modules/mails/mail.service';
 import { CreateUserDto } from '../dtos/create-user.dto';
 import { UserRepository } from '../repository/user.repository';
 
