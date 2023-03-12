@@ -53,8 +53,10 @@ export class UsersEntity {
   @UpdateDateColumn({ update: true })
   updated_at: Date;
 
-  @Column()
-  @Generated('uuid')
+  @Column({ default: false })
+  mailconfirm: Boolean;
+
+  @Column({ nullable: true })
   recoverPasswordToken?: string;
 
   constructor(user?: Partial<UsersEntity>) {
@@ -64,6 +66,7 @@ export class UsersEntity {
     this.cpf = user?.cpf;
     this.password = user?.password;
     this.type = user?.type;
+    this.mailconfirm = user?.mailconfirm;
     this.recoverPasswordToken = user?.recoverPasswordToken;
     this.created_at = user?.created_at;
     this.updated_at = user?.updated_at;

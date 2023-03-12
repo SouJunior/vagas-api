@@ -35,10 +35,10 @@ export class CreatePasswordHashDto {
   @IsString()
   @Length(8, 50)
   @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
-    message: 'Senha muito fraca',
+    message: 'Inserir senha com os critérios informados',
   })
   @ApiProperty({
-    description: 'Inserir senha com os critérios informados',
+    description: 'Senha de Login',
     example: 'Abcd@1234',
   })
   password: string;

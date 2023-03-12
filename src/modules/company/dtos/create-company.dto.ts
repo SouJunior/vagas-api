@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString, Matches } from 'class-validator';
 
 export class CreateCompanyDto {
   @IsString()
@@ -42,4 +42,23 @@ export class CreateCompanyDto {
     example: 'Empresa de pipocas',
   })
   description: string;
+
+  @IsNotEmpty()
+  @IsString()
+  @ApiProperty({
+    description: 'CNPJ',
+    example: '1345678654',
+  })
+  cnpj: string;
+
+  @IsNotEmpty()
+  @IsString()
+  @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
+    message: 'Senha muito fraca',
+  })
+  @ApiProperty({
+    description: 'Senha de Login',
+    example: 'Abcd@1234',
+  })
+  password: string;
 }

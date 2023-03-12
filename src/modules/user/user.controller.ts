@@ -32,6 +32,7 @@ import {
   UpdatePasswordByEmailService,
   UpdateUserService,
 } from './services';
+import { ActivateUserService } from './services/activate-user.service';
 
 @ApiTags('user')
 @Controller('user')
@@ -44,6 +45,7 @@ export class UserController {
     private deleteUserService: DeleteUserService,
     private recoveryPasswordByEmail: RecoveryPasswordByEmail,
     private updatePasswordByEmailService: UpdatePasswordByEmailService,
+    private activateUserService: ActivateUserService,
   ) {}
 
   @Post()
@@ -54,6 +56,14 @@ export class UserController {
     const { data, status } = await this.createUserService.execute(createUser);
 
     return res.status(status).send(data);
+  }
+
+  @Put(':id')
+  @ApiOperation({
+    summary: 'Ativar um usuário pelo ID',
+  })
+  async activateUser(@Param('id') id: string) {
+    return this.activateUserService.execute(id);
   }
 
   @Get()

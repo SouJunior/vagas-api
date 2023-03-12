@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserRepository } from '../user/repository/user.repository';
+import { UserModule } from '../user/user.module';
 import { CompanyController } from './company.controller';
 import { CompanyRepository } from './repository/company-repository';
 import {
@@ -9,7 +10,8 @@ import {
   FindAllCompanyService,
   UpdateCompanyService,
 } from './services';
-import { RecoveryPasswordByEmail } from './services/recovery-password-by-email.service';
+import { ActivateCompanyService } from './services/activate-company.service';
+import { RecoveryCompanyPasswordByEmail } from './services/recovery-password-by-email.service';
 import { UpdatePasswordByEmailService } from './services/update-password-by-email.service';
 
 @Module({
@@ -20,8 +22,9 @@ import { UpdatePasswordByEmailService } from './services/update-password-by-emai
     FindAllCompanyService,
     UpdateCompanyService,
     DeleteCompanyService,
-    RecoveryPasswordByEmail,
+    RecoveryCompanyPasswordByEmail,
     UpdatePasswordByEmailService,
+    ActivateCompanyService,
   ],
 })
 export class CompanyModule {}
