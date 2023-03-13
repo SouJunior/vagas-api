@@ -1,11 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsEmail,
+  IsEnum,
   IsNotEmpty,
   IsString,
   Length,
   Matches,
 } from 'class-validator';
+import { LoginTypeEnum } from '../enums/login-type.enum';
 
 export class UserLoginDto {
   @IsEmail()
@@ -29,4 +31,12 @@ export class UserLoginDto {
   })
   @IsNotEmpty()
   password: string;
+
+  @ApiProperty({
+    enum: LoginTypeEnum,
+    example: LoginTypeEnum.COMPANY,
+  })
+  @IsEnum(LoginTypeEnum, { message: 'Opções de type COMPANY e USER' })
+  @IsNotEmpty()
+  type: LoginTypeEnum;
 }
