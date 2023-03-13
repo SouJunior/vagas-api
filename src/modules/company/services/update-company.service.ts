@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { UpdateCompanyDto } from '../dtos/update-company.sto';
 import { CompanyRepository } from '../repository/company-repository';
 
@@ -10,9 +10,21 @@ export class UpdateCompanyService {
     const companyExists = await this.companyRepository.findCompanyById(id);
 
     if (!companyExists) {
-      throw new BadRequestException('Company not found');
+      return {
+        status: 404,
+        data: {
+          message: 'Company not found',
+        },
+      };
     }
 
-    return this.companyRepository.UpdateCompanyById(id, data);
+    await this.companyRepository.UpdateCompanyById(id, data);
+
+    return {
+      status: 204,
+      data: {
+        message: 'Company updated successfully',
+      },
+    };
   }
 }
