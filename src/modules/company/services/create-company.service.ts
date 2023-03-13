@@ -12,7 +12,7 @@ export class CreateCompanyService {
   ) {}
 
   async execute(data: CreateCompanyDto) {
-    const { email, password, cnpj } = data;
+    const { email, password, passwordConfirmation, cnpj } = data;
     const companyAlreadyExists = await this.companyRepository.findOneByEmail(
       email,
     );
@@ -21,7 +21,16 @@ export class CreateCompanyService {
       return {
         status: 404,
         data: {
-          message: 'Email already exists',
+          message: 'E-mail já cadastrado',
+        },
+      };
+    }
+
+    if (password != passwordConfirmation) {
+      return {
+        status: 404,
+        data: {
+          message: 'As senhas precisam ser idênticas',
         },
       };
     }
