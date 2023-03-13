@@ -1,14 +1,24 @@
+import { IsCNPJ } from '../../../shared/validators/cnpj.validator';
+
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, IsString, Matches } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsString,
+  Matches,
+  MaxLength,
+  MinLength,
+} from 'class-validator';
 
 export class CreateCompanyDto {
   @IsString()
   @IsNotEmpty()
+  @MaxLength(30)
   @ApiProperty({
     description: 'Nome da empresa',
     example: 'Pipomills',
   })
-  company_name: string;
+  companyName: string;
 
   @IsString()
   @IsNotEmpty()
@@ -31,7 +41,7 @@ export class CreateCompanyDto {
   @IsNotEmpty()
   @ApiProperty({
     description: 'Endereço',
-    example: 'Rua NICKGER no bairro VAJNA',
+    example: 'Rua dos Bobos',
   })
   address: string;
 
@@ -45,9 +55,12 @@ export class CreateCompanyDto {
 
   @IsNotEmpty()
   @IsString()
+  @MaxLength(14)
+  @MinLength(14)
+  @IsCNPJ()
   @ApiProperty({
     description: 'CNPJ',
-    example: '1345678654',
+    example: '67.979.311/0001-15',
   })
   cnpj: string;
 
@@ -61,4 +74,15 @@ export class CreateCompanyDto {
     example: 'Abcd@1234',
   })
   password: string;
+
+  @IsNotEmpty()
+  @IsString()
+  @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
+    message: 'Senha muito fraca',
+  })
+  @ApiProperty({
+    description: 'Confirmação de Senha de Login',
+    example: 'Abcd@1234',
+  })
+  passwordConfirmation: string;
 }

@@ -1,35 +1,44 @@
 import * as bcrypt from 'bcrypt';
+import { CompanyRepository } from './../../company/repository/company-repository';
 
-import { JwtService } from '@nestjs/jwt';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { UserRepository } from '../../../modules/user/repository/user.repository';
 import { UserLoginDto } from '../dtos/user-login.dto';
+import { LoginTypeEnum } from '../enums/login-type.enum';
 
 @Injectable()
 export class AuthLoginService {
   constructor(
     private userRepository: UserRepository,
+    private companyRepository: CompanyRepository,
     private jwt: JwtService,
   ) {}
 
-  async execute({ email, password }: UserLoginDto) {
-    const userExists = await this.userRepository.findOneByEmail(email);
+  async execute({ email, password, type }: UserLoginDto) {
+    let info: any;
 
-    if (!userExists) {
-      throw new UnauthorizedException('Invalid email or password');
+    if (type == LoginTypeEnum.COMPANY) {
+      info = await this.companyRepository.findOneByEmail(email);
+    } else {
+      info = await this.userRepository.findOneByEmail(email);
     }
 
-    const passwordIsValid = await bcrypt.compare(password, userExists.password);
+    if (!info) {
+      throw new UnauthorizedException('E-mail ou Senha não conferem');
+    }
+
+    const passwordIsValid = await bcrypt.compare(password, info.password);
 
     if (!passwordIsValid) {
-      throw new UnauthorizedException('Invalid email or password');
+      throw new UnauthorizedException('E-mail ou Senha não conferem');
     }
 
-    delete userExists.password;
+    delete info.password;
 
     return {
       token: this.jwt.sign({ email }),
-      userExists,
+      info,
     };
   }
 }

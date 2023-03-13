@@ -1,30 +1,26 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
+import * as bcrypt from 'bcrypt';
+import { UsersEntity } from '../../../database/entities/users.entity';
 import { UpdateUserDto } from '../dtos/update-user.dto';
 import { UserRepository } from '../repository/user.repository';
-import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UpdateUserService {
   constructor(private userRepository: UserRepository) {}
 
-  async execute(id: string, data: UpdateUserDto) {
-    if (!id) {
-      throw new BadRequestException('Id not provided');
-    }
-
-    const userExists = await this.userRepository.findOneById(id);
-
-    if (!userExists) {
-      throw new NotFoundException('User not found');
-    }
+  async execute(user: UsersEntity, data: UpdateUserDto) {
     if (data.password) {
       data.password = await bcrypt.hash(data.password, 10);
     }
-    const userUpdated = await this.userRepository.updateUser(id, data);
+
+    if (data.cpf) {
+      const cpfAlreadyInUse = await this.userRepository.findOneByCpf(data.cpf);
+
+      if (cpfAlreadyInUse) {
+        throw new BadRequestException('Cpf already in use');
+      }
+    }
+    const userUpdated = await this.userRepository.updateUser(user.id, data);
 
     delete userUpdated.password;
 

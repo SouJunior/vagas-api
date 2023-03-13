@@ -10,10 +10,7 @@ import { UpdateMyPasswordDto } from '../dtos/update-my-password.dto';
 @EntityRepository(CompaniesEntity)
 export class CompanyRepository extends Repository<CompaniesEntity> {
   async createCompany(data: CreateCompanyDto): Promise<CompaniesEntity> {
-    const newCompany = this.create(data);
-    return this.update(newCompany.id, data)
-      .then(() => newCompany)
-      .catch(handleError);
+    return this.save(data);
   }
 
   async findAllCompany(
@@ -81,20 +78,27 @@ export class CompanyRepository extends Repository<CompaniesEntity> {
       .catch(handleError);
   }
 
-  async updateRecoveryPassword(id, recoverPasswordToken) {
+  async updateRecoveryPassword(
+    id,
+    recoverPasswordToken,
+  ): Promise<CompaniesEntity> {
     const company = await this.findOne(id).catch(handleError);
 
     company.recoverPasswordToken = recoverPasswordToken;
 
-    return this.update(id, company);
+    await this.update(id, company);
+
+    return company;
   }
 
-  async activateCompany(id) {
+  async activateCompany(id: string) {
     const company = await this.findOne(id).catch(handleError);
 
-    company.mailconfirm = true;
+    company.mailConfirm = true;
 
-    return this.update(id, company);
+    await this.update(id, company);
+
+    return company;
   }
 
   async updatePassword(id, password: string): Promise<CompaniesEntity> {
