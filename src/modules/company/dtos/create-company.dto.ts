@@ -57,7 +57,7 @@ export class CreateCompanyDto {
   @IsString()
   @MaxLength(14)
   @MinLength(14)
-  @IsCNPJ()
+  // @IsCNPJ()
   @ApiProperty({
     description: 'CNPJ',
     example: '67.979.311/0001-15',
