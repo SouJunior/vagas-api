@@ -14,10 +14,7 @@ import { UpdateUserDto } from '../dtos/update-user.dto';
 @EntityRepository(UsersEntity)
 export class UserRepository extends Repository<UsersEntity> {
   async createUser(data: CreateUserDto): Promise<UsersEntity> {
-    const newUser = this.create(data);
-    return this.update(newUser.id, data)
-      .then(() => newUser)
-      .catch(handleError);
+    return this.save(data).catch(handleError);
   }
 
   async getAllUsers(
@@ -92,15 +89,19 @@ export class UserRepository extends Repository<UsersEntity> {
 
     user.recoverPasswordToken = recoverPasswordToken;
 
-    return this.update(id, user);
+    await this.save(user);
+
+    return user;
   }
 
-  async activateUser(id) {
+  async activateUser(id: string): Promise<UsersEntity> {
     const user = await this.findOne(id).catch(handleError);
 
     user.mailconfirm = true;
 
-    return this.update(id, user);
+    await this.update(id, { mailconfirm: true });
+
+    return this.findOne(id);
   }
 
   async findByToken(recoverPasswordToken: string): Promise<UsersEntity> {

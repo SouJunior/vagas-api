@@ -86,7 +86,9 @@ export class CompanyRepository extends Repository<CompaniesEntity> {
 
     company.recoverPasswordToken = recoverPasswordToken;
 
-    return this.update(id, company);
+    await this.save(company);
+
+    return company;
   }
 
   async activateCompany(id) {
@@ -94,7 +96,9 @@ export class CompanyRepository extends Repository<CompaniesEntity> {
 
     company.mailconfirm = true;
 
-    return this.update(id, company);
+    await this.update(id, { mailconfirm: true });
+
+    return this.findOne(id);
   }
 
   async updatePassword(id, password: string): Promise<CompaniesEntity> {

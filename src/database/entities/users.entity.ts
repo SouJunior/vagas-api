@@ -36,6 +36,9 @@ export class UsersEntity {
   @Column()
   policies: boolean;
 
+  @Column({ nullable: true })
+  ip: string;
+
   @Column({
     type: 'enum',
     enum: ['ADMIN', 'USER'],
