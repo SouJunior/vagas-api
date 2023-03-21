@@ -86,11 +86,7 @@ export class CompanyRepository extends Repository<CompaniesEntity> {
 
     company.recoverPasswordToken = recoverPasswordToken;
 
-<<<<<<< HEAD
     await this.save(company);
-=======
-    await this.update(id, company);
->>>>>>> 5c8ff8a57e8e4c9a96d8df9fa0f384cbb57672b7
 
     return company;
   }
@@ -100,15 +96,9 @@ export class CompanyRepository extends Repository<CompaniesEntity> {
 
     company.mailConfirm = true;
 
-<<<<<<< HEAD
-    await this.update(id, { mailconfirm: true });
-
-    return this.findOne(id);
-=======
     await this.update(id, company);
 
     return company;
->>>>>>> 5c8ff8a57e8e4c9a96d8df9fa0f384cbb57672b7
   }
 
   async updatePassword(id, password: string): Promise<CompaniesEntity> {
