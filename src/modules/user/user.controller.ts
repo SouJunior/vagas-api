@@ -96,18 +96,17 @@ export class UserController {
     return this.findOneUserService.execute(id);
   }
 
-  @Put(':id')
+  @Put()
   @ApiOperation({
     summary: 'Atualizar um usuário pelo ID',
   })
   @UseGuards(AuthGuard())
   @ApiBearerAuth()
   async updateUser(
-    @Param('id') id: string,
     @Body() data: UpdateUserDto,
     @LoggedUser() user: UsersEntity,
   ) {
-    return this.updateUserService.execute(id, data);
+    return this.updateUserService.execute(user, data);
   }
 
   @Delete(':id')

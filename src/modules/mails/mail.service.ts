@@ -53,7 +53,7 @@ export class MailService {
   }
 
   async sendCompanyConfirmation(company: CompaniesEntity) {
-    const { email, company_name, recoverPasswordToken } = company;
+    const { email, companyName, recoverPasswordToken } = company;
     const url = `http://localhost:3333/recovery-password?token=${recoverPasswordToken}`;
 
     if (recoverPasswordToken) {
@@ -62,7 +62,7 @@ export class MailService {
         subject: 'Recuperação de Senha!',
         template: './send',
         context: {
-          name: company_name,
+          name: companyName,
           url,
         },
       });
@@ -72,14 +72,14 @@ export class MailService {
         subject: 'Senha alterada com Sucesso!',
         template: './passwordupdate',
         context: {
-          name: company_name,
+          name: companyName,
         },
       });
     }
   }
 
   async sendCompanyCreationConfirmation(company: CompaniesEntity) {
-    const { email, company_name, id } = company;
+    const { email, companyName, id } = company;
 
     const url = `http://localhost:3333/companyconfirmation?id=${id}`;
 
@@ -88,7 +88,7 @@ export class MailService {
       subject: 'Empresa criado!',
       template: './create',
       context: {
-        name: company_name,
+        name: companyName,
         url,
       },
     });

@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CompanyRepository } from '../repository/company-repository';
 
 @Injectable()
@@ -9,9 +9,21 @@ export class DeleteCompanyService {
     const companyExists = await this.companyRepository.findCompanyById(id);
 
     if (!companyExists) {
-      throw new BadRequestException('Company not found');
+      return {
+        status: 404,
+        data: {
+          message: 'Company not found',
+        },
+      };
     }
 
-    return this.companyRepository.deleteCompanyById(id);
+    await this.companyRepository.deleteCompanyById(id);
+
+    return {
+      status: 200,
+      data: {
+        message: 'Company deleted successfully',
+      },
+    };
   }
 }

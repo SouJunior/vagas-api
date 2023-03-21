@@ -10,10 +10,7 @@ import { UpdateMyPasswordDto } from '../dtos/update-my-password.dto';
 @EntityRepository(CompaniesEntity)
 export class CompanyRepository extends Repository<CompaniesEntity> {
   async createCompany(data: CreateCompanyDto): Promise<CompaniesEntity> {
-    const newCompany = this.create(data);
-    return this.update(newCompany.id, data)
-      .then(() => newCompany)
-      .catch(handleError);
+    return this.save(data);
   }
 
   async findAllCompany(
@@ -81,24 +78,37 @@ export class CompanyRepository extends Repository<CompaniesEntity> {
       .catch(handleError);
   }
 
-  async updateRecoveryPassword(id, recoverPasswordToken) {
+  async updateRecoveryPassword(
+    id,
+    recoverPasswordToken,
+  ): Promise<CompaniesEntity> {
     const company = await this.findOne(id).catch(handleError);
 
     company.recoverPasswordToken = recoverPasswordToken;
 
+<<<<<<< HEAD
     await this.save(company);
+=======
+    await this.update(id, company);
+>>>>>>> 5c8ff8a57e8e4c9a96d8df9fa0f384cbb57672b7
 
     return company;
   }
 
-  async activateCompany(id) {
+  async activateCompany(id: string) {
     const company = await this.findOne(id).catch(handleError);
 
-    company.mailconfirm = true;
+    company.mailConfirm = true;
 
+<<<<<<< HEAD
     await this.update(id, { mailconfirm: true });
 
     return this.findOne(id);
+=======
+    await this.update(id, company);
+
+    return company;
+>>>>>>> 5c8ff8a57e8e4c9a96d8df9fa0f384cbb57672b7
   }
 
   async updatePassword(id, password: string): Promise<CompaniesEntity> {

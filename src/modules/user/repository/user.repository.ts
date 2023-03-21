@@ -55,7 +55,7 @@ export class UserRepository extends Repository<UsersEntity> {
   }
 
   async findOneByCpf(cpf: string): Promise<UsersEntity> {
-    return this.findOne({ cpf }).catch(handleError);
+    return this.findOne({ where: { cpf } }).catch(handleError);
   }
 
   async updateUser(id: string, data: UpdateUserDto) {
@@ -84,7 +84,7 @@ export class UserRepository extends Repository<UsersEntity> {
       .catch(handleError);
   }
 
-  async updateRecoveryPassword(id, recoverPasswordToken) {
+  async updateRecoveryPassword(id: string, recoverPasswordToken: string) {
     const user = await this.findOne(id).catch(handleError);
 
     user.recoverPasswordToken = recoverPasswordToken;

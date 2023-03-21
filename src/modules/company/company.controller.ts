@@ -10,25 +10,25 @@ import {
   Query,
   Res,
 } from '@nestjs/common';
-import { Response } from 'express';
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import { Response } from 'express';
 import { CompaniesEntity } from 'src/database/entities/companies.entity';
 import { PageOptionsDto } from '../../shared/pagination';
 import GetEntity from '../../shared/pipes/pipe-entity.pipe';
+import { EmailDto } from '../user/dtos/email-user.dto';
 import { CompanyIdDto } from './dtos/company-id.dto';
 import { CreateCompanyDto } from './dtos/create-company.dto';
 import { UpdateCompanyDto } from './dtos/update-company.sto';
+import { CreatePasswordHashDto } from './dtos/update-my-password.dto';
 import {
   CreateCompanyService,
   DeleteCompanyService,
   FindAllCompanyService,
   UpdateCompanyService,
 } from './services';
+import { ActivateCompanyService } from './services/activate-company.service';
 import { RecoveryCompanyPasswordByEmail } from './services/recovery-password-by-email.service';
 import { UpdatePasswordByEmailService } from './services/update-password-by-email.service';
-import { EmailDto } from '../user/dtos/email-user.dto';
-import { CreatePasswordHashDto } from './dtos/update-my-password.dto';
-import { ActivateCompanyService } from './services/activate-company.service';
 
 @ApiTags('company')
 @Controller('company')
@@ -56,14 +56,6 @@ export class CompanyController {
     );
 
     return res.status(status).send(data);
-  }
-
-  @Put(':id')
-  @ApiOperation({
-    summary: 'Ativar uma empresa pelo ID',
-  })
-  async activateCompany(@Param('id') id: string) {
-    return this.activateCompanyService.execute(id);
   }
 
   @Get()
@@ -95,17 +87,14 @@ export class CompanyController {
   })
   async updatecompanyById(
     @Param() { id }: CompanyIdDto,
-    @Body() data: UpdateCompanyDto,
+    @Body() updateCompanyDto: UpdateCompanyDto,
+    @Res() res: Response,
   ) {
-    return this.updateCompanyService.execute(id, data);
-  }
-
-  @Delete(':id')
-  @ApiOperation({
-    summary: 'Excluir uma empresa por id.',
-  })
-  async deleteCompanyById(@Param() { id }: CompanyIdDto) {
-    return this.deleteCompanyService.execute(id);
+    const { data, status } = await this.updateCompanyService.execute(
+      id,
+      updateCompanyDto,
+    );
+    return res.status(status).send(data);
   }
 
   @Patch('recovery-password')
@@ -125,7 +114,31 @@ export class CompanyController {
   @ApiOperation({
     summary: 'Company update password.',
   })
-  updatePassword(@Body() updatePassword: CreatePasswordHashDto) {
-    return this.updatePasswordByEmailService.execute(updatePassword);
+  async updatePassword(
+    @Body() updatePassword: CreatePasswordHashDto,
+    @Res() res: Response,
+  ) {
+    const { data, status } = await this.updatePasswordByEmailService.execute(
+      updatePassword,
+    );
+    return res.status(status).send(data);
+  }
+
+  @Patch(':id')
+  @ApiOperation({
+    summary: 'Ativar uma empresa pelo ID',
+  })
+  async activateCompany(@Param('id') id: string, @Res() res: Response) {
+    const { data, status } = await this.activateCompanyService.execute(id);
+    return res.status(status).send(data);
+  }
+
+  @Delete(':id')
+  @ApiOperation({
+    summary: 'Excluir uma empresa por id.',
+  })
+  async deleteCompanyById(@Param() { id }: CompanyIdDto, @Res() res: Response) {
+    const { data, status } = await this.deleteCompanyService.execute(id);
+    return res.status(status).send(data);
   }
 }

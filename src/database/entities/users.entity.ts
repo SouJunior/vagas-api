@@ -57,7 +57,7 @@ export class UsersEntity {
   updated_at: Date;
 
   @Column({ default: false })
-  mailconfirm: Boolean;
+  mailconfirm: boolean;
 
   @Column({ nullable: true })
   recoverPasswordToken?: string;
