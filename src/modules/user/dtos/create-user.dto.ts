@@ -59,14 +59,6 @@ export class CreateUserDto {
   confirmPassword: string;
 
   @IsNotEmpty()
-  @IsString()
-  @ApiProperty({
-    description: 'CPF do usuário',
-    example: '1234567890',
-  })
-  cpf: string;
-
-  @IsNotEmpty()
   @IsBoolean()
   @ApiProperty({
     description: 'Termo de aceite, para ser criado o usuário tem de ser aceito',

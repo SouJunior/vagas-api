@@ -13,13 +13,13 @@ export class UpdateUserService {
       data.password = await bcrypt.hash(data.password, 10);
     }
 
-    if (data.cpf) {
-      const cpfAlreadyInUse = await this.userRepository.findOneByCpf(data.cpf);
+    // if (data.cpf) {
+    //   const cpfAlreadyInUse = await this.userRepository.findOneByCpf(data.cpf);
 
-      if (cpfAlreadyInUse) {
-        throw new BadRequestException('Cpf already in use');
-      }
-    }
+    //   if (cpfAlreadyInUse) {
+    //     throw new BadRequestException('Cpf already in use');
+    //   }
+    // }
     const userUpdated = await this.userRepository.updateUser(user.id, data);
 
     delete userUpdated.password;

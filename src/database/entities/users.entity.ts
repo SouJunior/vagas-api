@@ -27,9 +27,6 @@ export class UsersEntity {
   @Column({ unique: true })
   email: string;
 
-  @Column({ unique: true })
-  cpf: string;
-
   @Column()
   password: string;
 
@@ -66,7 +63,6 @@ export class UsersEntity {
     this.id = user?.id;
     this.name = user?.name;
     this.email = user?.email;
-    this.cpf = user?.cpf;
     this.password = user?.password;
     this.type = user?.type;
     this.mailconfirm = user?.mailconfirm;

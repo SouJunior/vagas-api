@@ -12,7 +12,7 @@ export class CreateUserService {
   ) {}
 
   async execute(data: CreateUserDto) {
-    const { email, password, cpf } = data;
+    const { email, password } = data;
 
     const userAlreadyExists = await this.userRepository.findOneByEmail(email);
 
@@ -25,16 +25,16 @@ export class CreateUserService {
       };
     }
 
-    const cpfAlreadyInUse = await this.userRepository.findOneByCpf(cpf);
+    // const cpfAlreadyInUse = await this.userRepository.findOneByCpf(cpf);
 
-    if (cpfAlreadyInUse) {
-      return {
-        status: 404,
-        data: {
-          message: `CPF já cadastrado.`,
-        },
-      };
-    }
+    // if (cpfAlreadyInUse) {
+    //   return {
+    //     status: 404,
+    //     data: {
+    //       message: `CPF já cadastrado.`,
+    //     },
+    //   };
+    // }
 
     data.password = await bcrypt.hash(password, 10);
 
