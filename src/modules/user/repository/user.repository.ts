@@ -90,7 +90,6 @@ export class UserRepository extends Repository<UsersEntity> {
     user.recoverPasswordToken = recoverPasswordToken;
 
     await this.update(id, user).catch(handleError);
-
     return user;
   }
 
@@ -99,9 +98,9 @@ export class UserRepository extends Repository<UsersEntity> {
 
     user.mailconfirm = true;
 
-    await this.update(id, user).catch(handleError);
+    await this.update(id, { mailconfirm: true });
 
-    return user;
+    return this.findOne(id);
   }
 
   async findByToken(recoverPasswordToken: string): Promise<UsersEntity> {

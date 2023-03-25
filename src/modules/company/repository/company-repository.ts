@@ -86,7 +86,7 @@ export class CompanyRepository extends Repository<CompaniesEntity> {
 
     company.recoverPasswordToken = recoverPasswordToken;
 
-    await this.update(id, company);
+    await this.save(company);
 
     return company;
   }

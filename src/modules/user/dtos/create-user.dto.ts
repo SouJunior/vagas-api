@@ -8,12 +8,14 @@ import {
   MaxLength,
   IsEmail,
   Matches,
+  Validate,
+  Equals,
 } from 'class-validator';
 import { UserRole } from '../../../shared/utils/userRole/userRole';
 
 export class CreateUserDto {
   @IsNotEmpty()
-  @MaxLength(30)
+  @MaxLength(50)
   @IsString()
   @ApiProperty({
     description: 'Nome do usuário.',
@@ -32,9 +34,13 @@ export class CreateUserDto {
 
   @IsNotEmpty()
   @IsString()
-  @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
-    message: 'Senha muito fraca',
-  })
+  @Matches(
+    /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()\-_=+{};:,<.>])[a-zA-Z\d!@#$%^&*()\-_=+{};:,<.>.]{8,}$/,
+    {
+      message:
+        'Senha inválida. Deve conter pelo menos 8 caracteres, uma letra maiúscula, uma letra minúscula, um número e um caractere especial.',
+    },
+  )
   @ApiProperty({
     description: 'Senha de Login',
     example: 'Abcd@1234',
@@ -44,18 +50,30 @@ export class CreateUserDto {
   @IsNotEmpty()
   @IsString()
   @ApiProperty({
-    description: 'CPF do usuário',
-    example: '1234567890',
+    description: 'Confirmação de senha',
+    example: 'Abcd@1234',
   })
-  cpf: string;
+  @Validate((value, { object }) => value === object.password, {
+    message: 'Senhas precisam ser idênticas',
+  })
+  confirmPassword: string;
 
   @IsNotEmpty()
   @IsBoolean()
   @ApiProperty({
-    description: 'É um boolean que serve para algo.',
+    description: 'Termo de aceite, para ser criado o usuário tem de ser aceito',
     example: true,
   })
+  @Equals(true, { message: 'Termo de aceite deve ser aceito' })
   policies: boolean;
+
+  @IsNotEmpty()
+  @IsString()
+  @ApiProperty({
+    description: 'Endereço de IP do usuário',
+    example: '123.456.789.0',
+  })
+  ip: string;
 
   @IsOptional()
   @IsEnum(UserRole)

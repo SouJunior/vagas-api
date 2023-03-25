@@ -8,9 +8,11 @@ import {
   Post,
   Put,
   Query,
+  Req,
   Res,
   UseGuards,
 } from '@nestjs/common';
+import { Request } from 'express';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
@@ -52,13 +54,18 @@ export class UserController {
   @ApiOperation({
     summary: 'Criar um usuário!',
   })
-  async createNewUser(@Body() createUser: CreateUserDto, @Res() res: Response) {
+  async createNewUser(
+    @Body() createUser: CreateUserDto,
+    @Res() res: Response,
+    @Req() req: Request,
+  ) {
+    createUser.ip = req.ip;
     const { data, status } = await this.createUserService.execute(createUser);
 
     return res.status(status).send(data);
   }
 
-  @Put(':id')
+  @Put('activate/:id')
   @ApiOperation({
     summary: 'Ativar um usuário pelo ID',
   })

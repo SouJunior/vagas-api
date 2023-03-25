@@ -12,7 +12,7 @@ export class CreateUserService {
   ) {}
 
   async execute(data: CreateUserDto) {
-    const { email, password, cpf } = data;
+    const { email, password } = data;
 
     const userAlreadyExists = await this.userRepository.findOneByEmail(email);
 
@@ -20,28 +20,31 @@ export class CreateUserService {
       return {
         status: 404,
         data: {
-          message: 'Email already exists',
+          message: 'E-mail já cadastrado.',
         },
       };
     }
 
-    const cpfAlreadyInUse = await this.userRepository.findOneByCpf(cpf);
+    // const cpfAlreadyInUse = await this.userRepository.findOneByCpf(cpf);
 
-    if (cpfAlreadyInUse) {
-      return {
-        status: 404,
-        data: {
-          message: `This CPF is already in use`,
-        },
-      };
-    }
+    // if (cpfAlreadyInUse) {
+    //   return {
+    //     status: 404,
+    //     data: {
+    //       message: `CPF já cadastrado.`,
+    //     },
+    //   };
+    // }
 
     data.password = await bcrypt.hash(password, 10);
+
+    delete data.confirmPassword;
 
     const response = await this.userRepository.createUser(data);
 
     delete response.password;
     delete response.recoverPasswordToken;
+    delete response.ip;
 
     await this.mailService.sendUserCreationConfirmation(response);
 
