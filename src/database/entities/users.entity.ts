@@ -2,11 +2,9 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  Generated,
   JoinColumn,
   OneToOne,
   PrimaryGeneratedColumn,
-  Timestamp,
   UpdateDateColumn,
 } from 'typeorm';
 import { PersonalDataEntity } from './personal-data.entity';
@@ -30,7 +28,7 @@ export class UsersEntity {
   @Column()
   password: string;
 
-  @Column()
+  @Column({ default: false })
   policies: boolean;
 
   @Column({ nullable: true })

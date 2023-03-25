@@ -12,18 +12,17 @@ import {
   Res,
   UseGuards,
 } from '@nestjs/common';
-import { Request } from 'express';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import { UsersEntity } from '../../database/entities/users.entity';
 import { PageOptionsDto } from '../../shared/pagination';
 import { LoggedAdmin } from '../auth/decorator/logged-admin.decorator';
 import { LoggedUser } from '../auth/decorator/logged-user.decorator';
 import { CreateUserDto } from './dtos/create-user.dto';
-import { UpdateUserDto } from './dtos/update-user.dto';
 import { EmailDto } from './dtos/email-user.dto';
 import { CreatePasswordHashDto } from './dtos/update-my-password.dto';
+import { UpdateUserDto } from './dtos/update-user.dto';
 
 import {
   CreateUserService,
@@ -59,8 +58,10 @@ export class UserController {
     @Res() res: Response,
     @Req() req: Request,
   ) {
-    createUser.ip = req.ip;
-    const { data, status } = await this.createUserService.execute(createUser);
+    const { data, status } = await this.createUserService.execute(
+      createUser,
+      req,
+    );
 
     return res.status(status).send(data);
   }
@@ -92,8 +93,8 @@ export class UserController {
   })
   @UseGuards(AuthGuard())
   @ApiBearerAuth()
-  async getOneUser(@Param('id') id: string, @LoggedUser() user: UsersEntity) {
-    return this.findOneUserService.execute(id);
+  async getOneUser(@LoggedUser() user: UsersEntity) {
+    return this.findOneUserService.execute(user);
   }
 
   @Put()
@@ -115,8 +116,8 @@ export class UserController {
   })
   @UseGuards(AuthGuard())
   @ApiBearerAuth()
-  async deleteUser(@Param('id') id: string, @LoggedUser() user: UsersEntity) {
-    return this.deleteUserService.execute(id);
+  async deleteUser(@LoggedUser() user: UsersEntity) {
+    return this.deleteUserService.execute(user);
   }
 
   @Patch('recovery-password')

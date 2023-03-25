@@ -1,15 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
-  IsNotEmpty,
-  IsString,
-  IsOptional,
-  IsEnum,
-  IsBoolean,
-  MaxLength,
   IsEmail,
+  IsEnum,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
   Matches,
+  MaxLength,
   Validate,
-  Equals,
 } from 'class-validator';
 import { UserRole } from '../../../shared/utils/userRole/userRole';
 
@@ -57,23 +55,6 @@ export class CreateUserDto {
     message: 'Senhas precisam ser idênticas',
   })
   confirmPassword: string;
-
-  @IsNotEmpty()
-  @IsBoolean()
-  @ApiProperty({
-    description: 'Termo de aceite, para ser criado o usuário tem de ser aceito',
-    example: true,
-  })
-  @Equals(true, { message: 'Termo de aceite deve ser aceito' })
-  policies: boolean;
-
-  @IsNotEmpty()
-  @IsString()
-  @ApiProperty({
-    description: 'Endereço de IP do usuário',
-    example: '123.456.789.0',
-  })
-  ip: string;
 
   @IsOptional()
   @IsEnum(UserRole)
