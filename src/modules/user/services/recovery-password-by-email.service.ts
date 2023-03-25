@@ -23,10 +23,8 @@ export class RecoveryPasswordByEmail {
 
     const recoverPasswordToken = crypto.randomBytes(32).toString('hex');
 
-    const { id } = userExists;
-
     const userUpdated = await this.userRepository.updateRecoveryPassword(
-      id,
+      userExists.id,
       recoverPasswordToken,
     );
 

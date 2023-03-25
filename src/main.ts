@@ -14,14 +14,12 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('Vagas-Backend')
     .setDescription('App for Vagas-Backend.')
-    .setVersion('1.0.0')
-    .addTag('status')
-    .addTag('auth')
-    .addTag('comment')
-    .addTag('job')
-    .addTag('report')
-    .addTag('user')
+    .setVersion('1.1.1')
     .addBearerAuth()
+    .addTag('Status')
+    .addTag('Auth')
+    .addTag('User')
+    .addTag('Company')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

@@ -20,7 +20,7 @@ import {
   UpdateJobService,
 } from './services';
 
-@ApiTags('job')
+@ApiTags('Job')
 @Controller('job')
 export class JobsController {
   constructor(

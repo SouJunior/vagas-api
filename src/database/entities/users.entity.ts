@@ -2,11 +2,9 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  Generated,
   JoinColumn,
   OneToOne,
   PrimaryGeneratedColumn,
-  Timestamp,
   UpdateDateColumn,
 } from 'typeorm';
 import { PersonalDataEntity } from './personal-data.entity';
@@ -30,7 +28,7 @@ export class UsersEntity {
   @Column()
   password: string;
 
-  @Column()
+  @Column({ default: false })
   policies: boolean;
 
   @Column({ nullable: true })
@@ -45,7 +43,7 @@ export class UsersEntity {
 
   @OneToOne(() => PersonalDataEntity)
   @JoinColumn()
-  personal_data: PersonalDataEntity;
+  personalData: PersonalDataEntity;
 
   @CreateDateColumn()
   created_at: Date;
@@ -54,7 +52,7 @@ export class UsersEntity {
   updated_at: Date;
 
   @Column({ default: false })
-  mailconfirm: boolean;
+  mailConfirm: boolean;
 
   @Column({ nullable: true })
   recoverPasswordToken?: string;
@@ -65,7 +63,7 @@ export class UsersEntity {
     this.email = user?.email;
     this.password = user?.password;
     this.type = user?.type;
-    this.mailconfirm = user?.mailconfirm;
+    this.mailConfirm = user?.mailConfirm;
     this.recoverPasswordToken = user?.recoverPasswordToken;
     this.created_at = user?.created_at;
     this.updated_at = user?.updated_at;

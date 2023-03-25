@@ -24,13 +24,7 @@ export class UserRepository extends Repository<UsersEntity> {
 
     queryBuilder
       .orderBy(`users.${pageOptionsDto.orderByColumn}`, pageOptionsDto.order)
-      .select([
-        'users.id',
-        'users.name',
-        'users.email',
-        'users.created_at',
-        'users.cpf',
-      ])
+      .select(['users.id', 'users.name', 'users.email', 'users.created_at'])
       .skip(pageOptionsDto.skip)
       .take(pageOptionsDto.take);
 
@@ -61,13 +55,13 @@ export class UserRepository extends Repository<UsersEntity> {
   async updateUser(id: string, data: UpdateUserDto) {
     await this.update(id, data).catch(handleError);
 
-    return this.findOne(id).catch(handleError);
+    return;
   }
 
   async deleteUserById(id: string): Promise<object> {
     await this.delete(id).catch(handleError);
 
-    return { message: 'User deleted successfully' };
+    return;
   }
 
   async updateMyPassword(updateMyPasswordDto: UpdateMyPasswordDto, id) {
@@ -96,9 +90,9 @@ export class UserRepository extends Repository<UsersEntity> {
   async activateUser(id: string): Promise<UsersEntity> {
     const user = await this.findOne(id).catch(handleError);
 
-    user.mailconfirm = true;
+    user.mailConfirm = true;
 
-    await this.update(id, { mailconfirm: true });
+    await this.update(id, { mailConfirm: true });
 
     return this.findOne(id);
   }

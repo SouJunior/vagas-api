@@ -10,6 +10,7 @@ import { UpdateMyPasswordDto } from '../dtos/update-my-password.dto';
 @EntityRepository(CompaniesEntity)
 export class CompanyRepository extends Repository<CompaniesEntity> {
   async createCompany(data: CreateCompanyDto): Promise<CompaniesEntity> {
+    delete data.passwordConfirmation;
     return this.save(data);
   }
 

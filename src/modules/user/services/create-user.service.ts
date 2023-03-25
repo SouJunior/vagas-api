@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
+import { Request } from 'express';
+
 import { MailService } from '../../../modules/mails/mail.service';
 import { CreateUserDto } from '../dtos/create-user.dto';
 import { UserRepository } from '../repository/user.repository';
@@ -11,8 +13,10 @@ export class CreateUserService {
     private mailService: MailService,
   ) {}
 
-  async execute(data: CreateUserDto) {
+  async execute(data: CreateUserDto, req: Request) {
     const { email, password } = data;
+
+    data['ip'] = req.ip;
 
     const userAlreadyExists = await this.userRepository.findOneByEmail(email);
 
@@ -24,17 +28,6 @@ export class CreateUserService {
         },
       };
     }
-
-    // const cpfAlreadyInUse = await this.userRepository.findOneByCpf(cpf);
-
-    // if (cpfAlreadyInUse) {
-    //   return {
-    //     status: 404,
-    //     data: {
-    //       message: `CPF já cadastrado.`,
-    //     },
-    //   };
-    // }
 
     data.password = await bcrypt.hash(password, 10);
 

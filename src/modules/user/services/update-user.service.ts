@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { UsersEntity } from '../../../database/entities/users.entity';
 import { UpdateUserDto } from '../dtos/update-user.dto';
@@ -13,10 +13,8 @@ export class UpdateUserService {
       data.password = await bcrypt.hash(data.password, 10);
     }
 
-    const userUpdated = await this.userRepository.updateUser(user.id, data);
+    await this.userRepository.updateUser(user.id, data);
 
-    delete userUpdated.password;
-
-    return userUpdated;
+    return { message: 'User updated successfully' };
   }
 }

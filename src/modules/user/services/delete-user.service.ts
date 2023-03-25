@@ -1,21 +1,14 @@
+import { Injectable } from '@nestjs/common';
+import { UsersEntity } from '../../../database/entities/users.entity';
 import { UserRepository } from '../repository/user.repository';
-import { BadRequestException, Injectable } from '@nestjs/common';
 
 @Injectable()
 export class DeleteUserService {
   constructor(private userRepository: UserRepository) {}
 
-  async execute(id: string) {
-    if (!id) {
-      throw new BadRequestException('Id not provided');
-    }
+  async execute(user: UsersEntity) {
+    await this.userRepository.deleteUserById(user.id);
 
-    const userExists = await this.userRepository.findOneById(id);
-
-    if (!userExists) {
-      throw new BadRequestException('User not found');
-    }
-
-    return this.userRepository.deleteUserById(id);
+    return { message: 'User deleted successfully' };
   }
 }

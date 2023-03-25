@@ -30,7 +30,7 @@ import { ActivateCompanyService } from './services/activate-company.service';
 import { RecoveryCompanyPasswordByEmail } from './services/recovery-password-by-email.service';
 import { UpdatePasswordByEmailService } from './services/update-password-by-email.service';
 
-@ApiTags('company')
+@ApiTags('Company')
 @Controller('company')
 export class CompanyController {
   constructor(
