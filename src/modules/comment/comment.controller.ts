@@ -1,4 +1,3 @@
-import { UpdateCommentDto } from './dtos/update-comment.dto';
 import {
   Body,
   Controller,
@@ -7,10 +6,12 @@ import {
   Param,
   Post,
   Put,
-  UseGuards,
 } from '@nestjs/common';
+import { ApiExcludeController, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Throttle } from '@nestjs/throttler';
 import { CommentIdDto } from './dtos/comment-id.dto';
 import { CreateCommentDto } from './dtos/create-comment.dto';
+import { UpdateCommentDto } from './dtos/update-comment.dto';
 import {
   CreateCommentService,
   DeleteCommentService,
@@ -18,11 +19,9 @@ import {
   GetCommentByIdService,
   UpdateCommentService,
 } from './services';
-import { Throttle } from '@nestjs/throttler';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { AuthGuard } from '@nestjs/passport';
 
-@ApiTags('comment')
+@ApiExcludeController()
+@ApiTags('Comment')
 @Controller('comment')
 export class CommentController {
   constructor(

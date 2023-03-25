@@ -35,7 +35,7 @@ import {
 } from './services';
 import { ActivateUserService } from './services/activate-user.service';
 
-@ApiTags('user')
+@ApiTags('User')
 @Controller('user')
 export class UserController {
   constructor(

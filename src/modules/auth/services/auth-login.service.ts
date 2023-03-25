@@ -1,7 +1,7 @@
 import * as bcrypt from 'bcrypt';
 import { CompanyRepository } from './../../company/repository/company-repository';
 
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UserRepository } from '../../../modules/user/repository/user.repository';
 import { UserLoginDto } from '../dtos/user-login.dto';
@@ -24,21 +24,33 @@ export class AuthLoginService {
       info = await this.userRepository.findOneByEmail(email);
     }
 
-    if (!info.mailconfirm) {
-      throw new UnauthorizedException('Email not validated');
+    if (!info?.mailConfirm || !info) {
+      return {
+        status: 400,
+        data: { message: 'Email not validated' },
+      };
     }
 
     const passwordIsValid = await bcrypt.compare(password, info.password);
 
     if (!passwordIsValid) {
-      throw new UnauthorizedException('E-mail ou Senha não conferem');
+      return {
+        status: 400,
+        data: { message: 'E-mail ou Senha não conferem' },
+      };
     }
 
     delete info.password;
+    delete info.recoverPasswordToken;
+    delete info.mailconfirm;
+    delete info?.ip;
 
     return {
-      token: this.jwt.sign({ email }),
-      info,
+      status: 200,
+      data: {
+        token: this.jwt.sign({ email }),
+        info,
+      },
     };
   }
 }

@@ -7,7 +7,7 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiExcludeController, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreateReportDto } from './dtos/create-report.dto';
 import { ReportIdDto } from './dtos/get-report-by-id.dto';
 import { UpdateReportDto } from './dtos/update-report.dto';
@@ -19,7 +19,8 @@ import {
   UpdateReportService,
 } from './services';
 
-@ApiTags('report')
+@ApiExcludeController()
+@ApiTags('Report')
 @Controller('report')
 export class ReportsController {
   constructor(

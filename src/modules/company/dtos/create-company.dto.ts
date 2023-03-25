@@ -1,5 +1,3 @@
-import { IsCNPJ } from '../../../shared/validators/cnpj.validator';
-
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsEmail,
@@ -57,7 +55,6 @@ export class CreateCompanyDto {
   @IsString()
   @MaxLength(14)
   @MinLength(14)
-  // @IsCNPJ()
   @ApiProperty({
     description: 'CNPJ',
     example: '67.979.311/0001-15',

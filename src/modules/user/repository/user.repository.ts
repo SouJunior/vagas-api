@@ -91,9 +91,9 @@ export class UserRepository extends Repository<UsersEntity> {
   async activateUser(id: string): Promise<UsersEntity> {
     const user = await this.findOne(id).catch(handleError);
 
-    user.mailconfirm = true;
+    user.mailConfirm = true;
 
-    await this.update(id, { mailconfirm: true });
+    await this.update(id, { mailConfirm: true });
 
     return this.findOne(id);
   }
