@@ -83,8 +83,7 @@ export class UserRepository extends Repository<UsersEntity> {
 
     user.recoverPasswordToken = recoverPasswordToken;
 
-    await this.save(user);
-
+    await this.update(id, user).catch(handleError);
     return user;
   }
 
