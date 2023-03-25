@@ -24,7 +24,7 @@ export class ActivateUserService {
 
     delete user.password;
     delete user.recoverPasswordToken;
-
+    delete user.ip;
     return user;
   }
 }

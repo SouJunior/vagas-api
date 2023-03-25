@@ -24,8 +24,8 @@ export class AuthLoginService {
       info = await this.userRepository.findOneByEmail(email);
     }
 
-    if (!info) {
-      throw new UnauthorizedException('E-mail ou Senha não conferem');
+    if (!info.mailconfirm) {
+      throw new UnauthorizedException('Email not validated');
     }
 
     const passwordIsValid = await bcrypt.compare(password, info.password);
