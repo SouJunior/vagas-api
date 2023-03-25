@@ -7,6 +7,8 @@ export class DeleteUserService {
   constructor(private userRepository: UserRepository) {}
 
   async execute(user: UsersEntity) {
-    return this.userRepository.deleteUserById(user.id);
+    await this.userRepository.deleteUserById(user.id);
+
+    return { message: 'User deleted successfully' };
   }
 }

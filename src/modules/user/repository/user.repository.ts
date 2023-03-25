@@ -55,13 +55,13 @@ export class UserRepository extends Repository<UsersEntity> {
   async updateUser(id: string, data: UpdateUserDto) {
     await this.update(id, data).catch(handleError);
 
-    return { message: 'User updated successfully' };
+    return;
   }
 
   async deleteUserById(id: string): Promise<object> {
     await this.delete(id).catch(handleError);
 
-    return { message: 'User deleted successfully' };
+    return;
   }
 
   async updateMyPassword(updateMyPasswordDto: UpdateMyPasswordDto, id) {

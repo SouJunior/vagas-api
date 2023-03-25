@@ -29,7 +29,7 @@ export class AuthController {
   }
 
   @Get('/user-logged')
-  @UseGuards(AuthGuard()) //nest has a AuthGuard that checks the authorization, this makes the guard available for the route.
+  @UseGuards(AuthGuard())
   @ApiOperation({
     summary: 'Retorna usuário logado',
   })

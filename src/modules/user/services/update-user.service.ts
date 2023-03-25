@@ -13,8 +13,8 @@ export class UpdateUserService {
       data.password = await bcrypt.hash(data.password, 10);
     }
 
-    const userUpdated = await this.userRepository.updateUser(user.id, data);
+    await this.userRepository.updateUser(user.id, data);
 
-    return userUpdated;
+    return { message: 'User updated successfully' };
   }
 }

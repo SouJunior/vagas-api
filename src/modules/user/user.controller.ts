@@ -120,7 +120,7 @@ export class UserController {
     return this.deleteUserService.execute(user);
   }
 
-  @Patch('recovery-password')
+  @Patch('recovery_password')
   @ApiOperation({
     summary: 'Send email to recovery password.',
   })
