@@ -4,7 +4,6 @@ import {
   Entity,
   OneToMany,
   PrimaryGeneratedColumn,
-  Timestamp,
   UpdateDateColumn,
 } from 'typeorm';
 import { CertificationsEntity } from './certifications.entity';

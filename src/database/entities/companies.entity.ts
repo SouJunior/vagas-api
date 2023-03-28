@@ -2,9 +2,11 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { JobsEntity } from './jobs.entity';
 
 @Entity('tb_companies')
 export class CompaniesEntity {
@@ -31,6 +33,9 @@ export class CompaniesEntity {
 
   @Column()
   address: string;
+
+  @OneToMany(() => JobsEntity, (jobs) => jobs.company)
+  jobs: JobsEntity[];
 
   @CreateDateColumn()
   created_at: Date;

@@ -37,7 +37,7 @@ export class CompanyRepository extends Repository<CompaniesEntity> {
 
   async findCompanyById(id: string): Promise<CompaniesEntity> {
     return this.findOne(id, {
-      relations: ['company.jobs'],
+      relations: ['jobs'],
     }).catch(handleError);
   }
 
