@@ -11,8 +11,9 @@ import { handleError } from '../../../shared/utils/handle-error.util';
 
 @EntityRepository(JobsEntity)
 export class JobRepository extends Repository<JobsEntity> {
-  async createNewJob(data: CreateJobDto): Promise<CreateJobDto> {
-    return this.save(data).catch(handleError);
+  async createNewJob(data: CreateJobDto): Promise<void> {
+    await this.save(data).catch(handleError);
+    return ; 
   }
 
   async getAllJobs(

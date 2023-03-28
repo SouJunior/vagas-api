@@ -7,9 +7,13 @@ import {
   Post,
   Put,
   Query,
+  UseGuards
 } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { CompaniesEntity } from '../../database/entities/companies.entity';
 import { PageOptionsDto } from '../../shared/pagination';
+import { LoggedCompany } from '../auth/decorator/logged-company.decorator';
 import { CreateJobDto } from './dtos/create-job.dto';
 import { UpdateJobDto } from './dtos/update-job.dto';
 import {
@@ -17,7 +21,7 @@ import {
   DeleteJobService,
   GetAllJobsService,
   GetOneJobByIdService,
-  UpdateJobService,
+  UpdateJobService
 } from './services';
 
 @ApiTags('Job')
@@ -29,14 +33,16 @@ export class JobsController {
     private getOneJobByIdService: GetOneJobByIdService,
     private updateJobService: UpdateJobService,
     private deleteJobService: DeleteJobService,
-  ) {}
+  ) { }
 
   @Post()
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard())
   @ApiOperation({
     summary: 'Cadastrar um emprego.',
   })
-  async createNewJob(@Body() data: CreateJobDto) {
-    return this.createJobService.execute(data);
+  async createNewJob(@Body() data: CreateJobDto, @LoggedCompany() company: CompaniesEntity) {
+    return this.createJobService.execute(data, company);
   }
 
   @Get()
