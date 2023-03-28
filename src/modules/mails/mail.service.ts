@@ -93,4 +93,13 @@ export class MailService {
       },
     });
   }
+
+  async sendMail({subject, template, context, email}) {
+    await this.mailerService.sendMail({
+      to: email,
+      subject,
+      template,
+      context,
+    });
+  }
 }
