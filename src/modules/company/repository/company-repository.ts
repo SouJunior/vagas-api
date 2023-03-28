@@ -36,7 +36,9 @@ export class CompanyRepository extends Repository<CompaniesEntity> {
   }
 
   async findCompanyById(id: string): Promise<CompaniesEntity> {
-    return this.findOne(id).catch(handleError);
+    return this.findOne(id, {
+      relations: ['company.jobs'],
+    }).catch(handleError);
   }
 
   async UpdateCompanyById(id: string, data: UpdateCompanyDto) {

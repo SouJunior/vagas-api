@@ -1,18 +1,20 @@
 import {
   createParamDecorator,
   ExecutionContext,
-  UnauthorizedException
+  UnauthorizedException,
 } from '@nestjs/common';
 
-export const LoggedCompany = createParamDecorator((_, ctx: ExecutionContext) => {
-  const request = ctx.switchToHttp().getRequest();
-  const userObject = request.user;
+export const LoggedCompany = createParamDecorator(
+  (_, ctx: ExecutionContext) => {
+    const request = ctx.switchToHttp().getRequest();
+    const userObject = request.user;
 
-  if (!userObject) {
+    if (!userObject) {
+      throw new UnauthorizedException(
+        'User does not have permission to access this route',
+      );
+    }
+
     return userObject;
-  } else {
-    throw new UnauthorizedException(
-      'User does not have permission to access this route',
-    );
-  }
-});
+  },
+);

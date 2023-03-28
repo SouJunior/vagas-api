@@ -7,7 +7,7 @@ import {
   Post,
   Put,
   Query,
-  UseGuards
+  UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
@@ -21,7 +21,7 @@ import {
   DeleteJobService,
   GetAllJobsService,
   GetOneJobByIdService,
-  UpdateJobService
+  UpdateJobService,
 } from './services';
 
 @ApiTags('Job')
@@ -33,7 +33,7 @@ export class JobsController {
     private getOneJobByIdService: GetOneJobByIdService,
     private updateJobService: UpdateJobService,
     private deleteJobService: DeleteJobService,
-  ) { }
+  ) {}
 
   @Post()
   @ApiBearerAuth()
@@ -41,7 +41,10 @@ export class JobsController {
   @ApiOperation({
     summary: 'Cadastrar um emprego.',
   })
-  async createNewJob(@Body() data: CreateJobDto, @LoggedCompany() company: CompaniesEntity) {
+  async createNewJob(
+    @Body() data: CreateJobDto,
+    @LoggedCompany() company: CompaniesEntity,
+  ) {
     return this.createJobService.execute(data, company);
   }
 
