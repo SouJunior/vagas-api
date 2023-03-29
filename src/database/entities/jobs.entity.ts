@@ -5,7 +5,8 @@ import {
   JoinColumn,
   ManyToOne,
   OneToMany,
-  PrimaryGeneratedColumn, UpdateDateColumn
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { JobsAffirmativeTypeEnum } from '../../modules/jobs/enums/job-affirmative-type.enum';
 import { CommentsEntity } from './comments.entity';
@@ -27,13 +28,6 @@ enum JobsModalityEnum {
   REMOTE = 'REMOTE',
   HYBRID = 'HYBRID',
   IN_PERSON = 'IN_PERSON',
-}
-
-enum JobsContractTimeEnum {
-  SixMonth = '6m',
-  SixMonthToOneYear = '6m - 1a',
-  OneYearToTwoYear = '1a - 2a',
-  undetermined = 'undetermined',
 }
 
 @Entity('tb_jobs')
@@ -75,7 +69,6 @@ export class JobsEntity {
   @Column()
   salaryMin: number;
 
-
   @Column()
   salaryMax: number;
 
@@ -97,7 +90,7 @@ export class JobsEntity {
   headquarters: string;
 
   @Column({
-    default: true
+    default: true,
   })
   indefinideContract: boolean;
 
@@ -115,22 +108,22 @@ export class JobsEntity {
       JobsAffirmativeTypeEnum.LGBTQIA,
       JobsAffirmativeTypeEnum.SIXTY_PLUS,
     ],
-    nullable: true
+    nullable: true,
   })
   affirmativeType: JobsAffirmativeTypeEnum;
 
   @ManyToOne(() => CompaniesEntity)
-  @JoinColumn({ name: 'companyId' })
+  @JoinColumn({ name: 'company_id' })
   company: CompaniesEntity;
 
   @Column()
-  companyId: string;
+  company_id: string;
 
   @OneToMany(() => CommentsEntity, (comment) => comment.job, {
     cascade: true,
   })
   comments: CommentsEntity[];
- 
+
   @CreateDateColumn()
   createdAt: Date;
 

@@ -75,7 +75,7 @@ export class CompanyController {
     summary: 'Buscar uma empresa por id.',
   })
   async getcompanyById(
-    @Param('id', new GetEntity(CompaniesEntity))
+    @Param('id', new GetEntity(CompaniesEntity, ['jobs']))
     company: CompaniesEntity,
   ) {
     return company;

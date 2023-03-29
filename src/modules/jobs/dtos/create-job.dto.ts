@@ -6,7 +6,7 @@ import {
   IsNumber,
   IsOptional,
   IsString,
-  MaxLength
+  MaxLength,
 } from 'class-validator';
 import { JobsAffirmativeTypeEnum } from '../enums/job-affirmative-type.enum';
 import { JobsTypeContractEnum } from '../enums/job-contract-type.enum';
@@ -89,7 +89,7 @@ export class CreateJobDto {
 
   @ApiProperty({
     description: 'Informe a unidade federativa',
-    example: 'DF'
+    example: 'DF',
   })
   @IsOptional()
   @IsString()
@@ -155,11 +155,7 @@ export class CreateJobDto {
   })
   affirmativeType?: JobsAffirmativeTypeEnum;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
-  @ApiProperty({
-    description: 'ID da empresa',
-    example: 'be02e7b0-238a-44c2-b9db-ccb339d63fc9',
-  })
-  companyId: string;
+  company_id?: string;
 }

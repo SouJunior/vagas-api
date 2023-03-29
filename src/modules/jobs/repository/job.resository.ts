@@ -1,19 +1,19 @@
-import { JobsEntity } from '../../../database/entities/jobs.entity';
 import { EntityRepository, Repository } from 'typeorm';
-import { CreateJobDto } from '../dtos/create-job.dto';
-import { UpdateJobDto } from '../dtos/update-job.dto';
+import { JobsEntity } from '../../../database/entities/jobs.entity';
 import {
   PageDto,
   PageMetaDto,
   PageOptionsDto,
 } from '../../../shared/pagination';
 import { handleError } from '../../../shared/utils/handle-error.util';
+import { CreateJobDto } from '../dtos/create-job.dto';
+import { UpdateJobDto } from '../dtos/update-job.dto';
 
 @EntityRepository(JobsEntity)
 export class JobRepository extends Repository<JobsEntity> {
   async createNewJob(data: CreateJobDto): Promise<void> {
     await this.save(data).catch(handleError);
-    return ; 
+    return;
   }
 
   async getAllJobs(
@@ -36,7 +36,7 @@ export class JobRepository extends Repository<JobsEntity> {
 
   async findOneById(id: string): Promise<any> {
     return this.findOne({
-      relations: ['comments', 'comments.user'],
+      relations: ['comments', 'comments.user', 'company'],
       where: { id },
     }).catch(handleError);
   }
