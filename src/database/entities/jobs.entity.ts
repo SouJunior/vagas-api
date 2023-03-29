@@ -6,9 +6,9 @@ import {
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
-  Timestamp,
   UpdateDateColumn,
 } from 'typeorm';
+import { JobsAffirmativeTypeEnum } from '../../modules/jobs/enums/job-affirmative-type.enum';
 import { CommentsEntity } from './comments.entity';
 import { CompaniesEntity } from './companies.entity';
 
@@ -30,13 +30,6 @@ enum JobsModalityEnum {
   IN_PERSON = 'IN_PERSON',
 }
 
-enum JobsContractTimeEnum {
-  SixMonth = '6m',
-  SixMonthToOneYear = '6m - 1a',
-  OneYearToTwoYear = '1a - 2a',
-  undetermined = 'undetermined',
-}
-
 @Entity('tb_jobs')
 export class JobsEntity {
   @PrimaryGeneratedColumn('uuid')
@@ -51,7 +44,7 @@ export class JobsEntity {
   @Column()
   prerequisites: string;
 
-  @Column()
+  @Column({ nullable: true })
   benefits: string;
 
   @Column({
@@ -69,11 +62,18 @@ export class JobsEntity {
       JobsTypeContractEnum.PJ,
     ],
     default: JobsTypeContractEnum.CLT,
+    nullable: true,
   })
-  type_contract: string;
+  typeContract: string;
 
   @Column()
-  salary: number;
+  salaryMin: number;
+
+  @Column()
+  salaryMax: number;
+
+  @Column({ nullable: true })
+  federalUnit: string;
 
   @Column({
     type: 'enum',
@@ -90,21 +90,27 @@ export class JobsEntity {
   headquarters: string;
 
   @Column({
-    type: 'enum',
-    enum: [
-      JobsContractTimeEnum.undetermined,
-      JobsContractTimeEnum.OneYearToTwoYear,
-      JobsContractTimeEnum.SixMonth,
-      JobsContractTimeEnum.SixMonthToOneYear,
-    ],
+    default: true,
   })
-  contract_time: string;
+  indefinideContract: boolean;
 
-  @Column({ default: false })
+  @Column({ nullable: true })
+  contractType: string;
+
+  @Column({ default: true })
   affirmative: boolean;
 
-  @Column()
-  affirmative_type: string;
+  @Column({
+    type: 'enum',
+    enum: [
+      JobsAffirmativeTypeEnum.BLACK_BROWN_PERSON,
+      JobsAffirmativeTypeEnum.CIS_TRANS_WOMEN,
+      JobsAffirmativeTypeEnum.LGBTQIA,
+      JobsAffirmativeTypeEnum.SIXTY_PLUS,
+    ],
+    nullable: true,
+  })
+  affirmativeType: JobsAffirmativeTypeEnum;
 
   @ManyToOne(() => CompaniesEntity)
   @JoinColumn({ name: 'company_id' })
@@ -119,8 +125,8 @@ export class JobsEntity {
   comments: CommentsEntity[];
 
   @CreateDateColumn()
-  created_at: Date;
+  createdAt: Date;
 
   @UpdateDateColumn({ update: true })
-  updated_at: Date;
+  updatedAt: Date;
 }
