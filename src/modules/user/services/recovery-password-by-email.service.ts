@@ -34,7 +34,7 @@ export class RecoveryPasswordByEmail {
       status: 200,
       data: {
         message:
-          'Se o e-mail existir no nosso banco será enviado um email com o link para recuperação da senha.',
+          'Será encaminhado uma mensagem para o e-mail cadastrado, informando os próximos passos para a redefinição da senha.',
       },
     };
   }
