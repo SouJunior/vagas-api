@@ -16,7 +16,8 @@ export class RecoveryCompanyPasswordByEmail {
       return {
         status: 200,
         data: {
-          message: 'Email não encontrado!',
+          message:
+            'Caso esse e-mail esteja cadastrado no sistema, será encaminhado para ele uma mensagem de orientação sobre o próximos passos para a redefinição da senha.',
         },
       };
     }
@@ -36,7 +37,7 @@ export class RecoveryCompanyPasswordByEmail {
       status: 200,
       data: {
         message:
-          'Será encaminhado uma mensagem para o e-mail cadastrado, informando os próximos passos para a redefinição da senha.',
+          'Caso esse e-mail esteja cadastrado no sistema, será encaminhado para ele uma mensagem de orientação sobre o próximos passos para a redefinição da senha.',
       },
     };
   }
