@@ -11,11 +11,19 @@ import {
   Req,
   Res,
   UseGuards,
+  HttpStatus
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { Request, Response } from 'express';
 import { UsersEntity } from '../../database/entities/users.entity';
+import { BadRequestSwagger } from '../../shared/Swagger/bad-request.swagger';
+import { NotFoundSwagger } from '../../shared/Swagger/unauthorized.swagger';
 import { PageOptionsDto } from '../../shared/pagination';
 import { LoggedAdmin } from '../auth/decorator/logged-admin.decorator';
 import { LoggedUser } from '../auth/decorator/logged-user.decorator';
@@ -50,6 +58,21 @@ export class UserController {
   ) {}
 
   @Post()
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Exemplo do retorno de sucesso da rota',
+    type: CreateUserDto,
+  })
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Modelo de erro',
+    type: NotFoundSwagger,
+  })
+  @ApiResponse({
+    status: HttpStatus.BAD_REQUEST,
+    description: 'Modelo de erro',
+    type: BadRequestSwagger,
+  })
   @ApiOperation({
     summary: 'Criar um usuário!',
   })
@@ -75,6 +98,21 @@ export class UserController {
   }
 
   @Get()
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Exemplo do retorno de sucesso da rota',
+    type: PageOptionsDto
+  })
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Modelo de erro',
+    type: NotFoundSwagger,
+  })
+  @ApiResponse({
+    status: HttpStatus.BAD_REQUEST,
+    description: 'Modelo de erro',
+    type: BadRequestSwagger,
+  })
   @ApiOperation({
     summary: 'Visualizar todos os usuários',
   })
@@ -88,6 +126,21 @@ export class UserController {
   }
 
   @Get(':id')
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Exemplo do retorno de sucesso da rota',
+    type: UsersEntity
+  })
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Modelo de erro',
+    type: NotFoundSwagger,
+  })
+  @ApiResponse({
+    status: HttpStatus.BAD_REQUEST,
+    description: 'Modelo de erro',
+    type: BadRequestSwagger,
+  })
   @ApiOperation({
     summary: 'Visualizar um usuário pelo ID (precisa ser adm)',
   })
@@ -98,6 +151,21 @@ export class UserController {
   }
 
   @Put()
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Exemplo do retorno de sucesso da rota',
+    type: UpdateUserDto
+  })
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Modelo de erro',
+    type: NotFoundSwagger,
+  })
+  @ApiResponse({
+    status: HttpStatus.BAD_REQUEST,
+    description: 'Modelo de erro',
+    type: BadRequestSwagger,
+  })
   @ApiOperation({
     summary: 'Atualizar um usuário pelo ID',
   })
@@ -111,6 +179,21 @@ export class UserController {
   }
 
   @Delete(':id')
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Exemplo do retorno de sucesso da rota',
+    type: UsersEntity
+  })
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Modelo de erro',
+    type: NotFoundSwagger,
+  })
+  @ApiResponse({
+    status: HttpStatus.BAD_REQUEST,
+    description: 'Modelo de erro',
+    type: BadRequestSwagger,
+  })
   @ApiOperation({
     summary: 'Deletar um usuário pelo ID',
   })
@@ -121,6 +204,21 @@ export class UserController {
   }
 
   @Patch('recovery_password')
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Exemplo do retorno de sucesso da rota',
+    type: EmailDto
+  })
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Modelo de erro',
+    type: NotFoundSwagger,
+  })
+  @ApiResponse({
+    status: HttpStatus.BAD_REQUEST,
+    description: 'Modelo de erro',
+    type: BadRequestSwagger,
+  })
   @ApiOperation({
     summary: 'Send email to recovery password.',
   })
@@ -134,6 +232,21 @@ export class UserController {
   }
 
   @Patch('update_password')
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Exemplo do retorno de sucesso da rota',
+    type: CreatePasswordHashDto
+  })
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Modelo de erro',
+    type: NotFoundSwagger,
+  })
+  @ApiResponse({
+    status: HttpStatus.BAD_REQUEST,
+    description: 'Modelo de erro',
+    type: BadRequestSwagger,
+  })
   @ApiOperation({
     summary: 'User update password.',
   })
