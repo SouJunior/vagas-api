@@ -8,11 +8,19 @@ import {
   Post,
   Put,
   Query,
+  HttpStatus,
   Res,
 } from '@nestjs/common';
-import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import { 
+  ApiOperation, 
+  ApiParam, 
+  ApiTags, 
+  ApiResponse
+} from '@nestjs/swagger';
 import { Response } from 'express';
 import { CompaniesEntity } from 'src/database/entities/companies.entity';
+import { BadRequestSwagger } from '../../shared/Swagger/bad-request.swagger';
+import { NotFoundSwagger } from '../../shared/Swagger/unauthorized.swagger';
 import { PageOptionsDto } from '../../shared/pagination';
 import GetEntity from '../../shared/pipes/pipe-entity.pipe';
 import { EmailDto } from '../user/dtos/email-user.dto';
@@ -44,6 +52,21 @@ export class CompanyController {
   ) {}
 
   @Post()
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Exemplo do retorno de sucesso da rota',
+    type: CreateCompanyDto,
+  })
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Modelo de erro',
+    type: NotFoundSwagger,
+  })
+  @ApiResponse({
+    status: HttpStatus.BAD_REQUEST,
+    description: 'Modelo de erro',
+    type: BadRequestSwagger,
+  })
   @ApiOperation({
     summary: 'Cadastrar uma empresa.',
   })
@@ -59,6 +82,21 @@ export class CompanyController {
   }
 
   @Get()
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Exemplo do retorno de sucesso da rota',
+    type: PageOptionsDto,
+  })
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Modelo de erro',
+    type: NotFoundSwagger,
+  })
+  @ApiResponse({
+    status: HttpStatus.BAD_REQUEST,
+    description: 'Modelo de erro',
+    type: BadRequestSwagger,
+  })
   @ApiOperation({
     summary: 'Buscar todas as empresas.',
   })
@@ -71,6 +109,16 @@ export class CompanyController {
     name: 'id',
     type: 'string',
   })
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Modelo de erro',
+    type: NotFoundSwagger,
+  })
+  @ApiResponse({
+    status: HttpStatus.BAD_REQUEST,
+    description: 'Modelo de erro',
+    type: BadRequestSwagger,
+  })
   @ApiOperation({
     summary: 'Buscar uma empresa por id.',
   })
@@ -82,6 +130,21 @@ export class CompanyController {
   }
 
   @Put(':id')
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Exemplo do retorno de sucesso da rota',
+    type: UpdateCompanyDto,
+  })
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Modelo de erro',
+    type: NotFoundSwagger,
+  })
+  @ApiResponse({
+    status: HttpStatus.BAD_REQUEST,
+    description: 'Modelo de erro',
+    type: BadRequestSwagger,
+  })
   @ApiOperation({
     summary: 'Atualizar uma empresa por id.',
   })
@@ -98,6 +161,21 @@ export class CompanyController {
   }
 
   @Patch('recovery-password')
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Exemplo do retorno de sucesso da rota',
+    type: EmailDto,
+  })
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Modelo de erro',
+    type: NotFoundSwagger,
+  })
+  @ApiResponse({
+    status: HttpStatus.BAD_REQUEST,
+    description: 'Modelo de erro',
+    type: BadRequestSwagger,
+  })
   @ApiOperation({
     summary: 'Send email to recovery password.',
   })
@@ -111,6 +189,21 @@ export class CompanyController {
   }
 
   @Patch('update_password')
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Exemplo do retorno de sucesso da rota',
+    type: CreatePasswordHashDto,
+  })
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Modelo de erro',
+    type: NotFoundSwagger,
+  })
+  @ApiResponse({
+    status: HttpStatus.BAD_REQUEST,
+    description: 'Modelo de erro',
+    type: BadRequestSwagger,
+  })
   @ApiOperation({
     summary: 'Company update password.',
   })
@@ -125,6 +218,16 @@ export class CompanyController {
   }
 
   @Patch(':id')
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Modelo de erro',
+    type: NotFoundSwagger,
+  })
+  @ApiResponse({
+    status: HttpStatus.BAD_REQUEST,
+    description: 'Modelo de erro',
+    type: BadRequestSwagger,
+  })
   @ApiOperation({
     summary: 'Ativar uma empresa pelo ID',
   })
@@ -134,6 +237,21 @@ export class CompanyController {
   }
 
   @Delete(':id')
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Exemplo do retorno de sucesso da rota',
+    type: CompanyIdDto,
+  })
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Modelo de erro',
+    type: NotFoundSwagger,
+  })
+  @ApiResponse({
+    status: HttpStatus.BAD_REQUEST,
+    description: 'Modelo de erro',
+    type: BadRequestSwagger,
+  })
   @ApiOperation({
     summary: 'Excluir uma empresa por id.',
   })
