@@ -90,6 +90,19 @@ export class UserController {
   }
 
   @Put('activate/:id')
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Modelo de erro',
+    type: NotFoundSwagger,
+  })
+  @ApiResponse({
+    status: HttpStatus.BAD_REQUEST,
+    description: 'Modelo de erro',
+    type: BadRequestSwagger,
+  })
+  @ApiOperation({
+    summary: 'Visualizar todos os usuários',
+  })
   @ApiOperation({
     summary: 'Ativar um usuário pelo ID',
   })
