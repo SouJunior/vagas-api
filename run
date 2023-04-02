@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+COMMAND=${1:-"local"}
+
+DOCKER_REPOSITORY="public.ecr.aws/a8g4m8m1/vagas-backend"
+BUILD_DOCKER_TAG=$(git log -n 1 --pretty='format:%cd-%h' --date=format:'%Y%m%d%H%M')
+
+push() {
+  docker buildx build --platform linux/arm64/v8,linux/amd64 -f Dockerfile \
+    --push -t $DOCKER_REPOSITORY:$BUILD_DOCKER_TAG .
+}
+
+compose_up() {
+  [[ ! $COMMAND == "server" ]] || declare -a args=('-f' 'docker-compose-vm.yml')
+  CONTAINER_IMAGE="$DOCKER_REPOSITORY:$BUILD_DOCKER_TAG" docker-compose ${args[*]} up -d
+}
+
+case $COMMAND in
+  build-push)
+    push;;
+  local)
+    compose_up;;
+  server)
+    compose_up;;
+esac
