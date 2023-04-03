@@ -17,7 +17,7 @@ import {
 import { Response } from 'express';
 import { UsersEntity } from '../../database/entities/users.entity';
 import { BadRequestSwagger } from '../../shared/Swagger/bad-request.swagger';
-import { NotFoundSwagger } from '../../shared/Swagger/unauthorized.swagger';
+import { UnauthorizedSwagger } from '../../shared/Swagger/unauthorized.swagger';
 import { LoggedUser } from './decorator/logged-user.decorator';
 import { UserLoginResponseDto } from './dtos/user-login-response.dto';
 import { UserLoginDto } from './dtos/user-login.dto';
@@ -59,7 +59,7 @@ export class AuthController {
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
     description: 'Modelo de erro',
-    type: NotFoundSwagger,
+    type: UnauthorizedSwagger,
   })
   @ApiOperation({
     summary: 'Retorna usuário logado',

@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  HttpStatus,
   Param,
   Patch,
   Post,
@@ -11,7 +12,6 @@ import {
   Req,
   Res,
   UseGuards,
-  HttpStatus
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import {
@@ -23,7 +23,7 @@ import {
 import { Request, Response } from 'express';
 import { UsersEntity } from '../../database/entities/users.entity';
 import { BadRequestSwagger } from '../../shared/Swagger/bad-request.swagger';
-import { NotFoundSwagger } from '../../shared/Swagger/unauthorized.swagger';
+import { UnauthorizedSwagger } from '../../shared/Swagger/unauthorized.swagger';
 import { PageOptionsDto } from '../../shared/pagination';
 import { LoggedAdmin } from '../auth/decorator/logged-admin.decorator';
 import { LoggedUser } from '../auth/decorator/logged-user.decorator';
@@ -66,7 +66,7 @@ export class UserController {
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
     description: 'Modelo de erro',
-    type: NotFoundSwagger,
+    type: UnauthorizedSwagger,
   })
   @ApiResponse({
     status: HttpStatus.BAD_REQUEST,
@@ -93,7 +93,7 @@ export class UserController {
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
     description: 'Modelo de erro',
-    type: NotFoundSwagger,
+    type: UnauthorizedSwagger,
   })
   @ApiResponse({
     status: HttpStatus.BAD_REQUEST,
@@ -114,12 +114,12 @@ export class UserController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Exemplo do retorno de sucesso da rota',
-    type: PageOptionsDto
+    type: PageOptionsDto,
   })
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
     description: 'Modelo de erro',
-    type: NotFoundSwagger,
+    type: UnauthorizedSwagger,
   })
   @ApiResponse({
     status: HttpStatus.BAD_REQUEST,
@@ -142,12 +142,12 @@ export class UserController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Exemplo do retorno de sucesso da rota',
-    type: UsersEntity
+    type: UsersEntity,
   })
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
     description: 'Modelo de erro',
-    type: NotFoundSwagger,
+    type: UnauthorizedSwagger,
   })
   @ApiResponse({
     status: HttpStatus.BAD_REQUEST,
@@ -167,12 +167,12 @@ export class UserController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Exemplo do retorno de sucesso da rota',
-    type: UpdateUserDto
+    type: UpdateUserDto,
   })
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
     description: 'Modelo de erro',
-    type: NotFoundSwagger,
+    type: UnauthorizedSwagger,
   })
   @ApiResponse({
     status: HttpStatus.BAD_REQUEST,
@@ -195,12 +195,12 @@ export class UserController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Exemplo do retorno de sucesso da rota',
-    type: UsersEntity
+    type: UsersEntity,
   })
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
     description: 'Modelo de erro',
-    type: NotFoundSwagger,
+    type: UnauthorizedSwagger,
   })
   @ApiResponse({
     status: HttpStatus.BAD_REQUEST,
@@ -220,12 +220,12 @@ export class UserController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Exemplo do retorno de sucesso da rota',
-    type: EmailDto
+    type: EmailDto,
   })
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
     description: 'Modelo de erro',
-    type: NotFoundSwagger,
+    type: UnauthorizedSwagger,
   })
   @ApiResponse({
     status: HttpStatus.BAD_REQUEST,
@@ -248,12 +248,12 @@ export class UserController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Exemplo do retorno de sucesso da rota',
-    type: CreatePasswordHashDto
+    type: CreatePasswordHashDto,
   })
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
     description: 'Modelo de erro',
-    type: NotFoundSwagger,
+    type: UnauthorizedSwagger,
   })
   @ApiResponse({
     status: HttpStatus.BAD_REQUEST,

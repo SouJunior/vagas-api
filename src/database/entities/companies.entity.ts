@@ -25,15 +25,6 @@ export class CompaniesEntity {
   @Column()
   cnpj: string;
 
-  @Column()
-  linkedin: string;
-
-  @Column()
-  description: string;
-
-  @Column()
-  address: string;
-
   @OneToMany(() => JobsEntity, (jobs) => jobs.company)
   jobs: JobsEntity[];
 
@@ -55,9 +46,6 @@ export class CompaniesEntity {
     this.email = company?.email;
     this.password = company?.password;
     this.cnpj = company?.cnpj;
-    this.linkedin = company?.linkedin;
-    this.description = company?.description;
-    this.address = company?.address;
     this.mailConfirm = company?.mailConfirm;
     this.recoverPasswordToken = company?.recoverPasswordToken;
     this.created_at = company?.created_at;

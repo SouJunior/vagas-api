@@ -3,24 +3,19 @@ import {
   Controller,
   Delete,
   Get,
+  HttpStatus,
   Param,
   Patch,
   Post,
   Put,
   Query,
-  HttpStatus,
   Res,
 } from '@nestjs/common';
-import { 
-  ApiOperation, 
-  ApiParam, 
-  ApiTags, 
-  ApiResponse
-} from '@nestjs/swagger';
+import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 import { CompaniesEntity } from 'src/database/entities/companies.entity';
 import { BadRequestSwagger } from '../../shared/Swagger/bad-request.swagger';
-import { NotFoundSwagger } from '../../shared/Swagger/unauthorized.swagger';
+import { UnauthorizedSwagger } from '../../shared/Swagger/unauthorized.swagger';
 import { PageOptionsDto } from '../../shared/pagination';
 import GetEntity from '../../shared/pipes/pipe-entity.pipe';
 import { EmailDto } from '../user/dtos/email-user.dto';
@@ -60,7 +55,7 @@ export class CompanyController {
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
     description: 'Modelo de erro',
-    type: NotFoundSwagger,
+    type: UnauthorizedSwagger,
   })
   @ApiResponse({
     status: HttpStatus.BAD_REQUEST,
@@ -90,7 +85,7 @@ export class CompanyController {
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
     description: 'Modelo de erro',
-    type: NotFoundSwagger,
+    type: UnauthorizedSwagger,
   })
   @ApiResponse({
     status: HttpStatus.BAD_REQUEST,
@@ -112,7 +107,7 @@ export class CompanyController {
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
     description: 'Modelo de erro',
-    type: NotFoundSwagger,
+    type: UnauthorizedSwagger,
   })
   @ApiResponse({
     status: HttpStatus.BAD_REQUEST,
@@ -138,7 +133,7 @@ export class CompanyController {
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
     description: 'Modelo de erro',
-    type: NotFoundSwagger,
+    type: UnauthorizedSwagger,
   })
   @ApiResponse({
     status: HttpStatus.BAD_REQUEST,
@@ -169,7 +164,7 @@ export class CompanyController {
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
     description: 'Modelo de erro',
-    type: NotFoundSwagger,
+    type: UnauthorizedSwagger,
   })
   @ApiResponse({
     status: HttpStatus.BAD_REQUEST,
@@ -197,7 +192,7 @@ export class CompanyController {
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
     description: 'Modelo de erro',
-    type: NotFoundSwagger,
+    type: UnauthorizedSwagger,
   })
   @ApiResponse({
     status: HttpStatus.BAD_REQUEST,
@@ -221,7 +216,7 @@ export class CompanyController {
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
     description: 'Modelo de erro',
-    type: NotFoundSwagger,
+    type: UnauthorizedSwagger,
   })
   @ApiResponse({
     status: HttpStatus.BAD_REQUEST,
@@ -245,7 +240,7 @@ export class CompanyController {
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
     description: 'Modelo de erro',
-    type: NotFoundSwagger,
+    type: UnauthorizedSwagger,
   })
   @ApiResponse({
     status: HttpStatus.BAD_REQUEST,

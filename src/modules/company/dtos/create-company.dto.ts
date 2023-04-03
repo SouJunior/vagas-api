@@ -27,30 +27,6 @@ export class CreateCompanyDto {
   })
   email: string;
 
-  @IsString()
-  @IsNotEmpty()
-  @ApiProperty({
-    description: 'linkedIn',
-    example: 'linkedIn/Usuárioaqui',
-  })
-  linkedin: string;
-
-  @IsString()
-  @IsNotEmpty()
-  @ApiProperty({
-    description: 'Endereço',
-    example: 'Rua dos Bobos',
-  })
-  address: string;
-
-  @IsString()
-  @IsNotEmpty()
-  @ApiProperty({
-    description: 'Descrição',
-    example: 'Empresa de pipocas',
-  })
-  description: string;
-
   @IsNotEmpty()
   @IsString()
   @MaxLength(14)
