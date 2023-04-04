@@ -16,7 +16,8 @@ export class RecoveryPasswordByEmail {
       return {
         status: 200,
         data: {
-          message: 'Email não encontrado!',
+          message:
+            'Caso esse e-mail esteja cadastrado no sistema, será encaminhado para ele uma mensagem de orientação sobre os próximos passos para a redefinição da senha.',
         },
       };
     }
@@ -34,7 +35,7 @@ export class RecoveryPasswordByEmail {
       status: 200,
       data: {
         message:
-          'Se o e-mail existir no nosso banco será enviado um email com o link para recuperação da senha.',
+          'Caso esse e-mail esteja cadastrado no sistema, será encaminhado para ele uma mensagem de orientação sobre os próximos passos para a redefinição da senha.',
       },
     };
   }
