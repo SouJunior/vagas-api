@@ -263,7 +263,7 @@ O projeto vai estar rodando em:
 
 ## Mentores 🙎🏻‍♂️🙎🏻
 
-| [<img src="https://media-exp1.licdn.com/dms/image/C4E03AQHcYVE3ctR6mQ/profile-displayphoto-shrink_800_800/0/1661880374425?e=1675296000&v=beta&t=y-5-fJ-8CWyB8kGOGn-PE2EFJFJ8hiN90fJfDSfVwoc" width=115><br><sub>Thiago Rodrigues</sub>](#) | 
+| [<img src="https://avatars.githubusercontent.com/u/54317829?v=4" width=115><br><sub>Thiago Rodrigues</sub>](https://github.com/thiagorcode) | 
 | :-----------------------------------------------------------------------------------------------------------------------------: |
 
 ## Ex contribuidores 🙎🏻‍♂️
