@@ -17,6 +17,7 @@ import { AuthGuard } from '@nestjs/passport';
 import {
   ApiBearerAuth,
   ApiOperation,
+  ApiParam,
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
@@ -32,6 +33,12 @@ import { EmailDto } from './dtos/email-user.dto';
 import { CreatePasswordHashDto } from './dtos/update-my-password.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
 
+import { NotFoundSwagger } from '../../shared/Swagger/not-found.swagger';
+import { UnprocessableEntitySwagger } from '../../shared/Swagger/unprocessable-entity.swagger';
+import { CreateResponseSwagger } from '../../shared/Swagger/user/create-response.swagger';
+import { ListResponseSwagger } from '../../shared/Swagger/user/list-response.swagger';
+import { RecoveryPasswordSwagger } from '../../shared/Swagger/user/recovery-password.swagger';
+import { GetByParamsDto } from './dtos/get-by-params.dto';
 import {
   CreateUserService,
   DeleteUserService,
@@ -59,9 +66,9 @@ export class UserController {
 
   @Post()
   @ApiResponse({
-    status: HttpStatus.OK,
+    status: HttpStatus.CREATED,
     description: 'Exemplo do retorno de sucesso da rota',
-    type: CreateUserDto,
+    type: CreateResponseSwagger,
   })
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
@@ -91,17 +98,19 @@ export class UserController {
 
   @Put('activate/:id')
   @ApiResponse({
-    status: HttpStatus.UNAUTHORIZED,
+    status: HttpStatus.OK,
+    description: 'Exemplo do retorno de sucesso da rota',
+    type: CreateResponseSwagger,
+  })
+  @ApiResponse({
+    status: HttpStatus.UNPROCESSABLE_ENTITY,
     description: 'Modelo de erro',
-    type: UnauthorizedSwagger,
+    type: UnprocessableEntitySwagger,
   })
   @ApiResponse({
     status: HttpStatus.BAD_REQUEST,
     description: 'Modelo de erro',
     type: BadRequestSwagger,
-  })
-  @ApiOperation({
-    summary: 'Visualizar todos os usuários',
   })
   @ApiOperation({
     summary: 'Ativar um usuário pelo ID',
@@ -114,7 +123,7 @@ export class UserController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Exemplo do retorno de sucesso da rota',
-    type: PageOptionsDto,
+    type: ListResponseSwagger,
   })
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
@@ -142,7 +151,7 @@ export class UserController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Exemplo do retorno de sucesso da rota',
-    type: UsersEntity,
+    type: CreateResponseSwagger,
   })
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
@@ -157,6 +166,10 @@ export class UserController {
   @ApiOperation({
     summary: 'Visualizar um usuário pelo ID (precisa ser adm)',
   })
+  @ApiParam({
+    type: GetByParamsDto,
+    name: '',
+  })
   @UseGuards(AuthGuard())
   @ApiBearerAuth()
   async getOneUser(@LoggedUser() user: UsersEntity) {
@@ -167,7 +180,7 @@ export class UserController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Exemplo do retorno de sucesso da rota',
-    type: UpdateUserDto,
+    type: BadRequestSwagger,
   })
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
@@ -195,7 +208,7 @@ export class UserController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Exemplo do retorno de sucesso da rota',
-    type: UsersEntity,
+    type: NotFoundSwagger,
   })
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
@@ -210,6 +223,10 @@ export class UserController {
   @ApiOperation({
     summary: 'Deletar um usuário pelo ID',
   })
+  @ApiParam({
+    type: GetByParamsDto,
+    name: '',
+  })
   @UseGuards(AuthGuard())
   @ApiBearerAuth()
   async deleteUser(@LoggedUser() user: UsersEntity) {
@@ -220,7 +237,7 @@ export class UserController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Exemplo do retorno de sucesso da rota',
-    type: EmailDto,
+    type: RecoveryPasswordSwagger,
   })
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
@@ -248,7 +265,7 @@ export class UserController {
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Exemplo do retorno de sucesso da rota',
-    type: CreatePasswordHashDto,
+    type: NotFoundSwagger,
   })
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
@@ -263,7 +280,14 @@ export class UserController {
   @ApiOperation({
     summary: 'User update password.',
   })
-  updatePassword(@Body() updatePassword: CreatePasswordHashDto) {
-    return this.updatePasswordByEmailService.execute(updatePassword);
+  async updatePassword(
+    @Body() updatePassword: CreatePasswordHashDto,
+    @Res() res: Response,
+  ) {
+    const { data, status } = await this.updatePasswordByEmailService.execute(
+      updatePassword,
+    );
+
+    return res.status(status).send(data);
   }
 }
