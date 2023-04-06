@@ -2,7 +2,7 @@
 
 ![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=2088f2&style=for-the-badge)
 
-# <h1 align="center"> [![Typing SVG](<https://readme-typing-svg.herokuapp.com/?color=ffffff&size=35&center=true&vCenter=true&width=1000&lines=Seja+bem+vindo(a)+no+vagas-backend!>)](https://git.io/typing-svg) </h1>
+# <h1 align="center"> [![Typing SVG](<https://readme-typing-svg.herokuapp.com/?color=ffffff&size=35&center=true&vCenter=true&width=1000&lines=Seja+bem+vindo(a)+ao+vagas-backend!>)](https://git.io/typing-svg) </h1>
 
 <img width=150% src="https://capsule-render.vercel.app/api?type=waving&width=150%&color=2088f2&fontColor=ffffff&height=300&section=header&text=Sou%20Junior&fontSize=90&animation=fadeIn&fontAlignY=38&desc=Projeto%20Opensource%20para%20melhorar%20o%20match%20entre%20os%20profissionais%20Juniors%20e%20Empresas!&descAlignY=61&descAlign=52" />
 
@@ -248,7 +248,7 @@ O projeto vai estar rodando em:
 
 <a id="equipe_do_backend"></a>
 
-## Head 🙎🏻
+## Head 🙎🏻‍♂️
 | [<img src="https://avatars.githubusercontent.com/u/81826043?s=96&v=4" width=115><br><sub>Wanderson Santos</sub>](https://github.com/wandersonDeve) |
 | :----------------------------------------------------------------------------------------------------------------------------: |
 
@@ -261,14 +261,14 @@ O projeto vai estar rodando em:
 | [<img src="https://avatars.githubusercontent.com/u/95504029?v=4" width=115><br><sub>Daniel Vinhas</sub>](https://github.com/vinhas93) | [<img src="https://avatars.githubusercontent.com/u/88009922?v=4" width=115><br><sub>Amaro Francisco</sub>](https://github.com/Amaro13) | [<img src="https://avatars.githubusercontent.com/u/100654478?v=4" width=115><br><sub>Ytallo Cesar</sub>](https://github.com/YtalloCesar2022) | [<img src="https://avatars.githubusercontent.com/u/14294566?v=4" width=115><br><sub>Alessandra Souza</sub>](https://github.com/ale4souza) | [<img src="https://avatars.githubusercontent.com/u/98703647?v=4" width=115><br><sub>Pedro Igor</sub>](https://github.com/pedroigorsf)
 | :-----------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------: |
 
-## Mentores 🙎🏻‍♂️🙎🏻
+## Mentores 🙎🏻‍♂️
 
-| [<img src="https://media-exp1.licdn.com/dms/image/C4E03AQHcYVE3ctR6mQ/profile-displayphoto-shrink_800_800/0/1661880374425?e=1675296000&v=beta&t=y-5-fJ-8CWyB8kGOGn-PE2EFJFJ8hiN90fJfDSfVwoc" width=115><br><sub>Thiago Rodrigues</sub>](#) | 
+| [<img src="https://avatars.githubusercontent.com/u/54317829?v=4" width=115><br><sub>Thiago Rodrigues</sub>](https://github.com/thiagorcode) | 
 | :-----------------------------------------------------------------------------------------------------------------------------: |
 
-## Ex contribuidores 🙎🏻‍♂️
+## Ex contribuidores 🙎🏻‍♂️🙎🏻
 
-| [<img src="https://avatars.githubusercontent.com/u/75804508?v=4" width=115><br><sub>Leonardo Monteiro</sub>](https://github.com/lmmagalhaes) | [<img src="https://avatars.githubusercontent.com/u/95653155?s=96&v=4" width=115><br><sub>Joana D'arc</sub>](https://github.com/Joanadarknes) | [<img src="https://media-exp1.licdn.com/dms/image/C4E03AQHQo3q7TQBveQ/profile-displayphoto-shrink_800_800/0/1663098222518?e=1675296000&v=beta&t=o4m83tO5REwfUJdYLlKDe6ExI_1jvkKtdkGxDp5gxKY" width=115><br><sub>Audinéia Carmo</sub>](#) | [<img src="https://avatars.githubusercontent.com/u/88730176?v=4" width=115><br><sub>Bruno</sub>](https://github.com/brunodev21)| [<img src="https://avatars.githubusercontent.com/u/96137175?v=4" width=115><br><sub>Leonardo Reis</sub>](https://github.com/LeonardoReis86) |
+| [<img src="https://avatars.githubusercontent.com/u/75804508?v=4" width=115><br><sub>Leonardo Monteiro</sub>](https://github.com/lmmagalhaes) | [<img src="https://avatars.githubusercontent.com/u/95653155?s=96&v=4" width=115><br><sub>Joana D'arc</sub>](https://github.com/Joanadarknes) | [<img src="https://avatars.githubusercontent.com/u/56273265?v=4" width=115><br><sub>Audinéia Carmo</sub>](https://github.com/audicarmo) | [<img src="https://avatars.githubusercontent.com/u/88730176?v=4" width=115><br><sub>Bruno</sub>](https://github.com/brunodev21)| [<img src="https://avatars.githubusercontent.com/u/96137175?v=4" width=115><br><sub>Leonardo Reis</sub>](https://github.com/LeonardoReis86) |
 | :----------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------: |
 
 ## Idealizador do projeto 🙎🏻‍♂️

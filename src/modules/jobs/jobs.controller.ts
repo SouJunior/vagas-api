@@ -13,6 +13,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CompaniesEntity } from '../../database/entities/companies.entity';
 import { PageOptionsDto } from '../../shared/pagination';
+import GetEntity from '../../shared/pipes/pipe-entity.pipe';
 import { LoggedCompany } from '../auth/decorator/logged-company.decorator';
 import { CreateJobDto } from './dtos/create-job.dto';
 import { UpdateJobDto } from './dtos/update-job.dto';
@@ -54,6 +55,17 @@ export class JobsController {
   })
   async getAllJobs(@Query() pageOptionsDto: PageOptionsDto) {
     return this.getAllJobsService.execute(pageOptionsDto);
+  }
+
+  @Get('all/:id')
+  @ApiOperation({
+    summary: 'Buscar todos os empregos da empresa logada.',
+  })
+  async getAll(
+    @Param('id', new GetEntity(CompaniesEntity, ['jobs']))
+    company: CompaniesEntity,
+  ) {
+    return company.jobs;
   }
 
   @Get(':id')
