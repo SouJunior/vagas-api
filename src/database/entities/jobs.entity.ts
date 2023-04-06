@@ -66,10 +66,10 @@ export class JobsEntity {
   })
   typeContract: string;
 
-  @Column()
+  @Column({ nullable: true })
   salaryMin: number;
 
-  @Column()
+  @Column({ nullable: true })
   salaryMax: number;
 
   @Column({ nullable: true })

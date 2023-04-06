@@ -32,7 +32,7 @@ export class CreateJobDto {
   })
   description: string;
 
-  @IsOptional()
+  @IsNotEmpty()
   @IsString()
   @MaxLength(3000)
   @ApiProperty({
@@ -48,18 +48,18 @@ export class CreateJobDto {
     description: 'Beneficios da vaga',
     example: 'Vale alimentação, Auxilio homeofice',
   })
-  benefits: string;
+  benefits?: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsEnum(JobsTypes)
   @ApiProperty({
     description: 'Senioridade da vaga',
     enum: [JobsTypes.ANALYST, JobsTypes.JUNIOR, JobsTypes.TRAINEE],
     example: JobsTypes.JUNIOR,
   })
-  type: string;
+  type?: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsEnum(JobsTypeContractEnum)
   @ApiProperty({
     description: 'Tipo de contrato do trabalho',
@@ -71,21 +71,23 @@ export class CreateJobDto {
       JobsTypeContractEnum.OTHER,
     ],
   })
-  typeContract: string;
+  typeContract?: string;
 
   @IsNumber()
+  @IsOptional()
   @ApiProperty({
     description: 'Modalidade o valor da remuneração em meses',
     example: 3000,
   })
-  salaryMin: number;
+  salaryMin?: number;
 
   @IsNumber()
+  @IsOptional()
   @ApiProperty({
     description: 'Modalidade o valor da remuneração em meses',
     example: 3000,
   })
-  salaryMax: number;
+  salaryMax?: number;
 
   @ApiProperty({
     description: 'Informe a unidade federativa',
@@ -93,7 +95,7 @@ export class CreateJobDto {
   })
   @IsOptional()
   @IsString()
-  federalUnit: string;
+  federalUnit?: string;
 
   @IsNotEmpty()
   @IsEnum(JobsModalityEnum)
@@ -108,7 +110,7 @@ export class CreateJobDto {
   })
   modality: string;
 
-  @IsOptional()
+  @IsNotEmpty()
   @IsString()
   @ApiProperty({
     description:
@@ -117,7 +119,7 @@ export class CreateJobDto {
   })
   headquarters: string;
 
-  @IsOptional()
+  @IsNotEmpty()
   @IsBoolean()
   @ApiProperty({
     description: 'O contrato de trabalho e indefinido?',
@@ -131,7 +133,7 @@ export class CreateJobDto {
     description: 'Tempo de contrato de trabalho',
     example: '6 Meses',
   })
-  contractType: string;
+  contractType?: string;
 
   @IsNotEmpty()
   @IsBoolean()
