@@ -14,23 +14,23 @@ import { JobsModalityEnum } from '../enums/job-modality.enum';
 import { JobsTypes } from '../enums/job-type.enum';
 
 export class CreateJobDto {
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   @MaxLength(30)
   @ApiProperty({
     description: 'Título do trabalho',
     example: 'Desenvolvedor',
   })
-  title: string;
+  title?: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   @MaxLength(3000)
   @ApiProperty({
     description: 'Descrição do trabalho',
     example: 'Trabalho com vendas',
   })
-  description: string;
+  description?: string;
 
   @IsOptional()
   @IsString()
@@ -39,7 +39,7 @@ export class CreateJobDto {
     description: 'Pre-requisitos para a vaga',
     example: 'Conhecimento em python 3',
   })
-  prerequisites: string;
+  prerequisites?: string;
 
   @IsOptional()
   @IsString()
@@ -48,7 +48,7 @@ export class CreateJobDto {
     description: 'Beneficios da vaga',
     example: 'Vale alimentação, Auxilio homeofice',
   })
-  benefits: string;
+  benefits?: string;
 
   @IsNotEmpty()
   @IsEnum(JobsTypes)
@@ -74,18 +74,20 @@ export class CreateJobDto {
   typeContract: string;
 
   @IsNumber()
+  @IsOptional()
   @ApiProperty({
     description: 'Modalidade o valor da remuneração em meses',
     example: 3000,
   })
-  salaryMin: number;
+  salaryMin?: number;
 
   @IsNumber()
+  @IsOptional()
   @ApiProperty({
     description: 'Modalidade o valor da remuneração em meses',
     example: 3000,
   })
-  salaryMax: number;
+  salaryMax?: number;
 
   @ApiProperty({
     description: 'Informe a unidade federativa',
@@ -93,7 +95,7 @@ export class CreateJobDto {
   })
   @IsOptional()
   @IsString()
-  federalUnit: string;
+  federalUnit?: string;
 
   @IsNotEmpty()
   @IsEnum(JobsModalityEnum)
@@ -115,7 +117,7 @@ export class CreateJobDto {
       'Cidade e estado do local de trabalho caso a vaga nao seja remota',
     example: 'São Paulo/SP',
   })
-  headquarters: string;
+  headquarters?: string;
 
   @IsOptional()
   @IsBoolean()
@@ -123,7 +125,7 @@ export class CreateJobDto {
     description: 'O contrato de trabalho e indefinido?',
     example: true,
   })
-  indefinideContract: boolean;
+  indefinideContract?: boolean;
 
   @IsString()
   @IsOptional()
@@ -131,15 +133,15 @@ export class CreateJobDto {
     description: 'Tempo de contrato de trabalho',
     example: '6 Meses',
   })
-  contractType: string;
+  contractType?: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsBoolean()
   @ApiProperty({
     description: 'Verifica se a vaga é afirmativa',
     example: false,
   })
-  affirmative: boolean;
+  affirmative?: boolean;
 
   @IsOptional()
   @IsEnum(JobsAffirmativeTypeEnum)
