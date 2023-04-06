@@ -9,7 +9,7 @@ export const LoggedAdmin = createParamDecorator((_, ctx: ExecutionContext) => {
   const request = ctx.switchToHttp().getRequest();
   const userObject = request.user;
 
-  if (userObject.type === UserRole.ADMIN) {
+  if ([UserRole.ADMIN, UserRole.USER].includes(userObject.type)) {
     return userObject;
   } else {
     throw new UnauthorizedException(
