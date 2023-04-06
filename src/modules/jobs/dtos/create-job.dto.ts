@@ -93,9 +93,9 @@ export class CreateJobDto {
     description: 'Informe a unidade federativa',
     example: 'DF',
   })
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
-  federalUnit: string;
+  federalUnit?: string;
 
   @IsNotEmpty()
   @IsEnum(JobsModalityEnum)
@@ -143,7 +143,7 @@ export class CreateJobDto {
   })
   affirmative: boolean;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsEnum(JobsAffirmativeTypeEnum)
   @ApiProperty({
     description: 'Opções da vaga afirmativa',
@@ -155,7 +155,7 @@ export class CreateJobDto {
       JobsAffirmativeTypeEnum.SIXTY_PLUS,
     ],
   })
-  affirmativeType: JobsAffirmativeTypeEnum;
+  affirmativeType?: JobsAffirmativeTypeEnum;
 
   @IsOptional()
   @IsString()
