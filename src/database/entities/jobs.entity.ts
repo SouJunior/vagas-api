@@ -57,7 +57,7 @@ export class JobsEntity {
     ],
     default: JobsTypeEnum.JUNIOR,
   })
-  type: JobsTypeEnum;
+  type: string;
 
   @Column({
     type: 'enum',
@@ -65,7 +65,7 @@ export class JobsEntity {
     default: JobsTypeContractEnum.CLT,
     nullable: true,
   })
-  typeContract: JobsTypeContractEnum;
+  typeContract: string;
 
   @Column({ nullable: true })
   salaryMin: number;
@@ -85,7 +85,7 @@ export class JobsEntity {
     ],
     default: JobsModalityEnum.REMOTE,
   })
-  modality: JobsModalityEnum;
+  modality: string;
 
   @Column({ nullable: true })
   city: string;
@@ -114,7 +114,7 @@ export class JobsEntity {
     ],
     nullable: true,
   })
-  affirmativeType: JobsAffirmativeTypeEnum;
+  affirmativeType: string;
 
   @ManyToOne(() => CompaniesEntity)
   @JoinColumn({ name: 'company_id' })
