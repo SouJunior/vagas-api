@@ -23,7 +23,7 @@ export class JobRepository extends Repository<JobsEntity> {
 
     queryBuilder
       .orderBy(`jobs.${pageOptionsDto.orderByColumn}`, pageOptionsDto.order)
-      .skip(pageOptionsDto.skip)
+      .skip((pageOptionsDto.page - 1) * pageOptionsDto.take)
       .take(pageOptionsDto.take);
 
     const itemCount = await queryBuilder.getCount().catch(handleError);
@@ -77,7 +77,7 @@ export class JobRepository extends Repository<JobsEntity> {
     queryBuilder
       .andWhere(`job.title ILIKE '%${searchQuery}%'`)
       .orderBy(`job.${pageOptionsDto.orderByColumn}`, pageOptionsDto.order)
-      .skip(pageOptionsDto.skip)
+      .skip((pageOptionsDto.page - 1) * pageOptionsDto.take)
       .take(pageOptionsDto.take);
 
     const itemCount = await queryBuilder.getCount();
