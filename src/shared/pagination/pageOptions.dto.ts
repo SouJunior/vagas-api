@@ -39,8 +39,4 @@ export class PageOptionsDto {
     default: 'id',
   })
   readonly orderByColumn?: string = 'id';
-
-  get skip(): number {
-    return (this.page - 1) * this.take;
-  }
 }

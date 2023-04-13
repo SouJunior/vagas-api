@@ -25,7 +25,7 @@ export class UserRepository extends Repository<UsersEntity> {
     queryBuilder
       .orderBy(`users.${pageOptionsDto.orderByColumn}`, pageOptionsDto.order)
       .select(['users.id', 'users.name', 'users.email', 'users.created_at'])
-      .skip(pageOptionsDto.skip)
+      .skip((pageOptionsDto.page - 1) * pageOptionsDto.take)
       .take(pageOptionsDto.take);
 
     const itemCount = await queryBuilder.getCount().catch(handleError);
