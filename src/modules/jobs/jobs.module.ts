@@ -12,9 +12,14 @@ import {
   GetOneJobByIdService,
   UpdateJobService,
 } from './services';
+import { SearchJobsService } from './services/search-job.service';
 
 @Module({
-  imports: [MailModule,TypeOrmModule.forFeature([JobRepository]), PassportModule.register({defaultStrategy: 'jwt'})],
+  imports: [
+    MailModule,
+    TypeOrmModule.forFeature([JobRepository]),
+    PassportModule.register({ defaultStrategy: 'jwt' }),
+  ],
   controllers: [JobsController],
   providers: [
     CreateJobService,
@@ -22,6 +27,7 @@ import {
     GetOneJobByIdService,
     UpdateJobService,
     DeleteJobService,
+    SearchJobsService,
   ],
 })
 export class JobsModule {}

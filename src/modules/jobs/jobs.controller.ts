@@ -10,7 +10,12 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiQuery,
+  ApiTags,
+} from '@nestjs/swagger';
 import { CompaniesEntity } from '../../database/entities/companies.entity';
 import { PageOptionsDto } from '../../shared/pagination';
 import GetEntity from '../../shared/pipes/pipe-entity.pipe';
@@ -24,6 +29,7 @@ import {
   GetOneJobByIdService,
   UpdateJobService,
 } from './services';
+import { SearchJobsService } from './services/search-job.service';
 
 @ApiTags('Job')
 @Controller('job')
@@ -34,6 +40,7 @@ export class JobsController {
     private getOneJobByIdService: GetOneJobByIdService,
     private updateJobService: UpdateJobService,
     private deleteJobService: DeleteJobService,
+    private searchJobsService: SearchJobsService,
   ) {}
 
   @Post()
@@ -90,5 +97,26 @@ export class JobsController {
   })
   async deleteJob(@Param('id') id: string) {
     return this.deleteJobService.execute(id);
+  }
+
+  @Get('/search/:keyword')
+  @ApiOperation({
+    summary: 'Search for jobs by keyword, company name, or headquarters',
+  })
+  async searchJobs(
+    @Query() pageOptionsDto: PageOptionsDto,
+    @Param('keyword') keyword?: string,
+    @Query('company_id') company_id?: string,
+    @Query('headquarters') headquarters?: string,
+  ): Promise<any> {
+    keyword = keyword || ' ';
+    company_id = company_id || ' ';
+    headquarters = headquarters || ' ';
+    return this.searchJobsService.execute(
+      keyword,
+      company_id,
+      headquarters,
+      pageOptionsDto,
+    );
   }
 }
