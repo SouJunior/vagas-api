@@ -24,7 +24,7 @@ export class CompanyRepository extends Repository<CompaniesEntity> {
         `companies.${pageOptionsDto.orderByColumn}`,
         pageOptionsDto.order,
       )
-      .skip(pageOptionsDto.skip)
+      .skip((pageOptionsDto.page - 1) * pageOptionsDto.take)
       .take(pageOptionsDto.take);
 
     const itemCount = await queryBuilder.getCount().catch(handleError);

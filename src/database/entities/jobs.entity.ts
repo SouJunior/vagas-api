@@ -22,6 +22,7 @@ enum JobsTypeEnum {
 enum JobsTypeContractEnum {
   CLT = 'CLT',
   PJ = 'PJ',
+  FREELANCER = 'FREELANCER',
 }
 
 enum JobsModalityEnum {
@@ -61,7 +62,11 @@ export class JobsEntity {
 
   @Column({
     type: 'enum',
-    enum: [JobsTypeContractEnum.CLT, JobsTypeContractEnum.PJ],
+    enum: [
+      JobsTypeContractEnum.CLT,
+      JobsTypeContractEnum.PJ,
+      JobsTypeContractEnum.FREELANCER,
+    ],
     default: JobsTypeContractEnum.CLT,
     nullable: true,
   })
@@ -73,9 +78,6 @@ export class JobsEntity {
   @Column({ nullable: true })
   salaryMax: number;
 
-  @Column({ nullable: true })
-  federalUnit: string;
-
   @Column({
     type: 'enum',
     enum: [
@@ -86,6 +88,9 @@ export class JobsEntity {
     default: JobsModalityEnum.REMOTE,
   })
   modality: string;
+
+  @Column({ nullable: true })
+  federalUnit: string;
 
   @Column({ nullable: true })
   city: string;
