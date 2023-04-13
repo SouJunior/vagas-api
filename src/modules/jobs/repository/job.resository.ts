@@ -55,4 +55,34 @@ export class JobRepository extends Repository<JobsEntity> {
 
     return { message: 'Job deleted successfully' };
   }
+
+  async searchJobs(
+    searchQuery: string,
+    company_id: string,
+    headquarters: string,
+    pageOptionsDto: PageOptionsDto,
+  ): Promise<{ itemCount: number; entities: JobsEntity[] }> {
+    const queryBuilder = this.createQueryBuilder('job');
+
+    if (company_id) {
+      queryBuilder
+        .innerJoin('job.company', 'company')
+        .andWhere(`company.id = :companyId`, { companyId: company_id });
+    }
+
+    if (headquarters) {
+      queryBuilder.andWhere(`job.headquarters ILIKE '%${headquarters}%'`);
+    }
+
+    queryBuilder
+      .andWhere(`job.title ILIKE '%${searchQuery}%'`)
+      .orderBy(`job.${pageOptionsDto.orderByColumn}`, pageOptionsDto.order)
+      .skip(pageOptionsDto.skip)
+      .take(pageOptionsDto.take);
+
+    const itemCount = await queryBuilder.getCount();
+    const { entities } = await queryBuilder.getRawAndEntities();
+
+    return { itemCount, entities };
+  }
 }
