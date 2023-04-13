@@ -16,12 +16,12 @@ enum JobsTypeEnum {
   TRAINEE = 'TRAINEE',
   JUNIOR = 'JUNIOR',
   ANALYST = 'ANALYST',
+  INTERNSHIP = 'INTERNSHIP',
 }
 
 enum JobsTypeContractEnum {
   CLT = 'CLT',
   PJ = 'PJ',
-  FREELANCE = 'FREELANCE',
 }
 
 enum JobsModalityEnum {
@@ -49,22 +49,23 @@ export class JobsEntity {
 
   @Column({
     type: 'enum',
-    enum: [JobsTypeEnum.ANALYST, JobsTypeEnum.JUNIOR, JobsTypeEnum.TRAINEE],
+    enum: [
+      JobsTypeEnum.ANALYST,
+      JobsTypeEnum.JUNIOR,
+      JobsTypeEnum.TRAINEE,
+      JobsTypeEnum.INTERNSHIP,
+    ],
     default: JobsTypeEnum.JUNIOR,
   })
-  type: string;
+  type: JobsTypeEnum;
 
   @Column({
     type: 'enum',
-    enum: [
-      JobsTypeContractEnum.CLT,
-      JobsTypeContractEnum.FREELANCE,
-      JobsTypeContractEnum.PJ,
-    ],
+    enum: [JobsTypeContractEnum.CLT, JobsTypeContractEnum.PJ],
     default: JobsTypeContractEnum.CLT,
     nullable: true,
   })
-  typeContract: string;
+  typeContract: JobsTypeContractEnum;
 
   @Column({ nullable: true })
   salaryMin: number;
@@ -84,7 +85,7 @@ export class JobsEntity {
     ],
     default: JobsModalityEnum.REMOTE,
   })
-  modality: string;
+  modality: JobsModalityEnum;
 
   @Column({ nullable: true })
   city: string;
@@ -96,6 +97,9 @@ export class JobsEntity {
 
   @Column({ nullable: true })
   contractType: string;
+
+  @Column({ nullable: true })
+  contractText?: string;
 
   @Column({ default: true })
   affirmative: boolean;
