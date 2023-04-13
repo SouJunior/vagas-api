@@ -86,8 +86,8 @@ export class JobsEntity {
   })
   modality: string;
 
-  @Column()
-  headquarters: string;
+  @Column({ nullable: true })
+  city: string;
 
   @Column({
     default: true,
