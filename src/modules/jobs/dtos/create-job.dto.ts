@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Exclude } from 'class-transformer';
 import {
   IsBoolean,
   IsEnum,
@@ -12,7 +13,6 @@ import { JobsAffirmativeTypeEnum } from '../enums/job-affirmative-type.enum';
 import { JobsTypeContractEnum } from '../enums/job-contract-type.enum';
 import { JobsModalityEnum } from '../enums/job-modality.enum';
 import { JobsTypes } from '../enums/job-type.enum';
-import { Exclude } from 'class-transformer';
 
 export class CreateJobDto {
   @IsNotEmpty()
@@ -68,7 +68,7 @@ export class CreateJobDto {
     ],
     example: JobsTypes.JUNIOR,
   })
-  type?: JobsTypes;
+  type?: string;
 
   @IsOptional()
   @IsEnum(JobsTypeContractEnum)
@@ -82,7 +82,7 @@ export class CreateJobDto {
       JobsTypeContractEnum.OTHER,
     ],
   })
-  typeContract?: JobsTypeContractEnum;
+  typeContract?: string;
 
   @IsOptional()
   @IsString()
@@ -182,7 +182,7 @@ export class CreateJobDto {
       JobsAffirmativeTypeEnum.SIXTY_PLUS,
     ],
   })
-  affirmativeType?: JobsAffirmativeTypeEnum;
+  affirmativeType?: string;
 
   @IsOptional()
   @Exclude()
