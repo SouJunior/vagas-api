@@ -92,6 +92,14 @@ export class CreateJobDto {
   })
   contractText?: string;
 
+  @IsOptional()
+  @IsString()
+  @ApiProperty({
+    required: false,
+    example: 'Freelance',
+  })
+  contractText?: string;
+
   @IsNumber()
   @IsOptional()
   @ApiProperty({

@@ -87,7 +87,7 @@ export class JobsEntity {
   })
   modality: JobsModalityEnum;
 
-  @Column()
+  @Column({ nullable: true })
   city: string;
 
   @Column({
