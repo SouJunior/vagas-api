@@ -180,6 +180,7 @@ export class CreateJobDto {
       JobsAffirmativeTypeEnum.CIS_TRANS_WOMEN,
       JobsAffirmativeTypeEnum.LGBTQIA,
       JobsAffirmativeTypeEnum.SIXTY_PLUS,
+      JobsAffirmativeTypeEnum.PWD,
     ],
   })
   affirmativeType?: string;
