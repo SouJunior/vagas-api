@@ -3,4 +3,5 @@ export enum JobsAffirmativeTypeEnum {
   SIXTY_PLUS = 'SIXTY_PLUS',
   BLACK_BROWN_PERSON = 'BLACK_BROWN_PERSON',
   CIS_TRANS_WOMEN = 'CIS_TRANS_WOMEN',
+  PWD = 'PWD',
 }

@@ -116,6 +116,7 @@ export class JobsEntity {
       JobsAffirmativeTypeEnum.CIS_TRANS_WOMEN,
       JobsAffirmativeTypeEnum.LGBTQIA,
       JobsAffirmativeTypeEnum.SIXTY_PLUS,
+      JobsAffirmativeTypeEnum.PWD,
     ],
     nullable: true,
   })
