@@ -7,7 +7,9 @@ import {
   IsNumber,
   IsOptional,
   IsString,
+  Max,
   MaxLength,
+  Min,
 } from 'class-validator';
 import { JobsAffirmativeTypeEnum } from '../enums/job-affirmative-type.enum';
 import { JobsTypeContractEnum } from '../enums/job-contract-type.enum';
@@ -56,6 +58,9 @@ export class CreateJobDto {
   benefits?: string;
 
   @IsOptional()
+  @Max(99999)
+  @Min(0)
+  @IsNumber({ maxDecimalPlaces: 0, allowNaN: false, allowInfinity: false })
   @IsEnum(JobsTypes)
   @ApiProperty({
     required: false,
@@ -71,6 +76,9 @@ export class CreateJobDto {
   type?: string;
 
   @IsOptional()
+  @Max(99999)
+  @Min(0)
+  @IsNumber({ maxDecimalPlaces: 0, allowNaN: false, allowInfinity: false })
   @IsEnum(JobsTypeContractEnum)
   @ApiProperty({
     required: false,
