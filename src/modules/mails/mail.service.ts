@@ -9,7 +9,7 @@ export class MailService {
 
   async sendUserConfirmation(user: UsersEntity): Promise<void> {
     const { email, name, recoverPasswordToken } = user;
-    const url = `http://localhost:3333/recovery-password?token=${recoverPasswordToken}`;
+    const url = `http://localhost:3333/recovery-password?token=${recoverPasswordToken}&type=USER`;
 
     if (recoverPasswordToken) {
       await this.mailerService.sendMail({
@@ -54,7 +54,7 @@ export class MailService {
 
   async sendCompanyConfirmation(company: CompaniesEntity) {
     const { email, companyName, recoverPasswordToken } = company;
-    const url = `http://localhost:3333/recovery-password?token=${recoverPasswordToken}`;
+    const url = `http://localhost:3333/recovery-password?token=${recoverPasswordToken}&type=COMPANY`;
 
     if (recoverPasswordToken) {
       await this.mailerService.sendMail({
@@ -94,7 +94,7 @@ export class MailService {
     });
   }
 
-  async sendMail({subject, template, context, email}) {
+  async sendMail({ subject, template, context, email }) {
     await this.mailerService.sendMail({
       to: email,
       subject,
