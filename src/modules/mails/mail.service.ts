@@ -9,7 +9,7 @@ export class MailService {
 
   async sendUserConfirmation(user: UsersEntity): Promise<void> {
     const { email, name, recoverPasswordToken } = user;
-    const url = `http://localhost:3333/recovery-password/${recoverPasswordToken}/USER`;
+    const url = `http://localhost:3333/recovery-password?token=${recoverPasswordToken}&type=USER`;
 
     if (recoverPasswordToken) {
       await this.mailerService.sendMail({
@@ -37,7 +37,7 @@ export class MailService {
   async sendUserCreationConfirmation(user: UsersEntity) {
     const { email, name, id } = user;
 
-    const url = `http://localhost:3333/userconfirmation/${id}/USER`;
+    const url = `http://localhost:3333/userconfirmation?id=${id}&type=USER`;
 
     await this.mailerService.sendMail({
       to: email,
@@ -54,7 +54,7 @@ export class MailService {
 
   async sendCompanyConfirmation(company: CompaniesEntity) {
     const { email, companyName, recoverPasswordToken } = company;
-    const url = `http://localhost:3333/recovery-password/${recoverPasswordToken}/COMPANY`;
+    const url = `http://localhost:3333/recovery-password?token=${recoverPasswordToken}&type=COMPANY`;
 
     if (recoverPasswordToken) {
       await this.mailerService.sendMail({
@@ -81,7 +81,7 @@ export class MailService {
   async sendCompanyCreationConfirmation(company: CompaniesEntity) {
     const { email, companyName, id } = company;
 
-    const url = `http://localhost:3333/companyconfirmation/${id}/COMPANY`;
+    const url = `http://localhost:3333/companyconfirmation?id=${id}&type=COMPANY`;
 
     await this.mailerService.sendMail({
       to: email,
