@@ -5,6 +5,7 @@ import {
   IsNotEmpty,
   IsOptional,
   IsString,
+  Length,
   Matches,
   MaxLength,
   Validate,
@@ -32,6 +33,7 @@ export class CreateUserDto {
 
   @IsNotEmpty()
   @IsString()
+  @Length(8, 20)
   @Matches(
     /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()\-_=+{};:,<.>])[a-zA-Z\d!@#$%^&*()\-_=+{};:,<.>.]{8,}$/,
     {
@@ -47,6 +49,7 @@ export class CreateUserDto {
 
   @IsNotEmpty()
   @IsString()
+  @Length(8, 20)
   @ApiProperty({
     description: 'Confirmação de senha',
     example: 'Abcd@1234',
