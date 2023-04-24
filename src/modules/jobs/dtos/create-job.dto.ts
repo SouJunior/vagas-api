@@ -58,8 +58,6 @@ export class CreateJobDto {
   benefits?: string;
 
   @IsOptional()
-  @Max(99999)
-  @Min(0)
   @IsNumber({ maxDecimalPlaces: 0, allowNaN: false, allowInfinity: false })
   @IsEnum(JobsTypes)
   @ApiProperty({
@@ -76,8 +74,6 @@ export class CreateJobDto {
   type?: string;
 
   @IsOptional()
-  @Max(99999)
-  @Min(0)
   @IsNumber({ maxDecimalPlaces: 0, allowNaN: false, allowInfinity: false })
   @IsEnum(JobsTypeContractEnum)
   @ApiProperty({
@@ -102,6 +98,8 @@ export class CreateJobDto {
 
   @IsNumber()
   @IsOptional()
+  @Max(99999)
+  @Min(0)
   @ApiProperty({
     required: false,
     description: 'Modalidade o valor da remuneração em meses',
@@ -111,6 +109,8 @@ export class CreateJobDto {
 
   @IsNumber()
   @IsOptional()
+  @Max(99999)
+  @Min(0)
   @ApiProperty({
     required: false,
     description: 'Modalidade o valor da remuneração em meses',

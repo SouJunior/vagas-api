@@ -3,6 +3,7 @@ import {
   IsEmail,
   IsNotEmpty,
   IsString,
+  Length,
   Matches,
   MaxLength,
   MinLength,
@@ -39,6 +40,7 @@ export class CreateCompanyDto {
 
   @IsNotEmpty()
   @IsString()
+  @Length(8, 20)
   @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
     message: 'Senha muito fraca',
   })
@@ -50,6 +52,7 @@ export class CreateCompanyDto {
 
   @IsNotEmpty()
   @IsString()
+  @Length(8, 20)
   @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
     message: 'Senha muito fraca',
   })

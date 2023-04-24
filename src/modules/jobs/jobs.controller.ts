@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  HttpStatus,
   Param,
   Post,
   Put,
@@ -13,10 +14,12 @@ import { AuthGuard } from '@nestjs/passport';
 import {
   ApiBearerAuth,
   ApiOperation,
-  ApiQuery,
+  ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
 import { CompaniesEntity } from '../../database/entities/companies.entity';
+import { BadRequestSwagger } from '../../shared/Swagger/bad-request.swagger';
+import { UnauthorizedSwagger } from '../../shared/Swagger/unauthorized.swagger';
 import { PageOptionsDto } from '../../shared/pagination';
 import GetEntity from '../../shared/pipes/pipe-entity.pipe';
 import { LoggedCompany } from '../auth/decorator/logged-company.decorator';
@@ -44,6 +47,24 @@ export class JobsController {
   ) {}
 
   @Post()
+  @ApiResponse({
+    status: HttpStatus.CREATED,
+    description: 'Exemplo do retorno de sucesso da rota',
+    type: 'Vaga publicada com sucesso',
+  })
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Modelo de erro',
+    type: UnauthorizedSwagger,
+  })
+  @ApiResponse({
+    status: HttpStatus.BAD_REQUEST,
+    description: 'Modelo de erro',
+    type: BadRequestSwagger,
+  })
+  @ApiOperation({
+    summary: 'Criar um usuário!',
+  })
   @ApiBearerAuth()
   @UseGuards(AuthGuard())
   @ApiOperation({
