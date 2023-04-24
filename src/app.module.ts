@@ -11,6 +11,7 @@ import { JobsModule } from './modules/jobs/jobs.module';
 import { MailModule } from './modules/mails/mail.module';
 import { ReportsModule } from './modules/reports/reports.module';
 import { UserModule } from './modules/user/user.module';
+import { UploadModule } from './modules/upload/upload.module';
 
 const {
   ISLOCAL,
@@ -53,6 +54,7 @@ const {
     ReportsModule,
     CompanyModule,
     CommentModule,
+    UploadModule,
   ],
   controllers: [AppController],
   providers: [AppService],
