@@ -16,6 +16,7 @@ async function bootstrap() {
     .setDescription('App for Vagas-Backend.')
     .setVersion('1.1.1')
     .addBearerAuth()
+    .addTag('Upload')
     .addTag('Status')
     .addTag('Auth')
     .addTag('User')
