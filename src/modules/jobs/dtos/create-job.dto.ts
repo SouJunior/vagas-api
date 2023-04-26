@@ -74,7 +74,6 @@ export class CreateJobDto {
   type?: string;
 
   @IsOptional()
-  @IsNumber({ maxDecimalPlaces: 0, allowNaN: false, allowInfinity: false })
   @IsEnum(JobsTypeContractEnum)
   @ApiProperty({
     required: false,
