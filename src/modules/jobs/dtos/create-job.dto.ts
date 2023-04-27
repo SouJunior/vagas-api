@@ -58,7 +58,6 @@ export class CreateJobDto {
   benefits?: string;
 
   @IsOptional()
-  @IsNumber({ maxDecimalPlaces: 0, allowNaN: false, allowInfinity: false })
   @IsEnum(JobsTypes)
   @ApiProperty({
     required: false,
@@ -97,6 +96,7 @@ export class CreateJobDto {
 
   @IsNumber()
   @IsOptional()
+  @IsNumber({ maxDecimalPlaces: 0, allowNaN: false, allowInfinity: false })
   @Max(99999)
   @Min(0)
   @ApiProperty({
@@ -108,6 +108,7 @@ export class CreateJobDto {
 
   @IsNumber()
   @IsOptional()
+  @IsNumber({ maxDecimalPlaces: 0, allowNaN: false, allowInfinity: false })
   @Max(99999)
   @Min(0)
   @ApiProperty({
