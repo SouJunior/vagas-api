@@ -3,6 +3,5 @@ export type ResponseS3 = {
   VersionId: string;
   Location: string;
   key: string;
-  Key: string;
   Bucket: string;
 };
