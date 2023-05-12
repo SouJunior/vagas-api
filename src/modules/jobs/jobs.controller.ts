@@ -63,12 +63,12 @@ export class JobsController {
     type: BadRequestSwagger,
   })
   @ApiOperation({
-    summary: 'Criar um usuário!',
+    summary: 'Criar uma vaga!',
   })
   @ApiBearerAuth()
   @UseGuards(AuthGuard())
   @ApiOperation({
-    summary: 'Cadastrar um emprego.',
+    summary: 'Cadastrar uma vaga.',
   })
   async createNewJob(
     @Body() data: CreateJobDto,
@@ -79,7 +79,7 @@ export class JobsController {
 
   @Get()
   @ApiOperation({
-    summary: 'Buscar todos os empregos.',
+    summary: 'Buscar todas as vagas.',
   })
   async getAllJobs(@Query() pageOptionsDto: PageOptionsDto) {
     return this.getAllJobsService.execute(pageOptionsDto);
@@ -87,7 +87,7 @@ export class JobsController {
 
   @Get('all/:id')
   @ApiOperation({
-    summary: 'Buscar todos os empregos da empresa logada.',
+    summary: 'Buscar todas as vagas da empresa logada.',
   })
   async getAll(
     @Param('id', new GetEntity(CompaniesEntity, ['jobs']))
@@ -98,7 +98,7 @@ export class JobsController {
 
   @Get(':id')
   @ApiOperation({
-    summary: 'Buscar um emprego por id.',
+    summary: 'Buscar uma vaga pelo id.',
   })
   async getOneJob(@Param('id') id: string) {
     return this.getOneJobByIdService.execute(id);
@@ -106,7 +106,7 @@ export class JobsController {
 
   @Put(':id')
   @ApiOperation({
-    summary: 'Atualizar um emprego por id.',
+    summary: 'Atualizaruma vaga pelo id.',
   })
   async updateJob(@Param('id') id: string, @Body() data: UpdateJobDto) {
     return this.updateJobService.execute(id, data);
@@ -114,7 +114,7 @@ export class JobsController {
 
   @Delete(':id')
   @ApiOperation({
-    summary: 'Excluir um emprego por id.',
+    summary: 'Excluir uma vaga pelo id.',
   })
   async deleteJob(@Param('id') id: string) {
     return this.deleteJobService.execute(id);
@@ -122,7 +122,7 @@ export class JobsController {
 
   @Get('/search/:keyword')
   @ApiOperation({
-    summary: 'Search for jobs by keyword, company name, or headquarters',
+    summary: 'Busca por vaga, pelo nome, empresa ou lugar',
   })
   async searchJobs(
     @Query() pageOptionsDto: PageOptionsDto,

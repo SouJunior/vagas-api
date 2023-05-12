@@ -40,7 +40,7 @@ const {
       database: ISLOCAL == 'true' ? TYPEORM_DOCKER_DATABASE : TYPEORM_DATABASE,
       logging: true,
       migrationsRun: true,
-      synchronize: false,
+      synchronize: true,
       entities: ['dist/database/entities/*.entity.js'],
       migrations: [
         'dist/database/migrations/*.js',
