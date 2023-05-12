@@ -42,7 +42,7 @@ export class MailService {
     await this.mailerService.sendMail({
       to: email,
       subject: 'Usuário criado!',
-      template: './create',
+      template: './confirmEmailUser',
       context: {
         name: name,
         url,
@@ -86,7 +86,7 @@ export class MailService {
     await this.mailerService.sendMail({
       to: email,
       subject: 'Empresa criado!',
-      template: './create',
+      template: './confirmEmailCompany',
       context: {
         name: companyName,
         url,

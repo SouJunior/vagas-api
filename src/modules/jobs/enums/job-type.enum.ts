@@ -1,4 +1,4 @@
-export enum JobsTypes {
+export enum JobsTypeEnum {
   TRAINEE = 'TRAINEE',
   JUNIOR = 'JUNIOR',
   ANALYST = 'ANALYST',

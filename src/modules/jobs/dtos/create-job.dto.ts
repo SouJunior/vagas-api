@@ -14,7 +14,7 @@ import {
 import { JobsAffirmativeTypeEnum } from '../enums/job-affirmative-type.enum';
 import { JobsTypeContractEnum } from '../enums/job-contract-type.enum';
 import { JobsModalityEnum } from '../enums/job-modality.enum';
-import { JobsTypes } from '../enums/job-type.enum';
+import { JobsTypeEnum } from '../enums/job-type.enum';
 
 export class CreateJobDto {
   @IsNotEmpty()
@@ -58,17 +58,17 @@ export class CreateJobDto {
   benefits?: string;
 
   @IsOptional()
-  @IsEnum(JobsTypes)
+  @IsEnum(JobsTypeEnum)
   @ApiProperty({
     required: false,
     description: 'Senioridade da vaga',
     enum: [
-      JobsTypes.ANALYST,
-      JobsTypes.JUNIOR,
-      JobsTypes.TRAINEE,
-      JobsTypes.INTERNSHIP,
+      JobsTypeEnum.ANALYST,
+      JobsTypeEnum.JUNIOR,
+      JobsTypeEnum.TRAINEE,
+      JobsTypeEnum.INTERNSHIP,
     ],
-    example: JobsTypes.JUNIOR,
+    example: JobsTypeEnum.JUNIOR,
   })
   type?: string;
 

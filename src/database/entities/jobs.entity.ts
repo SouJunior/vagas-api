@@ -9,27 +9,11 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { JobsAffirmativeTypeEnum } from '../../modules/jobs/enums/job-affirmative-type.enum';
+import { JobsTypeContractEnum } from '../../modules/jobs/enums/job-contract-type.enum';
+import { JobsModalityEnum } from '../../modules/jobs/enums/job-modality.enum';
+import { JobsTypeEnum } from '../../modules/jobs/enums/job-type.enum';
 import { CommentsEntity } from './comments.entity';
 import { CompaniesEntity } from './companies.entity';
-
-enum JobsTypeEnum {
-  TRAINEE = 'TRAINEE',
-  JUNIOR = 'JUNIOR',
-  ANALYST = 'ANALYST',
-  INTERNSHIP = 'INTERNSHIP',
-}
-
-enum JobsTypeContractEnum {
-  CLT = 'CLT',
-  PJ = 'PJ',
-  FREELANCER = 'FREELANCER',
-}
-
-enum JobsModalityEnum {
-  REMOTE = 'REMOTE',
-  HYBRID = 'HYBRID',
-  IN_PERSON = 'IN_PERSON',
-}
 
 @Entity('tb_jobs')
 export class JobsEntity {
@@ -65,7 +49,7 @@ export class JobsEntity {
     enum: [
       JobsTypeContractEnum.CLT,
       JobsTypeContractEnum.PJ,
-      JobsTypeContractEnum.FREELANCER,
+      JobsTypeContractEnum.OTHER,
     ],
     default: JobsTypeContractEnum.CLT,
     nullable: true,
