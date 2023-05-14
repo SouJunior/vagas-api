@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { UpdateJobDto } from '../dtos/update-job.dto';
-import { JobRepository } from '../repository/job.resository';
+import { JobRepository } from '../repository/job.repository';
 
 @Injectable()
 export class UpdateJobService {

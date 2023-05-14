@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { UserRepository } from '../../../modules/user/repository/user.repository';
-import { JobRepository } from '../../../modules/jobs/repository/job.resository';
+import { JobRepository } from '../../jobs/repository/job.repository';
 import { CreateCommentDto } from '../dtos/create-comment.dto';
 import { CommentRepository } from '../repository/comment.repository';
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { JobsEntity } from '../../../database/entities/jobs.entity';
 import { PageDto, PageOptionsDto } from '../../../shared/pagination';
-import { JobRepository } from '../repository/job.resository';
+import { JobRepository } from '../repository/job.repository';
 
 @Injectable()
 export class GetAllJobsService {

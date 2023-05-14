@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { JobRepository } from '../jobs/repository/job.resository';
+import { JobRepository } from '../jobs/repository/job.repository';
 import { UserRepository } from '../user/repository/user.repository';
 import { CommentController } from './comment.controller';
 import { CommentRepository } from './repository/comment.repository';
