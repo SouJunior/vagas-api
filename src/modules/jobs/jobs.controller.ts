@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   HttpStatus,
+  NotFoundException,
   Param,
   Post,
   Put,
@@ -33,6 +34,7 @@ import {
   UpdateJobService,
 } from './services';
 import { SearchJobsService } from './services/search-job.service';
+import { CompanyRepository } from '../company/repository/company-repository';
 
 @ApiTags('Job')
 @Controller('job')
@@ -44,6 +46,7 @@ export class JobsController {
     private updateJobService: UpdateJobService,
     private deleteJobService: DeleteJobService,
     private searchJobsService: SearchJobsService,
+    private companyRepository: CompanyRepository,
   ) {}
 
   @Post()
@@ -89,11 +92,17 @@ export class JobsController {
   @ApiOperation({
     summary: 'Buscar todas as vagas da empresa logada.',
   })
-  async getAll(
-    @Param('id', new GetEntity(CompaniesEntity, ['jobs']))
-    company: CompaniesEntity,
-  ) {
-    return company.jobs;
+  async getAll(@Param('id') id: string) {
+    try {
+      const company = await this.companyRepository.findCompanyById(id);
+      if (!company) {
+        throw new NotFoundException(`Empresa com ID ${id} não encontrado.`);
+      }
+      return company.jobs;
+    } catch (error) {
+      // Handle the error here
+      console.log(error);
+    }
   }
 
   @Get(':id')
@@ -106,7 +115,7 @@ export class JobsController {
 
   @Put(':id')
   @ApiOperation({
-    summary: 'Atualizaruma vaga pelo id.',
+    summary: 'Atualizar uma vaga pelo id.',
   })
   async updateJob(@Param('id') id: string, @Body() data: UpdateJobDto) {
     return this.updateJobService.execute(id, data);
@@ -122,22 +131,13 @@ export class JobsController {
 
   @Get('/search/:keyword')
   @ApiOperation({
-    summary: 'Busca por vaga, pelo nome, empresa ou lugar',
+    summary: 'Buscar vaga',
   })
   async searchJobs(
     @Query() pageOptionsDto: PageOptionsDto,
     @Param('keyword') keyword?: string,
-    @Query('company_id') company_id?: string,
-    @Query('headquarters') headquarters?: string,
   ): Promise<any> {
     keyword = keyword || ' ';
-    company_id = company_id || ' ';
-    headquarters = headquarters || ' ';
-    return this.searchJobsService.execute(
-      keyword,
-      company_id,
-      headquarters,
-      pageOptionsDto,
-    );
+    return this.searchJobsService.execute(keyword, pageOptionsDto);
   }
 }

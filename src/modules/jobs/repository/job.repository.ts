@@ -58,21 +58,9 @@ export class JobRepository extends Repository<JobsEntity> {
 
   async searchJobs(
     searchQuery: string,
-    company_id: string,
-    headquarters: string,
     pageOptionsDto: PageOptionsDto,
   ): Promise<{ itemCount: number; entities: JobsEntity[] }> {
     const queryBuilder = this.createQueryBuilder('job');
-
-    if (company_id) {
-      queryBuilder
-        .innerJoin('job.company', 'company')
-        .andWhere(`company.id = :companyId`, { companyId: company_id });
-    }
-
-    if (headquarters) {
-      queryBuilder.andWhere(`job.headquarters ILIKE '%${headquarters}%'`);
-    }
 
     queryBuilder
       .andWhere(`job.title ILIKE '%${searchQuery}%'`)

@@ -4,7 +4,7 @@ import { MailService } from '../../mails/mail.service';
 import { CreateJobDto } from '../dtos/create-job.dto';
 import { JobsTypeContractEnum } from '../enums/job-contract-type.enum';
 import { JobsModalityEnum } from '../enums/job-modality.enum';
-import { JobRepository } from '../repository/job.resository';
+import { JobRepository } from '../repository/job.repository';
 
 @Injectable()
 export class CreateJobService {

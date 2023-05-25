@@ -6,7 +6,7 @@ import {
   PageMetaDto,
   PageOptionsDto,
 } from '../../../shared/pagination';
-import { JobRepository } from '../repository/job.resository';
+import { JobRepository } from '../repository/job.repository';
 
 @Injectable()
 export class SearchJobsService {
@@ -17,14 +17,10 @@ export class SearchJobsService {
 
   async execute(
     searchQuery: string,
-    company_id: string,
-    headquarters: string,
     pageOptionsDto: PageOptionsDto,
   ): Promise<PageDto<JobsEntity>> {
     const { itemCount, entities } = await this.jobRepository.searchJobs(
       searchQuery,
-      company_id,
-      headquarters,
       pageOptionsDto,
     );
 
