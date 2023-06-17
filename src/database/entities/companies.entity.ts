@@ -6,6 +6,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { CompanySizeEnum } from '../../modules/company/enum/company-size.enum';
 import { JobsEntity } from './jobs.entity';
 
 @Entity('tb_companies')
@@ -39,6 +40,42 @@ export class CompaniesEntity {
 
   @Column({ nullable: true })
   recoverPasswordToken: string;
+
+  @Column({ nullable: true })
+  companyType: string;
+
+  @Column({
+    nullable: true,
+    type: 'enum',
+    enum: [
+      CompanySizeEnum.BIG_SIZE,
+      CompanySizeEnum.HALF_SIZE,
+      CompanySizeEnum.SMALL_SIZE,
+    ],
+  })
+  companySize: string;
+
+  @Column({ nullable: true })
+  location: string;
+
+  @Column({ nullable: true })
+  companySite: string;
+
+  @Column({ type: 'json', nullable: true })
+  otherSite: {
+    instagran: string;
+    linkedin: string;
+    twitter: string;
+  };
+
+  @Column({ nullable: true })
+  description: string;
+
+  @Column({ nullable: true })
+  profile: string;
+
+  @Column({ nullable: true })
+  profileKey: string;
 
   constructor(company?: Partial<CompaniesEntity>) {
     this.id = company?.id;

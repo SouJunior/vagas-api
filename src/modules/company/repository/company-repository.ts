@@ -4,7 +4,7 @@ import { PageDto, PageMetaDto, PageOptionsDto } from 'src/shared/pagination';
 import { EntityRepository, Repository } from 'typeorm';
 import { handleError } from '../../../shared/utils/handle-error.util';
 import { CreateCompanyDto } from '../dtos/create-company.dto';
-import { UpdateCompanyDto } from '../dtos/update-company.sto';
+import { UpdateCompanyDto } from '../dtos/update-company.dto';
 import { UpdateMyPasswordDto } from '../dtos/update-my-password.dto';
 
 @EntityRepository(CompaniesEntity)
@@ -92,6 +92,12 @@ export class CompanyRepository extends Repository<CompaniesEntity> {
     await this.save(company);
 
     return company;
+  }
+
+  async updateCompany(company: CompaniesEntity) {
+    await this.save(company);
+
+    return this.findOneById(company.id);
   }
 
   async activateCompany(id: string) {
