@@ -11,12 +11,12 @@ import { CreateCompanyDto } from './create-company.dto';
 
 export class UpdateCompanyDto extends PartialType(CreateCompanyDto) {
   @IsOptional()
-  @IsEnum(CompanySizeEnum)
   @IsString()
   companyType?: string;
 
   @IsOptional()
   @IsString()
+  @IsEnum(CompanySizeEnum)
   companySize?: string;
 
   @IsNotEmpty()
@@ -39,4 +39,7 @@ export class UpdateCompanyDto extends PartialType(CreateCompanyDto) {
   @IsOptional()
   @IsString()
   profileKey?: string;
+
+  @IsOptional()
+  file: any;
 }

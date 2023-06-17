@@ -12,9 +12,24 @@ export class UpdateCompanyService {
   ) {}
 
   async execute(company: CompaniesEntity, data: UpdateCompanyDto, file) {
-    const { Location, key } = await this.fileUploadService.upload(file);
-    data.profile = Location;
-    data.profileKey = key;
+    if (file && !data.profileKey) {
+      return {
+        status: 400,
+        data: {
+          message: 'profileKey is required when file is send',
+        },
+      };
+    }
+
+    if (file) {
+      await this.fileUploadService.deleteFile(data.profileKey);
+      const { Location, key } = await this.fileUploadService.upload(file);
+      data.profile = Location;
+      data.profileKey = key;
+    }
+
+    delete data.file;
+
     await this.companyRepository.UpdateCompanyById(company.id, data);
 
     return {
