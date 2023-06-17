@@ -12,7 +12,6 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class UpdateCompanyDto extends PartialType(CreateCompanyDto) {
   @IsOptional()
-  @IsEnum(CompanySizeEnum)
   @IsString()
   @ApiProperty({
     description: 'Tipo de empresa',
@@ -22,6 +21,7 @@ export class UpdateCompanyDto extends PartialType(CreateCompanyDto) {
 
   @IsOptional()
   @IsString()
+  @IsEnum(CompanySizeEnum)
   @ApiProperty({
     description: 'Porte da empresa',
     example: 'Ex: Grande Porte',
