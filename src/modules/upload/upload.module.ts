@@ -7,5 +7,6 @@ import { FileUploadService } from './upload.service';
   imports: [PassportModule.register({ defaultStrategy: 'jwt' })],
   controllers: [UploadController],
   providers: [FileUploadService],
+  exports: [FileUploadService],
 })
 export class UploadModule {}

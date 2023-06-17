@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { UploadModule } from '../upload/upload.module';
+import { FileUploadService } from '../upload/upload.service';
 import { UserRepository } from '../user/repository/user.repository';
-import { UserModule } from '../user/user.module';
 import { CompanyController } from './company.controller';
 import { CompanyRepository } from './repository/company-repository';
 import {
@@ -15,7 +16,10 @@ import { RecoveryCompanyPasswordByEmail } from './services/recovery-password-by-
 import { UpdatePasswordByEmailService } from './services/update-password-by-email.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([CompanyRepository, UserRepository])],
+  imports: [
+    UploadModule,
+    TypeOrmModule.forFeature([CompanyRepository, UserRepository]),
+  ],
   controllers: [CompanyController],
   providers: [
     CreateCompanyService,
