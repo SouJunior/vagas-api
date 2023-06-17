@@ -18,6 +18,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { FileInterceptor } from '@nestjs/platform-express';
 import {
   ApiBearerAuth,
+  ApiBody,
   ApiOperation,
   ApiParam,
   ApiResponse,
@@ -140,6 +141,18 @@ export class CompanyController {
   @UseGuards(AuthGuard())
   @UseInterceptors(FileInterceptor('file'))
   @Put('edit')
+  @ApiBody({
+    description: 'Upload images',
+    schema: {
+      type: 'object',
+      properties: {
+        file: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Exemplo do retorno de sucesso da rota',

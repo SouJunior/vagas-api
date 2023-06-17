@@ -66,4 +66,7 @@ export class UpdateCompanyDto extends PartialType(CreateCompanyDto) {
     description: 'Chave para remoção da imagem do perfil',
   })
   profileKey?: string;
+
+  @IsOptional()
+  file: any;
 }
