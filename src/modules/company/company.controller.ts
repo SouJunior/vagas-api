@@ -11,10 +11,11 @@ import {
   Query,
   Res,
   UploadedFile,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 import { CompaniesEntity } from 'src/database/entities/companies.entity';
 import { BadRequestSwagger } from '../../shared/Swagger/bad-request.swagger';
@@ -36,6 +37,7 @@ import {
 import { ActivateCompanyService } from './services/activate-company.service';
 import { RecoveryCompanyPasswordByEmail } from './services/recovery-password-by-email.service';
 import { UpdatePasswordByEmailService } from './services/update-password-by-email.service';
+import { AuthGuard } from '@nestjs/passport';
 
 @ApiTags('Company')
 @Controller('company')
@@ -128,6 +130,8 @@ export class CompanyController {
     return company;
   }
 
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard())
   @UseInterceptors(FileInterceptor('file'))
   @Put('edit')
   @ApiResponse({
