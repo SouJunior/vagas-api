@@ -3,11 +3,13 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { PersonalDataEntity } from './personal-data.entity';
+import { CurriculumEntity } from './curriculum.entity';
 
 enum RolesEnum {
   ADMIN = 'ADMIN',
@@ -44,6 +46,9 @@ export class UsersEntity {
   @OneToOne(() => PersonalDataEntity)
   @JoinColumn()
   personalData: PersonalDataEntity;
+
+  @OneToMany(() => CurriculumEntity, (curriculum) => curriculum.user)
+  curriculums: CurriculumEntity[];
 
   @CreateDateColumn()
   created_at: Date;
