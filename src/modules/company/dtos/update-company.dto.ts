@@ -2,6 +2,7 @@ import { PartialType } from '@nestjs/mapped-types';
 import {
   IsEnum,
   IsNotEmpty,
+  IsObject,
   IsOptional,
   IsString,
   MaxLength,
@@ -22,6 +23,14 @@ export class UpdateCompanyDto extends PartialType(CreateCompanyDto) {
   @IsNotEmpty()
   @IsString()
   location: string;
+
+  @IsOptional()
+  @IsObject()
+  OtherSite: {
+    instagran: string;
+    linkedin: string;
+    twitter: string;
+  };
 
   @IsOptional()
   @IsString()
