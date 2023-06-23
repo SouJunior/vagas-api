@@ -33,9 +33,9 @@ export class UpdateCompanyDto extends PartialType(CreateCompanyDto) {
   @IsString()
   @ApiProperty({
     description: 'Localização da empresa',
-    example: 'Ex: São Paulo',
+    example: 'Ex: SP',
   })
-  location: string;
+  uf: string;
 
   @IsOptional()
   @IsObject()
