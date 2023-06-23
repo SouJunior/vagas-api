@@ -56,7 +56,7 @@ export class CompaniesEntity {
   companySize: string;
 
   @Column({ nullable: true })
-  location: string;
+  uf: string;
 
   @Column({ nullable: true })
   companySite: string;
