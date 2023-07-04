@@ -4,6 +4,7 @@ import {
   Get,
   Param,
   Post,
+  Res,
   UploadedFile,
   UseGuards,
   UseInterceptors,
@@ -11,11 +12,12 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
-import { CurriculumEntity } from '../../database/entities/curriculum.entity';
+import { Response } from 'express';
 import { UsersEntity } from '../../database/entities/users.entity';
 import { LoggedAdmin } from '../auth/decorator/logged-admin.decorator';
 import { CurriculumService } from './curriculum.service';
 import { DeleteCurriculumDto } from './dtos/delete-curriculum.dto';
+import { LoggedUser } from '../auth/decorator/logged-user.decorator';
 
 @ApiTags('Curriculum')
 @ApiBearerAuth()
@@ -26,9 +28,14 @@ export class CurriculumController {
 
   @Get()
   async getAllCurriculum(
-    @LoggedAdmin() user: UsersEntity,
-  ): Promise<CurriculumEntity[]> {
-    return this.curriculumService.getALlCurriculum(user);
+    @LoggedUser() user: UsersEntity,
+    @Res() res: Response,
+  ) {
+    const { data, status } = await this.curriculumService.getALlCurriculum(
+      user,
+    );
+
+    return res.status(status).send(data);
   }
 
   @ApiConsumes('multipart/form-data')
@@ -47,10 +54,16 @@ export class CurriculumController {
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
   async uploadCurriculum(
-    @LoggedAdmin() user: UsersEntity,
+    @LoggedUser() user: UsersEntity,
     @UploadedFile() file,
+    @Res() res: Response,
   ) {
-    return this.curriculumService.uploadCurriculum(file, user);
+    const { data, status } = await this.curriculumService.uploadCurriculum(
+      file,
+      user,
+    );
+
+    return res.status(status).send(data);
   }
 
   @Delete(':key')

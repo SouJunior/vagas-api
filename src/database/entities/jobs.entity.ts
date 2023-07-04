@@ -12,6 +12,7 @@ import { JobsAffirmativeTypeEnum } from '../../modules/jobs/enums/job-affirmativ
 import { JobsTypeContractEnum } from '../../modules/jobs/enums/job-contract-type.enum';
 import { JobsModalityEnum } from '../../modules/jobs/enums/job-modality.enum';
 import { JobsTypeEnum } from '../../modules/jobs/enums/job-type.enum';
+import { ApplicationEntity } from './applications.entity';
 import { CommentsEntity } from './comments.entity';
 import { CompaniesEntity } from './companies.entity';
 
@@ -117,6 +118,11 @@ export class JobsEntity {
     cascade: true,
   })
   comments: CommentsEntity[];
+
+  @OneToMany(() => ApplicationEntity, (application) => application.job, {
+    cascade: true,
+  })
+  applications: ApplicationEntity[];
 
   @CreateDateColumn()
   createdAt: Date;
