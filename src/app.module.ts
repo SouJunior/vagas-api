@@ -40,8 +40,8 @@ const {
       password: ISLOCAL == 'true' ? TYPEORM_DOCKER_PASSWORD : TYPEORM_PASSWORD,
       database: ISLOCAL == 'true' ? TYPEORM_DOCKER_DATABASE : TYPEORM_DATABASE,
       logging: true,
-      migrationsRun: false,
-      synchronize: false,
+      migrationsRun: true,
+      synchronize: true,
       entities: ['dist/database/entities/*.entity.js'],
       migrations: [
         'dist/database/migrations/*.js',
