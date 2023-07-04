@@ -7,11 +7,12 @@ import { AppService } from './app.service';
 import { AuthModule } from './modules/auth/auth.module';
 import { CommentModule } from './modules/comment/comment.module';
 import { CompanyModule } from './modules/company/company.module';
+import { CurriculumModule } from './modules/curriculum/curriculum.module';
 import { JobsModule } from './modules/jobs/jobs.module';
 import { MailModule } from './modules/mails/mail.module';
 import { ReportsModule } from './modules/reports/reports.module';
-import { UserModule } from './modules/user/user.module';
 import { UploadModule } from './modules/upload/upload.module';
+import { UserModule } from './modules/user/user.module';
 
 const {
   ISLOCAL,
@@ -55,6 +56,7 @@ const {
     CompanyModule,
     CommentModule,
     UploadModule,
+    CurriculumModule,
   ],
   controllers: [AppController],
   providers: [AppService],
