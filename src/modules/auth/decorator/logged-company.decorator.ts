@@ -11,7 +11,7 @@ export const LoggedCompany = createParamDecorator(
 
     if (!userObject) {
       throw new UnauthorizedException(
-        'User does not have permission to access this route',
+        'Company does not have permission to access this route',
       );
     }
 

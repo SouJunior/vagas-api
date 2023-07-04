@@ -35,10 +35,29 @@ export class JobRepository extends Repository<JobsEntity> {
   }
 
   async findOneById(id: string): Promise<any> {
-    return this.findOne({
-      relations: ['comments', 'comments.user', 'company'],
-      where: { id },
-    }).catch(handleError);
+    const queryBuilder = this.createQueryBuilder('jobs')
+      .leftJoinAndSelect('jobs.comments', 'comments')
+      .leftJoinAndSelect('comments.user', 'user')
+      .leftJoinAndSelect('jobs.company', 'company')
+      .leftJoinAndSelect('jobs.applications', 'applications')
+      .leftJoinAndSelect('applications.user', 'users')
+      .leftJoinAndSelect('applications.curriculum', 'curriculum')
+      .select([
+        'jobs',
+        'comments.id',
+        'user.id',
+        'company.id',
+        'company.companyName',
+        'applications.id',
+        'users.id',
+        'users.name',
+        'users.email',
+        'curriculum.id',
+        'curriculum.file',
+      ])
+      .where('jobs.id = :id', { id });
+
+    return queryBuilder.getOne();
   }
 
   async updateJob(id: string, data: UpdateJobDto) {

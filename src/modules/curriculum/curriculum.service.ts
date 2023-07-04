@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { CurriculumEntity } from '../../database/entities/curriculum.entity';
 import { UsersEntity } from '../../database/entities/users.entity';
 import { FileUploadService } from '../upload/upload.service';
 import { CurriculumRepository } from './repository/curriculum-repository';
@@ -12,11 +11,23 @@ export class CurriculumService {
     private curriculumRepository: CurriculumRepository,
   ) {}
 
-  async getALlCurriculum(user: UsersEntity): Promise<CurriculumEntity[]> {
-    return this.curriculumRepository.findAllCurriculum(user.id);
+  async getALlCurriculum(
+    user: UsersEntity,
+  ): Promise<{ status: number; data: any }> {
+    const curriculuns = await this.curriculumRepository.findAllCurriculum(
+      user.id,
+    );
+
+    return {
+      status: 200,
+      data: curriculuns,
+    };
   }
 
-  async uploadCurriculum(file, user: UsersEntity) {
+  async uploadCurriculum(
+    file,
+    user: UsersEntity,
+  ): Promise<{ status: number; data: any }> {
     if (!file) {
       return {
         status: 400,
@@ -39,7 +50,14 @@ export class CurriculumService {
       user,
     };
 
-    return this.curriculumRepository.saveCurriculum(saveNewCurriculum);
+    const curriculuns = await this.curriculumRepository.saveCurriculum(
+      saveNewCurriculum,
+    );
+
+    return {
+      status: 200,
+      data: curriculuns,
+    };
   }
 
   async deleteCurriculum(key: string) {

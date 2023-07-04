@@ -22,8 +22,8 @@ import { CompaniesEntity } from '../../database/entities/companies.entity';
 import { BadRequestSwagger } from '../../shared/Swagger/bad-request.swagger';
 import { UnauthorizedSwagger } from '../../shared/Swagger/unauthorized.swagger';
 import { PageOptionsDto } from '../../shared/pagination';
-import GetEntity from '../../shared/pipes/pipe-entity.pipe';
 import { LoggedCompany } from '../auth/decorator/logged-company.decorator';
+import { CompanyRepository } from '../company/repository/company-repository';
 import { CreateJobDto } from './dtos/create-job.dto';
 import { UpdateJobDto } from './dtos/update-job.dto';
 import {
@@ -34,7 +34,6 @@ import {
   UpdateJobService,
 } from './services';
 import { SearchJobsService } from './services/search-job.service';
-import { CompanyRepository } from '../company/repository/company-repository';
 
 @ApiTags('Job')
 @Controller('job')

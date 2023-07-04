@@ -13,6 +13,7 @@ import { MailModule } from './modules/mails/mail.module';
 import { ReportsModule } from './modules/reports/reports.module';
 import { UploadModule } from './modules/upload/upload.module';
 import { UserModule } from './modules/user/user.module';
+import { ApplicationsModule } from './modules/applications/applications.module';
 
 const {
   ISLOCAL,
@@ -57,6 +58,7 @@ const {
     CommentModule,
     UploadModule,
     CurriculumModule,
+    ApplicationsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

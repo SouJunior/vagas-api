@@ -4,9 +4,11 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { UsersEntity } from './users.entity';
+import { ApplicationEntity } from './applications.entity';
 
 @Entity('tb_curriculum')
 export class CurriculumEntity {
@@ -19,6 +21,9 @@ export class CurriculumEntity {
   @ManyToOne(() => UsersEntity)
   @JoinColumn({ name: 'user_id' })
   user: UsersEntity;
+
+  @OneToMany(() => ApplicationEntity, (application) => application.curriculum)
+  applications: ApplicationEntity[];
 
   @Column()
   file: string;
