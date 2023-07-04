@@ -280,7 +280,7 @@ O projeto vai estar rodando em:
 
 ## Feedback
 
-Se você tiver algum feedback, por favor nos deixe saber por meio do nosso [Discord](https://discord.gg/R5RAxFVC). Ou fazendo uma [contribuição](#contribuição).
+Se você tiver algum feedback, por favor nos deixe saber por meio do nosso [Discord](https://discord.com/invite/soujunior-community-759176734460346423). Ou fazendo uma [contribuição](#contribuição).
 
 ## Contribuição
 
