@@ -13,13 +13,21 @@ export class FileUploadService {
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   });
 
-  async upload(file: {
-    buffer?: any;
-    originalname?: any;
-  }): Promise<ResponseS3> {
+  async upload(
+    file: {
+      buffer?: any;
+      originalname?: any;
+    },
+    contentType?: string,
+  ): Promise<ResponseS3> {
     const { originalname } = file;
     const bucketS3 = process.env.AWS_S3_BUCKET_NAME;
-    const result = await this.uploadS3(file.buffer, bucketS3, originalname);
+    const result = await this.uploadS3(
+      file.buffer,
+      bucketS3,
+      originalname,
+      contentType,
+    );
 
     return result as ResponseS3;
   }
@@ -37,7 +45,12 @@ export class FileUploadService {
     }
   }
 
-  async uploadS3(file: any, bucket: string, name: number) {
+  async uploadS3(
+    file: any,
+    bucket: string,
+    name: number,
+    contentType?: string,
+  ) {
     const newName = Date.now() + name;
 
     const params = {
@@ -45,6 +58,7 @@ export class FileUploadService {
       Key: String(newName),
       Body: file,
       ACL: 'public-read',
+      ContentType: contentType,
     };
 
     return new Promise((resolve, reject) => {

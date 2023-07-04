@@ -35,7 +35,10 @@ export class CurriculumService {
       };
     }
 
-    const { Location, key } = await this.fileUploadService.upload(file);
+    const { Location, key } = await this.fileUploadService.upload(
+      file,
+      'application/pdf',
+    );
 
     if (!Location || !key) {
       return {
