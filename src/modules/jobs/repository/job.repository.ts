@@ -31,6 +31,16 @@ export class JobRepository extends Repository<JobsEntity> {
       .skip((pageOptionsDto.page - 1) * pageOptionsDto.take)
       .take(pageOptionsDto.take);
 
+    if (params.city) {
+      queryBuilder.andWhere('jobs.city = :city', { city: params.city });
+    }
+
+    if (params.federalUnit) {
+      queryBuilder.andWhere('jobs.federalUnit = :federalUnit', {
+        federalUnit: params.federalUnit,
+      });
+    }
+
     const itemCount = await queryBuilder.getCount().catch(handleError);
     const { entities } = await queryBuilder.getRawAndEntities();
 
