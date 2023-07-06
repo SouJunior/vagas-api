@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsOptional, IsString, ValidateIf } from 'class-validator';
+import { IsOptional, IsString } from 'class-validator';
 import { JobsModalityEnum } from '../enums/job-modality.enum';
 
 export class GetAllJobsDto {
@@ -15,4 +15,22 @@ export class GetAllJobsDto {
     ],
   })
   modality: JobsModalityEnum;
+
+  @IsOptional()
+  @IsString()
+  @ApiProperty({
+    required: false,
+    description: 'Filtro por unidade federal',
+    example: 'SP',
+  })
+  federalUnit: string;
+
+  @IsOptional()
+  @IsString()
+  @ApiProperty({
+    required: false,
+    description: 'Filtro por cidade',
+    example: 'São Paulo',
+  })
+  city: string;
 }
