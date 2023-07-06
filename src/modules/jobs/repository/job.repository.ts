@@ -8,6 +8,7 @@ import {
 import { handleError } from '../../../shared/utils/handle-error.util';
 import { CreateJobDto } from '../dtos/create-job.dto';
 import { UpdateJobDto } from '../dtos/update-job.dto';
+import { GetAllJobsDto } from '../dtos/get-all-jobs.dto';
 
 @EntityRepository(JobsEntity)
 export class JobRepository extends Repository<JobsEntity> {
@@ -18,10 +19,14 @@ export class JobRepository extends Repository<JobsEntity> {
 
   async getAllJobs(
     pageOptionsDto: PageOptionsDto,
+    params: GetAllJobsDto,
   ): Promise<PageDto<JobsEntity>> {
     const queryBuilder = this.createQueryBuilder('jobs');
 
     queryBuilder
+      .andWhere(params.modality ? 'jobs.modality = :modality' : {}, {
+        modality: params.modality,
+      })
       .orderBy(`jobs.${pageOptionsDto.orderByColumn}`, pageOptionsDto.order)
       .skip((pageOptionsDto.page - 1) * pageOptionsDto.take)
       .take(pageOptionsDto.take);
