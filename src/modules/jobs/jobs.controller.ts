@@ -103,7 +103,6 @@ export class JobsController {
       }
       return company.jobs;
     } catch (error) {
-      // Handle the error here
       console.log(error);
     }
   }
@@ -132,15 +131,16 @@ export class JobsController {
     return this.deleteJobService.execute(id);
   }
 
-  @Get('/search/:keyword')
+  @Post('/search/:keyword')
   @ApiOperation({
     summary: 'Buscar vaga',
   })
   async searchJobs(
     @Query() pageOptionsDto: PageOptionsDto,
+    @Body() data: GetAllJobsDto,
     @Param('keyword') keyword?: string,
   ): Promise<any> {
     keyword = keyword || ' ';
-    return this.searchJobsService.execute(keyword, pageOptionsDto);
+    return this.searchJobsService.execute(keyword, pageOptionsDto, data);
   }
 }
