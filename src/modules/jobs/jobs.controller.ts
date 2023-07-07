@@ -34,6 +34,7 @@ import {
   UpdateJobService,
 } from './services';
 import { SearchJobsService } from './services/search-job.service';
+import { GetAllJobsDto } from './dtos/get-all-jobs.dto';
 
 @ApiTags('Job')
 @Controller('job')
@@ -83,8 +84,11 @@ export class JobsController {
   @ApiOperation({
     summary: 'Buscar todas as vagas.',
   })
-  async getAllJobs(@Query() pageOptionsDto: PageOptionsDto) {
-    return this.getAllJobsService.execute(pageOptionsDto);
+  async getAllJobs(
+    @Query() pageOptionsDto: PageOptionsDto,
+    @Query() params: GetAllJobsDto,
+  ) {
+    return this.getAllJobsService.execute(pageOptionsDto, params);
   }
 
   @Get('all/:id')
