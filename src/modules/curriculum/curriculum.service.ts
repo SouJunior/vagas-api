@@ -65,5 +65,9 @@ export class CurriculumService {
 
   async deleteCurriculum(key: string) {
     await this.fileUploadService.deleteFile(key);
+
+    await this.curriculumRepository.deleteByKey(key);
+
+    return { message: 'Deleted successfully' };
   }
 }

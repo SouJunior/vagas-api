@@ -1,14 +1,15 @@
 import {
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { UsersEntity } from './users.entity';
 import { ApplicationEntity } from './applications.entity';
+import { UsersEntity } from './users.entity';
 
 @Entity('tb_curriculum')
 export class CurriculumEntity {
@@ -33,4 +34,7 @@ export class CurriculumEntity {
 
   @CreateDateColumn()
   created_at: Date;
+
+  @DeleteDateColumn()
+  desativated_at: Date;
 }
