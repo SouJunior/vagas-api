@@ -6,6 +6,7 @@ import {
   PageMetaDto,
   PageOptionsDto,
 } from '../../../shared/pagination';
+import { GetAllJobsDto } from '../dtos/get-all-jobs.dto';
 import { JobRepository } from '../repository/job.repository';
 
 @Injectable()
@@ -18,10 +19,12 @@ export class SearchJobsService {
   async execute(
     searchQuery: string,
     pageOptionsDto: PageOptionsDto,
+    params: GetAllJobsDto,
   ): Promise<PageDto<JobsEntity>> {
     const { itemCount, entities } = await this.jobRepository.searchJobs(
       searchQuery,
       pageOptionsDto,
+      params,
     );
 
     const pageMetaDto = new PageMetaDto({ itemCount, pageOptionsDto });

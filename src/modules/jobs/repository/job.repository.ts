@@ -7,8 +7,8 @@ import {
 } from '../../../shared/pagination';
 import { handleError } from '../../../shared/utils/handle-error.util';
 import { CreateJobDto } from '../dtos/create-job.dto';
-import { UpdateJobDto } from '../dtos/update-job.dto';
 import { GetAllJobsDto } from '../dtos/get-all-jobs.dto';
+import { UpdateJobDto } from '../dtos/update-job.dto';
 
 @EntityRepository(JobsEntity)
 export class JobRepository extends Repository<JobsEntity> {
@@ -24,6 +24,8 @@ export class JobRepository extends Repository<JobsEntity> {
     const queryBuilder = this.createQueryBuilder('jobs');
 
     queryBuilder
+      .leftJoin('jobs.company', 'company')
+      .select(['jobs', 'company.id', 'company.companyName', 'company.profile'])
       .andWhere(params.modality ? 'jobs.modality = :modality' : {}, {
         modality: params.modality,
       })
@@ -63,6 +65,7 @@ export class JobRepository extends Repository<JobsEntity> {
         'user.id',
         'company.id',
         'company.companyName',
+        'company.profile',
         'applications.id',
         'users.id',
         'users.name',
@@ -93,17 +96,38 @@ export class JobRepository extends Repository<JobsEntity> {
   async searchJobs(
     searchQuery: string,
     pageOptionsDto: PageOptionsDto,
+    params: GetAllJobsDto,
   ): Promise<{ itemCount: number; entities: JobsEntity[] }> {
     const queryBuilder = this.createQueryBuilder('job');
 
     queryBuilder
+      .leftJoin('job.company', 'company')
+      .select(['job', 'company.id', 'company.companyName', 'company.profile'])
       .andWhere(`job.title ILIKE '%${searchQuery}%'`)
       .orderBy(`job.${pageOptionsDto.orderByColumn}`, pageOptionsDto.order)
       .skip((pageOptionsDto.page - 1) * pageOptionsDto.take)
       .take(pageOptionsDto.take);
 
-    const itemCount = await queryBuilder.getCount();
-    const { entities } = await queryBuilder.getRawAndEntities();
+    if (params.city) {
+      queryBuilder.andWhere('job.city = :city', { city: params.city });
+    }
+
+    if (params.federalUnit) {
+      queryBuilder.andWhere('job.federalUnit = :federalUnit', {
+        federalUnit: params.federalUnit,
+      });
+    }
+
+    if (params.modality) {
+      queryBuilder.andWhere('job.modality = :modality', {
+        modality: params.modality,
+      });
+    }
+
+    const itemCount = await queryBuilder.getCount().catch(handleError);
+    const { entities } = await queryBuilder
+      .getRawAndEntities()
+      .catch(handleError);
 
     return { itemCount, entities };
   }
