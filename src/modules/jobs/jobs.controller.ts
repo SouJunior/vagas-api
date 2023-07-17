@@ -1,11 +1,11 @@
 import {
   Body,
   Controller,
-  Delete,
   Get,
   HttpStatus,
   NotFoundException,
   Param,
+  Patch,
   Post,
   Put,
   Query,
@@ -19,12 +19,15 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { CompaniesEntity } from '../../database/entities/companies.entity';
+import { JobsEntity } from '../../database/entities/jobs.entity';
 import { BadRequestSwagger } from '../../shared/Swagger/bad-request.swagger';
 import { UnauthorizedSwagger } from '../../shared/Swagger/unauthorized.swagger';
 import { PageOptionsDto } from '../../shared/pagination';
+import GetEntity from '../../shared/pipes/pipe-entity.pipe';
 import { LoggedCompany } from '../auth/decorator/logged-company.decorator';
 import { CompanyRepository } from '../company/repository/company-repository';
 import { CreateJobDto } from './dtos/create-job.dto';
+import { GetAllJobsDto } from './dtos/get-all-jobs.dto';
 import { UpdateJobDto } from './dtos/update-job.dto';
 import {
   CreateJobService,
@@ -34,7 +37,6 @@ import {
   UpdateJobService,
 } from './services';
 import { SearchJobsService } from './services/search-job.service';
-import { GetAllJobsDto } from './dtos/get-all-jobs.dto';
 
 @ApiTags('Job')
 @Controller('job')
@@ -123,12 +125,15 @@ export class JobsController {
     return this.updateJobService.execute(id, data);
   }
 
-  @Delete(':id')
+  @Patch(':id')
   @ApiOperation({
     summary: 'Excluir uma vaga pelo id.',
   })
-  async deleteJob(@Param('id') id: string) {
-    return this.deleteJobService.execute(id);
+  async archivedJob(
+    @Param('id', new GetEntity(JobsEntity))
+    job: JobsEntity,
+  ) {
+    return this.deleteJobService.execute(job);
   }
 
   @Post('/search/:keyword')

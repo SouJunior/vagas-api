@@ -104,6 +104,7 @@ export class JobRepository extends Repository<JobsEntity> {
       .leftJoin('job.company', 'company')
       .select(['job', 'company.id', 'company.companyName', 'company.profile'])
       .andWhere(`job.title ILIKE '%${searchQuery}%'`)
+      .andWhere(`job.status = 'ACTIVE'`)
       .orderBy(`job.${pageOptionsDto.orderByColumn}`, pageOptionsDto.order)
       .skip((pageOptionsDto.page - 1) * pageOptionsDto.take)
       .take(pageOptionsDto.take);

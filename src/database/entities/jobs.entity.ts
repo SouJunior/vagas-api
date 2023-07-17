@@ -114,6 +114,9 @@ export class JobsEntity {
   @Column()
   company_id: string;
 
+  @Column({ nullable: false, default: 'ACTIVE' })
+  status: string;
+
   @OneToMany(() => CommentsEntity, (comment) => comment.job, {
     cascade: true,
   })

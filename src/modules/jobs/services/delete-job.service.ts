@@ -1,21 +1,14 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
+import { JobsEntity } from '../../../database/entities/jobs.entity';
+import { StatusEnum } from '../../../shared/enums/status.enum';
 import { JobRepository } from '../repository/job.repository';
 
 @Injectable()
 export class DeleteJobService {
   constructor(private jobRepository: JobRepository) {}
 
-  async execute(id: string) {
-    if (!id) {
-      throw new BadRequestException('Id not provided');
-    }
-
-    const jobExists = await this.jobRepository.findOneById(id);
-
-    if (!jobExists) {
-      throw new BadRequestException('Job not found');
-    }
-
-    return this.jobRepository.deleteJobById(id);
+  async execute(job: JobsEntity) {
+    job.status = StatusEnum.ARCHIVED;
+    return this.jobRepository.save(job);
   }
 }
