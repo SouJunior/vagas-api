@@ -14,10 +14,9 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 import { UsersEntity } from '../../database/entities/users.entity';
-import { LoggedAdmin } from '../auth/decorator/logged-admin.decorator';
+import { LoggedUser } from '../auth/decorator/logged-user.decorator';
 import { CurriculumService } from './curriculum.service';
 import { DeleteCurriculumDto } from './dtos/delete-curriculum.dto';
-import { LoggedUser } from '../auth/decorator/logged-user.decorator';
 
 @ApiTags('Curriculum')
 @ApiBearerAuth()

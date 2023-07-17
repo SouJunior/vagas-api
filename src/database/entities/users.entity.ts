@@ -8,9 +8,9 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { PersonalDataEntity } from './personal-data.entity';
-import { CurriculumEntity } from './curriculum.entity';
 import { ApplicationEntity } from './applications.entity';
+import { CurriculumEntity } from './curriculum.entity';
+import { PersonalDataEntity } from './personal-data.entity';
 
 enum RolesEnum {
   ADMIN = 'ADMIN',
@@ -43,6 +43,18 @@ export class UsersEntity {
     default: RolesEnum.USER,
   })
   type: string;
+
+  @Column({ nullable: true })
+  phone: string;
+
+  @Column({ nullable: true })
+  mainPhone: string;
+
+  @Column({ nullable: true })
+  city: string;
+
+  @Column({ nullable: true })
+  state: string;
 
   @OneToOne(() => PersonalDataEntity)
   @JoinColumn()
