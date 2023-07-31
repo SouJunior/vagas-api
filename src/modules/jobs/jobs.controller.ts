@@ -132,8 +132,9 @@ export class JobsController {
   async archivedJob(
     @Param('id', new GetEntity(JobsEntity))
     job: JobsEntity,
+    @Body('content') content: string,
   ) {
-    return this.deleteJobService.execute(job);
+    return this.deleteJobService.execute(job, content);
   }
 
   @Post('/search/:keyword')

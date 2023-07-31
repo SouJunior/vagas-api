@@ -132,4 +132,7 @@ export class JobsEntity {
 
   @UpdateDateColumn({ update: true })
   updatedAt: Date;
+
+  @Column({ nullable: true })
+  content: string;
 }

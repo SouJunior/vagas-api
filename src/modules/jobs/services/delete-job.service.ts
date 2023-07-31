@@ -7,8 +7,9 @@ import { JobRepository } from '../repository/job.repository';
 export class DeleteJobService {
   constructor(private jobRepository: JobRepository) {}
 
-  async execute(job: JobsEntity) {
+  async execute(job: JobsEntity, content: string) {
     job.status = StatusEnum.ARCHIVED;
+    job.content = content;
     return this.jobRepository.save(job);
   }
 }

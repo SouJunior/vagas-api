@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
-import { AuthGuard, PassportModule } from '@nestjs/passport';
+import { PassportModule } from '@nestjs/passport';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import passport, { Passport } from 'passport';
+import { CompanyModule } from '../company/company.module';
+import { CompanyRepository } from '../company/repository/company-repository';
 import { MailModule } from '../mails/mail.module';
 import { JobsController } from './jobs.controller';
 import { JobRepository } from './repository/job.repository';
@@ -13,8 +14,6 @@ import {
   UpdateJobService,
 } from './services';
 import { SearchJobsService } from './services/search-job.service';
-import { CompanyRepository } from '../company/repository/company-repository';
-import { CompanyModule } from '../company/company.module';
 
 @Module({
   imports: [
