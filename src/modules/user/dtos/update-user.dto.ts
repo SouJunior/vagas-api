@@ -26,4 +26,21 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
   @IsNotEmpty()
   @IsString()
   state: string;
+
+  @IsOptional()
+  @IsString()
+  @ApiProperty({
+    description: 'Imagem do perfil',
+  })
+  profile?: string;
+
+  @IsOptional()
+  @IsString()
+  @ApiProperty({
+    description: 'Chave para remoção da imagem do perfil',
+  })
+  profileKey?: string;
+
+  @IsOptional()
+  file: any;
 }

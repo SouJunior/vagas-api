@@ -5,21 +5,23 @@ import { MailModule } from '../mails/mail.module';
 import { UserRepository } from './repository/user.repository';
 import {
   CreateUserService,
-  FindOneUserService,
-  FindAllUsersService,
-  UpdateUserService,
   DeleteUserService,
+  FindAllUsersService,
+  FindOneUserService,
   RecoveryPasswordByEmail,
   UpdatePasswordByEmailService,
+  UpdateUserService,
 } from './services';
 import { ActivateUserService } from './services/activate-user.service';
 import { UserController } from './user.controller';
+import { UploadModule } from '../upload/upload.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([UserRepository]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
     MailModule,
+    UploadModule,
   ],
   controllers: [UserController],
   providers: [

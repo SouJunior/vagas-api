@@ -11,11 +11,14 @@ import {
   Query,
   Req,
   Res,
+  UploadedFile,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import {
   ApiBearerAuth,
+  ApiBody,
   ApiOperation,
   ApiParam,
   ApiResponse,
@@ -33,6 +36,7 @@ import { EmailDto } from './dtos/email-user.dto';
 import { CreatePasswordHashDto } from './dtos/update-my-password.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
 
+import { FileInterceptor } from '@nestjs/platform-express';
 import { NotFoundSwagger } from '../../shared/Swagger/not-found.swagger';
 import { UnprocessableEntitySwagger } from '../../shared/Swagger/unprocessable-entity.swagger';
 import { CreateResponseSwagger } from '../../shared/Swagger/user/create-response.swagger';
@@ -177,6 +181,21 @@ export class UserController {
   }
 
   @Put()
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard())
+  @UseInterceptors(FileInterceptor('file'))
+  @ApiBody({
+    description: 'Upload images',
+    schema: {
+      type: 'object',
+      properties: {
+        file: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Exemplo do retorno de sucesso da rota',
@@ -195,13 +214,12 @@ export class UserController {
   @ApiOperation({
     summary: 'Atualizar um usuário pelo ID',
   })
-  @UseGuards(AuthGuard())
-  @ApiBearerAuth()
   async updateUser(
-    @Body() data: UpdateUserDto,
     @LoggedUser() user: UsersEntity,
+    @Body() data: UpdateUserDto,
+    @UploadedFile('file') file,
   ) {
-    return this.updateUserService.execute(user, data);
+    return this.updateUserService.execute(user, data, file);
   }
 
   @Delete(':id')

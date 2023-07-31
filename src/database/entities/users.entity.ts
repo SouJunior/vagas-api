@@ -56,6 +56,12 @@ export class UsersEntity {
   @Column({ nullable: true })
   state: string;
 
+  @Column({ nullable: true })
+  profile: string;
+
+  @Column({ nullable: true })
+  profileKey: string;
+
   @OneToOne(() => PersonalDataEntity)
   @JoinColumn()
   personalData: PersonalDataEntity;
@@ -86,6 +92,8 @@ export class UsersEntity {
     this.type = user?.type;
     this.mailConfirm = user?.mailConfirm;
     this.recoverPasswordToken = user?.recoverPasswordToken;
+    this.profile = user?.profile;
+    this.profileKey = user?.profileKey;
     this.created_at = user?.created_at;
     this.updated_at = user?.updated_at;
   }
