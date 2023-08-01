@@ -35,7 +35,7 @@ export class UpdateUserService {
       data.password = await bcrypt.hash(data?.password, 10);
     }
 
-    await this.userRepository.updateUser(user.id, data);
+    await this.userRepository.updateUser(user, data);
 
     return { message: 'User updated successfully' };
   }

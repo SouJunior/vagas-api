@@ -45,15 +45,21 @@ export class UserRepository extends Repository<UsersEntity> {
   }
 
   async findOneByEmail(email: string): Promise<UsersEntity> {
-    return this.findOne({ where: { email } }).catch(handleError);
+    return this.findOne({ where: { email }, relations: ['curriculums'] }).catch(
+      handleError,
+    );
   }
 
   async findOneByCpf(cpf: string): Promise<UsersEntity> {
     return this.findOne({ where: { cpf } }).catch(handleError);
   }
 
-  async updateUser(id: string, data: UpdateUserDto) {
-    await this.update(id, data).catch(handleError);
+  async updateUser(user: UsersEntity, data: UpdateUserDto) {
+    const bodyToUpdate = {
+      ...user,
+      ...data,
+    };
+    await this.save(bodyToUpdate).catch(handleError);
 
     return;
   }
