@@ -15,6 +15,7 @@ import {
 import { ActivateUserService } from './services/activate-user.service';
 import { UserController } from './user.controller';
 import { UploadModule } from '../upload/upload.module';
+import { UpdatePasswordService } from './services/update-password.service';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { UploadModule } from '../upload/upload.module';
     DeleteUserService,
     RecoveryPasswordByEmail,
     UpdatePasswordByEmailService,
+    UpdatePasswordService,
     ActivateUserService,
   ],
   exports: [RecoveryPasswordByEmail],
