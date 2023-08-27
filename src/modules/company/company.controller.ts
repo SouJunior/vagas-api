@@ -250,6 +250,24 @@ export class CompanyController {
   @Patch('update_password')
   @UseGuards(AuthGuard())
   @ApiBearerAuth()
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Exemplo do retorno de sucesso da rota',
+    type: CreatePasswordHashDto,
+  })
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Modelo de erro',
+    type: UnauthorizedSwagger,
+  })
+  @ApiResponse({
+    status: HttpStatus.BAD_REQUEST,
+    description: 'Modelo de erro',
+    type: BadRequestSwagger,
+  })
+  @ApiOperation({
+    summary: 'Company update password without recovery e-mail.',
+  })
   async updatePassword(
     @LoggedCompany() company: CompaniesEntity,
     @Body() updatePassword: UpdateMyPasswordDto,
