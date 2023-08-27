@@ -35,7 +35,10 @@ import { EmailDto } from '../user/dtos/email-user.dto';
 import { CompanyIdDto } from './dtos/company-id.dto';
 import { CreateCompanyDto } from './dtos/create-company.dto';
 import { UpdateCompanyDto } from './dtos/update-company.dto';
-import { CreatePasswordHashDto } from './dtos/update-my-password.dto';
+import {
+  CreatePasswordHashDto,
+  UpdateMyPasswordDto,
+} from './dtos/update-my-password.dto';
 import {
   CreateCompanyService,
   DeleteCompanyService,
@@ -45,6 +48,7 @@ import {
 import { ActivateCompanyService } from './services/activate-company.service';
 import { RecoveryCompanyPasswordByEmail } from './services/recovery-password-by-email.service';
 import { UpdatePasswordByEmailService } from './services/update-password-by-email.service';
+import { UpdateCompanyPassword } from './services/update-password.service';
 
 @ApiTags('Company')
 @Controller('company')
@@ -56,6 +60,7 @@ export class CompanyController {
     private deleteCompanyService: DeleteCompanyService,
     private recoveryPasswordByEmail: RecoveryCompanyPasswordByEmail,
     private updatePasswordByEmailService: UpdatePasswordByEmailService,
+    private updateCompanyPassword: UpdateCompanyPassword,
     private activateCompanyService: ActivateCompanyService,
   ) {}
 
@@ -213,7 +218,7 @@ export class CompanyController {
     return res.status(status).send(data);
   }
 
-  @Patch('update_password')
+  @Patch('update_password_email')
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Exemplo do retorno de sucesso da rota',
@@ -232,11 +237,26 @@ export class CompanyController {
   @ApiOperation({
     summary: 'Company update password.',
   })
-  async updatePassword(
+  async updatePasswordByEmail(
     @Body() updatePassword: CreatePasswordHashDto,
     @Res() res: Response,
   ) {
     const { data, status } = await this.updatePasswordByEmailService.execute(
+      updatePassword,
+    );
+    return res.status(status).send(data);
+  }
+
+  @Patch('update_password')
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
+  async updatePassword(
+    @LoggedCompany() company: CompaniesEntity,
+    @Body() updatePassword: UpdateMyPasswordDto,
+    @Res() res: Response,
+  ) {
+    const { data, status } = await this.updateCompanyPassword.execute(
+      company,
       updatePassword,
     );
     return res.status(status).send(data);

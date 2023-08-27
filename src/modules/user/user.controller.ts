@@ -33,7 +33,10 @@ import { LoggedAdmin } from '../auth/decorator/logged-admin.decorator';
 import { LoggedUser } from '../auth/decorator/logged-user.decorator';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { EmailDto } from './dtos/email-user.dto';
-import { CreatePasswordHashDto } from './dtos/update-my-password.dto';
+import {
+  CreatePasswordHashDto,
+  UpdateMyPasswordDto,
+} from './dtos/update-my-password.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
 
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -53,6 +56,7 @@ import {
   UpdateUserService,
 } from './services';
 import { ActivateUserService } from './services/activate-user.service';
+import { UpdatePasswordService } from './services/update-password.service';
 
 @ApiTags('User')
 @Controller('user')
@@ -65,6 +69,7 @@ export class UserController {
     private deleteUserService: DeleteUserService,
     private recoveryPasswordByEmail: RecoveryPasswordByEmail,
     private updatePasswordByEmailService: UpdatePasswordByEmailService,
+    private updatePasswordService: UpdatePasswordService,
     private activateUserService: ActivateUserService,
   ) {}
 
@@ -279,7 +284,7 @@ export class UserController {
     return res.status(status).send(data);
   }
 
-  @Patch('update_password')
+  @Patch('update_password_email')
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Exemplo do retorno de sucesso da rota',
@@ -298,12 +303,45 @@ export class UserController {
   @ApiOperation({
     summary: 'User update password.',
   })
-  async updatePassword(
+  async updatePasswordAfterEmail(
     @Body() updatePassword: CreatePasswordHashDto,
     @Res() res: Response,
   ) {
     const { data, status } = await this.updatePasswordByEmailService.execute(
       updatePassword,
+    );
+    return res.status(status).send(data);
+  }
+
+  @Patch('update_password')
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Exemplo do retorno de sucesso da rota',
+    type: NotFoundSwagger,
+  })
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Modelo de erro',
+    type: UnauthorizedSwagger,
+  })
+  @ApiResponse({
+    status: HttpStatus.BAD_REQUEST,
+    description: 'Modelo de erro',
+    type: BadRequestSwagger,
+  })
+  @ApiOperation({
+    summary: 'User update password without recovery e-mail.',
+  })
+  async updatePassword(
+    @LoggedUser() user: UsersEntity,
+    @Body() passData: UpdateMyPasswordDto,
+    @Res() res: Response,
+  ) {
+    const { data, status } = await this.updatePasswordService.execute(
+      user,
+      passData,
     );
 
     return res.status(status).send(data);
