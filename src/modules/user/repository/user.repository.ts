@@ -41,7 +41,7 @@ export class UserRepository extends Repository<UsersEntity> {
   }
 
   async findOneById(id: string): Promise<UsersEntity> {
-    return this.findOne(id).catch(handleError);
+    return this.findOne({ where: { id } }).catch(handleError);
   }
 
   async findOneByEmail(email: string): Promise<UsersEntity> {

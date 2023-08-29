@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString, Length, Matches } from 'class-validator';
+import { Match } from '../dtos/decorators/match.decorator';
 
 export class UpdateMyPasswordDto {
   @IsString()
@@ -7,10 +8,10 @@ export class UpdateMyPasswordDto {
   oldPassword: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsNotEmpty({ message: "O campo 'password' não pode ficar vazio" })
   @Length(8, 50)
   @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
-    message: 'Inserir senha com os critérios informados',
+    message: 'A senha precisa ter no mínimo 8 caracteres, máximo de 50, uma letra maiúscula, um número e um símbolo.',
   })
   @ApiProperty({
     description: 'Senha de Login',
@@ -19,10 +20,10 @@ export class UpdateMyPasswordDto {
   password: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsNotEmpty({ message: "O campo 'confirmPassword' não pode ficar vazio" })
   @Length(8, 50)
   @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
-    message: 'Inserir senha com os critérios informados',
+    message: 'A senha precisa ter no mínimo 8 caracteres, máximo de 50, uma letra maiúscula, um número e um símbolo.',
   })
   @ApiProperty({
     description: 'Senha de Login',
@@ -32,10 +33,12 @@ export class UpdateMyPasswordDto {
 }
 
 export class CreatePasswordHashDto {
+  @IsNotEmpty({ message: "O campo 'password' não pode ficar vazio" })
   @IsString()
   @Length(8, 50)
   @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
-    message: 'Inserir senha com os critérios informados',
+    message:
+      'A senha precisa ter no mínimo 8 caracteres, máximo de 50, uma letra maiúscula, um número e um símbolo.',
   })
   @ApiProperty({
     description: 'Senha de Login',
@@ -43,14 +46,14 @@ export class CreatePasswordHashDto {
   })
   password: string;
 
+  @IsNotEmpty({ message: "O campo 'confirmPassword' não pode ficar vazio" })
   @IsString()
-  @Length(8, 50)
-  @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
-    message: 'Inserir senha com os critérios informados',
-  })
   @ApiProperty({
-    description: 'Confirmação de senha de Login',
-    example: 'Abcd@1234',
+    description: 'Confirmação de senha',
+    example: 'Abcd@123',
+  })
+  @Match('password', {
+    message: 'Os campos de senha precisam ser idênticos.',
   })
   confirmPassword: string;
 
