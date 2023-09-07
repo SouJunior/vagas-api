@@ -3,7 +3,6 @@ import {
   Controller,
   Delete,
   Get,
-  HttpStatus,
   Param,
   Patch,
   Post,
@@ -18,16 +17,10 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import {
   ApiBearerAuth,
-  ApiBody,
-  ApiOperation,
-  ApiParam,
-  ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
 import { Request, Response } from 'express';
 import { UsersEntity } from '../../database/entities/users.entity';
-import { BadRequestSwagger } from '../../shared/Swagger/bad-request.swagger';
-import { UnauthorizedSwagger } from '../../shared/Swagger/unauthorized.swagger';
 import { PageOptionsDto } from '../../shared/pagination';
 import { LoggedAdmin } from '../auth/decorator/logged-admin.decorator';
 import { LoggedUser } from '../auth/decorator/logged-user.decorator';
@@ -39,13 +32,8 @@ import {
 } from './dtos/update-my-password.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
 
-import { FileInterceptor } from '@nestjs/platform-express';
-import { NotFoundSwagger } from '../../shared/Swagger/not-found.swagger';
-import { UnprocessableEntitySwagger } from '../../shared/Swagger/unprocessable-entity.swagger';
-import { CreateResponseSwagger } from '../../shared/Swagger/user/create-response.swagger';
-import { ListResponseSwagger } from '../../shared/Swagger/user/list-response.swagger';
-import { RecoveryPasswordSwagger } from '../../shared/Swagger/user/recovery-password.swagger';
-import { GetByParamsDto } from './dtos/get-by-params.dto';
+import { FileInterceptor } from "@nestjs/platform-express";
+
 import {
   CreateUserService,
   DeleteUserService,
@@ -57,6 +45,15 @@ import {
 } from './services';
 import { ActivateUserService } from './services/activate-user.service';
 import { UpdatePasswordService } from './services/update-password.service';
+import { SwaggerCreateUser } from 'src/shared/Swagger/decorators/user/create-user.swagger.decorator';
+import { SwaggerGetUser } from 'src/shared/Swagger/decorators/user/get-user.swagger.decorator';
+import { SwaggerFindUsers } from 'src/shared/Swagger/decorators/user/view-users.swagger.decorator';
+import { SwaggerGetUserAdm } from 'src/shared/Swagger/decorators/user/get-user-adm.swagger.decorator';
+import { SwaggerUpdateUser } from 'src/shared/Swagger/decorators/user/update-user.swagger.decorator';
+import { SwaggerDeleteUser } from 'src/shared/Swagger/decorators/user/delete-user.swagger.decorator';
+import { SwaggerRecoverEmail } from 'src/shared/Swagger/decorators/user/recover-by-email.swagger.decorator';
+import { SwaggerUpdatePassAfterRecovery } from 'src/shared/Swagger/decorators/user/update-pass-after-email-recovery.swagger.decorator';
+import { SwaggerUpdatePassword } from 'src/shared/Swagger/decorators/user/update-password.swagger.decorator';
 
 @ApiTags('User')
 @Controller('user')
@@ -74,24 +71,7 @@ export class UserController {
   ) {}
 
   @Post()
-  @ApiResponse({
-    status: HttpStatus.CREATED,
-    description: 'Exemplo do retorno de sucesso da rota',
-    type: CreateResponseSwagger,
-  })
-  @ApiResponse({
-    status: HttpStatus.UNAUTHORIZED,
-    description: 'Modelo de erro',
-    type: UnauthorizedSwagger,
-  })
-  @ApiResponse({
-    status: HttpStatus.BAD_REQUEST,
-    description: 'Modelo de erro',
-    type: BadRequestSwagger,
-  })
-  @ApiOperation({
-    summary: 'Criar um usuário!',
-  })
+  @SwaggerCreateUser()
   async createNewUser(
     @Body() createUser: CreateUserDto,
     @Res() res: Response,
@@ -106,47 +86,13 @@ export class UserController {
   }
 
   @Put('activate/:id')
-  @ApiResponse({
-    status: HttpStatus.OK,
-    description: 'Exemplo do retorno de sucesso da rota',
-    type: CreateResponseSwagger,
-  })
-  @ApiResponse({
-    status: HttpStatus.UNPROCESSABLE_ENTITY,
-    description: 'Modelo de erro',
-    type: UnprocessableEntitySwagger,
-  })
-  @ApiResponse({
-    status: HttpStatus.BAD_REQUEST,
-    description: 'Modelo de erro',
-    type: BadRequestSwagger,
-  })
-  @ApiOperation({
-    summary: 'Ativar um usuário pelo ID',
-  })
+  @SwaggerGetUser()
   async activateUser(@Param('id') id: string) {
     return this.activateUserService.execute(id);
   }
 
   @Get()
-  @ApiResponse({
-    status: HttpStatus.OK,
-    description: 'Exemplo do retorno de sucesso da rota',
-    type: ListResponseSwagger,
-  })
-  @ApiResponse({
-    status: HttpStatus.UNAUTHORIZED,
-    description: 'Modelo de erro',
-    type: UnauthorizedSwagger,
-  })
-  @ApiResponse({
-    status: HttpStatus.BAD_REQUEST,
-    description: 'Modelo de erro',
-    type: BadRequestSwagger,
-  })
-  @ApiOperation({
-    summary: 'Visualizar todos os usuários',
-  })
+  @SwaggerFindUsers()
   @UseGuards(AuthGuard())
   @ApiBearerAuth()
   async getAllUsers(
@@ -157,68 +103,18 @@ export class UserController {
   }
 
   @Get(':id')
-  @ApiResponse({
-    status: HttpStatus.OK,
-    description: 'Exemplo do retorno de sucesso da rota',
-    type: CreateResponseSwagger,
-  })
-  @ApiResponse({
-    status: HttpStatus.UNAUTHORIZED,
-    description: 'Modelo de erro',
-    type: UnauthorizedSwagger,
-  })
-  @ApiResponse({
-    status: HttpStatus.BAD_REQUEST,
-    description: 'Modelo de erro',
-    type: BadRequestSwagger,
-  })
-  @ApiOperation({
-    summary: 'Visualizar um usuário pelo ID (precisa ser adm)',
-  })
-  @ApiParam({
-    type: GetByParamsDto,
-    name: '',
-  })
+  @SwaggerGetUserAdm()
   @UseGuards(AuthGuard())
   @ApiBearerAuth()
-  async getOneUser(@LoggedUser() user: UsersEntity) {
-    return this.findOneUserService.execute(user);
+  async getOneUser(@Param("id") id: string, @LoggedUser() user: UsersEntity) {
+    return this.findOneUserService.execute(id);
   }
 
   @Put()
   @ApiBearerAuth()
   @UseGuards(AuthGuard())
   @UseInterceptors(FileInterceptor('file'))
-  @ApiBody({
-    description: 'Upload images',
-    schema: {
-      type: 'object',
-      properties: {
-        file: {
-          type: 'string',
-          format: 'binary',
-        },
-      },
-    },
-  })
-  @ApiResponse({
-    status: HttpStatus.OK,
-    description: 'Exemplo do retorno de sucesso da rota',
-    type: BadRequestSwagger,
-  })
-  @ApiResponse({
-    status: HttpStatus.UNAUTHORIZED,
-    description: 'Modelo de erro',
-    type: UnauthorizedSwagger,
-  })
-  @ApiResponse({
-    status: HttpStatus.BAD_REQUEST,
-    description: 'Modelo de erro',
-    type: BadRequestSwagger,
-  })
-  @ApiOperation({
-    summary: 'Atualizar um usuário pelo ID',
-  })
+  @SwaggerUpdateUser()
   async updateUser(
     @LoggedUser() user: UsersEntity,
     @Body() data: UpdateUserDto,
@@ -228,53 +124,15 @@ export class UserController {
   }
 
   @Delete(':id')
-  @ApiResponse({
-    status: HttpStatus.OK,
-    description: 'Exemplo do retorno de sucesso da rota',
-    type: NotFoundSwagger,
-  })
-  @ApiResponse({
-    status: HttpStatus.UNAUTHORIZED,
-    description: 'Modelo de erro',
-    type: UnauthorizedSwagger,
-  })
-  @ApiResponse({
-    status: HttpStatus.BAD_REQUEST,
-    description: 'Modelo de erro',
-    type: BadRequestSwagger,
-  })
-  @ApiOperation({
-    summary: 'Deletar um usuário pelo ID',
-  })
-  @ApiParam({
-    type: GetByParamsDto,
-    name: '',
-  })
+  @SwaggerDeleteUser()
   @UseGuards(AuthGuard())
   @ApiBearerAuth()
-  async deleteUser(@LoggedUser() user: UsersEntity) {
-    return this.deleteUserService.execute(user);
+  async deleteUser(@Param("id") id: string, @LoggedUser() user: UsersEntity) {
+    return this.deleteUserService.execute(id);
   }
 
   @Patch('recovery_password')
-  @ApiResponse({
-    status: HttpStatus.OK,
-    description: 'Exemplo do retorno de sucesso da rota',
-    type: RecoveryPasswordSwagger,
-  })
-  @ApiResponse({
-    status: HttpStatus.UNAUTHORIZED,
-    description: 'Modelo de erro',
-    type: UnauthorizedSwagger,
-  })
-  @ApiResponse({
-    status: HttpStatus.BAD_REQUEST,
-    description: 'Modelo de erro',
-    type: BadRequestSwagger,
-  })
-  @ApiOperation({
-    summary: 'Send email to recovery password.',
-  })
+  @SwaggerRecoverEmail()
   async recoveryPasswordSendEmail(
     @Body() { email }: EmailDto,
     @Res() res: Response,
@@ -285,24 +143,7 @@ export class UserController {
   }
 
   @Patch('update_password_email')
-  @ApiResponse({
-    status: HttpStatus.OK,
-    description: 'Exemplo do retorno de sucesso da rota',
-    type: NotFoundSwagger,
-  })
-  @ApiResponse({
-    status: HttpStatus.UNAUTHORIZED,
-    description: 'Modelo de erro',
-    type: UnauthorizedSwagger,
-  })
-  @ApiResponse({
-    status: HttpStatus.BAD_REQUEST,
-    description: 'Modelo de erro',
-    type: BadRequestSwagger,
-  })
-  @ApiOperation({
-    summary: 'User update password.',
-  })
+  @SwaggerUpdatePassAfterRecovery()
   async updatePasswordAfterEmail(
     @Body() updatePassword: CreatePasswordHashDto,
     @Res() res: Response,
@@ -316,24 +157,7 @@ export class UserController {
   @Patch('update_password')
   @UseGuards(AuthGuard())
   @ApiBearerAuth()
-  @ApiResponse({
-    status: HttpStatus.OK,
-    description: 'Exemplo do retorno de sucesso da rota',
-    type: NotFoundSwagger,
-  })
-  @ApiResponse({
-    status: HttpStatus.UNAUTHORIZED,
-    description: 'Modelo de erro',
-    type: UnauthorizedSwagger,
-  })
-  @ApiResponse({
-    status: HttpStatus.BAD_REQUEST,
-    description: 'Modelo de erro',
-    type: BadRequestSwagger,
-  })
-  @ApiOperation({
-    summary: 'User update password without recovery e-mail.',
-  })
+  @SwaggerUpdatePassword()
   async updatePassword(
     @LoggedUser() user: UsersEntity,
     @Body() passData: UpdateMyPasswordDto,

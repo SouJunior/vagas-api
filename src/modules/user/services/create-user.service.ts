@@ -22,7 +22,7 @@ export class CreateUserService {
 
     if (userAlreadyExists) {
       return {
-        status: 404,
+        status: 400,
         data: {
           message: 'E-mail já cadastrado.',
         },

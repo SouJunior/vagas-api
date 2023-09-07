@@ -11,6 +11,7 @@ import {
   Validate,
 } from 'class-validator';
 import { UserRole } from '../../../shared/utils/userRole/userRole';
+import { Match } from '../decorators/match.decorator';
 
 export class CreateUserDto {
   @IsNotEmpty()
@@ -33,7 +34,6 @@ export class CreateUserDto {
 
   @IsNotEmpty()
   @IsString()
-  @Length(8, 20)
   @Matches(
     /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()\-_=+{};:,<.>])[a-zA-Z\d!@#$%^&*()\-_=+{};:,<.>.]{8,}$/,
     {
@@ -49,13 +49,12 @@ export class CreateUserDto {
 
   @IsNotEmpty()
   @IsString()
-  @Length(8, 20)
   @ApiProperty({
     description: 'Confirmação de senha',
     example: 'Abcd@1234',
   })
-  @Validate((value, { object }) => value === object.password, {
-    message: 'Senhas precisam ser idênticas',
+  @Match('password', {
+    message: 'The password does not match with the password confirmation',
   })
   confirmPassword: string;
 
