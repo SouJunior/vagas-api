@@ -18,11 +18,11 @@ import {
   FindReportByIdService,
   UpdateReportService,
 } from './services';
-import { CreateReportSwagger } from 'src/shared/Swagger/reports/create-report.swagger';
-import { GetAllReportsSwagger } from 'src/shared/Swagger/reports/get-all-reports.swagger';
-import { GetReportByIdSwagger } from 'src/shared/Swagger/reports/get-report-by-id.swagger';
-import { UpdateReportSwagger } from 'src/shared/Swagger/reports/update-report.swagger';
-import { DeleteReportSwagger } from 'src/shared/Swagger/reports/delete-report.swagger';
+import { CreateReportSwagger } from 'src/shared/Swagger/decorators/reports/create-report.swagger';
+import { GetAllReportsSwagger } from 'src/shared/Swagger/decorators/reports/get-all-reports.swagger';
+import { GetReportByIdSwagger } from 'src/shared/Swagger/decorators/reports/get-report-by-id.swagger';
+import { UpdateReportSwagger } from 'src/shared/Swagger/decorators/reports/update-report.swagger';
+import { DeleteReportSwagger } from 'src/shared/Swagger/decorators/reports/delete-report.swagger';
 
 @ApiExcludeController()
 @ApiTags('Report')

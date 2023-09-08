@@ -16,11 +16,11 @@ import {
   ApiOperation,
   ApiTags
 } from '@nestjs/swagger';
-import { ArchiveJobSwagger } from 'src/shared/Swagger/jobs/archive-job.swagger';
-import { CreateNewJobSwagger } from 'src/shared/Swagger/jobs/create-new-job.swagger';
-import { GetOneJobSwagger } from 'src/shared/Swagger/jobs/get-one-job.swagger';
-import { SearchJobSwagger } from 'src/shared/Swagger/jobs/search-job.swagger';
-import { UpdateJobSwagger } from 'src/shared/Swagger/jobs/update-job.swagger';
+import { ArchiveJobSwagger } from 'src/shared/Swagger/decorators/jobs/archive-job.swagger';
+import { CreateNewJobSwagger } from 'src/shared/Swagger/decorators/jobs/create-new-job.swagger';
+import { GetOneJobSwagger } from 'src/shared/Swagger/decorators/jobs/get-one-job.swagger';
+import { SearchJobSwagger } from 'src/shared/Swagger/decorators/jobs/search-job.swagger';
+import { UpdateJobSwagger } from 'src/shared/Swagger/decorators/jobs/update-job.swagger';
 import { CompaniesEntity } from '../../database/entities/companies.entity';
 import { JobsEntity } from '../../database/entities/jobs.entity';
 import { PageOptionsDto } from '../../shared/pagination';
@@ -38,8 +38,8 @@ import {
   UpdateJobService,
 } from './services';
 import { SearchJobsService } from './services/search-job.service';
-import { GetAllJobsOfLoggedCompanySwagger } from 'src/shared/Swagger/jobs/get-all-jobs-of-logged-company.swagger';
-import { GetAllJobsSwagger } from 'src/shared/Swagger/jobs/get-all-jobs-of-logged-company.swagger copy';
+import { GetAllJobsOfLoggedCompanySwagger } from 'src/shared/Swagger/decorators/jobs/get-all-jobs-of-logged-company.swagger';
+import { GetAllJobsSwagger } from 'src/shared/Swagger/decorators/jobs/get-all-jobs-of-logged-company.swagger copy';
 
 @ApiTags('Job')
 @Controller('job')

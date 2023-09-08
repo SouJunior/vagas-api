@@ -11,7 +11,7 @@ import {
   ApiBearerAuth,
   ApiTags
 } from '@nestjs/swagger';
-import { UploadSwagger } from 'src/shared/Swagger/upload/upload.swagger';
+import { UploadSwagger } from 'src/shared/Swagger/decorators/upload/upload.swagger';
 import { FileUploadService } from './upload.service';
 
 @ApiTags('Upload')
