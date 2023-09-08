@@ -1,22 +1,22 @@
 import { HttpStatus, applyDecorators } from "@nestjs/common";
 import { ApiOperation, ApiResponse } from "@nestjs/swagger";
-import { LoggerUserType } from "src/modules/auth/types/logged-user.types";
-import { UnauthorizedSwagger } from "../unauthorized.swagger";
+import { UserLoginResponseDto } from "src/modules/auth/dtos/user-login-response.dto";
+import { BadRequestSwagger } from "../../bad-request.swagger";
 
-export function UserLoggedSwagger(){
+export function LoginSwagger() {
     return applyDecorators(
         ApiResponse({
             status: HttpStatus.OK,
             description: 'Exemplo do retorno de sucesso da rota',
-            type: LoggerUserType,
+            type: UserLoginResponseDto,
           }),
           ApiResponse({
-            status: HttpStatus.UNAUTHORIZED,
+            status: HttpStatus.BAD_REQUEST,
             description: 'Modelo de erro',
-            type: UnauthorizedSwagger,
+            type: BadRequestSwagger,
           }),
           ApiOperation({
-            summary: 'Retorna usuário logado',
+            summary: 'Rota para fazer login na plataforma',
           })
     )
 }

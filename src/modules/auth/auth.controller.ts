@@ -12,8 +12,8 @@ import {
   ApiTags
 } from '@nestjs/swagger';
 import { Response } from 'express';
-import { LoginSwagger } from 'src/shared/Swagger/auth/login.swagger';
-import { UserLoggedSwagger } from 'src/shared/Swagger/auth/user-logged.swagger';
+import { LoginSwagger } from 'src/shared/Swagger/decorators/auth/login.swagger';
+import { UserLoggedSwagger } from 'src/shared/Swagger/decorators/auth/user-logged.swagger';
 import { UsersEntity } from '../../database/entities/users.entity';
 import { LoggedUser } from './decorator/logged-user.decorator';
 import { UserLoginDto } from './dtos/user-login.dto';

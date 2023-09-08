@@ -9,11 +9,11 @@ import {
 } from '@nestjs/common';
 import { ApiExcludeController, ApiTags } from '@nestjs/swagger';
 import { Throttle } from '@nestjs/throttler';
-import { CreateCommentSwagger } from 'src/shared/Swagger/comment/create-comment.swagger';
-import { DeleteCommentarySwagger } from 'src/shared/Swagger/comment/delete-commentary.swagger';
-import { GetAllCommentariesSwagger } from 'src/shared/Swagger/comment/get-all-commentaries.swagger';
-import { GetOneCommentaryByIdSwagger } from 'src/shared/Swagger/comment/get-one-commentary.swagger';
-import { UpdateCommentarySwagger } from 'src/shared/Swagger/comment/update-commentary.swagger';
+import { CreateCommentSwagger } from 'src/shared/Swagger/decorators/comment/create-comment.swagger';
+import { DeleteCommentarySwagger } from 'src/shared/Swagger/decorators/comment/delete-commentary.swagger';
+import { GetAllCommentariesSwagger } from 'src/shared/Swagger/decorators/comment/get-all-commentaries.swagger';
+import { GetOneCommentaryByIdSwagger } from 'src/shared/Swagger/decorators/comment/get-one-commentary.swagger';
+import { UpdateCommentarySwagger } from 'src/shared/Swagger/decorators/comment/update-commentary.swagger';
 import { CommentIdDto } from './dtos/comment-id.dto';
 import { CreateCommentDto } from './dtos/create-comment.dto';
 import { UpdateCommentDto } from './dtos/update-comment.dto';
