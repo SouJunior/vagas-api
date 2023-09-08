@@ -7,8 +7,13 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { ApiExcludeController, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiExcludeController, ApiTags } from '@nestjs/swagger';
 import { Throttle } from '@nestjs/throttler';
+import { CreateCommentSwagger } from 'src/shared/Swagger/comment/create-comment.swagger';
+import { DeleteCommentarySwagger } from 'src/shared/Swagger/comment/delete-commentary.swagger';
+import { GetAllCommentariesSwagger } from 'src/shared/Swagger/comment/get-all-commentaries.swagger';
+import { GetOneCommentaryByIdSwagger } from 'src/shared/Swagger/comment/get-one-commentary.swagger';
+import { UpdateCommentarySwagger } from 'src/shared/Swagger/comment/update-commentary.swagger';
 import { CommentIdDto } from './dtos/comment-id.dto';
 import { CreateCommentDto } from './dtos/create-comment.dto';
 import { UpdateCommentDto } from './dtos/update-comment.dto';
@@ -21,8 +26,8 @@ import {
 } from './services';
 
 @ApiExcludeController()
-@ApiTags('Comment')
-@Controller('comment')
+@ApiTags('Commentary')
+@Controller('commentary')
 export class CommentController {
   constructor(
     private createCommentService: CreateCommentService,
@@ -34,34 +39,26 @@ export class CommentController {
 
   @Throttle(2, 30)
   @Post()
-  @ApiOperation({
-    summary: 'Cadastrar um comentário.',
-  })
-  async createComment(@Body() data: CreateCommentDto) {
+  @CreateCommentSwagger()
+  async createCommentary(@Body() data: CreateCommentDto) {
     return this.createCommentService.execute(data);
   }
 
   @Get()
-  @ApiOperation({
-    summary: 'Encontrar todos os comentários.',
-  })
-  async getAllComments() {
+  @GetAllCommentariesSwagger()
+  async getAllCommentaries() {
     return this.getAllCommentsService.execute();
   }
 
   @Get(':id')
-  @ApiOperation({
-    summary: 'Buscar um comentário por id.',
-  })
-  async getCommentById(@Param() { id }: CommentIdDto) {
+  @GetOneCommentaryByIdSwagger()
+  async getCommentaryById(@Param() { id }: CommentIdDto) {
     return this.getCommentByIdService.execute(id);
   }
 
   @Put(':id')
-  @ApiOperation({
-    summary: 'Atualizar um comentário por id.',
-  })
-  async updateComment(
+  @UpdateCommentarySwagger()
+  async updateCommentary(
     @Param() { id }: CommentIdDto,
     @Body() data: UpdateCommentDto,
   ) {
@@ -69,10 +66,8 @@ export class CommentController {
   }
 
   @Delete(':id')
-  @ApiOperation({
-    summary: 'Excluir um comentário por id.',
-  })
-  async deleteComment(@Param() { id }: CommentIdDto) {
+  @DeleteCommentarySwagger()
+  async deleteCommentary(@Param() { id }: CommentIdDto) {
     return this.deleteCommentService.execute(id);
   }
 }

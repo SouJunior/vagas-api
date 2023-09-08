@@ -11,8 +11,9 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiBearerAuth, ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
+import { UploadCurriculumSwagger } from 'src/shared/Swagger/curriculum/upload-curriculum.swagger';
 import { UsersEntity } from '../../database/entities/users.entity';
 import { LoggedUser } from '../auth/decorator/logged-user.decorator';
 import { CurriculumService } from './curriculum.service';
@@ -37,19 +38,7 @@ export class CurriculumController {
     return res.status(status).send(data);
   }
 
-  @ApiConsumes('multipart/form-data')
-  @ApiBody({
-    description: 'Upload images',
-    schema: {
-      type: 'object',
-      properties: {
-        file: {
-          type: 'string',
-          format: 'binary',
-        },
-      },
-    },
-  })
+  @UploadCurriculumSwagger()
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
   async uploadCurriculum(
