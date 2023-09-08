@@ -37,19 +37,7 @@ export class CurriculumController {
     return res.status(status).send(data);
   }
 
-  @ApiConsumes('multipart/form-data')
-  @ApiBody({
-    description: 'Upload images',
-    schema: {
-      type: 'object',
-      properties: {
-        file: {
-          type: 'string',
-          format: 'binary',
-        },
-      },
-    },
-  })
+  
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
   async uploadCurriculum(
