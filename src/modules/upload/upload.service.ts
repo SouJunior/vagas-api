@@ -57,7 +57,6 @@ export class FileUploadService {
       Bucket: bucket,
       Key: String(newName),
       Body: file,
-      ACL: 'public-read',
       ContentType: contentType,
     };
 
