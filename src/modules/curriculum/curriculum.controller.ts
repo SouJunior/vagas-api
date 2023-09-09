@@ -13,7 +13,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
-import { UploadCurriculumSwagger } from 'src/shared/Swagger/curriculum/upload-curriculum.swagger';
+import { UploadCurriculumSwagger } from 'src/shared/Swagger/decorators/curriculum/upload-curriculum.swagger';
 import { UsersEntity } from '../../database/entities/users.entity';
 import { LoggedUser } from '../auth/decorator/logged-user.decorator';
 import { CurriculumService } from './curriculum.service';

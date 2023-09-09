@@ -2,7 +2,8 @@ import { applyDecorators, HttpStatus } from '@nestjs/common';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { BadRequestSwagger } from '../../bad-request.swagger';
 import { UnprocessableEntitySwagger } from '../../unprocessable-entity.swagger';
-import { CreateResponseSwagger } from '../../user/create-response.swagger';
+import { CreateResponseSwagger } from './classes/create-response.swagger';
+
 
 
 export function SwaggerGetUser() {

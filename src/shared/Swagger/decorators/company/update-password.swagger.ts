@@ -1,8 +1,8 @@
 import { HttpStatus, applyDecorators } from "@nestjs/common";
 import { CreatePasswordHashDto } from "src/modules/company/dtos/update-my-password.dto";
-import { UnauthorizedSwagger } from "../unauthorized.swagger";
+import { UnauthorizedSwagger } from "../../unauthorized.swagger";
 import { ApiOperation, ApiResponse } from "@nestjs/swagger";
-import { BadRequestSwagger } from "../bad-request.swagger";
+import { BadRequestSwagger } from "../../bad-request.swagger";
 
 export function UpdatePasswordSwagger() {
     return applyDecorators(

@@ -2,7 +2,8 @@ import { applyDecorators, HttpStatus } from '@nestjs/common';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { BadRequestSwagger } from '../../bad-request.swagger';
 import { UnauthorizedSwagger } from '../../unauthorized.swagger';
-import { ListResponseSwagger } from '../../user/list-response.swagger';
+import { ListResponseSwagger } from './classes/list-response.swagger';
+
 
 export function SwaggerFindUsers() {
     return applyDecorators(

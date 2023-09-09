@@ -1,8 +1,8 @@
 import { HttpStatus, applyDecorators } from "@nestjs/common";
 import { ApiBody, ApiOperation, ApiResponse } from "@nestjs/swagger";
 import { UpdateCompanyDto } from "src/modules/company/dtos/update-company.dto";
-import { UnauthorizedSwagger } from "../unauthorized.swagger";
-import { BadRequestSwagger } from "../bad-request.swagger";
+import { UnauthorizedSwagger } from "../../unauthorized.swagger";
+import { BadRequestSwagger } from "../../bad-request.swagger";
 
 export function UpdateCompanyByIdSwagger() {
     return applyDecorators(

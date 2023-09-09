@@ -1,8 +1,8 @@
 import { HttpStatus, applyDecorators } from "@nestjs/common";
 import { ApiOperation, ApiResponse } from "@nestjs/swagger";
 import { CompanyIdDto } from "src/modules/company/dtos/company-id.dto";
-import { UnauthorizedSwagger } from "../unauthorized.swagger";
-import { BadRequestSwagger } from "../bad-request.swagger";
+import { UnauthorizedSwagger } from "../../unauthorized.swagger";
+import { BadRequestSwagger } from "../../bad-request.swagger";
 
 export function DeleteCompanyByIdSwagger() {
     return applyDecorators(

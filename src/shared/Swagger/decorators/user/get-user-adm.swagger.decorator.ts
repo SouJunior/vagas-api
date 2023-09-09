@@ -3,7 +3,7 @@ import { ApiOperation, ApiResponse, ApiParam } from '@nestjs/swagger';
 import { GetByParamsDto } from 'src/modules/user/dtos/get-by-params.dto';
 import { BadRequestSwagger } from '../../bad-request.swagger';
 import { UnauthorizedSwagger } from '../../unauthorized.swagger';
-import { CreateResponseSwagger } from '../../user/create-response.swagger';
+import { CreateResponseSwagger } from './classes/create-response.swagger';
 
 
 export function SwaggerGetUserAdm() {
