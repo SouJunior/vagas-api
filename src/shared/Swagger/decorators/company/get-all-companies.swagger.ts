@@ -1,7 +1,7 @@
 import { HttpStatus, applyDecorators } from "@nestjs/common";
 import { ApiOperation, ApiResponse } from "@nestjs/swagger";
-import { BadRequestSwagger } from "../bad-request.swagger";
-import { UnauthorizedSwagger } from "../unauthorized.swagger";
+import { BadRequestSwagger } from "../../bad-request.swagger";
+import { UnauthorizedSwagger } from "../../unauthorized.swagger";
 import { PageOptionsDto } from "src/shared/pagination";
 
 export function GetAllCompaniesSwagger() {

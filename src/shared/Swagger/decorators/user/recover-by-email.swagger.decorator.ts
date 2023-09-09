@@ -2,7 +2,8 @@ import { applyDecorators, HttpStatus } from '@nestjs/common';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { BadRequestSwagger } from '../../bad-request.swagger';
 import { UnauthorizedSwagger } from '../../unauthorized.swagger';
-import { RecoveryPasswordSwagger } from '../../user/recovery-password.swagger';
+import { RecoveryPasswordSwagger } from './classes/recovery-password.swagger';
+
 
 export function SwaggerRecoverEmail() {
     return applyDecorators(
