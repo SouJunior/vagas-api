@@ -9,11 +9,9 @@ import { AuthGuard } from '@nestjs/passport';
 import { FileInterceptor } from '@nestjs/platform-express';
 import {
   ApiBearerAuth,
-  ApiBody,
-  ApiConsumes,
-  ApiProperty,
-  ApiTags,
+  ApiTags
 } from '@nestjs/swagger';
+import { UploadSwagger } from 'src/shared/Swagger/decorators/upload/upload.swagger';
 import { FileUploadService } from './upload.service';
 
 @ApiTags('Upload')
@@ -23,20 +21,7 @@ import { FileUploadService } from './upload.service';
 export class UploadController {
   constructor(private fileUploadService: FileUploadService) {}
 
-  @ApiProperty()
-  @ApiConsumes('multipart/form-data')
-  @ApiBody({
-    description: 'Upload images',
-    schema: {
-      type: 'object',
-      properties: {
-        file: {
-          type: 'string',
-          format: 'binary',
-        },
-      },
-    },
-  })
+  @UploadSwagger()
   @Post('')
   @UseInterceptors(FileInterceptor('file'))
   async upload(@UploadedFile() file) {
