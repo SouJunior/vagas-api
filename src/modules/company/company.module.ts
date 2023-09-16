@@ -14,6 +14,7 @@ import { ActivateCompanyService } from './services/activate-company.service';
 import { RecoveryCompanyPasswordByEmail } from './services/recovery-password-by-email.service';
 import { UpdatePasswordByEmailService } from './services/update-password-by-email.service';
 import { PassportModule } from '@nestjs/passport';
+import { UpdateCompanyPassword } from './services/update-password.service';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { PassportModule } from '@nestjs/passport';
     DeleteCompanyService,
     RecoveryCompanyPasswordByEmail,
     UpdatePasswordByEmailService,
+    UpdateCompanyPassword,
     ActivateCompanyService,
   ],
 })

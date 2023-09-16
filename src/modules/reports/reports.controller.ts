@@ -18,6 +18,11 @@ import {
   FindReportByIdService,
   UpdateReportService,
 } from './services';
+import { CreateReportSwagger } from 'src/shared/Swagger/decorators/reports/create-report.swagger';
+import { GetAllReportsSwagger } from 'src/shared/Swagger/decorators/reports/get-all-reports.swagger';
+import { GetReportByIdSwagger } from 'src/shared/Swagger/decorators/reports/get-report-by-id.swagger';
+import { UpdateReportSwagger } from 'src/shared/Swagger/decorators/reports/update-report.swagger';
+import { DeleteReportSwagger } from 'src/shared/Swagger/decorators/reports/delete-report.swagger';
 
 @ApiExcludeController()
 @ApiTags('Report')
@@ -32,33 +37,25 @@ export class ReportsController {
   ) {}
 
   @Post('')
-  @ApiOperation({
-    summary: 'Criar um relatório.',
-  })
+  @CreateReportSwagger()
   async create(@Body() data: CreateReportDto) {
     return this.createReportService.execute(data);
   }
 
   @Get()
-  @ApiOperation({
-    summary: 'Encontrar todos os relatórios.',
-  })
+  @GetAllReportsSwagger()
   async getAllReports() {
     return this.findAllReportsService.execute();
   }
 
   @Get(':id')
-  @ApiOperation({
-    summary: 'Encontrar um relatório por id.',
-  })
+  @GetReportByIdSwagger()
   async getReportById(@Param() data: ReportIdDto) {
     return this.findReportByIdService.execute(data);
   }
 
   @Put(':id')
-  @ApiOperation({
-    summary: 'Atualizar um relatório por id.',
-  })
+  @UpdateReportSwagger()
   async updateReport(
     @Param() reportId: ReportIdDto,
     @Body() data: UpdateReportDto,
@@ -67,9 +64,7 @@ export class ReportsController {
   }
 
   @Delete(':id')
-  @ApiOperation({
-    summary: 'Excluir um relatório por id.',
-  })
+  @DeleteReportSwagger()
   async deleteReport(@Param() data: ReportIdDto) {
     return this.deleteReportService.execute(data);
   }

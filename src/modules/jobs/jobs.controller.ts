@@ -2,26 +2,27 @@ import {
   Body,
   Controller,
   Get,
-  HttpStatus,
   NotFoundException,
   Param,
   Patch,
   Post,
   Put,
   Query,
-  UseGuards,
+  UseGuards
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import {
   ApiBearerAuth,
   ApiOperation,
-  ApiResponse,
-  ApiTags,
+  ApiTags
 } from '@nestjs/swagger';
+import { ArchiveJobSwagger } from 'src/shared/Swagger/decorators/jobs/archive-job.swagger';
+import { CreateNewJobSwagger } from 'src/shared/Swagger/decorators/jobs/create-new-job.swagger';
+import { GetOneJobSwagger } from 'src/shared/Swagger/decorators/jobs/get-one-job.swagger';
+import { SearchJobSwagger } from 'src/shared/Swagger/decorators/jobs/search-job.swagger';
+import { UpdateJobSwagger } from 'src/shared/Swagger/decorators/jobs/update-job.swagger';
 import { CompaniesEntity } from '../../database/entities/companies.entity';
 import { JobsEntity } from '../../database/entities/jobs.entity';
-import { BadRequestSwagger } from '../../shared/Swagger/bad-request.swagger';
-import { UnauthorizedSwagger } from '../../shared/Swagger/unauthorized.swagger';
 import { PageOptionsDto } from '../../shared/pagination';
 import GetEntity from '../../shared/pipes/pipe-entity.pipe';
 import { LoggedCompany } from '../auth/decorator/logged-company.decorator';
@@ -37,6 +38,8 @@ import {
   UpdateJobService,
 } from './services';
 import { SearchJobsService } from './services/search-job.service';
+import { GetAllJobsOfLoggedCompanySwagger } from 'src/shared/Swagger/decorators/jobs/get-all-jobs-of-logged-company.swagger';
+import { GetAllJobsSwagger } from 'src/shared/Swagger/decorators/jobs/get-all-jobs-of-logged-company.swagger copy';
 
 @ApiTags('Job')
 @Controller('job')
@@ -52,24 +55,7 @@ export class JobsController {
   ) {}
 
   @Post()
-  @ApiResponse({
-    status: HttpStatus.CREATED,
-    description: 'Exemplo do retorno de sucesso da rota',
-    type: 'Vaga publicada com sucesso',
-  })
-  @ApiResponse({
-    status: HttpStatus.UNAUTHORIZED,
-    description: 'Modelo de erro',
-    type: UnauthorizedSwagger,
-  })
-  @ApiResponse({
-    status: HttpStatus.BAD_REQUEST,
-    description: 'Modelo de erro',
-    type: BadRequestSwagger,
-  })
-  @ApiOperation({
-    summary: 'Criar uma vaga!',
-  })
+  @CreateNewJobSwagger()
   @ApiBearerAuth()
   @UseGuards(AuthGuard())
   @ApiOperation({
@@ -83,20 +69,15 @@ export class JobsController {
   }
 
   @Get()
-  @ApiOperation({
-    summary: 'Buscar todas as vagas.',
-  })
+  @GetAllJobsSwagger()
   async getAllJobs(
     @Query() pageOptionsDto: PageOptionsDto,
     @Query() params: GetAllJobsDto,
   ) {
     return this.getAllJobsService.execute(pageOptionsDto, params);
   }
-
+  @GetAllJobsOfLoggedCompanySwagger()
   @Get('all/:id')
-  @ApiOperation({
-    summary: 'Buscar todas as vagas da empresa logada.',
-  })
   async getAll(@Param('id') id: string) {
     try {
       const company = await this.companyRepository.findCompanyById(id);
@@ -110,25 +91,19 @@ export class JobsController {
   }
 
   @Get(':id')
-  @ApiOperation({
-    summary: 'Buscar uma vaga pelo id.',
-  })
+  @GetOneJobSwagger()
   async getOneJob(@Param('id') id: string) {
     return this.getOneJobByIdService.execute(id);
   }
 
   @Put(':id')
-  @ApiOperation({
-    summary: 'Atualizar uma vaga pelo id.',
-  })
+  @UpdateJobSwagger()
   async updateJob(@Param('id') id: string, @Body() data: UpdateJobDto) {
     return this.updateJobService.execute(id, data);
   }
 
   @Patch(':id')
-  @ApiOperation({
-    summary: 'Excluir uma vaga pelo id.',
-  })
+  @ArchiveJobSwagger()
   async archivedJob(
     @Param('id', new GetEntity(JobsEntity))
     job: JobsEntity,
@@ -138,9 +113,7 @@ export class JobsController {
   }
 
   @Post('/search/:keyword')
-  @ApiOperation({
-    summary: 'Buscar vaga',
-  })
+  @SearchJobSwagger()
   async searchJobs(
     @Query() pageOptionsDto: PageOptionsDto,
     @Body() data: GetAllJobsDto,
