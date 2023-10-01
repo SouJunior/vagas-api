@@ -4,8 +4,6 @@ import { BadRequestSwagger } from '../../bad-request.swagger';
 import { UnprocessableEntitySwagger } from '../../unprocessable-entity.swagger';
 import { CreateResponseSwagger } from './classes/create-response.swagger';
 
-
-
 export function SwaggerGetUser() {
   return applyDecorators(
     ApiResponse({
@@ -25,6 +23,6 @@ export function SwaggerGetUser() {
     }),
     ApiOperation({
       summary: 'Ativar um usuário pelo ID',
-    })
+    }),
   );
 }

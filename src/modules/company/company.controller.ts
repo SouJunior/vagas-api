@@ -11,14 +11,11 @@ import {
   Res,
   UploadedFile,
   UseGuards,
-  UseInterceptors
+  UseInterceptors,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { FileInterceptor } from '@nestjs/platform-express';
-import {
-  ApiBearerAuth,
-  ApiTags
-} from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 import { CompaniesEntity } from 'src/database/entities/companies.entity';
 import { ActivateCompanySwagger } from 'src/shared/Swagger/decorators/company/activate-company.swagger';

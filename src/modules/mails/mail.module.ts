@@ -19,8 +19,8 @@ import { MailService } from './mail.service';
             pass: config.get('MAIL_PASSWORD'),
           },
           tls: {
-            rejectUnauthorized: false
-          }
+            rejectUnauthorized: false,
+          },
         },
         defaults: {
           from: `no-reply <no-reply@vagas-backend.com>`,

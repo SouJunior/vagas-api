@@ -1,10 +1,10 @@
-import { applyDecorators } from "@nestjs/common";
-import { ApiOperation } from "@nestjs/swagger";
+import { applyDecorators } from '@nestjs/common';
+import { ApiOperation } from '@nestjs/swagger';
 
 export function GetAllReportsSwagger() {
-    return applyDecorators(
-        ApiOperation({
-            summary: 'Encontrar todos os relatórios.',
-          })
-    )
+  return applyDecorators(
+    ApiOperation({
+      summary: 'Encontrar todos os relatórios.',
+    }),
+  );
 }

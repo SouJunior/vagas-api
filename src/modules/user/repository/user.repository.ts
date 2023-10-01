@@ -98,7 +98,7 @@ export class UserRepository extends Repository<UsersEntity> {
 
     user.mailConfirm = true;
 
-    await this.update(id, { mailConfirm: true });
+    await this.update(id, { mailConfirm: true }).catch(handleError);
 
     return this.findOne(id);
   }
