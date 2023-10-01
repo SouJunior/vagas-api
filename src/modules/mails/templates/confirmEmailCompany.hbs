@@ -3,210 +3,77 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-
         <link
             href="https://fonts.googleapis.com/css?family=Radio Canada"
             rel="stylesheet"
         />
-
         <title>Confirma e-mail</title>
-
-        <style type="text/css">
-            body {
-                font-family: "Radio Canada";
-            }
-
-            header {
-                padding-top: 30px;
-                padding-bottom: 30px;
-            }
-
-            .container {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-                flex-wrap: wrap;
-            }
-
-            .background-blue-light {
-                background-color: #cbe0f4;
-            }
-
-            .background-blue {
-                background-color: #046ad0;
-            }
-
-            .img {
-                position: relative;
-                top: 20px;
-            }
-
-            button.background-blue {
-                color: #d7d9d7;
-                font-size: 1.2em;
-                padding: 16px 16px;
-                border-style: none;
-                border-radius: 8px;
-            }
-
-            .color-blue {
-                color: #046ad0;
-            }
-
-            h1.color-blue {
-                font-size: 48px;
-            }
-
-            .text-gray {
-                color: #5d5f5d;
-                line-height: 22px;
-            }
-
-            a.text-gray {
-                text-decoration: none;
-            }
-
-            .icons {
-                text-decoration: none;
-            }
-
-            .text-red {
-                color: #c1292e;
-                font-size: 14px;
-                font-weight: 600;
-            }
-
-            .text-main {
-                font-size: 24px;
-                line-height: 32px;
-                opacity: 0.8;
-                padding-bottom: 30px;
-            }
-
-            .box {
-                box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
-                width: 90vmin;
-                padding-bottom: 50px;
-                margin-bottom: 15px;
-            }
-            .box__texts {
-                padding: 30px;
-            }
-
-            .link {
-                padding-top: 20px;
-                padding-bottom: 20px;
-            }
-
-            .no-spacing {
-                margin: 0;
-            }
-
-            .gap {
-                margin-right: 20px;
-            }
-            footer {
-                width: 90vmin;
-            }
-        </style>
     </head>
-    <body>
-        <div class="container">
-            <header>
+    <body style='font-family: "Radio Canada", sans-serif'>
+        <div style="display: block; text-align: center; justify-content: center">
+            <header style="padding-top: 70px; padding-bottom: 40px">
                 <img src="https://i.imgur.com/HjfJAQd.png" alt="Logo" />
             </header>
-            <main class="box">
-                <div>
-                    <div class="background-blue-light">
+            <main>
+                <div style="border: 1px solid #ccc; width: 90vmin; padding-bottom: 50px; position: relative; margin: auto; margin-bottom: 10px">
+                    <div style="background-color: #CBE0F4">
                         <img
                             class="img"
                             src="https://i.imgur.com/dlfEPPQ.png"
                             alt="Gráfico de pizza"
+                            style="position: relative; top: 10px"
                         />
                     </div>
-                    <div class="box__texts">
-                        <h1 class="color-blue">
+                    <div style="padding: 30px">
+                        <h1 style="color: #046AD0">
                             Confirmação de cadastro de empresa
                         </h1>
-                        <div class="text-main">
-                            <p class="no-spacing">Olá, {{name}}!</p>
-                            <p class="no-spacing">
+                        <div style="font-size: 24px; line-height: 32px; opacity: 0.8; padding-bottom: 30px">
+                            <p style="margin: 0">Olá, {{name}}!</p>
+                            <p style="margin: 0">
                                 Este e-mail foi cadastrado no Portal de Vagas
                                 <strong>SouJunior</strong>. Para sua
                                 <strong>segurança</strong>, confirme a operação:
                             </p>
                         </div>
                     </div>
-                    <a
-                    href='{{url}}'
-                    target='_blank'
-                    >
-                      <button class="background-blue" >
+                    <a style="background-color: #046AD0; color: #D7D9D7; padding: 12px 16px; border-style: none; border-radius: 8px; text-decoration: none; cursor: pointer" href="{{url}}" target='_blank'>
                        Confirmar meu e-mail
-                      </button>
                     </a>
                 </div>
             </main>
             <footer>
-                <small>
-                    <div>
-                        <div class="text-gray">
-                            <strong>Não foi você?</strong>
-                            <p class="no-spacing">
-                                Se não realizou nenhuma solicitação para
-                                recuperar sua senha na plataforma SouJunior, por
-                                favor, desconsidere este e-mail.
-                            </p>
-                        </div>
-                        <div>
-                            <p class="text-gray">
-                                Nos acompanhe nas redes sociais
-                            </p>
-                            <a
-                                href="https://www.instagram.com/soujunior.tech/"
-                                class="gap icons"
-                            >
-                                <img
-                                    src="https://i.imgur.com/2PSmKoI_d.webp"
-                                    alt="Instagram"
-                                />
-                            </a>
-                            <a
-                                href="https://www.youtube.com/@soujuniortech"
-                                class="gap icons"
-                            >
-                                <img
-                                    src="https://i.imgur.com/EpdiQkB_d.webp"
-                                    alt="YouTube"
-                                />
-                            </a>
-                            <a
-                                href="https://www.linkedin.com/company/soujunior/"
-                            >
-                                <img
-                                    src="https://i.imgur.com/2GyrgQR_d.webp"
-                                    alt="LinkedIn"
-                                />
-                            </a>
-                        </div>
-                        <div class="link">
-                            <a
-                                class="text-gray"
-                                href="https://www.soujunior.tech/"
-                            >
-                                https://www.soujunior.tech/
-                            </a>
-                        </div>
-                    </div>
-                    <div class="text-red">
-                        <p>
-                            Esta é uma mensagem automática. Por favor não
-                            responda este e-mail.
+            <small>
+                <div>
+                    <div style="color: #5D5F5D; line-height: 22px">
+                        <strong>Não foi você?</strong>
+                        <p style="margin: 0">
+                            Se não realizou nenhuma solicitação para recuperar sua senha na plataforma SouJunior, por favor, desconsidere este e-mail.
                         </p>
                     </div>
-                </small>
-            </footer>
+                    <div>
+                        <p style="color: #5D5F5D; line-height: 22px">Nos acompanhe nas redes sociais</p>
+                        <a href="https://www.instagram.com/soujunior.tech/" style="margin-right: 20px; text-decoration: none">
+                            <img src="https://vagas-dev.s3.amazonaws.com/1683044119369instagram.png" alt="Instagram">
+                        </a>
+                        <a href="https://www.youtube.com/@soujuniortech" style="margin-right: 20px; text-decoration: none">
+                            <img src="https://vagas-dev.s3.amazonaws.com/1683055682396youtube.jpg" alt="YouTube">
+                        </a>
+                        <a href="https://www.linkedin.com/company/soujunior/" style="text-decoration: none">
+                            <img src="https://vagas-dev.s3.amazonaws.com/1683055899782linkedin.jpg" alt="LinkedIn">
+                        </a>
+                    </div>
+                    <div style="padding-top: 20px; padding-bottom: 20px">
+                        <a style="color: #5D5F5D; line-height: 22px; text-decoration: none" href="https://www.soujunior.tech/">
+                            https://www.soujunior.tech/
+                        </a>
+                    </div>
+                </div>
+                <div style="color: #C1292E; font-size: 14px; font-weight: 600">
+                    <p>Esta é uma mensagem automática. Por favor não responda este e-mail.</p>
+                </div>
+            </small>
+        </footer>
         </div>
     </body>
 </html>
