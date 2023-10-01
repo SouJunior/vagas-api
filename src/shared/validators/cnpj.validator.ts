@@ -3,7 +3,7 @@ import {
   ValidationArguments,
   ValidationOptions,
 } from 'class-validator';
-import { cpf, cnpj } from 'cpf-cnpj-validator';
+import { cnpj, cpf } from 'cpf-cnpj-validator';
 
 export default function IsCPForCNPJ(validationOptions?: ValidationOptions) {
   return function (object: any, propertyName: string) {
