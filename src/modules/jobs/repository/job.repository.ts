@@ -75,7 +75,7 @@ export class JobRepository extends Repository<JobsEntity> {
       ])
       .where('jobs.id = :id', { id });
 
-    return queryBuilder.getOne();
+    return queryBuilder.getOne().catch(handleError);
   }
 
   async updateJob(id: string, data: UpdateJobDto) {
