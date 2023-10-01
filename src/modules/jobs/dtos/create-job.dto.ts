@@ -10,6 +10,7 @@ import {
   Max,
   MaxLength,
   Min,
+  ValidateIf,
 } from 'class-validator';
 import { JobsAffirmativeTypeEnum } from '../enums/job-affirmative-type.enum';
 import { JobsTypeContractEnum } from '../enums/job-contract-type.enum';
@@ -86,7 +87,7 @@ export class CreateJobDto {
   })
   typeContract?: string;
 
-  @IsOptional()
+  @ValidateIf((values) => values.typeContract === JobsTypeContractEnum.OTHER)
   @IsString()
   @ApiProperty({
     required: false,
@@ -95,7 +96,7 @@ export class CreateJobDto {
   contractText?: string;
 
   @IsNumber()
-  @IsOptional()
+  @ValidateIf((values) => values.salaryMax)
   @IsNumber({ maxDecimalPlaces: 0, allowNaN: false, allowInfinity: false })
   @Max(99999)
   @Min(0)
@@ -107,7 +108,7 @@ export class CreateJobDto {
   salaryMin?: number;
 
   @IsNumber()
-  @IsOptional()
+  @ValidateIf((values) => values.salaryMin)
   @IsNumber({ maxDecimalPlaces: 0, allowNaN: false, allowInfinity: false })
   @Max(99999)
   @Min(0)
@@ -132,16 +133,16 @@ export class CreateJobDto {
   })
   modality: string;
 
+  @ValidateIf((values) => values.modality != JobsModalityEnum.REMOTE)
   @ApiProperty({
     required: false,
     description: 'Informe a unidade federativa',
     example: 'DF',
   })
-  @IsOptional()
   @IsString()
   federalUnit?: string;
 
-  @IsOptional()
+  @ValidateIf((values) => values.modality != JobsModalityEnum.REMOTE)
   @IsString()
   @ApiProperty({
     required: false,
@@ -159,8 +160,8 @@ export class CreateJobDto {
   })
   indefinideContract: boolean;
 
+  @ValidateIf((values) => !values.indefinideContract)
   @IsString()
-  @IsOptional()
   @ApiProperty({
     required: false,
     description: 'Tempo de contrato de trabalho',
@@ -177,7 +178,7 @@ export class CreateJobDto {
   })
   affirmative: boolean;
 
-  @IsOptional()
+  @ValidateIf((values) => values.affirmative)
   @IsEnum(JobsAffirmativeTypeEnum)
   @ApiProperty({
     required: false,
