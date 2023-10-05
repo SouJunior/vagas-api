@@ -1,4 +1,5 @@
 import { PartialType } from '@nestjs/mapped-types';
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsEnum,
   IsNotEmpty,
@@ -9,7 +10,6 @@ import {
 } from 'class-validator';
 import { CompanySizeEnum } from '../enum/company-size.enum';
 import { CreateCompanyDto } from './create-company.dto';
-import { ApiProperty } from '@nestjs/swagger';
 
 export class UpdateCompanyDto extends PartialType(CreateCompanyDto) {
   @IsOptional()
@@ -25,7 +25,7 @@ export class UpdateCompanyDto extends PartialType(CreateCompanyDto) {
   @IsEnum(CompanySizeEnum)
   @ApiProperty({
     description: 'Porte da empresa',
-    example: 'Ex: Grande Porte',
+    example: CompanySizeEnum.BIG_SIZE,
   })
   companySize?: string;
 
@@ -37,9 +37,18 @@ export class UpdateCompanyDto extends PartialType(CreateCompanyDto) {
   })
   uf: string;
 
+  @ApiProperty({
+    required: false,
+    description: 'Localização da empresa',
+    example: {
+      instagran: 'https://www.instagram.com/suaempresa',
+      linkedin: 'https://www.linkedin.com/suaempresa',
+      twitter: 'https://www.twitter.com/suaempresa',
+    },
+  })
   @IsOptional()
   @IsObject()
-  OtherSite: {
+  otherSite: {
     instagran: string;
     linkedin: string;
     twitter: string;

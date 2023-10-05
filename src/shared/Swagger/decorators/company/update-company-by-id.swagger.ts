@@ -1,22 +1,17 @@
 import { HttpStatus, applyDecorators } from '@nestjs/common';
-import { ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiBody, ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
 import { UpdateCompanyDto } from 'src/modules/company/dtos/update-company.dto';
-import { UnauthorizedSwagger } from '../../unauthorized.swagger';
 import { BadRequestSwagger } from '../../bad-request.swagger';
+import { UnauthorizedSwagger } from '../../unauthorized.swagger';
 
 export function UpdateCompanyByIdSwagger() {
   return applyDecorators(
+    ApiParam({
+      name: 'id',
+      type: 'string',
+    }),
     ApiBody({
-      description: 'Upload images',
-      schema: {
-        type: 'object',
-        properties: {
-          file: {
-            type: 'string',
-            format: 'binary',
-          },
-        },
-      },
+      type: UpdateCompanyDto,
     }),
     ApiResponse({
       status: HttpStatus.OK,
