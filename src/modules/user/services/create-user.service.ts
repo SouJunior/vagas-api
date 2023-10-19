@@ -5,11 +5,13 @@ import { Request } from 'express';
 import { MailService } from '../../../modules/mails/mail.service';
 import { CreateUserDto } from '../dtos/create-user.dto';
 import { UserRepository } from '../repository/user.repository';
+import { CompanyRepository } from 'src/modules/company/repository/company-repository';
 
 @Injectable()
 export class CreateUserService {
   constructor(
     private userRepository: UserRepository,
+    private companyRepository: CompanyRepository,
     private mailService: MailService,
   ) {}
 
@@ -18,13 +20,19 @@ export class CreateUserService {
 
     data['ip'] = req.ip;
 
-    const userAlreadyExists = await this.userRepository.findOneByEmail(email);
+    const emailAlreadyInUseCompany = await this.companyRepository.findOneByEmail(
+      email,
+    );
 
-    if (userAlreadyExists) {
+    const emailAlreadyInUseUser = await this.userRepository.findOneByEmail(
+      email,
+    );
+
+    if (emailAlreadyInUseCompany || emailAlreadyInUseUser) {
       return {
-        status: 400,
+        status: 404,
         data: {
-          message: 'E-mail já cadastrado.',
+          message: 'E-mail já cadastrado',
         },
       };
     }
