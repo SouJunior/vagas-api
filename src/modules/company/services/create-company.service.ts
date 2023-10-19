@@ -3,21 +3,27 @@ import * as bcrypt from 'bcrypt';
 import { MailService } from 'src/modules/mails/mail.service';
 import { CreateCompanyDto } from '../dtos/create-company.dto';
 import { CompanyRepository } from '../repository/company-repository';
+import { UserRepository } from 'src/modules/user/repository/user.repository';
 
 @Injectable()
 export class CreateCompanyService {
   constructor(
     private companyRepository: CompanyRepository,
+    private userRepository: UserRepository,
     private mailService: MailService,
   ) {}
 
   async execute(data: CreateCompanyDto) {
     const { email, password, passwordConfirmation, cnpj } = data;
-    const companyAlreadyExists = await this.companyRepository.findOneByEmail(
+    const emailAlreadyInUseCompany = await this.companyRepository.findOneByEmail(
       email,
     );
 
-    if (companyAlreadyExists) {
+    const emailAlreadyInUseUser = await this.userRepository.findOneByEmail(
+      email,
+    );
+
+    if (emailAlreadyInUseCompany || emailAlreadyInUseUser) {
       return {
         status: 404,
         data: {

@@ -55,6 +55,10 @@ export class CompanyRepository extends Repository<CompaniesEntity> {
     return this.findOne({ where: { email } }).catch(handleError);
   }
 
+  async findEmailInDatabase(email: string): Promise<CompaniesEntity> {
+    return this.findOne({ where: { email } }).catch(handleError);
+  }
+
   async findByToken(recoverPasswordToken: string): Promise<CompaniesEntity> {
     return this.findOne({ where: { recoverPasswordToken } }).catch(handleError);
   }
