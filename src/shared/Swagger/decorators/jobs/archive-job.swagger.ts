@@ -1,10 +1,10 @@
-import { applyDecorators } from "@nestjs/common";
-import { ApiOperation } from "@nestjs/swagger";
+import { applyDecorators } from '@nestjs/common';
+import { ApiOperation } from '@nestjs/swagger';
 
 export function ArchiveJobSwagger() {
-    return applyDecorators(
-        ApiOperation({
-            summary: 'Excluir uma vaga pelo id.',
-          })
-    )
+  return applyDecorators(
+    ApiOperation({
+      summary: 'Excluir uma vaga pelo id.',
+    }),
+  );
 }

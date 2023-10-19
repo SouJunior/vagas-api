@@ -15,11 +15,18 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import {
-  ApiBearerAuth,
-  ApiTags,
-} from '@nestjs/swagger';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Request, Response } from 'express';
+import { SwaggerCreateUser } from 'src/shared/Swagger/decorators/user/create-user.swagger.decorator';
+import { SwaggerDeleteUser } from 'src/shared/Swagger/decorators/user/delete-user.swagger.decorator';
+import { SwaggerGetUserAdm } from 'src/shared/Swagger/decorators/user/get-user-adm.swagger.decorator';
+import { SwaggerGetUser } from 'src/shared/Swagger/decorators/user/get-user.swagger.decorator';
+import { SwaggerRecoverEmail } from 'src/shared/Swagger/decorators/user/recover-by-email.swagger.decorator';
+import { SwaggerUpdatePassAfterRecovery } from 'src/shared/Swagger/decorators/user/update-pass-after-email-recovery.swagger.decorator';
+import { SwaggerUpdatePassword } from 'src/shared/Swagger/decorators/user/update-password.swagger.decorator';
+import { SwaggerUpdateUser } from 'src/shared/Swagger/decorators/user/update-user.swagger.decorator';
+import { SwaggerFindUsers } from 'src/shared/Swagger/decorators/user/view-users.swagger.decorator';
 import { UsersEntity } from '../../database/entities/users.entity';
 import { PageOptionsDto } from '../../shared/pagination';
 import { LoggedAdmin } from '../auth/decorator/logged-admin.decorator';
@@ -31,9 +38,6 @@ import {
   UpdateMyPasswordDto,
 } from './dtos/update-my-password.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
-
-import { FileInterceptor } from "@nestjs/platform-express";
-
 import {
   CreateUserService,
   DeleteUserService,
@@ -45,15 +49,6 @@ import {
 } from './services';
 import { ActivateUserService } from './services/activate-user.service';
 import { UpdatePasswordService } from './services/update-password.service';
-import { SwaggerCreateUser } from 'src/shared/Swagger/decorators/user/create-user.swagger.decorator';
-import { SwaggerGetUser } from 'src/shared/Swagger/decorators/user/get-user.swagger.decorator';
-import { SwaggerFindUsers } from 'src/shared/Swagger/decorators/user/view-users.swagger.decorator';
-import { SwaggerGetUserAdm } from 'src/shared/Swagger/decorators/user/get-user-adm.swagger.decorator';
-import { SwaggerUpdateUser } from 'src/shared/Swagger/decorators/user/update-user.swagger.decorator';
-import { SwaggerDeleteUser } from 'src/shared/Swagger/decorators/user/delete-user.swagger.decorator';
-import { SwaggerRecoverEmail } from 'src/shared/Swagger/decorators/user/recover-by-email.swagger.decorator';
-import { SwaggerUpdatePassAfterRecovery } from 'src/shared/Swagger/decorators/user/update-pass-after-email-recovery.swagger.decorator';
-import { SwaggerUpdatePassword } from 'src/shared/Swagger/decorators/user/update-password.swagger.decorator';
 
 @ApiTags('User')
 @Controller('user')
@@ -106,7 +101,7 @@ export class UserController {
   @SwaggerGetUserAdm()
   @UseGuards(AuthGuard())
   @ApiBearerAuth()
-  async getOneUser(@Param("id") id: string, @LoggedUser() user: UsersEntity) {
+  async getOneUser(@Param('id') id: string, @LoggedUser() user: UsersEntity) {
     return this.findOneUserService.execute(id);
   }
 
@@ -127,7 +122,7 @@ export class UserController {
   @SwaggerDeleteUser()
   @UseGuards(AuthGuard())
   @ApiBearerAuth()
-  async deleteUser(@Param("id") id: string, @LoggedUser() user: UsersEntity) {
+  async deleteUser(@Param('id') id: string, @LoggedUser() user: UsersEntity) {
     return this.deleteUserService.execute(id);
   }
 

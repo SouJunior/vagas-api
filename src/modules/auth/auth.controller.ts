@@ -1,16 +1,6 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Post,
-  Res,
-  UseGuards
-} from '@nestjs/common';
+import { Body, Controller, Get, Post, Res, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import {
-  ApiBearerAuth,
-  ApiTags
-} from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 import { LoginSwagger } from 'src/shared/Swagger/decorators/auth/login.swagger';
 import { UserLoggedSwagger } from 'src/shared/Swagger/decorators/auth/user-logged.swagger';

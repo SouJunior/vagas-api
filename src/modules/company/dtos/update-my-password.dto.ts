@@ -11,7 +11,8 @@ export class UpdateMyPasswordDto {
   @IsNotEmpty({ message: "O campo 'password' não pode ficar vazio" })
   @Length(8, 50)
   @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
-    message: 'A senha precisa ter no mínimo 8 caracteres, máximo de 50, uma letra maiúscula, um número e um símbolo.',
+    message:
+      'A senha precisa ter no mínimo 8 caracteres, máximo de 50, uma letra maiúscula, um número e um símbolo.',
   })
   @ApiProperty({
     description: 'Senha de Login',
@@ -23,7 +24,8 @@ export class UpdateMyPasswordDto {
   @IsNotEmpty({ message: "O campo 'confirmPassword' não pode ficar vazio" })
   @Length(8, 50)
   @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
-    message: 'A senha precisa ter no mínimo 8 caracteres, máximo de 50, uma letra maiúscula, um número e um símbolo.',
+    message:
+      'A senha precisa ter no mínimo 8 caracteres, máximo de 50, uma letra maiúscula, um número e um símbolo.',
   })
   @ApiProperty({
     description: 'Senha de Login',

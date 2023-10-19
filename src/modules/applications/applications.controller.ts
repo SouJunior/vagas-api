@@ -5,9 +5,8 @@ import { CurriculumEntity } from '../../database/entities/curriculum.entity';
 import { JobsEntity } from '../../database/entities/jobs.entity';
 import { UsersEntity } from '../../database/entities/users.entity';
 import GetEntity from '../../shared/pipes/pipe-entity.pipe';
-import { LoggedAdmin } from '../auth/decorator/logged-admin.decorator';
-import { ApplicationsService } from './applications.service';
 import { LoggedUser } from '../auth/decorator/logged-user.decorator';
+import { ApplicationsService } from './applications.service';
 
 @ApiTags('Applications')
 @ApiBearerAuth()

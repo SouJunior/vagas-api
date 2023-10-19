@@ -15,7 +15,7 @@ export class UserLoginDto {
   @IsString()
   @ApiProperty({
     description: 'E-mail do usuário.',
-    example: 'johnsnow@outlook.com',
+    example: 'pipomills@pipomills.com',
   })
   @IsNotEmpty()
   email: string;

@@ -5,7 +5,6 @@ import { BadRequestSwagger } from '../../bad-request.swagger';
 import { UnauthorizedSwagger } from '../../unauthorized.swagger';
 import { CreateResponseSwagger } from './classes/create-response.swagger';
 
-
 export function SwaggerGetUserAdm() {
   return applyDecorators(
     ApiResponse({
@@ -29,6 +28,6 @@ export function SwaggerGetUserAdm() {
     ApiParam({
       type: GetByParamsDto,
       name: '',
-    })
+    }),
   );
 }

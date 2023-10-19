@@ -10,7 +10,7 @@ import { UpdateMyPasswordDto } from '../dtos/update-my-password.dto';
 export class CompanyRepository extends Repository<CompaniesEntity> {
   async createCompany(data: CreateCompanyDto): Promise<CompaniesEntity> {
     delete data.passwordConfirmation;
-    return this.save(data);
+    return this.save(data).catch(handleError);
   }
 
   async findAllCompany(
@@ -93,7 +93,7 @@ export class CompanyRepository extends Repository<CompaniesEntity> {
 
     company.recoverPasswordToken = recoverPasswordToken;
 
-    await this.save(company);
+    await this.save(company).catch(handleError);
 
     return company;
   }
