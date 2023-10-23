@@ -12,39 +12,42 @@ import { CompanySizeEnum } from '../enum/company-size.enum';
 import { CreateCompanyDto } from './create-company.dto';
 
 export class UpdateCompanyDto extends PartialType(CreateCompanyDto) {
-  @IsOptional()
-  @IsString()
   @ApiProperty({
-    description: 'Tipo de empresa',
-    example: 'Ex: Empresa de Tecnologia',
+    description: 'Tipo de empresa (por exemplo: "Empresa de Tecnologia")',
+    example: 'Empresa de Tecnologia',
+    required: false,
   })
+  @IsOptional()
+  @IsString({ message: 'O campo companyType deve ser uma string' })
   companyType?: string;
 
-  @IsOptional()
-  @IsString()
-  @IsEnum(CompanySizeEnum)
   @ApiProperty({
-    description: 'Porte da empresa',
+    description: 'Porte da empresa (por exemplo: "BIG_SIZE")',
     example: CompanySizeEnum.BIG_SIZE,
+    enum: CompanySizeEnum,
+    required: false,
   })
+  @IsOptional()
+  @IsString({ message: 'O campo companySize deve ser uma string' })
+  @IsEnum(CompanySizeEnum)
   companySize?: string;
 
-  @IsNotEmpty()
-  @IsString()
   @ApiProperty({
-    description: 'Localização da empresa',
-    example: 'Ex: SP',
+    description: 'Localização da empresa (por exemplo: "SP")',
+    example: 'SP',
   })
+  @IsNotEmpty({ message: 'O campo uf não pode estar vazio' })
+  @IsString({ message: 'O campo uf deve ser uma string' })
   uf: string;
 
   @ApiProperty({
-    required: false,
-    description: 'Localização da empresa',
+    description: 'Redes sociais da empresa',
     example: {
       instagran: 'https://www.instagram.com/suaempresa',
       linkedin: 'https://www.linkedin.com/suaempresa',
       twitter: 'https://www.twitter.com/suaempresa',
     },
+    required: false,
   })
   @IsOptional()
   @IsObject()
@@ -54,35 +57,35 @@ export class UpdateCompanyDto extends PartialType(CreateCompanyDto) {
     twitter: string;
   };
 
-  @IsOptional()
-  @IsString()
   @ApiProperty({
-    description: 'Site da empresa',
-    example: 'Ex: www.soujunior.com.br',
+    description: 'Site da empresa (por exemplo: "www.soujunior.com.br")',
+    example: 'www.soujunior.com.br',
   })
+  @IsOptional()
+  @IsString({ message: 'O campo companySite deve ser uma string' })
   companySite?: string;
 
-  @IsOptional()
-  @IsString()
-  @MaxLength(2000)
   @ApiProperty({
-    description: 'Descrição da empresa',
+    description: 'Descrição da empresa (até 2000 caracteres)',
     example: 'Breve Descrição da Empresa',
   })
+  @IsOptional()
+  @IsString({ message: 'O campo description deve ser uma string' })
+  @MaxLength(2000)
   description?: string;
 
-  @IsOptional()
-  @IsString()
   @ApiProperty({
-    description: 'Imagem do perfil',
+    description: 'Imagem do perfil da empresa',
   })
+  @IsOptional()
+  @IsString({ message: 'O campo profile deve ser uma string' })
   profile?: string;
 
-  @IsOptional()
-  @IsString()
   @ApiProperty({
     description: 'Chave para remoção da imagem do perfil',
   })
+  @IsOptional()
+  @IsString({ message: 'O campo profileKey deve ser uma string' })
   profileKey?: string;
 
   @IsOptional()
