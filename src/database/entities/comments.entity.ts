@@ -19,14 +19,14 @@ export class CommentsEntity {
   @Column({ length: 500 })
   comment: string;
 
-  @ManyToOne(() => UsersEntity)
+  @ManyToOne(() => UsersEntity, { onDelete: "CASCADE"})
   @JoinColumn({ name: 'user_id' })
   user: UsersEntity;
 
   @Column()
   user_id: string;
 
-  @ManyToOne(() => JobsEntity, (job) => job.comments)
+  @ManyToOne(() => JobsEntity, (job) => job.comments, { onDelete: "CASCADE"})
   @JoinColumn({ name: 'job_id' })
   job: JobsEntity;
 

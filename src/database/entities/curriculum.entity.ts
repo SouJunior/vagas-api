@@ -23,7 +23,7 @@ export class CurriculumEntity {
   @JoinColumn({ name: 'user_id' })
   user: UsersEntity;
 
-  @OneToMany(() => ApplicationEntity, (application) => application.curriculum, {onDelete: "CASCADE"})
+  @OneToMany(() => ApplicationEntity, (application) => application.curriculum)
   applications: ApplicationEntity[];
 
   @Column()
