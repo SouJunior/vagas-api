@@ -64,7 +64,7 @@ export class UserRepository extends Repository<UsersEntity> {
     return;
   }
 
-  async deleteUserById(id: string): Promise<object> {
+  async deleteUserById(id: string) {
     await this.delete(id).catch(handleError);
 
     return;

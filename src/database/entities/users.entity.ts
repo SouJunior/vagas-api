@@ -66,10 +66,10 @@ export class UsersEntity {
   @JoinColumn()
   personalData: PersonalDataEntity;
 
-  @OneToMany(() => CurriculumEntity, (curriculum) => curriculum.user)
+  @OneToMany(() => CurriculumEntity, (curriculum) => curriculum.user, { onDelete: "CASCADE"})
   curriculums: CurriculumEntity[];
 
-  @OneToMany(() => ApplicationEntity, (application) => application.user)
+  @OneToMany(() => ApplicationEntity, (application) => application.user, {onDelete: "CASCADE"})
   applications: ApplicationEntity[];
 
   @CreateDateColumn()

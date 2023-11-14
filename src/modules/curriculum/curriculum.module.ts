@@ -5,10 +5,11 @@ import { FileUploadService } from '../upload/upload.service';
 import { CurriculumController } from './curriculum.controller';
 import { CurriculumService } from './curriculum.service';
 import { CurriculumRepository } from './repository/curriculum-repository';
+import { UserRepository } from '../user/repository/user.repository';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([CurriculumRepository]),
+    TypeOrmModule.forFeature([CurriculumRepository, UserRepository]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
   ],
   controllers: [CurriculumController],

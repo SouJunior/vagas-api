@@ -17,10 +17,11 @@ import { UserController } from './user.controller';
 import { UploadModule } from '../upload/upload.module';
 import { UpdatePasswordService } from './services/update-password.service';
 import { CompanyRepository } from '../company/repository/company-repository';
+import { CurriculumRepository } from '../curriculum/repository/curriculum-repository';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([UserRepository, CompanyRepository]),
+    TypeOrmModule.forFeature([UserRepository, CompanyRepository, CurriculumRepository]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
     MailModule,
     UploadModule,

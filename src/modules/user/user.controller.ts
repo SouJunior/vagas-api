@@ -118,12 +118,12 @@ export class UserController {
     return this.updateUserService.execute(user, data, file);
   }
 
-  @Delete(':id')
+  @Delete()
   @SwaggerDeleteUser()
   @UseGuards(AuthGuard())
   @ApiBearerAuth()
-  async deleteUser(@Param('id') id: string, @LoggedUser() user: UsersEntity) {
-    return this.deleteUserService.execute(id);
+  async deleteUser( @LoggedUser() user: UsersEntity) {
+    return this.deleteUserService.execute(user.id);
   }
 
   @Patch('recovery_password')

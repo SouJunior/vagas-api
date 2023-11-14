@@ -19,11 +19,11 @@ export class CurriculumEntity {
   @Column()
   user_id: string;
 
-  @ManyToOne(() => UsersEntity)
+  @ManyToOne(() => UsersEntity, {onDelete: "CASCADE"})
   @JoinColumn({ name: 'user_id' })
   user: UsersEntity;
 
-  @OneToMany(() => ApplicationEntity, (application) => application.curriculum)
+  @OneToMany(() => ApplicationEntity, (application) => application.curriculum, {onDelete: "CASCADE"})
   applications: ApplicationEntity[];
 
   @Column()
