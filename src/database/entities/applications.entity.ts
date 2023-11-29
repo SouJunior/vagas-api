@@ -16,21 +16,21 @@ export class ApplicationEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(() => JobsEntity)
+  @ManyToOne(() => JobsEntity, { onDelete: "CASCADE"})
   @JoinColumn({ name: 'job_id' })
   job: JobsEntity;
 
   @Column()
   job_id: string;
 
-  @ManyToOne(() => UsersEntity)
+  @ManyToOne(() => UsersEntity, { onDelete: "CASCADE"})
   @JoinColumn({ name: 'user_id' })
   user: UsersEntity;
 
   @Column()
   user_id: string;
 
-  @ManyToOne(() => CurriculumEntity)
+  @ManyToOne(() => CurriculumEntity, { onDelete: "CASCADE"})
   @JoinColumn({ name: 'curriculum_id' })
   curriculum: CurriculumEntity;
 

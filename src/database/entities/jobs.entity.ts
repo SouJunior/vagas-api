@@ -107,7 +107,7 @@ export class JobsEntity {
   })
   affirmativeType: string;
 
-  @ManyToOne(() => CompaniesEntity)
+  @ManyToOne(() => CompaniesEntity, { onDelete: "CASCADE"})
   @JoinColumn({ name: 'company_id' })
   company: CompaniesEntity;
 

@@ -9,6 +9,10 @@ export class CurriculumRepository extends Repository<CurriculumEntity> {
     return this.save(data).catch(handleError);
   }
 
+  async findOneByUserId(userId: string): Promise<CurriculumEntity> {
+    return this.findOne({ where: { user_id: userId } }).catch(handleError);
+  }
+
   async findAllCurriculum(id: string): Promise<CurriculumEntity[]> {
     return this.find({ where: { user_id: id } }).catch(handleError);
   }
