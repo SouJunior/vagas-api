@@ -8,7 +8,7 @@ import { JobsController } from './jobs.controller';
 import { JobRepository } from './repository/job.repository';
 import {
   CreateJobService,
-  DeleteJobService,
+  ArchiveJobService,
   GetAllJobsService,
   GetOneJobByIdService,
   UpdateJobService,
@@ -28,7 +28,7 @@ import { SearchJobsService } from './services/search-job.service';
     GetAllJobsService,
     GetOneJobByIdService,
     UpdateJobService,
-    DeleteJobService,
+    ArchiveJobService,
     SearchJobsService,
     CompanyRepository,
   ],

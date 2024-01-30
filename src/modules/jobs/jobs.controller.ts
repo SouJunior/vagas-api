@@ -28,7 +28,7 @@ import { GetAllJobsDto } from './dtos/get-all-jobs.dto';
 import { UpdateJobDto } from './dtos/update-job.dto';
 import {
   CreateJobService,
-  DeleteJobService,
+  ArchiveJobService,
   GetAllJobsService,
   GetOneJobByIdService,
   UpdateJobService,
@@ -45,7 +45,7 @@ export class JobsController {
     private getAllJobsService: GetAllJobsService,
     private getOneJobByIdService: GetOneJobByIdService,
     private updateJobService: UpdateJobService,
-    private deleteJobService: DeleteJobService,
+    private archiveJobService: ArchiveJobService,
     private searchJobsService: SearchJobsService,
     private companyRepository: CompanyRepository,
   ) {}
@@ -99,13 +99,14 @@ export class JobsController {
   }
 
   @Patch(':id')
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard())
   @ArchiveJobSwagger()
   async archivedJob(
-    @Param('id', new GetEntity(JobsEntity))
-    job: JobsEntity,
-    @Body('content') content: string,
+    @LoggedCompany() company: CompaniesEntity,
+    @Param('id') id
   ) {
-    return this.deleteJobService.execute(job, content);
+    return this.archiveJobService.execute(id, company.id);
   }
 
   @Post('/search/:keyword')

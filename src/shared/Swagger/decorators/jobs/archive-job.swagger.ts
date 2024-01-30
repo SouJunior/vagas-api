@@ -4,7 +4,7 @@ import { ApiOperation } from '@nestjs/swagger';
 export function ArchiveJobSwagger() {
   return applyDecorators(
     ApiOperation({
-      summary: 'Excluir uma vaga pelo id.',
+      summary: 'Arquivar uma vaga pelo id.',
     }),
   );
 }
