@@ -104,7 +104,7 @@ export class JobsController {
   @ArchiveJobSwagger()
   async archivedJob(
     @LoggedCompany() company: CompaniesEntity,
-    @Param('id') id
+    @Param('id') id: string
   ) {
     return this.archiveJobService.execute(id, company.id);
   }
