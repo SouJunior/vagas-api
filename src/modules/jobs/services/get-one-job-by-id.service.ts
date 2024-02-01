@@ -7,7 +7,7 @@ export class GetOneJobByIdService {
 
   async execute(id: string) {
     if (!id) {
-      throw new BadRequestException('Id not provider');
+      throw new BadRequestException('Id not provided');
     }
 
     const jobExists = await this.jobRepository.findOneById(id);
