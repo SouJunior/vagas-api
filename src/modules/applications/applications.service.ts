@@ -1,6 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { CurriculumEntity } from '../../database/entities/curriculum.entity';
-import { JobsEntity } from '../../database/entities/jobs.entity';
 import { UsersEntity } from '../../database/entities/users.entity';
 import { ApplicationsRepository } from './repository/applications.repository';
 
@@ -10,13 +8,13 @@ export class ApplicationsService {
 
   async saveApplication(
     user: UsersEntity,
-    job: JobsEntity,
-    curriculum: CurriculumEntity,
+    jobId: string,
+    curriculumId: string,
   ) {
     const newApplication = {
-      job,
-      user,
-      curriculum,
+      job_id: jobId,
+      user_id: user.id,
+      curriculum_id: curriculumId,
     };
 
     return this.applicationsRepository.saveApplication(newApplication);

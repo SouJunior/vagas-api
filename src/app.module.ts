@@ -14,41 +14,19 @@ import { ReportsModule } from './modules/reports/reports.module';
 import { UploadModule } from './modules/upload/upload.module';
 import { UserModule } from './modules/user/user.module';
 import { ApplicationsModule } from './modules/applications/applications.module';
-
-const {
-  ISLOCAL,
-  TYPEORM_HOST,
-  TYPEORM_PORT,
-  TYPEORM_PASSWORD,
-  TYPEORM_USERNAME,
-  TYPEORM_DATABASE,
-  TYPEORM_DOCKER_HOST,
-  TYPEORM_DOCKER_PORT,
-  TYPEORM_DOCKER_USERNAME,
-  TYPEORM_DOCKER_PASSWORD,
-  TYPEORM_DOCKER_DATABASE,
-} = process.env;
+import { typeormConfig } from './database/data-source';import { PassportModule } from '@nestjs/passport';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
 
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: ISLOCAL == 'true' ? TYPEORM_DOCKER_HOST : TYPEORM_HOST,
-      port: ISLOCAL == 'true' ? +TYPEORM_DOCKER_PORT : +TYPEORM_PORT,
-      username: ISLOCAL == 'true' ? TYPEORM_DOCKER_USERNAME : TYPEORM_USERNAME,
-      password: ISLOCAL == 'true' ? TYPEORM_DOCKER_PASSWORD : TYPEORM_PASSWORD,
-      database: ISLOCAL == 'true' ? TYPEORM_DOCKER_DATABASE : TYPEORM_DATABASE,
-      logging: true,
-      migrationsRun: true,
-      synchronize: true,
-      entities: ['dist/database/entities/*.entity.js'],
-      migrations: [
-        'dist/database/migrations/*.js',
-        'dist/database/migrations/seeds/*.js',
-      ],
+    TypeOrmModule.forRootAsync({
+      useFactory: () => ({
+        ...typeormConfig,
+        autoLoadEntities: true
+      })
     }),
+    PassportModule.register({defaultStrategy: "jwt"}),
     JobsModule,
     UserModule,
     AuthModule,

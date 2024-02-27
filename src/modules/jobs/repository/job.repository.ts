@@ -1,4 +1,4 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { JobsEntity } from '../../../database/entities/jobs.entity';
 import {
   PageDto,
@@ -9,19 +9,32 @@ import { handleError } from '../../../shared/utils/handle-error.util';
 import { CreateJobDto } from '../dtos/create-job.dto';
 import { GetAllJobsDto } from '../dtos/get-all-jobs.dto';
 import { UpdateJobDto } from '../dtos/update-job.dto';
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 
-@EntityRepository(JobsEntity)
-export class JobRepository extends Repository<JobsEntity> {
+@Injectable()
+export class JobRepository {
+  constructor(@InjectRepository(JobsEntity) private jobsRepository: Repository<JobsEntity>) {}
+
   async createNewJob(data: CreateJobDto): Promise<void> {
-    await this.save(data).catch(handleError);
+    await this.jobsRepository.save(data).catch(handleError);
     return;
+  }
+
+  async getAllJobsByCompanyId(
+    companyId: string
+  ): Promise<JobsEntity[]> {
+
+    const jobs = await this.jobsRepository.find({where: {company_id: companyId}})
+
+    return jobs
   }
 
   async getAllJobs(
     pageOptionsDto: PageOptionsDto,
     params: GetAllJobsDto,
   ): Promise<PageDto<JobsEntity>> {
-    const queryBuilder = this.createQueryBuilder('jobs');
+    const queryBuilder = this.jobsRepository.createQueryBuilder('jobs');
 
     queryBuilder
       .leftJoin('jobs.company', 'company')
@@ -52,7 +65,7 @@ export class JobRepository extends Repository<JobsEntity> {
   }
 
   async findOneById(id: string): Promise<any> {
-    const queryBuilder = this.createQueryBuilder('jobs')
+    const queryBuilder = this.jobsRepository.createQueryBuilder('jobs')
       .leftJoinAndSelect('jobs.comments', 'comments')
       .leftJoinAndSelect('comments.user', 'user')
       .leftJoinAndSelect('jobs.company', 'company')
@@ -79,18 +92,12 @@ export class JobRepository extends Repository<JobsEntity> {
   }
 
   async updateJob(id: string, data: UpdateJobDto) {
-    const job = await this.findOne(id).catch(handleError);
+    const job = await this.jobsRepository.findOneBy({id}).catch(handleError);
 
-    return this.save({
+    return this.jobsRepository.save({
       ...job,
       ...data,
     }).catch(handleError);
-  }
-
-  async deleteJobById(id: string): Promise<object> {
-    await this.delete(id).catch(handleError);
-
-    return { message: 'Job deleted successfully' };
   }
 
   async searchJobs(
@@ -98,7 +105,7 @@ export class JobRepository extends Repository<JobsEntity> {
     pageOptionsDto: PageOptionsDto,
     params: GetAllJobsDto,
   ): Promise<{ itemCount: number; entities: JobsEntity[] }> {
-    const queryBuilder = this.createQueryBuilder('job');
+    const queryBuilder = this.jobsRepository.createQueryBuilder('job');
 
     queryBuilder
       .leftJoin('job.company', 'company')

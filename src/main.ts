@@ -9,7 +9,10 @@ async function bootstrap() {
     cors: true,
   });
 
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe({
+    whitelist: true,
+    transform: true
+  }));
 
   const config = new DocumentBuilder()
     .setTitle('Vagas-Backend')
@@ -27,9 +30,9 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
   await app.listen(process.env.PORT || 3333);
-  console.info(`🚀🚀 App listening on port ${process.env.PORT} 🚀🚀`);
+  console.info(`🚀🚀 App listening on port ${process.env.PORT || 3333} 🚀🚀`);
   console.info(
-    `Documentation running on http://localhost:${process.env.PORT}/api 🚀🚀`,
+    `Documentation running on http://localhost:${process.env.PORT || 3333}/api 🚀🚀`,
   );
   const databse = process.env.ISLOCAL == 'true' ? 'do DOCKER' : 'da NUVEM';
   console.info(`Você esta usando o banco de dados ${databse}`);

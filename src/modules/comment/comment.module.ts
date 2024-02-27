@@ -13,21 +13,31 @@ import {
   GetCommentByIdService,
   UpdateCommentService,
 } from './services';
+import { CommentsEntity } from 'src/database/entities/comments.entity';
+import { JobsEntity } from 'src/database/entities/jobs.entity';
+import { UsersEntity } from 'src/database/entities/users.entity';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([
-      CommentRepository,
-      JobRepository,
-      UserRepository,
+      CommentsEntity,
+      JobsEntity,
+      UsersEntity,
     ]),
     ThrottlerModule.forRoot({
-      ttl: 10,
-      limit: 4,
+      throttlers: [
+         {
+           ttl: 10000,
+           limit: 4
+         }
+      ] 
     }),
   ],
   controllers: [CommentController],
   providers: [
+    CommentRepository,
+    JobRepository,
+    UserRepository,
     CreateCommentService,
     GetAllCommentsService,
     GetCommentByIdService,

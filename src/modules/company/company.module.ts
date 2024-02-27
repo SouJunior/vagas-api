@@ -13,17 +13,19 @@ import {
 import { ActivateCompanyService } from './services/activate-company.service';
 import { RecoveryCompanyPasswordByEmail } from './services/recovery-password-by-email.service';
 import { UpdatePasswordByEmailService } from './services/update-password-by-email.service';
-import { PassportModule } from '@nestjs/passport';
 import { UpdateCompanyPassword } from './services/update-password.service';
+import { CompaniesEntity } from 'src/database/entities/companies.entity';
+import { UsersEntity } from 'src/database/entities/users.entity';
 
 @Module({
   imports: [
     UploadModule,
-    PassportModule.register({ defaultStrategy: 'jwt' }),
-    TypeOrmModule.forFeature([CompanyRepository, UserRepository]),
+    TypeOrmModule.forFeature([CompaniesEntity, UsersEntity]),
   ],
   controllers: [CompanyController],
   providers: [
+    CompanyRepository,
+     UserRepository,
     CreateCompanyService,
     FindAllCompanyService,
     UpdateCompanyService,

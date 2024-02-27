@@ -14,23 +14,28 @@ import {
   UpdateJobService,
 } from './services';
 import { SearchJobsService } from './services/search-job.service';
+import { GetAllJobsFromLoggedCompanyService } from './services/get-all-jobs-from-logged-company.service';
+import { JobsEntity } from 'src/database/entities/jobs.entity';
+import { CompaniesEntity } from 'src/database/entities/companies.entity';
 
 @Module({
   imports: [
     MailModule,
     CompanyModule,
-    TypeOrmModule.forFeature([JobRepository]),
+    TypeOrmModule.forFeature([JobRepository, JobsEntity, CompaniesEntity]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
   ],
   controllers: [JobsController],
   providers: [
     CreateJobService,
     GetAllJobsService,
+    GetAllJobsFromLoggedCompanyService,
     GetOneJobByIdService,
     UpdateJobService,
     DeleteJobService,
     SearchJobsService,
-    CompanyRepository,
+    JobRepository,
+    CompanyRepository
   ],
 })
 export class JobsModule {}

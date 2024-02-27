@@ -1,10 +1,7 @@
-import { Controller, Get, Query, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { CurriculumEntity } from '../../database/entities/curriculum.entity';
-import { JobsEntity } from '../../database/entities/jobs.entity';
 import { UsersEntity } from '../../database/entities/users.entity';
-import GetEntity from '../../shared/pipes/pipe-entity.pipe';
 import { LoggedUser } from '../auth/decorator/logged-user.decorator';
 import { ApplicationsService } from './applications.service';
 
@@ -17,12 +14,10 @@ export class ApplicationsController {
 
   @Get()
   async saveApplication(
-    @Query('job_id', new GetEntity(JobsEntity))
-    job: JobsEntity,
-    @Query('curriculum_id', new GetEntity(CurriculumEntity))
-    curriculum: CurriculumEntity,
+    @Query() jobId: string,
+    @Query() curriculumId: string,
     @LoggedUser() user: UsersEntity,
   ) {
-    return this.applicationsService.saveApplication(user, job, curriculum);
+    return this.applicationsService.saveApplication(user, jobId, curriculumId);
   }
 }

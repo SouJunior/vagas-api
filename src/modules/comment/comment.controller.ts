@@ -37,7 +37,12 @@ export class CommentController {
     private deleteCommentService: DeleteCommentService,
   ) {}
 
-  @Throttle(2, 30)
+  @Throttle({
+    createCommentary: {
+      ttl: 2000,
+      limit: 30
+    }
+  })
   @Post()
   @CreateCommentSwagger()
   async createCommentary(@Body() data: CreateCommentDto) {
