@@ -23,7 +23,8 @@
     "typeorm": "typeorm-ts-node-commonjs",
     "migration:create": "npm run typeorm -- migration:create -d src/database/migrations -n",
     "migration:generate": "npm run typeorm -- migration:generate ./src/database/migrations -d ./src/database/data-source.ts",
-    "migration:run": "npm run typeorm -- migration:run  -d ./src/database/data-source.ts"
+    "migration:run": "npm run typeorm -- migration:run -d ./src/database/data-source.ts",
+    "migration:revert": "npm run typeorm -- migration:revert -d ./src/database/data-source.ts"
   },
   "dependencies": {
     "@nestjs-modules/mailer": "^1.9.1",
@@ -43,6 +44,7 @@
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.0",
     "cpf-cnpj-validator": "^1.0.3",
+    "dotenv": "^16.4.5",
     "handlebars": "^4.7.8",
     "nodemailer": "^6.9.5",
     "passport": "^0.6.0",
