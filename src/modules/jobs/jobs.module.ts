@@ -8,7 +8,7 @@ import { JobsController } from './jobs.controller';
 import { JobRepository } from './repository/job.repository';
 import {
   CreateJobService,
-  DeleteJobService,
+  ArchiveJobService,
   GetAllJobsService,
   GetOneJobByIdService,
   UpdateJobService,
@@ -32,7 +32,7 @@ import { CompaniesEntity } from 'src/database/entities/companies.entity';
     GetAllJobsFromLoggedCompanyService,
     GetOneJobByIdService,
     UpdateJobService,
-    DeleteJobService,
+    ArchiveJobService,
     SearchJobsService,
     JobRepository,
     CompanyRepository

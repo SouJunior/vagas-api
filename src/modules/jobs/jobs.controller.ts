@@ -27,7 +27,6 @@ import { GetAllJobsDto } from './dtos/get-all-jobs.dto';
 import { UpdateJobDto } from './dtos/update-job.dto';
 import {
   CreateJobService,
-  DeleteJobService,
   GetAllJobsService,
   GetOneJobByIdService,
   UpdateJobService,
@@ -37,6 +36,7 @@ import { GetAllJobsOfLoggedCompanySwagger } from 'src/shared/Swagger/decorators/
 import { GetAllJobsSwagger } from 'src/shared/Swagger/decorators/jobs/get-all-jobs-of-logged-company.swagger copy';
 import { GetAllJobsFromLoggedCompanyService } from './services/get-all-jobs-from-logged-company.service';
 import { Response } from 'express';
+import { DeleteJobService } from './services/delete-job.service';
 
 @ApiTags('Job')
 @Controller('job')
@@ -98,6 +98,8 @@ export class JobsController {
   }
 
   @Patch(':id')
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard())
   @ArchiveJobSwagger()
   async archivedJob(
     @Param()
