@@ -1,1 +1,1066 @@
-{"_type":"export","__export_format":4,"__export_date":"2022-12-14T11:27:26.837Z","__export_source":"insomnia.desktop.app:v2022.6.0","resources":[{"_id":"req_034a525b87274f6f88136aaefac29a04","parentId":"fld_ff00175cac944612942458020b1b6946","modified":1671017185275,"created":1662763908305,"url":"{{ _.local }}/auth/login","name":"Login","description":"Teste para admin\n```bash\n{\n\t\"email\":\"admin@teste.com\",\n\t\"password\":\"teste\"\n}\n```\n\nTeste para user\n```bash\n{\n\t\"email\":\"user@teste.com\",\n\t\"password\":\"teste\"\n}\n```","method":"POST","body":{"mimeType":"application/json","text":"{\n\t\"email\":\"admin@teste.com\",\n\t\"password\":\"teste\"\n}"},"parameters":[],"headers":[{"name":"Content-Type","value":"application/json","id":"pair_7dcc99b773344616adaf46b29f70624b"}],"authentication":{},"metaSortKey":-1662763908305,"isPrivate":false,"settingStoreCookies":true,"settingSendCookies":true,"settingDisableRenderRequestBody":false,"settingEncodeUrl":true,"settingRebuildPath":true,"settingFollowRedirects":"global","_type":"request"},{"_id":"fld_ff00175cac944612942458020b1b6946","parentId":"wrk_b82f12282b574de180c368c45fe1ff01","modified":1663825925739,"created":1662763899786,"name":"Auth","description":"","environment":{},"environmentPropertyOrder":null,"metaSortKey":-1663822030592,"_type":"request_group"},{"_id":"wrk_b82f12282b574de180c368c45fe1ff01","parentId":null,"modified":1662423088160,"created":1662423088160,"name":"SouJunior - LinkedIn-backend","description":"","scope":"collection","_type":"workspace"},{"_id":"req_1e7a54203d9a47c98e9eafcac5ae4f2e","parentId":"fld_ff00175cac944612942458020b1b6946","modified":1664562800299,"created":1664514741768,"url":"{{ _.local }}/auth/user-logged","name":"User-Logged","description":"","method":"GET","body":{},"parameters":[],"headers":[],"authentication":{"type":"bearer","token":"{{ _.token }}"},"metaSortKey":-1662683510964,"isPrivate":false,"settingStoreCookies":true,"settingSendCookies":true,"settingDisableRenderRequestBody":false,"settingEncodeUrl":true,"settingRebuildPath":true,"settingFollowRedirects":"global","_type":"request"},{"_id":"req_87bfa459ad8e4ce7972b2a9b2defeed4","parentId":"fld_6f36395cbdaa434f819595144eb6baf5","modified":1665328860511,"created":1663822045365,"url":"{{ _.local }}/comment","name":"Create a Comment","description":"","method":"POST","body":{"mimeType":"application/json","text":"{\n\t\"comment\": \"Teste de comentario\",\n\t\"user_id\": 1,\n\t\"job_id\": 1\n}"},"parameters":[],"headers":[{"name":"Content-Type","value":"application/json","id":"pair_6892514159134668afcc207cdaac761c"}],"authentication":{},"metaSortKey":-1663822045366,"isPrivate":false,"settingStoreCookies":true,"settingSendCookies":true,"settingDisableRenderRequestBody":false,"settingEncodeUrl":true,"settingRebuildPath":true,"settingFollowRedirects":"global","_type":"request"},{"_id":"fld_6f36395cbdaa434f819595144eb6baf5","parentId":"wrk_b82f12282b574de180c368c45fe1ff01","modified":1663822030542,"created":1663822030542,"name":"Comments","description":"","environment":{},"environmentPropertyOrder":null,"metaSortKey":-1663822030542,"_type":"request_group"},{"_id":"req_0f766cea47bf4ef2a5c5ef2072733c8f","parentId":"fld_6f36395cbdaa434f819595144eb6baf5","modified":1663822201823,"created":1663822192516,"url":"{{ _.local }}/comment","name":"Get All Comments","description":"","method":"GET","body":{},"parameters":[],"headers":[],"authentication":{},"metaSortKey":-1663769864466.5,"isPrivate":false,"settingStoreCookies":true,"settingSendCookies":true,"settingDisableRenderRequestBody":false,"settingEncodeUrl":true,"settingRebuildPath":true,"settingFollowRedirects":"global","_type":"request"},{"_id":"req_d2073806581145ba899e1c76fa85f288","parentId":"fld_6f36395cbdaa434f819595144eb6baf5","modified":1663825904471,"created":1663822153734,"url":"{{ _.local }}/comment/:id","name":"Get Comment By Id","description":"","method":"GET","body":{},"parameters":[],"headers":[],"authentication":{},"metaSortKey":-1663769864416.5,"isPrivate":false,"settingStoreCookies":true,"settingSendCookies":true,"settingDisableRenderRequestBody":false,"settingEncodeUrl":true,"settingRebuildPath":true,"settingFollowRedirects":"global","_type":"request"},{"_id":"req_81ab8a9442e14d1da3f6a3b857c3f54b","parentId":"fld_6f36395cbdaa434f819595144eb6baf5","modified":1664497444869,"created":1663824414052,"url":"{{ _.local }}/comment/:id","name":"Update a Comment","description":"","method":"PUT","body":{"mimeType":"application/json","text":"{\n\t\"comment\": \"Teste de comentario atualizado\"\n}"},"parameters":[],"headers":[{"name":"Content-Type","value":"application/json","id":"pair_6892514159134668afcc207cdaac761c"}],"authentication":{},"metaSortKey":-1663769864366.5,"isPrivate":false,"settingStoreCookies":true,"settingSendCookies":true,"settingDisableRenderRequestBody":false,"settingEncodeUrl":true,"settingRebuildPath":true,"settingFollowRedirects":"global","_type":"request"},{"_id":"req_c617cc131de44451a0b47218431c0d18","parentId":"fld_6f36395cbdaa434f819595144eb6baf5","modified":1663825915004,"created":1663825031404,"url":"{{ _.local }}/comment/:id","name":"Delete Comment","description":"","method":"DELETE","body":{},"parameters":[],"headers":[],"authentication":{},"metaSortKey":-1663769864316.5,"isPrivate":false,"settingStoreCookies":true,"settingSendCookies":true,"settingDisableRenderRequestBody":false,"settingEncodeUrl":true,"settingRebuildPath":true,"settingFollowRedirects":"global","_type":"request"},{"_id":"req_350bef51bec243af8fb367e48e07f03c","parentId":"fld_f74ba1a4baf1418d88e07d3eeabd0d8e","modified":1671016771669,"created":1663717683617,"url":"{{ _.local }}/company","name":"Create Company","description":"","method":"POST","body":{"mimeType":"application/json","text":"{\n\t\"company_name\":\"Teste\",\n\t\"email\":\"teste@teste.com\",\n\t\"linkedin\":\"link\",\n\t\"address\":\"rua dos testes\",\n\t\"description\":\"isso é apenas um teste\",\n\t\"owner_name\":\"Super teste\",\n\t\"owner_phone\":\"12345\",\n\t\"user_id\":\"0320d22a-413f-4602-a508-ed6ab3d50e35\"\n}"},"parameters":[],"headers":[{"name":"Content-Type","value":"application/json","id":"pair_ddc59d94a634427bbe5f3dab0e41bf30"}],"authentication":{},"metaSortKey":-1663717683617,"isPrivate":false,"settingStoreCookies":true,"settingSendCookies":true,"settingDisableRenderRequestBody":false,"settingEncodeUrl":true,"settingRebuildPath":true,"settingFollowRedirects":"global","_type":"request"},{"_id":"fld_f74ba1a4baf1418d88e07d3eeabd0d8e","parentId":"wrk_b82f12282b574de180c368c45fe1ff01","modified":1663717669531,"created":1663717669531,"name":"Companies","description":"","environment":{},"environmentPropertyOrder":null,"metaSortKey":-1663717669531,"_type":"request_group"},{"_id":"req_3cdbeedde4c14b2e914cf00041daa464","parentId":"fld_f74ba1a4baf1418d88e07d3eeabd0d8e","modified":1664926240690,"created":1663717694057,"url":"{{ _.local }}/company","name":"Get all companies","description":"","method":"GET","body":{},"parameters":[{"id":"pair_bb5ada26070b417397f81dcc124b45c4","name":"orderByColumn","value":"id","description":""},{"id":"pair_b1b8c5f55b7b4aee992c1157d83e99a9","name":"page","value":"1","description":""},{"id":"pair_af9b26c3a2ce412bbabff11104c8983a","name":"take","value":"10","description":""},{"id":"pair_18a49785e3f94dc0807ba5822e102e37","name":"order","value":"ASC","description":""}],"headers":[],"authentication":{},"metaSortKey":-1663717683567,"isPrivate":false,"settingStoreCookies":true,"settingSendCookies":true,"settingDisableRenderRequestBody":false,"settingEncodeUrl":true,"settingRebuildPath":true,"settingFollowRedirects":"global","_type":"request"},{"_id":"req_a9208487c8e24c71b8465318989d724a","parentId":"fld_f74ba1a4baf1418d88e07d3eeabd0d8e","modified":1663721063166,"created":1663719157737,"url":"{{ _.local }}/company/:id","name":"Get company by id","description":"","method":"GET","body":{},"parameters":[],"headers":[],"authentication":{},"metaSortKey":-1663656438021,"isPrivate":false,"settingStoreCookies":true,"settingSendCookies":true,"settingDisableRenderRequestBody":false,"settingEncodeUrl":true,"settingRebuildPath":true,"settingFollowRedirects":"global","_type":"request"},{"_id":"req_6744832b8cf64ee6a72ebc4c058335e8","parentId":"fld_f74ba1a4baf1418d88e07d3eeabd0d8e","modified":1664497441947,"created":1663719917207,"url":"{{ _.local }}/company/1","name":"Update Company","description":"","method":"PUT","body":{"mimeType":"application/json","text":"{\n\t\"company_name\":\"Teste\",\n\t\"email\":\"teste@teste.com\",\n\t\"linkedin\":\"link\",\n\t\"address\":\"rua dos testes\",\n\t\"description\":\"isso é apenas um teste\",\n\t\"owner_name\":\"Super teste\",\n\t\"owner_phone\":\"12345\",\n\t\"user_id\":2\n}"},"parameters":[],"headers":[{"name":"Content-Type","value":"application/json","id":"pair_ddc59d94a634427bbe5f3dab0e41bf30"}],"authentication":{},"metaSortKey":-1663656437971,"isPrivate":false,"settingStoreCookies":true,"settingSendCookies":true,"settingDisableRenderRequestBody":false,"settingEncodeUrl":true,"settingRebuildPath":true,"settingFollowRedirects":"global","_type":"request"},{"_id":"req_50f29eb80e36411bb639fde880afc954","parentId":"fld_f74ba1a4baf1418d88e07d3eeabd0d8e","modified":1663720393195,"created":1663720379464,"url":"{{ _.local }}/company/2","name":"Delete Company","description":"","method":"DELETE","body":{},"parameters":[],"headers":[],"authentication":{},"metaSortKey":-1663656437921,"isPrivate":false,"settingStoreCookies":true,"settingSendCookies":true,"settingDisableRenderRequestBody":false,"settingEncodeUrl":true,"settingRebuildPath":true,"settingFollowRedirects":"global","_type":"request"},{"_id":"req_19a23d83b8c847b3a15021c452752b1f","parentId":"fld_e6f3637e6ce541a6812e174c7bb9900b","modified":1664513111489,"created":1663192329434,"url":"{{ _.local }}/report","name":"Create a new report","description":"","method":"POST","body":{"mimeType":"application/json","text":"{\n\t\"job_id\":1,\n\t\"user_id\":2,\n\t\"description\":\"Teste de report de vagas\"\n}"},"parameters":[],"headers":[{"name":"Content-Type","value":"application/json","id":"pair_66b25934ba924f4198757c0e234cef1e"}],"authentication":{},"metaSortKey":-1663287842518,"isPrivate":false,"settingStoreCookies":true,"settingSendCookies":true,"settingDisableRenderRequestBody":false,"settingEncodeUrl":true,"settingRebuildPath":true,"settingFollowRedirects":"global","_type":"request"},{"_id":"fld_e6f3637e6ce541a6812e174c7bb9900b","parentId":"wrk_b82f12282b574de180c368c45fe1ff01","modified":1663287193315,"created":1663192300244,"name":"Report","description":"","environment":{},"environmentPropertyOrder":null,"metaSortKey":-1663192300244,"_type":"request_group"},{"_id":"req_8c79aaffa21d405ca8b7cb2197e56923","parentId":"fld_e6f3637e6ce541a6812e174c7bb9900b","modified":1663287853796,"created":1663287842468,"url":"{{ _.local }}/report","name":"Get all Reports","description":"","method":"GET","body":{},"parameters":[],"headers":[],"authentication":{},"metaSortKey":-1663287842468,"isPrivate":false,"settingStoreCookies":true,"settingSendCookies":true,"settingDisableRenderRequestBody":false,"settingEncodeUrl":true,"settingRebuildPath":true,"settingFollowRedirects":"global","_type":"request"},{"_id":"req_2015dd0dff64463db72b576b381cd33c","parentId":"fld_e6f3637e6ce541a6812e174c7bb9900b","modified":1663292196748,"created":1663288014038,"url":"{{ _.local }}/report/:id","name":"Get Report By Id","description":"","method":"GET","body":{},"parameters":[],"headers":[],"authentication":{},"metaSortKey":-1663287842418,"isPrivate":false,"settingStoreCookies":true,"settingSendCookies":true,"settingDisableRenderRequestBody":false,"settingEncodeUrl":true,"settingRebuildPath":true,"settingFollowRedirects":"global","_type":"request"},{"_id":"req_e4f07a4304994e499ee3330c6802ee83","parentId":"fld_e6f3637e6ce541a6812e174c7bb9900b","modified":1664497438549,"created":1663292322611,"url":"{{ _.local }}/report/:id","name":"Update Report By Id","description":"","method":"PUT","body":{"mimeType":"application/json","text":"{\n\t\"description\":\"Teste teste teste\"\n}"},"parameters":[],"headers":[{"name":"Content-Type","value":"application/json","id":"pair_453e76c1d48a45d592a69582b2db1512"}],"authentication":{},"metaSortKey":-1663287842393,"isPrivate":false,"settingStoreCookies":true,"settingSendCookies":true,"settingDisableRenderRequestBody":false,"settingEncodeUrl":true,"settingRebuildPath":true,"settingFollowRedirects":"global","_type":"request"},{"_id":"req_4fb6c197f0cc4488b5fed2f1b348d65d","parentId":"fld_e6f3637e6ce541a6812e174c7bb9900b","modified":1663291578329,"created":1663290469262,"url":"{{ _.local }}/report/3","name":"Delete Report","description":"","method":"DELETE","body":{},"parameters":[],"headers":[],"authentication":{},"metaSortKey":-1663287842368,"isPrivate":false,"settingStoreCookies":true,"settingSendCookies":true,"settingDisableRenderRequestBody":false,"settingEncodeUrl":true,"settingRebuildPath":true,"settingFollowRedirects":"global","_type":"request"},{"_id":"req_66bdc2ed6f394752a6de16244f64723e","parentId":"fld_c0a169a7f6854baf905ccff0a0d66dd0","modified":1671016900017,"created":1662423102606,"url":"{{ _.local }}/job","name":"Create New Job","description":"Esta rota cria uma nova vaga de emprego.\n\nMetodo POST -> `/job`\n\ntype é um ENUM [\n'ESTAGIARIO',\n'TRAINNER',\n'JUNIOR'\n]\n\nPara criar um novo job é necessario enviar os seguintes itens no `body`:\n```json\n{\n\t\"title\":\"Vaga para Junior\",\n\t\"description\":\"Esse é apenas um teste\",\n\t\"company_id\": \"insira o ID da Company\",\n\t\"type\":\"JUNIOR\"\n}\n```\n\nEnviando os dados de maneira correta e não repetida, você receberá um confirmação com um response com os seus dados com um `id`.\n\nExemplo:\n```json\n{\n\t\"title\": \"Vagas abertas para Juniors\",\n\t\"description\": \"Esse é apenas um teste\",\n\t\"type\": \"JUNIOR\",\n\t\"company_id\": \"44a832e6-dd7c-409a-8beb-d80811c7dbc0\",\n\t\"id\": \"9fe675e6-c982-42b3-b18b-685701969daa\",\n\t\"created_at\": \"2022-12-14T14:20:59.340Z\",\n\t\"updated_at\": \"2022-12-14T14:20:59.340Z\"\n}\n```","method":"POST","body":{"mimeType":"application/json","text":"{\n\t\"title\":\"Vagas abertas para Juniors\",\n\t\"description\":\"Esse é apenas um teste\",\n\t\"type\":\"JUNIOR\",\n\t\"company_id\":\"44a832e6-dd7c-409a-8beb-d80811c7dbc0\"\n}"},"parameters":[],"headers":[{"name":"Content-Type","value":"application/json","id":"pair_6438b0e9a30c45178742aee72014ed57"}],"authentication":{},"metaSortKey":-1662423102606,"isPrivate":false,"settingStoreCookies":true,"settingSendCookies":true,"settingDisableRenderRequestBody":false,"settingEncodeUrl":true,"settingRebuildPath":true,"settingFollowRedirects":"global","_type":"request"},{"_id":"fld_c0a169a7f6854baf905ccff0a0d66dd0","parentId":"wrk_b82f12282b574de180c368c45fe1ff01","modified":1662423098750,"created":1662423098750,"name":"Jobs","description":"","environment":{},"environmentPropertyOrder":null,"metaSortKey":-1662423098750,"_type":"request_group"},{"_id":"req_e69f4ce0feb9442aad7c62214cefc288","parentId":"fld_c0a169a7f6854baf905ccff0a0d66dd0","modified":1671016937372,"created":1662423116859,"url":"{{ _.local }}/job","name":"Get All Jobs","description":"Rota para listar todas vagas de empregos criadas no banco de dados\n\nMetodo GET -> `/job`\n\nurl = http://localhost:3000/job\n\nComo essa rota utiliza o metodo `GET`, não será necessario enviar nenhum dado.\nBasta Bater(fazer a requisição) na rota que será listado todas as vagas cadastradas no banco.\n\n\n```json\n [\n\t\t{\n\t\t\t\"id\": \"9fe675e6-c982-42b3-b18b-685701969daa\",\n\t\t\t\"title\": \"Vagas abertas para Juniors\",\n\t\t\t\"description\": \"Esse é apenas um teste\",\n\t\t\t\"type\": \"JUNIOR\",\n\t\t\t\"company_id\": \"44a832e6-dd7c-409a-8beb-d80811c7dbc0\",\n\t\t\t\"created_at\": \"2022-12-14T14:20:59.340Z\",\n\t\t\t\"updated_at\": \"2022-12-14T14:20:59.340Z\"\n\t\t}\n\t]\n```","method":"GET","body":{},"parameters":[{"id":"pair_d49e1d196d21402ebcbf87b6b7d926cd","name":"order","value":"ASC","description":""},{"id":"pair_bbbc42c92e3748d9bcc512f28ac43c73","name":"page","value":"1","description":""},{"id":"pair_7cd3576f7bcb4dc99f373eb15beb70e8","name":"take","value":"2","description":""},{"id":"pair_f67a26f22a3948a7971cc98aa36e8655","name":"orderByColumn","value":"id","description":""}],"headers":[],"authentication":{},"metaSortKey":-1662350814034,"isPrivate":false,"settingStoreCookies":true,"settingSendCookies":true,"settingDisableRenderRequestBody":false,"settingEncodeUrl":true,"settingRebuildPath":true,"settingFollowRedirects":"global","_type":"request"},{"_id":"req_0a19c58c4b4441da971df3605739e076","parentId":"fld_c0a169a7f6854baf905ccff0a0d66dd0","modified":1671017093929,"created":1662423119469,"url":"{{ _.local }}/job/asdfsad","name":"Get Job By Id","description":"Rota para listar uma vaga de emprego pelo seu id\n\nMetodo GET -> `/job/:id`\n\nurl = http://localhost:3000/job/9fe675e6-c982-42b3-b18b-685701969daa\n\nPara receber os dados da vaga será necessario enviar o id no link(parametros)\nCaso sejá enviado um id que não existe no banco de dados terá um retorno de erro:\n\n```json\n{\n\t\"statusCode\": 400,\n\t\"message\": \"Job not found\",\n\t\"error\": \"Bad Request\"\n}\n```\nou\n```json\n{\n\t\"statusCode\": 422,\n\t\"message\": \"invalid input syntax for type uuid: \\\"asdfsad\\\"\",\n\t\"error\": \"Unprocessable Entity\"\n}\n```\n\nCaso o id exista no banco será retornado os dados da vaga que tem o id enviado.\n\n```json\n{\n\t\"id\": \"9fe675e6-c982-42b3-b18b-685701969daa\",\n\t\"title\": \"Vagas abertas para Juniors\",\n\t\"description\": \"Esse é apenas um teste\",\n\t\"type\": \"JUNIOR\",\n\t\"company_id\": \"44a832e6-dd7c-409a-8beb-d80811c7dbc0\",\n\t\"created_at\": \"2022-12-14T14:20:59.340Z\",\n\t\"updated_at\": \"2022-12-14T14:20:59.340Z\",\n\t\"comments\": []\n}\n```\n","method":"GET","body":{},"parameters":[],"headers":[],"authentication":{},"metaSortKey":-1662314669748,"isPrivate":false,"settingStoreCookies":true,"settingSendCookies":true,"settingDisableRenderRequestBody":false,"settingEncodeUrl":true,"settingRebuildPath":true,"settingFollowRedirects":"global","_type":"request"},{"_id":"req_0abdb6b9d81e436293a34e7dbe65a994","parentId":"fld_c0a169a7f6854baf905ccff0a0d66dd0","modified":1671016844190,"created":1662423124650,"url":"{{ _.local }}/job/2","name":"Update Job By Id","description":"Rota para atualizar uma vaga de emprego pelo seu id\n\nMetodo PUT -> `/job/:id`\n\nPara atualizar uma vaga será necessario duas coisas.\n 1. - O id da vaga que será atualizado, ele vai na url/link(parametro)\n 2. - O campo que precisa ser atualizado no body.\n\n url = http://localhost:3000/job/2\n\nBody:\n ```json\n{\n\t\"title\":\"Vaga abertas para trainner\"\n}\n ```\n\n Em caso de sucesso no update será um retorno dos onvos dados da vaga.\n\n ```json\n{\n\t\"id\": 2,\n\t\"title\": \"Vaga abertas para trainner\",\n\t\"description\": \"Esse é apenas um teste\",\n\t\"type\": \"TRAINNER\",\n\t\"created_at\": \"2022-09-07T19:42:21.012Z\",\n\t\"updated_at\": \"2022-09-07T20:18:36.484Z\"\n}\n ```\n\n Em caso de envio de id que não existe no banco haverá um retorno de job not found.\n ```json\n{\n\t\"statusCode\": 400,\n\t\"message\": \"Job not found\",\n\t\"error\": \"Bad Request\"\n}\n ```\n \n Não envio do id\n ```json\n{\n\t\"statusCode\": 400,\n\t\"message\": \"Id not provided\",\n\t\"error\": \"Bad Request\"\n}\n```","method":"PUT","body":{"mimeType":"application/json","text":"{\n\t\"title\":\"Vaga abertas para trainner\"\n}"},"parameters":[],"headers":[{"name":"Content-Type","value":"application/json","id":"pair_689be148eeba425380f1d97d6adad9c7"}],"authentication":{},"metaSortKey":-1662296597605,"isPrivate":false,"settingStoreCookies":true,"settingSendCookies":true,"settingDisableRenderRequestBody":false,"settingEncodeUrl":true,"settingRebuildPath":true,"settingFollowRedirects":"global","_type":"request"},{"_id":"req_beff65e039c1423c8e85cd014eec44e8","parentId":"fld_c0a169a7f6854baf905ccff0a0d66dd0","modified":1671016840972,"created":1662423112914,"url":"{{ _.local }}/job/bd1620ef-052e-4a14-bbe2-56d7b225a68d","name":"Delete Job By Id","description":"Rota para deletar uma vaga de emprego\n\nMetodo DELETE -> /job/:id\n\nurl = http://localhost:3000/job/2\n\nCaso a vaga com o id exista terá uma mensagem de sucesso no retorno\n```json\n{\n\t\"message\": \"Job deleted successfully\"\n}\n```\n\n Caso não exista o id no banco de dados\n ```json\n{\n\t\"statusCode\": 400,\n\t\"message\": \"Job not found\",\n\t\"error\": \"Bad Request\"\n}\n ```\n \n Caso o id não seja enviado\n ```json\n{\n\t\"statusCode\": 400,\n\t\"message\": \"Id not provided\",\n\t\"error\": \"Bad Request\"\n}\n```","method":"DELETE","body":{},"parameters":[],"headers":[],"authentication":{},"metaSortKey":-1662278525462,"isPrivate":false,"settingStoreCookies":true,"settingSendCookies":true,"settingDisableRenderRequestBody":false,"settingEncodeUrl":true,"settingRebuildPath":true,"settingFollowRedirects":"global","_type":"request"},{"_id":"req_10ad39870ce345dd8b2262c3bfd01a2d","parentId":"fld_5b96b769236f476fb53e23a683178fc2","modified":1671016454176,"created":1662576013146,"url":"{{ _.local }}/user","name":"Create New User","description":"Esta rota cria um novo usuario na plataforma\n\nMetodo POST -> `/user`\n\nPara criar um novo usuario é necessario enviar os seguintes itens no `body`:\n```json\n{\n\t\"name\":\"Non-Admin for tests\",\n\t\"email\":\"user@teste.com\",\n\t\"password\":\"teste\"\n}\n```\n\nEnviando os dados de maneira correta e não repetida, você receberá um confirmação com um response com os seus dados com um `id`.\n\nExemplo:\n```json\n{\n\t\"name\": \"Non-Admin for tests\",\n\t\"email\": \"user@teste.com\",\n\t\"id\": \"b6e1b615-05fe-4d5f-a90d-df9e8137164e\",\n\t\"type\": \"USER\",\n\t\"created_at\": \"2022-12-14T14:13:17.421Z\",\n\t\"updated_at\": \"2022-12-14T14:13:17.421Z\"\n}\n```\n\nCaso o email fornecido já exista terá um retorno de erro.\n```json\n{\n\t\"statusCode\": 400,\n\t\"message\": \"Email user@teste.com already exists\",\n\t\"error\": \"Bad Request\"\n}\n```","method":"POST","body":{"mimeType":"application/json","text":"{\n\t\"name\":\"Non-Admin for tests\",\n\t\"email\":\"user@teste.com\",\n\t\"password\":\"teste\"\n}"},"parameters":[],"headers":[{"name":"Content-Type","value":"application/json","id":"pair_6438b0e9a30c45178742aee72014ed57"}],"authentication":{},"metaSortKey":-1662423102606,"isPrivate":false,"settingStoreCookies":true,"settingSendCookies":true,"settingDisableRenderRequestBody":false,"settingEncodeUrl":true,"settingRebuildPath":true,"settingFollowRedirects":"global","_type":"request"},{"_id":"fld_5b96b769236f476fb53e23a683178fc2","parentId":"wrk_b82f12282b574de180c368c45fe1ff01","modified":1662576013139,"created":1662576013139,"name":"Users","description":"","environment":{},"environmentPropertyOrder":null,"metaSortKey":-1661889322146.5,"_type":"request_group"},{"_id":"req_3cfb20181eeb4683897f55fd1ce08f9b","parentId":"fld_5b96b769236f476fb53e23a683178fc2","modified":1671016497648,"created":1662576013160,"url":"{{ _.local }}/user","name":"Get All Users","description":"Rota para listar todas vagas de empregos criadas no banco de dados\n\nMetodo GET -> `/user`\n\nurl = http://localhost:3000/user\n\nComo essa rota utiliza o metodo `GET`, não será necessario enviar nenhum dado.\nBasta Bater(fazer a requisição) na rota que será listado todos os usuarios cadastradas no banco.\n\n\n```json\n[\n\t{\n\t\t\t\"id\": \"b6e1b615-05fe-4d5f-a90d-df9e8137164e\",\n\t\t\t\"name\": \"Non-Admin for tests\",\n\t\t\t\"email\": \"user@teste.com\",\n\t\t\t\"created_at\": \"2022-12-14T14:13:17.421Z\"\n\t}\n]\n```\n\ncaso não haja usuarios cadastrados no banco haverá um retorno informando\n```json\n{\n\t\"message\": \"Users is empty\"\n}\n```\n","method":"GET","body":{},"parameters":[{"id":"pair_5a4c0234eeb746c59ea0707255fd46e9","name":"orderByColumn","value":"name","description":""},{"id":"pair_32c5ec67e9cc42d7800d315e5b67c214","name":"page","value":"1","description":""},{"id":"pair_22a72ea537f1441db4069a2cce5ba935","name":"take","value":"5","description":""},{"id":"pair_4aac48f9b49b4426b87d9ca1bafabc45","name":"order","value":"ASC","description":""}],"headers":[],"authentication":{"type":"bearer","token":"{{ _.token }}"},"metaSortKey":-1662350814034,"isPrivate":false,"settingStoreCookies":true,"settingSendCookies":true,"settingDisableRenderRequestBody":false,"settingEncodeUrl":true,"settingRebuildPath":true,"settingFollowRedirects":"global","_type":"request"},{"_id":"req_0468706c49644517b7052cedbb4e55a7","parentId":"fld_5b96b769236f476fb53e23a683178fc2","modified":1671016574288,"created":1662576013168,"url":"{{ _.local }}/user/b6e1b615-05fe-4d5f-a90d-df9e8137164e","name":"Get User By Id","description":"Rota para listar um usuario pelo id\n\nMetodo GET -> `/user/:id`\n\nurl = http://localhost:3000/user/b6e1b615-05fe-4d5f-a90d-df9e8137164e\n\nPara receber os dados da vaga será necessario enviar o id no link(parametros)\nCaso sejá enviado um id que não existe no banco de dados terá um retorno de erro:\n\n```json\n{\n\t\"id\": \"b6e1b615-05fe-4d5f-a90d-df9e8137164e\",\n\t\"name\": \"Non-Admin for tests\",\n\t\"email\": \"user@teste.com\",\n\t\"created_at\": \"2022-12-14T14:13:17.421Z\",\n\t\"updated_at\": \"2022-12-14T14:13:17.421Z\"\n}\n```\n\nCaso o id exista no banco haverá um retorno que o usuario nao foi encontrado.\n\n```json\n{\n\t\"statusCode\": 400,\n\t\"message\": \"User not found\",\n\t\"error\": \"Bad Request\"\n}\n```\n","method":"GET","body":{},"parameters":[],"headers":[],"authentication":{"type":"bearer","token":"{{ _.token }}"},"metaSortKey":-1662314669748,"isPrivate":false,"settingStoreCookies":true,"settingSendCookies":true,"settingDisableRenderRequestBody":false,"settingEncodeUrl":true,"settingRebuildPath":true,"settingFollowRedirects":"global","_type":"request"},{"_id":"req_c8accca738b04ac78fe35e6981fc1bb0","parentId":"fld_5b96b769236f476fb53e23a683178fc2","modified":1671016665656,"created":1662576013176,"url":"{{ _.local }}/user/b6e1b615-05fe-4d5f-a90d-df9e8137164e","name":"Update User By Id","description":"Rota para atualizar os dados de um usuario\n\nMetodo PUT -> `/user/:id`\n\nPara atualizarum usuairo será necessario duas coisas.\n 1. - O id do usuario que será atualizado, ele vai na url/link(parametro)\n 2. - O campo que precisa ser atualizado no body.\n\n url = http://localhost:3000/user/b6e1b615-05fe-4d5f-a90d-df9e8137164e\n\nBody:\n ```json\n{\n\t\"name\":\"Non-Admin for tests 2.0\"\n}\n ```\n\n Em caso de sucesso no update será um retorno dos novos dados do usuario.\n\n ```json\n{\n\t\"id\": \"b6e1b615-05fe-4d5f-a90d-df9e8137164e\",\n\t\"name\": \"Non-Admin for tests2.0\",\n\t\"email\": \"user@teste.com\",\n\t\"type\": \"USER\",\n\t\"created_at\": \"2022-12-14T14:13:17.421Z\",\n\t\"updated_at\": \"2022-12-14T14:17:34.661Z\"\n}\n ```\n\n Em caso de envio de id que não existe no banco haverá um retorno de user not found.\n ```json\n{\n\t\"statusCode\": 400,\n\t\"message\": \"User not found\",\n\t\"error\": \"Bad Request\"\n}\n ```\n \n Não envio do id\n ```json\n{\n\t\"statusCode\": 400,\n\t\"message\": \"Id not provided\",\n\t\"error\": \"Bad Request\"\n}\n```","method":"PUT","body":{"mimeType":"application/json","text":"{\n\t\"name\": \"Non-Admin for tests2.0\"\n}"},"parameters":[],"headers":[{"name":"Content-Type","value":"application/json","id":"pair_689be148eeba425380f1d97d6adad9c7"}],"authentication":{"type":"bearer","token":"{{ _.token }}"},"metaSortKey":-1662296597605,"isPrivate":false,"settingStoreCookies":true,"settingSendCookies":true,"settingDisableRenderRequestBody":false,"settingEncodeUrl":true,"settingRebuildPath":true,"settingFollowRedirects":"global","_type":"request"},{"_id":"req_c4105a52f02f46edb792d6bab7857c20","parentId":"fld_5b96b769236f476fb53e23a683178fc2","modified":1671017139451,"created":1662576013152,"url":"{{ _.local }}/user/9be8d4aa-d485-4e85-b205-1b9f6da7c335","name":"Delete User By Id","description":"Rota para deletar um usuario\n\nMetodo DELETE -> /user/:id\n\nurl = http://localhost:3000/user/b6e1b615-05fe-4d5f-a90d-df9e8137164e\n\nCaso o usuario com o id exista terá uma mensagem de sucesso no retorno\n```json\n{\n\t\"message\": \"User deleted successfully\"\n}\n```\n\n Caso não exista o id no banco de dados\n ```json\n{\n\t\"statusCode\": 400,\n\t\"message\": \"User not found\",\n\t\"error\": \"Bad Request\"\n}\n ```\n \n Caso o id não seja enviado\n ```json\n{\n\t\"statusCode\": 400,\n\t\"message\": \"Id not provided\",\n\t\"error\": \"Bad Request\"\n}\n```","method":"DELETE","body":{},"parameters":[],"headers":[],"authentication":{"type":"bearer","token":"{{ _.token }}"},"metaSortKey":-1662278525462,"isPrivate":false,"settingStoreCookies":true,"settingSendCookies":false,"settingDisableRenderRequestBody":false,"settingEncodeUrl":true,"settingRebuildPath":true,"settingFollowRedirects":"global","_type":"request"},{"_id":"env_4061080ad84c053c11197b3a6ed75c84a2e2acd8","parentId":"wrk_b82f12282b574de180c368c45fe1ff01","modified":1664699242278,"created":1662423088170,"name":"Base Environment","data":{"local":"http://localhost:5005","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IndhbmRlcnNvbjFAdGVzdGUuY29tIiwiaWF0IjoxNjY0NTEzNTc4LCJleHAiOjE2NjQ1OTk5Nzh9.eTRuG0bOV2L_tJTsfcTFVNnUjETj9RoN8jDqUJeICiA"},"dataPropertyOrder":{"&":["local","token"]},"color":null,"isPrivate":false,"metaSortKey":1662423088170,"_type":"environment"},{"_id":"jar_4061080ad84c053c11197b3a6ed75c84a2e2acd8","parentId":"wrk_b82f12282b574de180c368c45fe1ff01","modified":1662423088175,"created":1662423088175,"name":"Default Jar","cookies":[],"_type":"cookie_jar"},{"_id":"spc_7d6b343355004196a13c45da6ce1daa6","parentId":"wrk_b82f12282b574de180c368c45fe1ff01","modified":1662423088161,"created":1662423088161,"fileName":"SouJunior - LinkedIn-backend","contents":"","contentType":"yaml","_type":"api_spec"},{"_id":"env_b425f583615f428dbed664051c093159","parentId":"env_4061080ad84c053c11197b3a6ed75c84a2e2acd8","modified":1671015964292,"created":1664513666594,"name":"🟢 Admin Localhost","data":{"local":"http://localhost:3001","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQHRlc3RlLmNvbSIsImlhdCI6MTY3MTAxNTk1NSwiZXhwIjoxNjcxMTAyMzU1fQ.hlKmhqj0193kJvWOQQBgvMrZglh3qqs1Wh_Z7bsVH9A"},"dataPropertyOrder":{"&":["local","token"]},"color":null,"isPrivate":false,"metaSortKey":0,"_type":"environment"},{"_id":"env_f99672e39c4d44a0b505e6dfaffa390a","parentId":"env_4061080ad84c053c11197b3a6ed75c84a2e2acd8","modified":1669935403040,"created":1664513680113,"name":"🔴 User Localhost","data":{"local":"http://localhost:3001","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAdGVzdGUuY29tIiwiaWF0IjoxNjY5OTM1MzY5LCJleHAiOjE2NzAwMjE3Njl9.Ul6YfIYJqMFBYR8hfjxEoUAAelAoEXyqNi6cC_DlTfI"},"dataPropertyOrder":{"&":["local","token"]},"color":null,"isPrivate":false,"metaSortKey":1,"_type":"environment"},{"_id":"env_ee5daaea82af416c9d63d4ca52bd6df6","parentId":"env_4061080ad84c053c11197b3a6ed75c84a2e2acd8","modified":1669935404488,"created":1664514835471,"name":"🐳 Admin Docker 🟢","data":{"local":"http://localhost:3000","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQHRlc3RlLmNvbSIsImlhdCI6MTY2NjA0MjQ3NSwiZXhwIjoxNjY2MTI4ODc1fQ.hWDeXuzDBG0fDUHlbGKYkfl1JdtCet2AmlPxRvEYHL4"},"dataPropertyOrder":{"&":["local","token"]},"color":null,"isPrivate":false,"metaSortKey":2,"_type":"environment"},{"_id":"env_019f7a929d5840ea99767fbbdf7038b1","parentId":"env_4061080ad84c053c11197b3a6ed75c84a2e2acd8","modified":1669935405031,"created":1664514875008,"name":"🐳 User Docker 🔴","data":{"local":"http://localhost:3000","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAdGVzdGUuY29tIiwiaWF0IjoxNjY2MDQyOTUyLCJleHAiOjE2NjYxMjkzNTJ9.L7nNW0KeJpcAoCg6enJxLAIgvz-EFx-DSZmmo-txK_8"},"dataPropertyOrder":{"&":["local","token"]},"color":null,"isPrivate":false,"metaSortKey":3,"_type":"environment"},{"_id":"env_344d2c8b3e984858bd01f75d6623818a","parentId":"env_4061080ad84c053c11197b3a6ed75c84a2e2acd8","modified":1669935400659,"created":1664515205563,"name":"☁️ Developer Deploy Admin","data":{"local":"https://dev-linkedin-backend.up.railway.app","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQHRlc3RlLmNvbSIsImlhdCI6MTY2NTI5NTg0MCwiZXhwIjoxNjY1MzgyMjQwfQ.N8leaAXUCipfYV_FClgciUvdNWijdEJ42QpcdnNoMHk"},"dataPropertyOrder":{"&":["local","token"]},"color":null,"isPrivate":false,"metaSortKey":792052569916,"_type":"environment"},{"_id":"env_57e793a5dae94a8c8470a9be943f1136","parentId":"env_4061080ad84c053c11197b3a6ed75c84a2e2acd8","modified":1669935398619,"created":1664515293573,"name":"🌧️ Developer Deploy User","data":{"local":"https://dev-linkedin-backend.up.railway.app","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAdGVzdGUuY29tIiwiaWF0IjoxNjY0NjQ5MTQ5LCJleHAiOjE2NjQ3MzU1NDl9.Fvzt4CbBjGGvB-Q9ld68QTbisROkkXolEXAoDKFWNWo"},"dataPropertyOrder":{"&":["local","token"]},"color":null,"isPrivate":false,"metaSortKey":1188078854872.5,"_type":"environment"}]}
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2022-12-14T11:27:26.837Z",
+  "__export_source": "insomnia.desktop.app:v2022.6.0",
+  "resources": [
+    {
+      "_id": "req_034a525b87274f6f88136aaefac29a04",
+      "parentId": "fld_ff00175cac944612942458020b1b6946",
+      "modified": 1671017185275,
+      "created": 1662763908305,
+      "url": "{{ _.local }}/auth/login",
+      "name": "Login",
+      "description": "Teste para admin\n```bash\n{\n\t\"email\":\"admin@teste.com\",\n\t\"password\":\"teste\"\n}\n```\n\nTeste para user\n```bash\n{\n\t\"email\":\"user@teste.com\",\n\t\"password\":\"teste\"\n}\n```",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"email\":\"admin@teste.com\",\n\t\"password\":\"teste\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_7dcc99b773344616adaf46b29f70624b"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1662763908305,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_ff00175cac944612942458020b1b6946",
+      "parentId": "wrk_b82f12282b574de180c368c45fe1ff01",
+      "modified": 1663825925739,
+      "created": 1662763899786,
+      "name": "Auth",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1663822030592,
+      "_type": "request_group"
+    },
+    {
+      "_id": "wrk_b82f12282b574de180c368c45fe1ff01",
+      "parentId": null,
+      "modified": 1662423088160,
+      "created": 1662423088160,
+      "name": "SouJunior - LinkedIn-backend",
+      "description": "",
+      "scope": "collection",
+      "_type": "workspace"
+    },
+    {
+      "_id": "req_1e7a54203d9a47c98e9eafcac5ae4f2e",
+      "parentId": "fld_ff00175cac944612942458020b1b6946",
+      "modified": 1664562800299,
+      "created": 1664514741768,
+      "url": "{{ _.local }}/auth/user-logged",
+      "name": "User-Logged",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      },
+      "metaSortKey": -1662683510964,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_87bfa459ad8e4ce7972b2a9b2defeed4",
+      "parentId": "fld_6f36395cbdaa434f819595144eb6baf5",
+      "modified": 1665328860511,
+      "created": 1663822045365,
+      "url": "{{ _.local }}/comment",
+      "name": "Create a Comment",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"comment\": \"Teste de comentario\",\n\t\"user_id\": 1,\n\t\"job_id\": 1\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_6892514159134668afcc207cdaac761c"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1663822045366,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_6f36395cbdaa434f819595144eb6baf5",
+      "parentId": "wrk_b82f12282b574de180c368c45fe1ff01",
+      "modified": 1663822030542,
+      "created": 1663822030542,
+      "name": "Comments",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1663822030542,
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_0f766cea47bf4ef2a5c5ef2072733c8f",
+      "parentId": "fld_6f36395cbdaa434f819595144eb6baf5",
+      "modified": 1663822201823,
+      "created": 1663822192516,
+      "url": "{{ _.local }}/comment",
+      "name": "Get All Comments",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1663769864466.5,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_d2073806581145ba899e1c76fa85f288",
+      "parentId": "fld_6f36395cbdaa434f819595144eb6baf5",
+      "modified": 1663825904471,
+      "created": 1663822153734,
+      "url": "{{ _.local }}/comment/:id",
+      "name": "Get Comment By Id",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1663769864416.5,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_81ab8a9442e14d1da3f6a3b857c3f54b",
+      "parentId": "fld_6f36395cbdaa434f819595144eb6baf5",
+      "modified": 1664497444869,
+      "created": 1663824414052,
+      "url": "{{ _.local }}/comment/:id",
+      "name": "Update a Comment",
+      "description": "",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"comment\": \"Teste de comentario atualizado\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_6892514159134668afcc207cdaac761c"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1663769864366.5,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_c617cc131de44451a0b47218431c0d18",
+      "parentId": "fld_6f36395cbdaa434f819595144eb6baf5",
+      "modified": 1663825915004,
+      "created": 1663825031404,
+      "url": "{{ _.local }}/comment/:id",
+      "name": "Delete Comment",
+      "description": "",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1663769864316.5,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_350bef51bec243af8fb367e48e07f03c",
+      "parentId": "fld_f74ba1a4baf1418d88e07d3eeabd0d8e",
+      "modified": 1671016771669,
+      "created": 1663717683617,
+      "url": "{{ _.local }}/company",
+      "name": "Create Company",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"company_name\":\"Teste\",\n\t\"email\":\"teste@teste.com\",\n\t\"linkedin\":\"link\",\n\t\"address\":\"rua dos testes\",\n\t\"description\":\"isso é apenas um teste\",\n\t\"owner_name\":\"Super teste\",\n\t\"owner_phone\":\"12345\",\n\t\"user_id\":\"0320d22a-413f-4602-a508-ed6ab3d50e35\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_ddc59d94a634427bbe5f3dab0e41bf30"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1663717683617,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_f74ba1a4baf1418d88e07d3eeabd0d8e",
+      "parentId": "wrk_b82f12282b574de180c368c45fe1ff01",
+      "modified": 1663717669531,
+      "created": 1663717669531,
+      "name": "Companies",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1663717669531,
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_3cdbeedde4c14b2e914cf00041daa464",
+      "parentId": "fld_f74ba1a4baf1418d88e07d3eeabd0d8e",
+      "modified": 1664926240690,
+      "created": 1663717694057,
+      "url": "{{ _.local }}/company",
+      "name": "Get all companies",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "id": "pair_bb5ada26070b417397f81dcc124b45c4",
+          "name": "orderByColumn",
+          "value": "id",
+          "description": ""
+        },
+        {
+          "id": "pair_b1b8c5f55b7b4aee992c1157d83e99a9",
+          "name": "page",
+          "value": "1",
+          "description": ""
+        },
+        {
+          "id": "pair_af9b26c3a2ce412bbabff11104c8983a",
+          "name": "take",
+          "value": "10",
+          "description": ""
+        },
+        {
+          "id": "pair_18a49785e3f94dc0807ba5822e102e37",
+          "name": "order",
+          "value": "ASC",
+          "description": ""
+        }
+      ],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1663717683567,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_a9208487c8e24c71b8465318989d724a",
+      "parentId": "fld_f74ba1a4baf1418d88e07d3eeabd0d8e",
+      "modified": 1663721063166,
+      "created": 1663719157737,
+      "url": "{{ _.local }}/company/:id",
+      "name": "Get company by id",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1663656438021,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_6744832b8cf64ee6a72ebc4c058335e8",
+      "parentId": "fld_f74ba1a4baf1418d88e07d3eeabd0d8e",
+      "modified": 1664497441947,
+      "created": 1663719917207,
+      "url": "{{ _.local }}/company/1",
+      "name": "Update Company",
+      "description": "",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"company_name\":\"Teste\",\n\t\"email\":\"teste@teste.com\",\n\t\"linkedin\":\"link\",\n\t\"address\":\"rua dos testes\",\n\t\"description\":\"isso é apenas um teste\",\n\t\"owner_name\":\"Super teste\",\n\t\"owner_phone\":\"12345\",\n\t\"user_id\":2\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_ddc59d94a634427bbe5f3dab0e41bf30"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1663656437971,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_50f29eb80e36411bb639fde880afc954",
+      "parentId": "fld_f74ba1a4baf1418d88e07d3eeabd0d8e",
+      "modified": 1663720393195,
+      "created": 1663720379464,
+      "url": "{{ _.local }}/company/2",
+      "name": "Delete Company",
+      "description": "",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1663656437921,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_19a23d83b8c847b3a15021c452752b1f",
+      "parentId": "fld_e6f3637e6ce541a6812e174c7bb9900b",
+      "modified": 1664513111489,
+      "created": 1663192329434,
+      "url": "{{ _.local }}/report",
+      "name": "Create a new report",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"job_id\":1,\n\t\"user_id\":2,\n\t\"description\":\"Teste de report de vagas\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_66b25934ba924f4198757c0e234cef1e"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1663287842518,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_e6f3637e6ce541a6812e174c7bb9900b",
+      "parentId": "wrk_b82f12282b574de180c368c45fe1ff01",
+      "modified": 1663287193315,
+      "created": 1663192300244,
+      "name": "Report",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1663192300244,
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_8c79aaffa21d405ca8b7cb2197e56923",
+      "parentId": "fld_e6f3637e6ce541a6812e174c7bb9900b",
+      "modified": 1663287853796,
+      "created": 1663287842468,
+      "url": "{{ _.local }}/report",
+      "name": "Get all Reports",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1663287842468,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_2015dd0dff64463db72b576b381cd33c",
+      "parentId": "fld_e6f3637e6ce541a6812e174c7bb9900b",
+      "modified": 1663292196748,
+      "created": 1663288014038,
+      "url": "{{ _.local }}/report/:id",
+      "name": "Get Report By Id",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1663287842418,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_e4f07a4304994e499ee3330c6802ee83",
+      "parentId": "fld_e6f3637e6ce541a6812e174c7bb9900b",
+      "modified": 1664497438549,
+      "created": 1663292322611,
+      "url": "{{ _.local }}/report/:id",
+      "name": "Update Report By Id",
+      "description": "",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"description\":\"Teste teste teste\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_453e76c1d48a45d592a69582b2db1512"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1663287842393,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_4fb6c197f0cc4488b5fed2f1b348d65d",
+      "parentId": "fld_e6f3637e6ce541a6812e174c7bb9900b",
+      "modified": 1663291578329,
+      "created": 1663290469262,
+      "url": "{{ _.local }}/report/3",
+      "name": "Delete Report",
+      "description": "",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1663287842368,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_66bdc2ed6f394752a6de16244f64723e",
+      "parentId": "fld_c0a169a7f6854baf905ccff0a0d66dd0",
+      "modified": 1671016900017,
+      "created": 1662423102606,
+      "url": "{{ _.local }}/job",
+      "name": "Create New Job",
+      "description": "Esta rota cria uma nova vaga de emprego.\n\nMetodo POST -> `/job`\n\ntype é um ENUM [\n'ESTAGIARIO',\n'TRAINNER',\n'JUNIOR'\n]\n\nPara criar um novo job é necessario enviar os seguintes itens no `body`:\n```json\n{\n\t\"title\":\"Vaga para Junior\",\n\t\"description\":\"Esse é apenas um teste\",\n\t\"company_id\": \"insira o ID da Company\",\n\t\"type\":\"JUNIOR\"\n}\n```\n\nEnviando os dados de maneira correta e não repetida, você receberá um confirmação com um response com os seus dados com um `id`.\n\nExemplo:\n```json\n{\n\t\"title\": \"Vagas abertas para Juniors\",\n\t\"description\": \"Esse é apenas um teste\",\n\t\"type\": \"JUNIOR\",\n\t\"company_id\": \"44a832e6-dd7c-409a-8beb-d80811c7dbc0\",\n\t\"id\": \"9fe675e6-c982-42b3-b18b-685701969daa\",\n\t\"created_at\": \"2022-12-14T14:20:59.340Z\",\n\t\"updated_at\": \"2022-12-14T14:20:59.340Z\"\n}\n```",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"title\":\"Vagas abertas para Juniors\",\n\t\"description\":\"Esse é apenas um teste\",\n\t\"type\":\"JUNIOR\",\n\t\"company_id\":\"44a832e6-dd7c-409a-8beb-d80811c7dbc0\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_6438b0e9a30c45178742aee72014ed57"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1662423102606,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_c0a169a7f6854baf905ccff0a0d66dd0",
+      "parentId": "wrk_b82f12282b574de180c368c45fe1ff01",
+      "modified": 1662423098750,
+      "created": 1662423098750,
+      "name": "Jobs",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1662423098750,
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_e69f4ce0feb9442aad7c62214cefc288",
+      "parentId": "fld_c0a169a7f6854baf905ccff0a0d66dd0",
+      "modified": 1671016937372,
+      "created": 1662423116859,
+      "url": "{{ _.local }}/job",
+      "name": "Get All Jobs",
+      "description": "Rota para listar todas vagas de empregos criadas no banco de dados\n\nMetodo GET -> `/job`\n\nurl = http://localhost:3000/job\n\nComo essa rota utiliza o metodo `GET`, não será necessario enviar nenhum dado.\nBasta Bater(fazer a requisição) na rota que será listado todas as vagas cadastradas no banco.\n\n\n```json\n [\n\t\t{\n\t\t\t\"id\": \"9fe675e6-c982-42b3-b18b-685701969daa\",\n\t\t\t\"title\": \"Vagas abertas para Juniors\",\n\t\t\t\"description\": \"Esse é apenas um teste\",\n\t\t\t\"type\": \"JUNIOR\",\n\t\t\t\"company_id\": \"44a832e6-dd7c-409a-8beb-d80811c7dbc0\",\n\t\t\t\"created_at\": \"2022-12-14T14:20:59.340Z\",\n\t\t\t\"updated_at\": \"2022-12-14T14:20:59.340Z\"\n\t\t}\n\t]\n```",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "id": "pair_d49e1d196d21402ebcbf87b6b7d926cd",
+          "name": "order",
+          "value": "ASC",
+          "description": ""
+        },
+        {
+          "id": "pair_bbbc42c92e3748d9bcc512f28ac43c73",
+          "name": "page",
+          "value": "1",
+          "description": ""
+        },
+        {
+          "id": "pair_7cd3576f7bcb4dc99f373eb15beb70e8",
+          "name": "take",
+          "value": "2",
+          "description": ""
+        },
+        {
+          "id": "pair_f67a26f22a3948a7971cc98aa36e8655",
+          "name": "orderByColumn",
+          "value": "id",
+          "description": ""
+        }
+      ],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1662350814034,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_0a19c58c4b4441da971df3605739e076",
+      "parentId": "fld_c0a169a7f6854baf905ccff0a0d66dd0",
+      "modified": 1671017093929,
+      "created": 1662423119469,
+      "url": "{{ _.local }}/job/asdfsad",
+      "name": "Get Job By Id",
+      "description": "Rota para listar uma vaga de emprego pelo seu id\n\nMetodo GET -> `/job/:id`\n\nurl = http://localhost:3000/job/9fe675e6-c982-42b3-b18b-685701969daa\n\nPara receber os dados da vaga será necessario enviar o id no link(parametros)\nCaso sejá enviado um id que não existe no banco de dados terá um retorno de erro:\n\n```json\n{\n\t\"statusCode\": 400,\n\t\"message\": \"Job not found\",\n\t\"error\": \"Bad Request\"\n}\n```\nou\n```json\n{\n\t\"statusCode\": 422,\n\t\"message\": \"invalid input syntax for type uuid: \\\"asdfsad\\\"\",\n\t\"error\": \"Unprocessable Entity\"\n}\n```\n\nCaso o id exista no banco será retornado os dados da vaga que tem o id enviado.\n\n```json\n{\n\t\"id\": \"9fe675e6-c982-42b3-b18b-685701969daa\",\n\t\"title\": \"Vagas abertas para Juniors\",\n\t\"description\": \"Esse é apenas um teste\",\n\t\"type\": \"JUNIOR\",\n\t\"company_id\": \"44a832e6-dd7c-409a-8beb-d80811c7dbc0\",\n\t\"created_at\": \"2022-12-14T14:20:59.340Z\",\n\t\"updated_at\": \"2022-12-14T14:20:59.340Z\",\n\t\"comments\": []\n}\n```\n",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1662314669748,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_0abdb6b9d81e436293a34e7dbe65a994",
+      "parentId": "fld_c0a169a7f6854baf905ccff0a0d66dd0",
+      "modified": 1671016844190,
+      "created": 1662423124650,
+      "url": "{{ _.local }}/job/2",
+      "name": "Update Job By Id",
+      "description": "Rota para atualizar uma vaga de emprego pelo seu id\n\nMetodo PUT -> `/job/:id`\n\nPara atualizar uma vaga será necessario duas coisas.\n 1. - O id da vaga que será atualizado, ele vai na url/link(parametro)\n 2. - O campo que precisa ser atualizado no body.\n\n url = http://localhost:3000/job/2\n\nBody:\n ```json\n{\n\t\"title\":\"Vaga abertas para trainner\"\n}\n ```\n\n Em caso de sucesso no update será um retorno dos onvos dados da vaga.\n\n ```json\n{\n\t\"id\": 2,\n\t\"title\": \"Vaga abertas para trainner\",\n\t\"description\": \"Esse é apenas um teste\",\n\t\"type\": \"TRAINNER\",\n\t\"created_at\": \"2022-09-07T19:42:21.012Z\",\n\t\"updated_at\": \"2022-09-07T20:18:36.484Z\"\n}\n ```\n\n Em caso de envio de id que não existe no banco haverá um retorno de job not found.\n ```json\n{\n\t\"statusCode\": 400,\n\t\"message\": \"Job not found\",\n\t\"error\": \"Bad Request\"\n}\n ```\n \n Não envio do id\n ```json\n{\n\t\"statusCode\": 400,\n\t\"message\": \"Id not provided\",\n\t\"error\": \"Bad Request\"\n}\n```",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"title\":\"Vaga abertas para trainner\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_689be148eeba425380f1d97d6adad9c7"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1662296597605,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_beff65e039c1423c8e85cd014eec44e8",
+      "parentId": "fld_c0a169a7f6854baf905ccff0a0d66dd0",
+      "modified": 1671016840972,
+      "created": 1662423112914,
+      "url": "{{ _.local }}/job/bd1620ef-052e-4a14-bbe2-56d7b225a68d",
+      "name": "Delete Job By Id",
+      "description": "Rota para deletar uma vaga de emprego\n\nMetodo DELETE -> /job/:id\n\nurl = http://localhost:3000/job/2\n\nCaso a vaga com o id exista terá uma mensagem de sucesso no retorno\n```json\n{\n\t\"message\": \"Job deleted successfully\"\n}\n```\n\n Caso não exista o id no banco de dados\n ```json\n{\n\t\"statusCode\": 400,\n\t\"message\": \"Job not found\",\n\t\"error\": \"Bad Request\"\n}\n ```\n \n Caso o id não seja enviado\n ```json\n{\n\t\"statusCode\": 400,\n\t\"message\": \"Id not provided\",\n\t\"error\": \"Bad Request\"\n}\n```",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1662278525462,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_10ad39870ce345dd8b2262c3bfd01a2d",
+      "parentId": "fld_5b96b769236f476fb53e23a683178fc2",
+      "modified": 1671016454176,
+      "created": 1662576013146,
+      "url": "{{ _.local }}/user",
+      "name": "Create New User",
+      "description": "Esta rota cria um novo usuario na plataforma\n\nMetodo POST -> `/user`\n\nPara criar um novo usuario é necessario enviar os seguintes itens no `body`:\n```json\n{\n\t\"name\":\"Non-Admin for tests\",\n\t\"email\":\"user@teste.com\",\n\t\"password\":\"teste\"\n}\n```\n\nEnviando os dados de maneira correta e não repetida, você receberá um confirmação com um response com os seus dados com um `id`.\n\nExemplo:\n```json\n{\n\t\"name\": \"Non-Admin for tests\",\n\t\"email\": \"user@teste.com\",\n\t\"id\": \"b6e1b615-05fe-4d5f-a90d-df9e8137164e\",\n\t\"type\": \"USER\",\n\t\"created_at\": \"2022-12-14T14:13:17.421Z\",\n\t\"updated_at\": \"2022-12-14T14:13:17.421Z\"\n}\n```\n\nCaso o email fornecido já exista terá um retorno de erro.\n```json\n{\n\t\"statusCode\": 400,\n\t\"message\": \"Email user@teste.com already exists\",\n\t\"error\": \"Bad Request\"\n}\n```",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"name\":\"Non-Admin for tests\",\n\t\"email\":\"user@teste.com\",\n\t\"password\":\"teste\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_6438b0e9a30c45178742aee72014ed57"
+        }
+      ],
+      "authentication": {},
+      "metaSortKey": -1662423102606,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_5b96b769236f476fb53e23a683178fc2",
+      "parentId": "wrk_b82f12282b574de180c368c45fe1ff01",
+      "modified": 1662576013139,
+      "created": 1662576013139,
+      "name": "Users",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1661889322146.5,
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_3cfb20181eeb4683897f55fd1ce08f9b",
+      "parentId": "fld_5b96b769236f476fb53e23a683178fc2",
+      "modified": 1671016497648,
+      "created": 1662576013160,
+      "url": "{{ _.local }}/user",
+      "name": "Get All Users",
+      "description": "Rota para listar todas vagas de empregos criadas no banco de dados\n\nMetodo GET -> `/user`\n\nurl = http://localhost:3000/user\n\nComo essa rota utiliza o metodo `GET`, não será necessario enviar nenhum dado.\nBasta Bater(fazer a requisição) na rota que será listado todos os usuarios cadastradas no banco.\n\n\n```json\n[\n\t{\n\t\t\t\"id\": \"b6e1b615-05fe-4d5f-a90d-df9e8137164e\",\n\t\t\t\"name\": \"Non-Admin for tests\",\n\t\t\t\"email\": \"user@teste.com\",\n\t\t\t\"created_at\": \"2022-12-14T14:13:17.421Z\"\n\t}\n]\n```\n\ncaso não haja usuarios cadastrados no banco haverá um retorno informando\n```json\n{\n\t\"message\": \"Users is empty\"\n}\n```\n",
+      "method": "GET",
+      "body": {},
+      "parameters": [
+        {
+          "id": "pair_5a4c0234eeb746c59ea0707255fd46e9",
+          "name": "orderByColumn",
+          "value": "name",
+          "description": ""
+        },
+        {
+          "id": "pair_32c5ec67e9cc42d7800d315e5b67c214",
+          "name": "page",
+          "value": "1",
+          "description": ""
+        },
+        {
+          "id": "pair_22a72ea537f1441db4069a2cce5ba935",
+          "name": "take",
+          "value": "5",
+          "description": ""
+        },
+        {
+          "id": "pair_4aac48f9b49b4426b87d9ca1bafabc45",
+          "name": "order",
+          "value": "ASC",
+          "description": ""
+        }
+      ],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      },
+      "metaSortKey": -1662350814034,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_0468706c49644517b7052cedbb4e55a7",
+      "parentId": "fld_5b96b769236f476fb53e23a683178fc2",
+      "modified": 1671016574288,
+      "created": 1662576013168,
+      "url": "{{ _.local }}/user/b6e1b615-05fe-4d5f-a90d-df9e8137164e",
+      "name": "Get User By Id",
+      "description": "Rota para listar um usuario pelo id\n\nMetodo GET -> `/user/:id`\n\nurl = http://localhost:3000/user/b6e1b615-05fe-4d5f-a90d-df9e8137164e\n\nPara receber os dados da vaga será necessario enviar o id no link(parametros)\nCaso sejá enviado um id que não existe no banco de dados terá um retorno de erro:\n\n```json\n{\n\t\"id\": \"b6e1b615-05fe-4d5f-a90d-df9e8137164e\",\n\t\"name\": \"Non-Admin for tests\",\n\t\"email\": \"user@teste.com\",\n\t\"created_at\": \"2022-12-14T14:13:17.421Z\",\n\t\"updated_at\": \"2022-12-14T14:13:17.421Z\"\n}\n```\n\nCaso o id exista no banco haverá um retorno que o usuario nao foi encontrado.\n\n```json\n{\n\t\"statusCode\": 400,\n\t\"message\": \"User not found\",\n\t\"error\": \"Bad Request\"\n}\n```\n",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      },
+      "metaSortKey": -1662314669748,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_c8accca738b04ac78fe35e6981fc1bb0",
+      "parentId": "fld_5b96b769236f476fb53e23a683178fc2",
+      "modified": 1671016665656,
+      "created": 1662576013176,
+      "url": "{{ _.local }}/user/b6e1b615-05fe-4d5f-a90d-df9e8137164e",
+      "name": "Update User By Id",
+      "description": "Rota para atualizar os dados de um usuario\n\nMetodo PUT -> `/user/:id`\n\nPara atualizarum usuairo será necessario duas coisas.\n 1. - O id do usuario que será atualizado, ele vai na url/link(parametro)\n 2. - O campo que precisa ser atualizado no body.\n\n url = http://localhost:3000/user/b6e1b615-05fe-4d5f-a90d-df9e8137164e\n\nBody:\n ```json\n{\n\t\"name\":\"Non-Admin for tests 2.0\"\n}\n ```\n\n Em caso de sucesso no update será um retorno dos novos dados do usuario.\n\n ```json\n{\n\t\"id\": \"b6e1b615-05fe-4d5f-a90d-df9e8137164e\",\n\t\"name\": \"Non-Admin for tests2.0\",\n\t\"email\": \"user@teste.com\",\n\t\"type\": \"USER\",\n\t\"created_at\": \"2022-12-14T14:13:17.421Z\",\n\t\"updated_at\": \"2022-12-14T14:17:34.661Z\"\n}\n ```\n\n Em caso de envio de id que não existe no banco haverá um retorno de user not found.\n ```json\n{\n\t\"statusCode\": 400,\n\t\"message\": \"User not found\",\n\t\"error\": \"Bad Request\"\n}\n ```\n \n Não envio do id\n ```json\n{\n\t\"statusCode\": 400,\n\t\"message\": \"Id not provided\",\n\t\"error\": \"Bad Request\"\n}\n```",
+      "method": "PUT",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"name\": \"Non-Admin for tests2.0\"\n}"
+      },
+      "parameters": [],
+      "headers": [
+        {
+          "name": "Content-Type",
+          "value": "application/json",
+          "id": "pair_689be148eeba425380f1d97d6adad9c7"
+        }
+      ],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      },
+      "metaSortKey": -1662296597605,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_c4105a52f02f46edb792d6bab7857c20",
+      "parentId": "fld_5b96b769236f476fb53e23a683178fc2",
+      "modified": 1671017139451,
+      "created": 1662576013152,
+      "url": "{{ _.local }}/user/9be8d4aa-d485-4e85-b205-1b9f6da7c335",
+      "name": "Delete User By Id",
+      "description": "Rota para deletar um usuario\n\nMetodo DELETE -> /user/:id\n\nurl = http://localhost:3000/user/b6e1b615-05fe-4d5f-a90d-df9e8137164e\n\nCaso o usuario com o id exista terá uma mensagem de sucesso no retorno\n```json\n{\n\t\"message\": \"User deleted successfully\"\n}\n```\n\n Caso não exista o id no banco de dados\n ```json\n{\n\t\"statusCode\": 400,\n\t\"message\": \"User not found\",\n\t\"error\": \"Bad Request\"\n}\n ```\n \n Caso o id não seja enviado\n ```json\n{\n\t\"statusCode\": 400,\n\t\"message\": \"Id not provided\",\n\t\"error\": \"Bad Request\"\n}\n```",
+      "method": "DELETE",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}"
+      },
+      "metaSortKey": -1662278525462,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": false,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "env_4061080ad84c053c11197b3a6ed75c84a2e2acd8",
+      "parentId": "wrk_b82f12282b574de180c368c45fe1ff01",
+      "modified": 1664699242278,
+      "created": 1662423088170,
+      "name": "Base Environment",
+      "data": {
+        "local": "http://localhost:5005",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IndhbmRlcnNvbjFAdGVzdGUuY29tIiwiaWF0IjoxNjY0NTEzNTc4LCJleHAiOjE2NjQ1OTk5Nzh9.eTRuG0bOV2L_tJTsfcTFVNnUjETj9RoN8jDqUJeICiA"
+      },
+      "dataPropertyOrder": {
+        "&": [
+          "local",
+          "token"
+        ]
+      },
+      "color": null,
+      "isPrivate": false,
+      "metaSortKey": 1662423088170,
+      "_type": "environment"
+    },
+    {
+      "_id": "jar_4061080ad84c053c11197b3a6ed75c84a2e2acd8",
+      "parentId": "wrk_b82f12282b574de180c368c45fe1ff01",
+      "modified": 1662423088175,
+      "created": 1662423088175,
+      "name": "Default Jar",
+      "cookies": [],
+      "_type": "cookie_jar"
+    },
+    {
+      "_id": "spc_7d6b343355004196a13c45da6ce1daa6",
+      "parentId": "wrk_b82f12282b574de180c368c45fe1ff01",
+      "modified": 1662423088161,
+      "created": 1662423088161,
+      "fileName": "SouJunior - LinkedIn-backend",
+      "contents": "",
+      "contentType": "yaml",
+      "_type": "api_spec"
+    },
+    {
+      "_id": "env_b425f583615f428dbed664051c093159",
+      "parentId": "env_4061080ad84c053c11197b3a6ed75c84a2e2acd8",
+      "modified": 1671015964292,
+      "created": 1664513666594,
+      "name": "🟢 Admin Localhost",
+      "data": {
+        "local": "http://localhost:3001",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQHRlc3RlLmNvbSIsImlhdCI6MTY3MTAxNTk1NSwiZXhwIjoxNjcxMTAyMzU1fQ.hlKmhqj0193kJvWOQQBgvMrZglh3qqs1Wh_Z7bsVH9A"
+      },
+      "dataPropertyOrder": {
+        "&": [
+          "local",
+          "token"
+        ]
+      },
+      "color": null,
+      "isPrivate": false,
+      "metaSortKey": 0,
+      "_type": "environment"
+    },
+    {
+      "_id": "env_f99672e39c4d44a0b505e6dfaffa390a",
+      "parentId": "env_4061080ad84c053c11197b3a6ed75c84a2e2acd8",
+      "modified": 1669935403040,
+      "created": 1664513680113,
+      "name": "🔴 User Localhost",
+      "data": {
+        "local": "http://localhost:3001",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAdGVzdGUuY29tIiwiaWF0IjoxNjY5OTM1MzY5LCJleHAiOjE2NzAwMjE3Njl9.Ul6YfIYJqMFBYR8hfjxEoUAAelAoEXyqNi6cC_DlTfI"
+      },
+      "dataPropertyOrder": {
+        "&": [
+          "local",
+          "token"
+        ]
+      },
+      "color": null,
+      "isPrivate": false,
+      "metaSortKey": 1,
+      "_type": "environment"
+    },
+    {
+      "_id": "env_ee5daaea82af416c9d63d4ca52bd6df6",
+      "parentId": "env_4061080ad84c053c11197b3a6ed75c84a2e2acd8",
+      "modified": 1669935404488,
+      "created": 1664514835471,
+      "name": "🐳 Admin Docker 🟢",
+      "data": {
+        "local": "http://localhost:3000",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQHRlc3RlLmNvbSIsImlhdCI6MTY2NjA0MjQ3NSwiZXhwIjoxNjY2MTI4ODc1fQ.hWDeXuzDBG0fDUHlbGKYkfl1JdtCet2AmlPxRvEYHL4"
+      },
+      "dataPropertyOrder": {
+        "&": [
+          "local",
+          "token"
+        ]
+      },
+      "color": null,
+      "isPrivate": false,
+      "metaSortKey": 2,
+      "_type": "environment"
+    },
+    {
+      "_id": "env_019f7a929d5840ea99767fbbdf7038b1",
+      "parentId": "env_4061080ad84c053c11197b3a6ed75c84a2e2acd8",
+      "modified": 1669935405031,
+      "created": 1664514875008,
+      "name": "🐳 User Docker 🔴",
+      "data": {
+        "local": "http://localhost:3000",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAdGVzdGUuY29tIiwiaWF0IjoxNjY2MDQyOTUyLCJleHAiOjE2NjYxMjkzNTJ9.L7nNW0KeJpcAoCg6enJxLAIgvz-EFx-DSZmmo-txK_8"
+      },
+      "dataPropertyOrder": {
+        "&": [
+          "local",
+          "token"
+        ]
+      },
+      "color": null,
+      "isPrivate": false,
+      "metaSortKey": 3,
+      "_type": "environment"
+    },
+    {
+      "_id": "env_344d2c8b3e984858bd01f75d6623818a",
+      "parentId": "env_4061080ad84c053c11197b3a6ed75c84a2e2acd8",
+      "modified": 1669935400659,
+      "created": 1664515205563,
+      "name": "☁️ Developer Deploy Admin",
+      "data": {
+        "local": "https://dev-linkedin-backend.up.railway.app",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQHRlc3RlLmNvbSIsImlhdCI6MTY2NTI5NTg0MCwiZXhwIjoxNjY1MzgyMjQwfQ.N8leaAXUCipfYV_FClgciUvdNWijdEJ42QpcdnNoMHk"
+      },
+      "dataPropertyOrder": {
+        "&": [
+          "local",
+          "token"
+        ]
+      },
+      "color": null,
+      "isPrivate": false,
+      "metaSortKey": 792052569916,
+      "_type": "environment"
+    },
+    {
+      "_id": "env_57e793a5dae94a8c8470a9be943f1136",
+      "parentId": "env_4061080ad84c053c11197b3a6ed75c84a2e2acd8",
+      "modified": 1669935398619,
+      "created": 1664515293573,
+      "name": "🌧️ Developer Deploy User",
+      "data": {
+        "local": "https://dev-linkedin-backend.up.railway.app",
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAdGVzdGUuY29tIiwiaWF0IjoxNjY0NjQ5MTQ5LCJleHAiOjE2NjQ3MzU1NDl9.Fvzt4CbBjGGvB-Q9ld68QTbisROkkXolEXAoDKFWNWo"
+      },
+      "dataPropertyOrder": {
+        "&": [
+          "local",
+          "token"
+        ]
+      },
+      "color": null,
+      "isPrivate": false,
+      "metaSortKey": 1188078854872.5,
+      "_type": "environment"
+    }
+  ]
+}
