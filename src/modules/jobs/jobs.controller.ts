@@ -8,6 +8,7 @@ import {
   Post,
   Put,
   Query,
+  Res,
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
@@ -20,15 +21,12 @@ import { UpdateJobSwagger } from 'src/shared/Swagger/decorators/jobs/update-job.
 import { CompaniesEntity } from '../../database/entities/companies.entity';
 import { JobsEntity } from '../../database/entities/jobs.entity';
 import { PageOptionsDto } from '../../shared/pagination';
-import GetEntity from '../../shared/pipes/pipe-entity.pipe';
 import { LoggedCompany } from '../auth/decorator/logged-company.decorator';
-import { CompanyRepository } from '../company/repository/company-repository';
 import { CreateJobDto } from './dtos/create-job.dto';
 import { GetAllJobsDto } from './dtos/get-all-jobs.dto';
 import { UpdateJobDto } from './dtos/update-job.dto';
 import {
   CreateJobService,
-  ArchiveJobService,
   GetAllJobsService,
   GetOneJobByIdService,
   UpdateJobService,
@@ -36,6 +34,9 @@ import {
 import { SearchJobsService } from './services/search-job.service';
 import { GetAllJobsOfLoggedCompanySwagger } from 'src/shared/Swagger/decorators/jobs/get-all-jobs-of-logged-company.swagger';
 import { GetAllJobsSwagger } from 'src/shared/Swagger/decorators/jobs/get-all-jobs-of-logged-company.swagger copy';
+import { GetAllJobsFromLoggedCompanyService } from './services/get-all-jobs-from-logged-company.service';
+import { Response } from 'express';
+import { DeleteJobService } from './services/delete-job.service';
 
 @ApiTags('Job')
 @Controller('job')
@@ -45,9 +46,9 @@ export class JobsController {
     private getAllJobsService: GetAllJobsService,
     private getOneJobByIdService: GetOneJobByIdService,
     private updateJobService: UpdateJobService,
-    private archiveJobService: ArchiveJobService,
+    private deleteJobService: DeleteJobService,
     private searchJobsService: SearchJobsService,
-    private companyRepository: CompanyRepository,
+    private getAllJobsFromLoggedCompany: GetAllJobsFromLoggedCompanyService
   ) {}
 
   @Post()
@@ -73,17 +74,15 @@ export class JobsController {
     return this.getAllJobsService.execute(pageOptionsDto, params);
   }
   @GetAllJobsOfLoggedCompanySwagger()
-  @Get('all/:id')
-  async getAll(@Param('id') id: string) {
-    try {
-      const company = await this.companyRepository.findCompanyById(id);
-      if (!company) {
-        throw new NotFoundException(`Empresa com ID ${id} não encontrado.`);
-      }
-      return company.jobs;
-    } catch (error) {
-      console.log(error);
-    }
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard())
+  @Get('loggedCompanyJobs')
+  async getAllLoggedCompanyJobs(
+    @LoggedCompany() company: CompaniesEntity,
+    @Res() res: Response
+  ) {
+    const { status, data } = await this.getAllJobsFromLoggedCompany.execute(company.id);
+    return res.status(status).json(data)
   }
 
   @Get(':id')
@@ -103,10 +102,11 @@ export class JobsController {
   @UseGuards(AuthGuard())
   @ArchiveJobSwagger()
   async archivedJob(
-    @LoggedCompany() company: CompaniesEntity,
-    @Param('id') id: string
+    @Param()
+    jobId: string,
+    @Body('content') content: string,
   ) {
-    return this.archiveJobService.execute(id, company.id);
+    return this.deleteJobService.execute(jobId, content);
   }
 
   @Post('/search/:keyword')

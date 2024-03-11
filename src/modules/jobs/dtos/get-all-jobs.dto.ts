@@ -10,7 +10,7 @@ export class GetAllJobsDto {
     description: 'Modalidade do trabalho',
     enum: [
       JobsModalityEnum.HYBRID,
-      JobsModalityEnum.IN_PERSON,
+      JobsModalityEnum.ON_SITE,
       JobsModalityEnum.REMOTE,
     ],
   })

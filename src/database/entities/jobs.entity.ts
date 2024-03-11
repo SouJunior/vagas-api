@@ -67,7 +67,7 @@ export class JobsEntity {
     type: 'enum',
     enum: [
       JobsModalityEnum.HYBRID,
-      JobsModalityEnum.IN_PERSON,
+      JobsModalityEnum.ON_SITE,
       JobsModalityEnum.REMOTE,
     ],
     default: JobsModalityEnum.REMOTE,
@@ -83,7 +83,7 @@ export class JobsEntity {
   @Column({
     default: true,
   })
-  indefinideContract: boolean;
+  openEndedContract: boolean;
 
   @Column({ nullable: true })
   contractType: string;

@@ -1,22 +1,26 @@
-import { NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CompaniesEntity } from 'src/database/entities/companies.entity';
 import { PageDto, PageMetaDto, PageOptionsDto } from 'src/shared/pagination';
-import { EntityRepository, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { handleError } from '../../../shared/utils/handle-error.util';
 import { CreateCompanyDto } from '../dtos/create-company.dto';
 import { UpdateMyPasswordDto } from '../dtos/update-my-password.dto';
+import { InjectRepository } from '@nestjs/typeorm';
 
-@EntityRepository(CompaniesEntity)
-export class CompanyRepository extends Repository<CompaniesEntity> {
+@Injectable()
+export class CompanyRepository {
+
+  constructor(@InjectRepository(CompaniesEntity) private companyRepository: Repository<CompaniesEntity>) {}
+
   async createCompany(data: CreateCompanyDto): Promise<CompaniesEntity> {
     delete data.passwordConfirmation;
-    return this.save(data).catch(handleError);
+    return this.companyRepository.save(data).catch(handleError);
   }
 
   async findAllCompany(
     pageOptionsDto: PageOptionsDto,
   ): Promise<PageDto<CompaniesEntity>> {
-    const queryBuilder = this.createQueryBuilder('companies');
+    const queryBuilder = this.companyRepository.createQueryBuilder('companies');
 
     queryBuilder
       .orderBy(
@@ -35,52 +39,61 @@ export class CompanyRepository extends Repository<CompaniesEntity> {
   }
 
   async findCompanyById(id: string): Promise<CompaniesEntity> {
-    return this.findOne(id, {
-      relations: ['jobs'],
-    }).catch(handleError);
-  }
+    if (!id) {
+      throw new NotFoundException('Invalid company ID');
+    }
+      const company = await this.companyRepository.findOneBy({id}).catch(handleError);
+  
+      if (!company) {
+        throw new NotFoundException('Company not found');
+      }
+  
+      console.log('Company with jobs:', company);
+  
+      return company;
+    }
 
   async UpdateCompanyById(id: string, data: any) {
-    const company = await this.findOne(id).catch(handleError);
+    const company = await this.companyRepository.findOneBy({id}).catch(handleError);
 
-    await this.update(id, {
+    await this.companyRepository.update(id, {
       ...company,
       ...data,
     }).catch(handleError);
 
-    return this.findOne(id).catch(handleError);
+    return this.companyRepository.findOneBy({id}).catch(handleError);
   }
 
   async findOneByEmail(email: string): Promise<CompaniesEntity> {
-    return this.findOne({ where: { email } }).catch(handleError);
+    return this.companyRepository.findOneBy({ email }).catch(handleError);
   }
 
   async findEmailInDatabase(email: string): Promise<CompaniesEntity> {
-    return this.findOne({ where: { email } }).catch(handleError);
+    return this.companyRepository.findOneBy({ email }).catch(handleError);
   }
 
   async findByToken(recoverPasswordToken: string): Promise<CompaniesEntity> {
-    return this.findOne({ where: { recoverPasswordToken } }).catch(handleError);
+    return this.companyRepository.findOneBy({ recoverPasswordToken }).catch(handleError);
   }
 
   async findOneById(id: string): Promise<CompaniesEntity> {
-    return this.findOne(id).catch(handleError);
+    return this.companyRepository.findOneBy({id}).catch(handleError);
   }
 
   async findOneByCnpj(cnpj: string): Promise<CompaniesEntity> {
-    return this.findOne({ cnpj }).catch(handleError);
+    return this.companyRepository.findOneBy({cnpj}).catch(handleError);
   }
 
   async updateMyPassword(updateMyPasswordDto: UpdateMyPasswordDto, id) {
-    const company = await this.findOne(id).catch(handleError);
+    const company = await this.companyRepository.findOneBy({id}).catch(handleError);
 
     if (!company) {
       throw new NotFoundException('Company not found');
     }
 
-    return this.update(id, updateMyPasswordDto)
+    return this.companyRepository.update(id, updateMyPasswordDto)
       .then(() => {
-        return this.findOne(id);
+        return this.companyRepository.findOneBy({id});
       })
       .catch(handleError);
   }
@@ -89,33 +102,33 @@ export class CompanyRepository extends Repository<CompaniesEntity> {
     id,
     recoverPasswordToken,
   ): Promise<CompaniesEntity> {
-    const company = await this.findOne(id).catch(handleError);
+    const company = await this.companyRepository.findOneBy({id}).catch(handleError);
 
     company.recoverPasswordToken = recoverPasswordToken;
 
-    await this.save(company).catch(handleError);
+    await this.companyRepository.save(company).catch(handleError);
 
     return company;
   }
 
   async updateCompany(company: CompaniesEntity) {
-    await this.save(company);
+    await this.companyRepository.save(company);
 
     return this.findOneById(company.id);
   }
 
   async activateCompany(id: string) {
-    const company = await this.findOne(id).catch(handleError);
+    const company = await this.companyRepository.findOneBy({id}).catch(handleError);
 
     company.mailConfirm = true;
 
-    await this.update(id, company);
+    await this.companyRepository.update(id, company);
 
     return company;
   }
 
   async updatePassword(id, password: string): Promise<CompaniesEntity> {
-    const company = await this.findOne(id).catch(handleError);
+    const company = await this.companyRepository.findOneBy({id}).catch(handleError);
     const data = {
       recoverPasswordToken: null,
       password,
@@ -123,16 +136,16 @@ export class CompanyRepository extends Repository<CompaniesEntity> {
 
     delete company.password;
 
-    await this.update(id, {
+    await this.companyRepository.update(id, {
       ...company,
       ...data,
     }).catch(handleError);
 
-    return this.findOne(id).catch(handleError);
+    return this.companyRepository.findOneBy({id}).catch(handleError);
   }
 
   async deleteCompanyById(id: string): Promise<object> {
-    this.delete(id).catch(handleError);
+    this.companyRepository.delete(id).catch(handleError);
 
     return { message: 'Company deleted successfully' };
   }

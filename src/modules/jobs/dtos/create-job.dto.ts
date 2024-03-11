@@ -127,7 +127,7 @@ export class CreateJobDto {
     example: JobsModalityEnum.REMOTE,
     enum: [
       JobsModalityEnum.HYBRID,
-      JobsModalityEnum.IN_PERSON,
+      JobsModalityEnum.ON_SITE,
       JobsModalityEnum.REMOTE,
     ],
   })
@@ -155,10 +155,10 @@ export class CreateJobDto {
   @IsBoolean()
   @ApiProperty({
     required: true,
-    description: 'O contrato de trabalho e indefinido?',
+    description: 'O contrato de trabalho é por tempo indeterminado?',
     example: true,
   })
-  indefinideContract: boolean;
+  openEndedContract: boolean;
 
   @ValidateIf((values) => !values.indefinideContract)
   @IsString()

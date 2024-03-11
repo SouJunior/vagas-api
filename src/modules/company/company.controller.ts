@@ -22,13 +22,11 @@ import { ActivateCompanySwagger } from 'src/shared/Swagger/decorators/company/ac
 import { CreateCompanySwagger } from 'src/shared/Swagger/decorators/company/create-company.swagger';
 import { DeleteCompanyByIdSwagger } from 'src/shared/Swagger/decorators/company/delete-company-by-id.swagger';
 import { GetAllCompaniesSwagger } from 'src/shared/Swagger/decorators/company/get-all-companies.swagger';
-import { GetCompanyByIdSwagger } from 'src/shared/Swagger/decorators/company/get-company-by-id.swagger';
 import { RecoverPasswordByEmailSwagger } from 'src/shared/Swagger/decorators/company/recovery-password-by-email.swagger';
 import { UpdateCompanyByIdSwagger } from 'src/shared/Swagger/decorators/company/update-company-by-id.swagger';
 import { UpdatePasswordAfterRecoveryEmailSwagger } from 'src/shared/Swagger/decorators/company/update-password-after-recovery-email.swagger';
 import { UpdatePasswordSwagger } from 'src/shared/Swagger/decorators/company/update-password.swagger';
 import { PageOptionsDto } from '../../shared/pagination';
-import GetEntity from '../../shared/pipes/pipe-entity.pipe';
 import { LoggedCompany } from '../auth/decorator/logged-company.decorator';
 import { EmailDto } from '../user/dtos/email-user.dto';
 import { CompanyIdDto } from './dtos/company-id.dto';
@@ -80,15 +78,6 @@ export class CompanyController {
   @GetAllCompaniesSwagger()
   async getAllCompanies(@Query() pageOptionsDto: PageOptionsDto) {
     return this.findAllCompanyService.execute(pageOptionsDto);
-  }
-
-  @Get(':id')
-  @GetCompanyByIdSwagger()
-  async getcompanyById(
-    @Param('id', new GetEntity(CompaniesEntity, ['jobs']))
-    company: CompaniesEntity,
-  ) {
-    return company;
   }
 
   @ApiBearerAuth()

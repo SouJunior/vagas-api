@@ -8,29 +8,34 @@ import { JobsController } from './jobs.controller';
 import { JobRepository } from './repository/job.repository';
 import {
   CreateJobService,
-  ArchiveJobService,
   GetAllJobsService,
   GetOneJobByIdService,
   UpdateJobService,
 } from './services';
 import { SearchJobsService } from './services/search-job.service';
+import { GetAllJobsFromLoggedCompanyService } from './services/get-all-jobs-from-logged-company.service';
+import { JobsEntity } from 'src/database/entities/jobs.entity';
+import { CompaniesEntity } from 'src/database/entities/companies.entity';
+import { DeleteJobService } from './services/delete-job.service';
 
 @Module({
   imports: [
     MailModule,
     CompanyModule,
-    TypeOrmModule.forFeature([JobRepository]),
+    TypeOrmModule.forFeature([JobRepository, JobsEntity, CompaniesEntity]),
     PassportModule.register({ defaultStrategy: 'jwt' }),
   ],
   controllers: [JobsController],
   providers: [
     CreateJobService,
     GetAllJobsService,
+    GetAllJobsFromLoggedCompanyService,
     GetOneJobByIdService,
     UpdateJobService,
-    ArchiveJobService,
+    DeleteJobService,
     SearchJobsService,
-    CompanyRepository,
+    JobRepository,
+    CompanyRepository
   ],
 })
 export class JobsModule {}

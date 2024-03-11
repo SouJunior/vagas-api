@@ -11,13 +11,19 @@ import {
   FindReportByIdService,
   UpdateReportService,
 } from './services';
+import { ReportsEntity } from 'src/database/entities/reports.entity';
+import { UsersEntity } from 'src/database/entities/users.entity';
+import { JobsEntity } from 'src/database/entities/jobs.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([ReportRepository, UserRepository, JobRepository]),
+    TypeOrmModule.forFeature([ReportsEntity, UsersEntity, JobsEntity]),
   ],
   controllers: [ReportsController],
   providers: [
+    JobRepository,
+    UserRepository,
+    ReportRepository,
     CreateReportService,
     FindAllReportsService,
     FindReportByIdService,
