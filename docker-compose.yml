@@ -13,6 +13,12 @@ services:
       - POSTGRES_DB=linkedin_backend
     volumes:
       - pgdata:/data/postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   app:
     build: .
     container_name: linkedIn_Backend
@@ -20,15 +26,12 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - .:/usr/app
-    links:
-      - database_soujunior
+      - .:/user/app
     depends_on:
-      - database_soujunior
+      database_soujunior:
+        condition: service_healthy
     env_file:
       - .env
-    environment:
-      - TYPEORM_HOST=database_soujunior
 
 volumes:
   pgdata:

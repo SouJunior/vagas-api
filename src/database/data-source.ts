@@ -9,6 +9,7 @@ const {
     TYPEORM_PASSWORD,
     TYPEORM_USERNAME,
     TYPEORM_DATABASE,
+    CA_CERT,
   } = process.env;
 
 export const typeormConfig: DataSourceOptions = {
@@ -23,6 +24,9 @@ export const typeormConfig: DataSourceOptions = {
       'dist/database/migrations/*.js',
       'dist/database/migrations/seeds/*.js',
     ],
+    ssl: {
+      ca: CA_CERT,
+    }
 }
 
 export const AppDataSource = new DataSource({
