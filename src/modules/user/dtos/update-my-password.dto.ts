@@ -4,6 +4,10 @@ import { IsNotEmpty, IsString, Length, Matches } from 'class-validator';
 export class UpdateMyPasswordDto {
   @IsString({ message: "O campo 'oldPassword' não pode ficar vazio" })
   @IsNotEmpty()
+  @ApiProperty({
+    description: 'Senha antiga',
+    example: 'Abcd@1234',
+  })
   oldPassword: string;
 
   @IsString()
