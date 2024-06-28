@@ -13,17 +13,18 @@ import { MailService } from './mail.service';
         transport: {
           host: config.get('MAIL_HOST'),
           port: config.get('MAIL_PORT'),
-          secure: true,
+          // secure: true,
+          // secure: false,
           auth: {
             user: config.get('MAIL_USER'),
             pass: config.get('MAIL_PASSWORD'),
           },
-          tls: {
-            rejectUnauthorized: false,
-          },
+          // tls: {
+          //   rejectUnauthorized: false,
+          // },
         },
         defaults: {
-          from: `no-reply <no-reply@vagas-backend.com>`,
+          from: `no-reply <carteiro@soujunior.tech>`,
         },
         template: {
           dir: join(__dirname, 'templates'),
