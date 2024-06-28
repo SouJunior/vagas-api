@@ -26,6 +26,7 @@ export const typeormConfig: DataSourceOptions = {
     ],
     ssl: {
       ca: CA_CERT,
+      rejectUnauthorized: false,
     }
 }
 
