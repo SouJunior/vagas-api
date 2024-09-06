@@ -14,7 +14,9 @@ export class AlertsRepository {
     return this.alertsRepository.save(data);
   }
 
-  async findUserById(userId: string): Promise<AlertEntity[]> {
+  async findAlertsByUserId(userId: string): Promise<AlertEntity[]> {
     return this.alertsRepository.find({ where: { user: { id: userId } } });
   }
+
+  
 }

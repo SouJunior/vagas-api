@@ -11,6 +11,9 @@ import {
   export class AlertEntity {
     @PrimaryGeneratedColumn('uuid')
     id: string;
+   
+    @Column('uuid')
+    userId: string;
   
     @Column()
     keyword: string;

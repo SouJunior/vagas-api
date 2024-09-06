@@ -6,8 +6,8 @@ import { AlertEntity } from '../../../database/entities/alert.entity'; // Lembre
 export class AlertsService {
   constructor(private readonly alertsRepository: AlertsRepository) {}
 
-  async findEmailUser(alertId: string): Promise<string | null> {
-    const alerts = await this.alertsRepository.findUserById(alertId);
+  async getUserEmailByAlertId(alertId: string): Promise<string | null> {
+    const alerts = await this.alertsRepository.findAlertsByUserId(alertId);
     if (alerts && alerts.length > 0) {
       const alert = alerts[0]; 
       if (alert.user) {
@@ -16,4 +16,12 @@ export class AlertsService {
     }
     return null;
   }
+
+  async createAlert(data: Partial<AlertEntity>): Promise<AlertEntity> {
+    return this.alertsRepository.createAlert(data);
+  }
 }
+
+
+
+
