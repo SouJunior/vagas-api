@@ -15,6 +15,7 @@ import { UploadModule } from './modules/upload/upload.module';
 import { UserModule } from './modules/user/user.module';
 import { ApplicationsModule } from './modules/applications/applications.module';
 import { typeormConfig } from './database/data-source';import { PassportModule } from '@nestjs/passport';
+import { AlertasService } from './alertas/alertas.service';
 
 @Module({
   imports: [
@@ -39,6 +40,6 @@ import { typeormConfig } from './database/data-source';import { PassportModule }
     ApplicationsModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, AlertasService],
 })
 export class AppModule {}
