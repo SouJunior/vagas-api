@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { AlertEntity } from '../../../database/entities/alert.entity'; 
+import { AlertEntity } from '../../../database/entities/alert.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
@@ -18,5 +18,7 @@ export class AlertsRepository {
     return this.alertsRepository.find({ where: { user: { id: userId } } });
   }
 
-  
+  async findAll(): Promise<AlertEntity[]> {
+    return this.alertsRepository.find();
+  }
 }
