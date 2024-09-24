@@ -12,7 +12,7 @@ export class AlertEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column('uuid')
+  @Column({ name: 'user_id' })
   userId: string;
 
   @Column()
@@ -22,6 +22,6 @@ export class AlertEntity {
   location: string;
 
   @ManyToOne(() => UsersEntity)
-  @JoinColumn({ name: 'userId' })
+  @JoinColumn({ name: 'user_id' })
   user: UsersEntity;
 }

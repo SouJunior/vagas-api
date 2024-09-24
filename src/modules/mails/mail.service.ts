@@ -12,8 +12,6 @@ export class MailService {
     // const url = `https://vagas-front-end.netlify.app/recovery-password?token=${recoverPasswordToken}&type=USER`;
     const url = `${process.env.FRONTEND_URL}/recovery-password?token=${recoverPasswordToken}&type=USER`;
 
-
-
     if (recoverPasswordToken) {
       await this.mailerService.sendMail({
         to: email,
@@ -93,6 +91,17 @@ export class MailService {
       context: {
         name: companyName,
         url,
+      },
+    });
+  }
+
+  async sendJobAlerts(email: string, jobs: any[]): Promise<void> {
+    await this.mailerService.sendMail({
+      to: email,
+      subject: 'Vagas Relevantes para Você',
+      template: './jobsAlert',
+      context: {
+        jobs,
       },
     });
   }

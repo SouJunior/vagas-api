@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vagas Encontradas</title>
+</head>
+<body>
+    <h1>Vagas Encontradas!</h1>
+    <p>Olá, aqui estão as vagas encontradas para a posição que você criou o alerta:</p>
+    <ul>
+        {{#each jobs}}
+        <li>
+            {{#if this.title}}
+            <h2>{{this.title}}</h2>
+            {{else}}
+            <h2>Título não disponível</h2>
+            {{/if}}
+
+            {{#if this.description}}
+            <p>{{this.description}}</p>
+            {{else}}
+            <p>Descrição não disponível</p>
+            {{/if}}
+
+            {{#if this.location}}
+            <p>Local: {{this.location}}</p>
+            {{else}}
+            <p>Localização não disponível</p>
+            {{/if}}
+
+            {{#if this.link}}
+            <p><a href="{{this.link}}">Ver mais detalhes</a></p>
+            {{else}}
+            <p>Link não disponível</p>
+            {{/if}}
+        </li>
+        {{/each}}
+    </ul>
+</body>
+</html>
