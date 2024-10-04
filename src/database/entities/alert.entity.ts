@@ -12,7 +12,7 @@ export class AlertEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ name: 'user_id' })
+  @Column({ name: 'user_id', nullable: false })
   userId: string;
 
   @Column()

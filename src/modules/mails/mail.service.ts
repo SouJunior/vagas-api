@@ -1,6 +1,7 @@
 import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable } from '@nestjs/common';
 import { CompaniesEntity } from 'src/database/entities/companies.entity';
+import { JobsEntity } from 'src/database/entities/jobs.entity';
 import { UsersEntity } from 'src/database/entities/users.entity';
 
 @Injectable()
@@ -95,7 +96,7 @@ export class MailService {
     });
   }
 
-  async sendJobAlerts(email: string, jobs: any[]): Promise<void> {
+  async sendJobAlerts(email: string, jobs: JobsEntity[]): Promise<void> {
     await this.mailerService.sendMail({
       to: email,
       subject: 'Vagas Relevantes para Você',

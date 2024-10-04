@@ -139,7 +139,7 @@ dist
 .svelte-kit
 
 # Config files
-src/database/data-source.ts
+# src/database/data-source.ts
 .env
 .env.example
 mail.module.ts

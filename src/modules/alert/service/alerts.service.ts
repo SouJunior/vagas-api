@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { AlertsRepository } from '../repository/alerts.repository';
 import { AlertEntity } from '../../../database/entities/alert.entity';
 import { JobsEntity } from 'src/database/entities/jobs.entity';
@@ -12,8 +12,12 @@ export class AlertsService {
     private readonly alertsRepository: AlertsRepository,
     private readonly mailerService: MailService,
   ) {
+    this.configureCronJob();
+  }
+
+  private configureCronJob() {
     Cron.schedule(
-      '0 12 * * *',
+      '49 15 * * *',
       () => {
         this.sendEmailsDaily();
       },
@@ -24,15 +28,11 @@ export class AlertsService {
     );
   }
 
-  async getUserEmailByAlertId(
-    alertId: string,
-  ): Promise<{ email: string } | null> {
+  async getUserEmailByAlertId(alertId: string): Promise<string> {
     const alert = await this.alertsRepository.findAlertById(alertId);
-    if (alert) {
-      return { email: alert.user.email };
-    }
+    if (!alert) throw new NotFoundException('Alert not found');
 
-    return null;
+    return alert.user.email;
   }
 
   async createAlert(data: Partial<AlertEntity>): Promise<AlertEntity> {
@@ -41,21 +41,33 @@ export class AlertsService {
 
   async sendEmailsDaily() {
     const alerts = await this.alertsRepository.findAll();
-    for (const alert of alerts) {
-      const jobs = await this.findJobs(alert.keyword, alert.location);
-      const user = await this.getUserEmailByAlertId(alert.id);
-      await this.sendEmail(user.email, jobs);
-    }
+
+    await Promise.all(
+      alerts.map(async (alert) => {
+        const jobs = await this.findJobs(alert.keyword, alert.location);
+        const userEmail = await this.getUserEmailByAlertId(alert.id);
+
+        await this.sendEmail(userEmail, jobs);
+      }),
+    );
   }
 
   private async findJobs(
     keyword: string,
     location: string,
   ): Promise<JobsEntity[]> {
-    const response = await axios.get(
-      `${process.env.VACANCIES_URL}/job?keyword=${keyword}&location=${location}`,
-    );
-    return response.data;
+    try {
+      const response = await axios.get(
+        `${process.env.VACANCIES_URL}/job?keyword=${keyword}&location=${location}`,
+      );
+      return response.data;
+    } catch (error) {
+      console.error(
+        `Error fetching jobs for keyword: ${keyword}, location: ${location}`,
+        error,
+      );
+      return [];
+    }
   }
 
   private async sendEmail(email: string, jobs: JobsEntity[]): Promise<void> {
