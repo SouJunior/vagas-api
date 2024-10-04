@@ -12,17 +12,16 @@ import { MailService } from './mail.service';
       useFactory: async (config: ConfigService) => ({
         transport: {
           host: config.get('MAIL_HOST'),
-          port: config.get('MAIL_PORT'),
+          port: config.get('MAIL_PORT'), 
           // secure: true,
           // secure: false,
-          // auth: {
-          // user: config.get('MAIL_USER'),
-          // pass: config.get('MAIL_PASSWORD'),
-          //},
+          auth: {
+            user: config.get('MAIL_USER'),
+            pass: config.get('MAIL_PASSWORD'),
+          },
           // tls: {
           //   rejectUnauthorized: false,
           // },
-        },
         defaults: {
           from: `no-reply <carteiro@soujunior.tech>`,
         },

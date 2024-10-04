@@ -24,10 +24,10 @@ export const typeormConfig: DataSourceOptions = {
     'dist/database/migrations/*.js',
     'dist/database/migrations/seeds/*.js',
   ],
-  /*   ssl: {
+  ssl: {
     ca: CA_CERT,
     rejectUnauthorized: false,
-  }, */
+  },
 };
 
 export const AppDataSource = new DataSource({
