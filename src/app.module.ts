@@ -14,7 +14,9 @@ import { ReportsModule } from './modules/reports/reports.module';
 import { UploadModule } from './modules/upload/upload.module';
 import { UserModule } from './modules/user/user.module';
 import { ApplicationsModule } from './modules/applications/applications.module';
-import { typeormConfig } from './database/data-source';import { PassportModule } from '@nestjs/passport';
+import { typeormConfig } from './database/data-source';
+import { PassportModule } from '@nestjs/passport';
+import { AlertsModule } from './modules/alert/alerts.module';
 
 @Module({
   imports: [
@@ -23,10 +25,10 @@ import { typeormConfig } from './database/data-source';import { PassportModule }
     TypeOrmModule.forRootAsync({
       useFactory: () => ({
         ...typeormConfig,
-        autoLoadEntities: true
-      })
+        autoLoadEntities: true,
+      }),
     }),
-    PassportModule.register({defaultStrategy: "jwt"}),
+    PassportModule.register({ defaultStrategy: 'jwt' }),
     JobsModule,
     UserModule,
     AuthModule,
@@ -37,6 +39,7 @@ import { typeormConfig } from './database/data-source';import { PassportModule }
     UploadModule,
     CurriculumModule,
     ApplicationsModule,
+    AlertsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
