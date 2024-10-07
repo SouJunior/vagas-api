@@ -137,6 +137,6 @@ export class JobsEntity {
   @Column({ nullable: true })
   content: string;
 
-  @OneToMany(() => CandidacyEntity, (candidacy) => candidacy.user)
+  @OneToMany(() => CandidacyEntity, (candidacy) => candidacy.job)
     candidacies: CandidacyEntity[];
 }
