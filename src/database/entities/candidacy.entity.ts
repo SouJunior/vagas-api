@@ -15,7 +15,7 @@ import { CandidacyStatus } from './candidacy-status.enum';
     id: string;
   
     @Column('uuid')
-    vacancyId: string;
+    jobId: string;
   
     @Column('uuid')
     userId: string; 
@@ -34,7 +34,7 @@ import { CandidacyStatus } from './candidacy-status.enum';
     user: UsersEntity; 
   
     @ManyToOne(() => JobsEntity)
-    @JoinColumn({ name: 'vacancyId' })
+    @JoinColumn({ name: 'jobId' })
     job: JobsEntity;
   }
   
