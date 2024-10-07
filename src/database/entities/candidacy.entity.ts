@@ -8,6 +8,7 @@ import {
   import { UsersEntity } from './users.entity'; 
   import { JobsEntity } from './jobs.entity'; 
 import { CandidacyStatus } from './candidacy-status.enum';
+
   
   @Entity('tb_candidacies') 
   export class CandidacyEntity {
