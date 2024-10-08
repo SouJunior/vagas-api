@@ -42,7 +42,7 @@ import { AlertsModule } from './modules/alert/alerts.module';
     UploadModule,
     CurriculumModule,
     ApplicationsModule,
-    TypeOrmModule.forFeature([UsersEntity])
+    TypeOrmModule.forFeature([UsersEntity]),
     AlertsModule,
   ],
   controllers: [AppController],
