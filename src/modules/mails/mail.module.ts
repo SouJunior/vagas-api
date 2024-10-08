@@ -22,6 +22,7 @@ import { MailService } from './mail.service';
           // tls: {
           //   rejectUnauthorized: false,
           // },
+        },
         defaults: {
           from: `no-reply <carteiro@soujunior.tech>`,
         },
