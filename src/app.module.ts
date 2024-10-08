@@ -16,7 +16,10 @@ import { UserModule } from './modules/user/user.module';
 import { ApplicationsModule } from './modules/applications/applications.module';
 import { typeormConfig } from './database/data-source';
 import { PassportModule } from '@nestjs/passport';
+import { UserRepository } from './modules/user/repository/user.repository';
+import { UsersEntity } from './database/entities/users.entity';
 import { AlertsModule } from './modules/alert/alerts.module';
+
 
 @Module({
   imports: [
@@ -39,9 +42,13 @@ import { AlertsModule } from './modules/alert/alerts.module';
     UploadModule,
     CurriculumModule,
     ApplicationsModule,
+    TypeOrmModule.forFeature([UsersEntity]),
     AlertsModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    UserRepository
+  ],
 })
 export class AppModule {}
