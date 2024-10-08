@@ -3,6 +3,7 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AlertEntity } from '../../../database/entities/alert.entity';
 
+
 @Injectable()
 export class AlertsRepository {
   constructor(
