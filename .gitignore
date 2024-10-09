@@ -138,4 +138,10 @@ dist
 # SvelteKit build / generate output
 .svelte-kit
 
+# Config files
+# src/database/data-source.ts
+.env
+.env.example
+mail.module.ts
+
 # End of https://www.toptal.com/developers/gitignore/api/node

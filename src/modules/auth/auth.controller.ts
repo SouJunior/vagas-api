@@ -23,7 +23,7 @@ export class AuthController {
   }
 
   @Get('/user-logged')
-  @UseGuards(AuthGuard())
+  @UseGuards(AuthGuard('jwt'))
   @UserLoggedSwagger()
   @ApiBearerAuth()
   async userLogged(@LoggedUser() user: UsersEntity) {
