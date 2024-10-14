@@ -16,20 +16,25 @@ export class CandidacyRepository {
     return this.candidacyRepository.save(candidacy);
   }
 
-  async updateStatus(id: string, status: CandidacyStatus): Promise<CandidacyEntity | undefined> {
+  async updateStatus(id: string, status: CandidacyStatus): Promise<CandidacyEntity> {
     try {
-      const candidacyToUpdate = await this.candidacyRepository.findOne({ where: { id } });  
+      const candidacyToUpdate = await this.candidacyRepository.findOne({ where: { id } });
+      
       if (!candidacyToUpdate) {
-        return undefined;
+        console.log(`Candidatura com ID ${id} não encontrada.`);
+        throw new Error(`Candidatura com ID ${id} não foi encontrada.`);
       }
   
+      candidacyToUpdate.status = status;
       await this.candidacyRepository.save(candidacyToUpdate);
   
       return candidacyToUpdate;
     } catch (error) {
-      return undefined;
+      console.error('Erro ao atualizar o status da candidatura:', error.message);
+      throw new Error('Erro ao atualizar o status da candidatura.');
     }
   }
+  
   
   async findByUserId(userId: string): Promise<CandidacyEntity[]> { 
     return await this.candidacyRepository.find({ where: { userId } }); 
