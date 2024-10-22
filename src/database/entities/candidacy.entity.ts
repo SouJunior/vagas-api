@@ -7,6 +7,7 @@ import {
 } from 'typeorm';
 import { UsersEntity } from './users.entity'; 
 import { JobsEntity } from './jobs.entity'; 
+import { CandidacyStatus } from './candidancy-status.enum';
 
 @Entity('tb_candidacies') 
 export class CandidacyEntity {
@@ -19,14 +20,14 @@ export class CandidacyEntity {
   @Column('uuid')
   userId: string; 
 
-  @Column({ type: 'enum', enum: ['em andamento', 'encerrada', 'sem interesse'] })
-  status: string;
+  @Column({ type: 'enum', enum: CandidacyStatus })
+  status: CandidacyStatus;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  dataCandidatura: Date;
+  dateCandidacy: Date;
 
   @Column({ type: 'timestamp', nullable: true })
-  dataEncerramento: Date;
+  dateaClosing: Date;
 
   @ManyToOne(() => UsersEntity)
   @JoinColumn({ name: 'userId' })
