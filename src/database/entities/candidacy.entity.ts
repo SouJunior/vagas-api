@@ -27,7 +27,7 @@ export class CandidacyEntity {
   dateCandidacy: Date;
 
   @Column({ type: 'timestamp', nullable: true })
-  dateaClosing: Date;
+  dateClosing: Date;
 
   @ManyToOne(() => UsersEntity)
   @JoinColumn({ name: 'userId' })
