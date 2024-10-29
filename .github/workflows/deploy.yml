@@ -14,9 +14,9 @@ jobs:
       - name: Determine Environment
         id: set-env
         run: |
-          if [ "${{ github.base_ref }}" == "main" ]; then
+          if [ "${{ github.base_ref }}" = "main" ]; then
             echo "deploy_env=production" >> $GITHUB_ENV
-          elif [ "${{ github.base_ref }}" == "hmg" ]; then
+          elif [ "${{ github.base_ref }}" = "hmg" ]; then
             echo "deploy_env=homologation" >> $GITHUB_ENV
           else
             echo "No matching environment for branch"
