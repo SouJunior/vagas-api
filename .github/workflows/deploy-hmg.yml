@@ -1,16 +1,16 @@
 name: Deploy to Homologation
 
 on:
-  workflow_call:
-
-env:
-  ACTIONS_RUNNER_DEBUG: true
-  ACTIONS_STEP_DEBUG: true
+  push:
+    branches:
+      - hmg
+  pull_request:
+    branches:
+      - hmg
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -26,19 +26,11 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
-      - name: Print Debug Information
-        run: |
-          echo "ECR Registry: ${{ steps.login-ecr.outputs.registry }}"
-          echo "Repository: vagas-hmg"
-          echo "Image Tag: latest"
-        shell: bash
-
       - name: Build, Tag, and Push the Image to Amazon ECR for Homologation
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: vagas-hmg
           IMAGE_TAG: latest
         run: |
-          set -euxo pipefail
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
