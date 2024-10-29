@@ -1,4 +1,3 @@
----
 name: Build and Push Docker Image to AWS ECR
 on:
   pull_request:
@@ -6,10 +5,10 @@ on:
     types: closed
 
 jobs:
-  build-and-push:
-    if: github.event.pull_request.merged == true
-    name: Build and Push to ECR
+  deploy_hmg:
+    if: github.event.pull_request.merged == true && github.head_ref == 'hmg'
     runs-on: ubuntu-latest
+    name: Deploy to Homologation
 
     steps:
     - name: Checkout
@@ -30,7 +29,37 @@ jobs:
       id: build-image
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: testing
+        ECR_REPOSITORY: vagas-hmg
+        IMAGE_TAG: latest
+      run: |
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+  deploy_producao:
+    if: github.event.pull_request.merged == true && github.head_ref == 'main'
+    runs-on: ubuntu-latest
+    name: Deploy to Production
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1
+
+    - name: Build, Tag, and Push the Image to Amazon ECR
+      id: build-image
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: vagas
         IMAGE_TAG: latest
       run: |
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
