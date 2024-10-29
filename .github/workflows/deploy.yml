@@ -12,14 +12,14 @@ jobs:
     if: github.event_name == 'push' || github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
+    env:
+      branch_name: ${{ github.ref_name }}  # Set branch_name directly
+
     steps:
       - name: Determine Environment
         id: set-env
         run: |
           set -euxo pipefail  # Enable debug mode and error handling
-
-          # Extract the branch name from the ref (refs/heads/main or refs/heads/hmg)
-          branch_name="${GITHUB_REF#refs/heads/}"
           
           if [ "$branch_name" = "main" ]; then
             echo "Setting environment to production"
@@ -30,6 +30,7 @@ jobs:
           else
             echo "No matching environment for branch"
             exit 1
+          fi
         shell: bash
 
       - name: Trigger Production Workflow
