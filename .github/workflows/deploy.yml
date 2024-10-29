@@ -1,0 +1,32 @@
+name: Deploy Selector
+
+on:
+  pull_request:
+    branches: [ main, hmg ]
+    types: [closed]
+
+jobs:
+  deploy:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Determine Environment
+        id: set-env
+        run: |
+          if [ "${{ github.base_ref }}" == "main" ]; then
+            echo "deploy_env=production" >> $GITHUB_ENV
+          elif [ "${{ github.base_ref }}" == "hmg" ]; then
+            echo "deploy_env=homologation" >> $GITHUB_ENV
+          else
+            echo "No matching environment for branch"
+            exit 1
+        shell: bash
+
+      - name: Trigger Production Workflow
+        if: env.deploy_env == 'production'
+        uses: ./.github/workflows/deploy-prod.yml
+
+      - name: Trigger Homologation Workflow
+        if: env.deploy_env == 'homologation'
+        uses: ./.github/workflows/deploy-hmg.yml
