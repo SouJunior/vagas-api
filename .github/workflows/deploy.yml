@@ -21,10 +21,10 @@ jobs:
           # Extract the branch name from the ref (refs/heads/main or refs/heads/hmg)
           branch_name="${GITHUB_REF#refs/heads/}"
           
-          if [ "$branch_name" == "main" ]; then
+          if [ "$branch_name" = "main" ]; then
             echo "Setting environment to production"
             echo "deploy_env=production" >> $GITHUB_ENV
-          elif [ "$branch_name" == "hmg" ]; then
+          elif [ "$branch_name" = "hmg" ]; then
             echo "Setting environment to homologation"
             echo "deploy_env=homologation" >> $GITHUB_ENV
           else
