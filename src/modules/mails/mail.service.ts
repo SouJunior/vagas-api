@@ -1,6 +1,7 @@
 import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable } from '@nestjs/common';
 import { CompaniesEntity } from 'src/database/entities/companies.entity';
+import { JobsEntity } from 'src/database/entities/jobs.entity';
 import { UsersEntity } from 'src/database/entities/users.entity';
 
 @Injectable()
@@ -11,8 +12,6 @@ export class MailService {
     const { email, name, recoverPasswordToken } = user;
     // const url = `https://vagas-front-end.netlify.app/recovery-password?token=${recoverPasswordToken}&type=USER`;
     const url = `${process.env.FRONTEND_URL}/recovery-password?token=${recoverPasswordToken}&type=USER`;
-
-
 
     if (recoverPasswordToken) {
       await this.mailerService.sendMail({
@@ -93,6 +92,17 @@ export class MailService {
       context: {
         name: companyName,
         url,
+      },
+    });
+  }
+
+  async sendJobAlerts(email: string, jobs: JobsEntity[]): Promise<void> {
+    await this.mailerService.sendMail({
+      to: email,
+      subject: 'Vagas Relevantes para Você',
+      template: './jobsAlert',
+      context: {
+        jobs,
       },
     });
   }

@@ -1,24 +1,27 @@
 import {
-    Column,
-    Entity,
-    PrimaryGeneratedColumn,
-    ManyToOne,
-    JoinColumn,
-  } from 'typeorm';
-  import { UsersEntity } from './users.entity';
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
+import { UsersEntity } from './users.entity';
 
-  @Entity('tb_alerts')
-  export class AlertEntity {
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+@Entity('tb_alerts')
+export class AlertEntity {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
-    @Column()
-    keyword: string;
+  @Column({ name: 'user_id', nullable: false })
+  userId: string;
 
-    @Column()
-    location: string;
+  @Column()
+  keyword: string;
 
-    @ManyToOne(() => UsersEntity)
-    @JoinColumn({ name: 'userId' })
-    user: UsersEntity;
-  }
+  @Column()
+  location: string;
+
+  @ManyToOne(() => UsersEntity)
+  @JoinColumn({ name: 'user_id' })
+  user: UsersEntity;
+}

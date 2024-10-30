@@ -3,18 +3,14 @@ import {
   BadRequestException,
   NotFoundException,
 } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
 import { CandidacyRepository } from 'src/modules/candidacy/repository/candidacy.repository';
-import { CreateCandidacyDto } from 'src/candidacy/dto/create-candidacy.dto';
 import { CandidacyEntity } from '../../database/entities/candidacy.entity';
 import { CandidacyStatus } from '../../database/entities/candidancy-status.enum';
+import { CreateCandidacyDto } from './dto/create-candidacy.dto';
 
 @Injectable()
 export class CandidacyService {
-  constructor(
-    @InjectRepository(CandidacyRepository)
-    private readonly candidacyRepository: CandidacyRepository,
-  ) {}
+  constructor(private readonly candidacyRepository: CandidacyRepository) {}
 
   async create(
     createCandidacyDto: CreateCandidacyDto,

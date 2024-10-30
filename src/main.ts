@@ -29,7 +29,10 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  
+  if (process.env.NODE_ENV == 'development') {
+    SwaggerModule.setup('api', app, document);
+  } 
 
   await app.listen(process.env.PORT || 3000);
   console.info(`🚀🚀 App listening on port ${process.env.PORT || 3000} 🚀🚀`);

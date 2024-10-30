@@ -14,9 +14,12 @@ import { ReportsModule } from './modules/reports/reports.module';
 import { UploadModule } from './modules/upload/upload.module';
 import { UserModule } from './modules/user/user.module';
 import { ApplicationsModule } from './modules/applications/applications.module';
-import { typeormConfig } from './database/data-source';import { PassportModule } from '@nestjs/passport';
-import { AlertsService } from './alerts/alerts.service';
-import { CandidacyService } from './modules/candidacy/candidacy.service';
+import { typeormConfig } from './database/data-source';
+import { PassportModule } from '@nestjs/passport';
+import { UserRepository } from './modules/user/repository/user.repository';
+import { UsersEntity } from './database/entities/users.entity';
+import { AlertsModule } from './modules/alert/alerts.module';
+import { CandidacyModule } from './modules/candidacy/candidacy.module';
 
 @Module({
   imports: [
@@ -25,10 +28,10 @@ import { CandidacyService } from './modules/candidacy/candidacy.service';
     TypeOrmModule.forRootAsync({
       useFactory: () => ({
         ...typeormConfig,
-        autoLoadEntities: true
-      })
+        autoLoadEntities: true,
+      }),
     }),
-    PassportModule.register({defaultStrategy: "jwt"}),
+    PassportModule.register({ defaultStrategy: 'jwt' }),
     JobsModule,
     UserModule,
     AuthModule,
@@ -39,8 +42,11 @@ import { CandidacyService } from './modules/candidacy/candidacy.service';
     UploadModule,
     CurriculumModule,
     ApplicationsModule,
+    TypeOrmModule.forFeature([UsersEntity]),
+    AlertsModule,
+    CandidacyModule,
   ],
   controllers: [AppController],
-  providers: [AppService, AlertsService, CandidacyService],
+  providers: [AppService, UserRepository],
 })
 export class AppModule {}

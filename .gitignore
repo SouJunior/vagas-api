@@ -138,7 +138,8 @@ dist
 # SvelteKit build / generate output
 .svelte-kit
 
-data-source.ts
+# Config files
+# src/database/data-source.ts
 .env
 .env.example
 mail.module.ts
