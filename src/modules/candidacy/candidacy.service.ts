@@ -1,19 +1,24 @@
-import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  BadRequestException,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CandidacyRepository } from 'src/modules/candidacy/repository/candidacy.repository';
 import { CreateCandidacyDto } from 'src/candidacy/dto/create-candidacy.dto';
-import { CandidacyEntity } from '../database/entities/candidacy.entity';
-import { CandidacyStatus } from '../database/entities/candidancy-status.enum';
+import { CandidacyEntity } from '../../database/entities/candidacy.entity';
+import { CandidacyStatus } from '../../database/entities/candidancy-status.enum';
 
 @Injectable()
 export class CandidacyService {
   constructor(
     @InjectRepository(CandidacyRepository)
-    private readonly candidacyRepository: CandidacyRepository
+    private readonly candidacyRepository: CandidacyRepository,
   ) {}
 
-  async create(createCandidacyDto: CreateCandidacyDto): Promise<CandidacyEntity> {
-    
+  async create(
+    createCandidacyDto: CreateCandidacyDto,
+  ): Promise<CandidacyEntity> {
     if (!createCandidacyDto.userId || !createCandidacyDto.jobId) {
       throw new BadRequestException('userId e jobId são obrigatórios');
     }
@@ -25,8 +30,10 @@ export class CandidacyService {
 
     try {
       return await this.candidacyRepository.createCandidacy(candidacy);
-    } catch (error) {    
-      throw new BadRequestException('Erro ao criar a candidatura: ' + error.message);
+    } catch (error) {
+      throw new BadRequestException(
+        'Erro ao criar a candidatura: ' + error.message,
+      );
     }
   }
 
@@ -38,16 +45,22 @@ export class CandidacyService {
     try {
       const candidacy = await this.candidacyRepository.findAllByUserId(userId);
       if (!candidacy.length) {
-        throw new NotFoundException('Nenhuma candidatura encontrada para este usuário');
+        throw new NotFoundException(
+          'Nenhuma candidatura encontrada para este usuário',
+        );
       }
       return candidacy;
     } catch (error) {
-      throw new BadRequestException('Erro ao buscar candidaturas: ' + error.message);
+      throw new BadRequestException(
+        'Erro ao buscar candidaturas: ' + error.message,
+      );
     }
-
   }
 
-  async closeCandidacy(id: string, status: CandidacyStatus.Closed | CandidacyStatus.NoInterest): Promise<CandidacyEntity> {
+  async closeCandidacy(
+    id: string,
+    status: CandidacyStatus.Closed | CandidacyStatus.NoInterest,
+  ): Promise<CandidacyEntity> {
     if (!id) {
       throw new BadRequestException('ID é obrigatório');
     }
@@ -63,8 +76,9 @@ export class CandidacyService {
       }
       return candidacy;
     } catch (error) {
-      throw new BadRequestException('Erro ao encerrar a candidatura: ' + error.message);
+      throw new BadRequestException(
+        'Erro ao encerrar a candidatura: ' + error.message,
+      );
     }
   }
-      
 }

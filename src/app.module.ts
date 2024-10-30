@@ -16,7 +16,7 @@ import { UserModule } from './modules/user/user.module';
 import { ApplicationsModule } from './modules/applications/applications.module';
 import { typeormConfig } from './database/data-source';import { PassportModule } from '@nestjs/passport';
 import { AlertsService } from './alerts/alerts.service';
-import { CandidacyService } from './candidacy/candidacy.service';
+import { CandidacyService } from './modules/candidacy/candidacy.service';
 
 @Module({
   imports: [
