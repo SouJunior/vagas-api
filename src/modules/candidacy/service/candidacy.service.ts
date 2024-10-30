@@ -3,10 +3,10 @@ import {
   BadRequestException,
   NotFoundException,
 } from '@nestjs/common';
+import { CandidacyEntity } from 'src/database/entities/candidacy.entity';
+import { CandidacyStatus } from 'src/database/entities/candidancy-status.enum';
 import { CandidacyRepository } from 'src/modules/candidacy/repository/candidacy.repository';
-import { CandidacyEntity } from '../../database/entities/candidacy.entity';
-import { CandidacyStatus } from '../../database/entities/candidancy-status.enum';
-import { CreateCandidacyDto } from './dto/create-candidacy.dto';
+import { CreateCandidacyDto } from '../dto/create-candidacy.dto';
 
 @Injectable()
 export class CandidacyService {
@@ -15,10 +15,6 @@ export class CandidacyService {
   async create(
     createCandidacyDto: CreateCandidacyDto,
   ): Promise<CandidacyEntity> {
-    if (!createCandidacyDto.userId || !createCandidacyDto.jobId) {
-      throw new BadRequestException('userId e jobId são obrigatórios');
-    }
-
     const candidacy = new CandidacyEntity();
     candidacy.userId = createCandidacyDto.userId;
     candidacy.jobId = createCandidacyDto.jobId;

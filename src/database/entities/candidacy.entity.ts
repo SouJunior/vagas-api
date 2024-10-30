@@ -14,26 +14,30 @@ export class CandidacyEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column('uuid')
+  @Column('uuid', { name: 'job_id' })
   jobId: string;
 
-  @Column('uuid')
+  @Column('uuid', { name: 'user_id' })
   userId: string;
 
   @Column({ type: 'enum', enum: CandidacyStatus })
   status: CandidacyStatus;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @Column({
+    type: 'timestamp',
+    name: 'date_candidacy',
+    default: () => 'CURRENT_TIMESTAMP',
+  })
   dateCandidacy: Date;
 
   @Column({ type: 'timestamp', nullable: true })
   dateclosing: Date;
 
   @ManyToOne(() => UsersEntity)
-  @JoinColumn({ name: 'userId' })
+  @JoinColumn({ name: 'user_id' })
   user: UsersEntity;
 
   @ManyToOne(() => JobsEntity)
-  @JoinColumn({ name: 'jobId' })
+  @JoinColumn({ name: 'job_id' })
   job: JobsEntity;
 }
