@@ -42,4 +42,5 @@ export class ApplicationEntity {
 
   @UpdateDateColumn({ update: true })
   updated_at: Date;
+    status: any;
 }
