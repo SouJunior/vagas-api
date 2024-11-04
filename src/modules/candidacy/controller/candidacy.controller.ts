@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Patch, Post, UseGuards } from '@nestjs/common';
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Get,
+  Patch,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { CandidacyService } from '../service/candidacy.service';
 import { CreateCandidacyDto } from '../dto/create-candidacy.dto';
 import { LoggedUser } from 'src/modules/auth/decorator/logged-user.decorator';
@@ -25,9 +33,9 @@ export class CandidacyController {
   @Patch()
   async updateCandidacy(@Body() updateCandidacyDto: UpdateCandidacyDto) {
     if (updateCandidacyDto.status === CandidacyStatus.InProgress) {
-      return {
-        message: 'Não é possível atualizar para o status "em andamento"',
-      };
+      throw new BadRequestException(
+        'Não é possível atualizar para o status "em andamento"',
+      );
     }
     return await this.candidacyService.closeCandidacy(
       updateCandidacyDto.id,
