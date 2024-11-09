@@ -16,21 +16,21 @@ export class ApplicationEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(() => JobsEntity, { onDelete: "CASCADE"})
+  @ManyToOne(() => JobsEntity, { onDelete: "CASCADE" })
   @JoinColumn({ name: 'job_id' })
   job: JobsEntity;
 
   @Column()
   job_id: string;
 
-  @ManyToOne(() => UsersEntity, { onDelete: "CASCADE"})
+  @ManyToOne(() => UsersEntity, { onDelete: "CASCADE" })
   @JoinColumn({ name: 'user_id' })
   user: UsersEntity;
 
   @Column()
   user_id: string;
 
-  @ManyToOne(() => CurriculumEntity, { onDelete: "CASCADE"})
+  @ManyToOne(() => CurriculumEntity, { onDelete: "CASCADE" })
   @JoinColumn({ name: 'curriculum_id' })
   curriculum: CurriculumEntity;
 
@@ -42,4 +42,6 @@ export class ApplicationEntity {
 
   @UpdateDateColumn({ update: true })
   updated_at: Date;
+  status: any;
+
 }
