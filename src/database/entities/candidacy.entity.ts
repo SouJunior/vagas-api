@@ -24,14 +24,14 @@ export class CandidacyEntity {
   status: CandidacyStatus;
 
   @Column({
-    type: 'timestamp',
+    type: 'date',
     name: 'date_candidacy',
     default: () => 'CURRENT_TIMESTAMP',
   })
   dateCandidacy: Date;
 
-  @Column({ type: 'timestamp', nullable: true })
-  dateclosing: Date;
+  @Column({ name: 'date_closing', type: 'timestamp', nullable: true })
+  dateClosing: Date;
 
   @ManyToOne(() => UsersEntity)
   @JoinColumn({ name: 'user_id' })

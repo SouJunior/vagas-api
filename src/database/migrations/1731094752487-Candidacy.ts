@@ -66,6 +66,13 @@ export class Candidacy1731094752487 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
+    const table = await queryRunner.getTable('tb_candidacies');
+    const foreignKeys = table.foreignKeys.filter(
+      (fk) =>
+        fk.columnNames.indexOf('user_id') !== -1 ||
+        fk.columnNames.indexOf('job_id') !== -1,
+    );
+    await queryRunner.dropForeignKeys('tb_candidacies', foreignKeys);
     await queryRunner.dropTable('tb_candidacies');
   }
 }

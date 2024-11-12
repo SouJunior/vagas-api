@@ -3,12 +3,12 @@ import { IsEnum, IsNotEmpty, IsUUID } from 'class-validator';
 import { CandidacyStatus } from 'src/database/entities/candidancy-status.enum';
 
 export class UpdateCandidacyDto {
-  @ApiProperty()
+  @ApiProperty({ type: 'string', format: 'uuid' })
   @IsUUID()
   @IsNotEmpty()
   id: string;
 
-  @ApiProperty()
+  @ApiProperty({ enum: CandidacyStatus })
   @IsNotEmpty()
   @IsEnum(CandidacyStatus)
   status: CandidacyStatus;
