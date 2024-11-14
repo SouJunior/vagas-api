@@ -37,7 +37,7 @@ export class Candidacy1731094752487 implements MigrationInterface {
             default: 'CURRENT_TIMESTAMP',
           },
           {
-            name: 'dateclosing',
+            name: 'date_closing',
             type: 'timestamp',
             isNullable: true,
           },
