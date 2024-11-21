@@ -1,9 +1,9 @@
-import { config } from 'dotenv';
-config();
+import 'dotenv/config'
 import { DataSource, DataSourceOptions } from 'typeorm';
 import 'reflect-metadata';
 
 const {
+  NODE_ENV,
   TYPEORM_HOST,
   TYPEORM_PORT,
   TYPEORM_PASSWORD,
@@ -15,7 +15,7 @@ const {
 export const typeormConfig: DataSourceOptions = {
   type: 'postgres',
   host: TYPEORM_HOST,
-  port: +TYPEORM_PORT,
+  port: parseInt(TYPEORM_PORT),
   username: TYPEORM_USERNAME,
   password: TYPEORM_PASSWORD,
   database: TYPEORM_DATABASE,
@@ -24,10 +24,13 @@ export const typeormConfig: DataSourceOptions = {
     'dist/database/migrations/*.js',
     'dist/database/migrations/seeds/*.js',
   ],
-  ssl: {
-    ca: CA_CERT,
-    rejectUnauthorized: false,
-  },
+  ssl:
+    NODE_ENV == 'production'
+      ? {
+          ca: CA_CERT,
+          rejectUnauthorized: false,
+        }
+      : undefined,
 };
 
 export const AppDataSource = new DataSource({
