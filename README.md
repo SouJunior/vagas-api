@@ -10,115 +10,6 @@
 
 ---
 
-## Menu
-
-### [Abrir e rodar o projeto](#abrir_e_rodar_o_projeto)
-
-### [Acesso ao projeto](#acesso_ao_projeto)
-
-### [Rodando Localmente](#rodando_localmente)
-
-### [Rodando com Docker](#instalando_o_docker)
-
-### [Stack Utilizada](#stack_utilizada)
-
-### [Equipe Back-end](#equipe_do_backend)
-
-### Pre requisitos:
-* git
-* docker
-* insomnia
-
----
-
-<a id="abrir_e_rodar_o_projeto"></a>
-
-## 🛠️ Abrir e rodar o projeto
-
-
-Clone o projeto na janela que abriu com o seguinte comando:
-
-```bash
-  git clone https://github.com/SouJunior/linkedin-backend.git
-```
-
-
----
-
-`docker-compose up -d`
-
-
-O projeto vai estar rodando em:
-
-`localhost:3000`
-
-agora basta seguir para [Instalando o Insomnia](#instalando_o_insomnia)
-
----
-
-<a id="acesso_ao_projeto"></a>
-
-## 📁 Acesso ao projeto
-
-Entre na pasta do projeto pelo Visual Studio, Abra o terminal do visual Studio e
-vá para o diretório do projeto com o comando:
-
-```bash
-  cd vagas-api
-
-Instale as dependências
-
-```bash
-  npm i
-```
-
-Feito a instalação dos pacotes basta renomear o arquivo `.env.example` para `.env` e preencher com as suas informações do banco de dados, no caso estamos usando o PostgreSQL
-
-Arquivo .env
-
-```bash
-PORT=3000 #Porta que seu projeto vai rodar na sua maquina
-
-# JWT
-SECRET_KEY= qualquerStringAqui #Uma string qualquer, chave para gerar o JWT
-
-# TYPEORM_CONNECTION
-TYPEORM_CONNECTION=postgres
-TYPEORM_HOST= #Host name do seu banco (geralmente quando esta na sua maquina fica localhost)
-TYPEORM_PORT=5432 #A porta geralmente é 5432, se no seu caso for outra porta basta alterar
-TYPEORM_USERNAME= # Seu usuario do banco postgress
-TYPEORM_PASSWORD= # Sua senha do banco postgress
-TYPEORM_DATABASE= # Sua database do banco de dados.
-```
-
----
-
-<a id="rodando_localmente"></a>
-
-## 🌐 Rodando localmente
-
-Inicie o servidor
-
-```bash
-  npm run start:dev
-```
-
----
-
-
-Após a instalação do Wsl, vamos até a pasta do projeto e rodar o comando
-
-`docker-compose up -d`
-
-
-O projeto vai estar rodando em:
-
-`localhost:3000`
-  
----
-
-<a id="stack_utilizada"></a>
-
 ## Stack utilizada ⚙
 
 **Linguagens:**
@@ -169,10 +60,6 @@ O projeto vai estar rodando em:
 ## Feedback
 
 Se você tiver algum feedback, por favor nos deixe saber por meio do nosso fazendo uma [contribuição](#contribuição).
-
-## Contribuição
-
-Contribuições são sempre bem-vindas!
 
 ## Usado por
 
