@@ -12,109 +12,70 @@
 
 ## Menu
 
-### [Abrir e rodar o projeto](#abrir_e_rodar_o_projeto)
+<a href="#rodando-localmente">Rodando localmente</a>
 
-### [Acesso ao projeto](#acesso_ao_projeto)
+<a href="#documentação">Documentação</a>
 
-### [Rodando Localmente](#rodando_localmente)
+<a href="#stack_utilizada">Stack Utilizada</a>
 
-### [Rodando com Docker](#instalando_o_docker)
+<a href="#equipe_do_backend">Equipe Back-end</a>
 
-### [Stack Utilizada](#stack_utilizada)
 
-### [Equipe Back-end](#equipe_do_backend)
-
-### Pre requisitos:
+### Pré-requisitos:
 * git
 * docker
 * insomnia
 
 ---
 
-<a id="abrir_e_rodar_o_projeto"></a>
+<a id="rodando-localmente"></a>
 
-## 🛠️ Abrir e rodar o projeto
+## 🛠️ Rodando localmente
 
 
-Clone o projeto na janela que abriu com o seguinte comando:
+Clone o projeto ou o fork do projeto com o seguinte comando:
 
 ```bash
-  git clone https://github.com/SouJunior/linkedin-backend.git
+git clone https://github.com/SouJunior/linkedin-backend.git
 ```
 
-
----
-
-`docker-compose up -d`
-
-
-O projeto vai estar rodando em:
-
-`localhost:3000`
-
-agora basta seguir para [Instalando o Insomnia](#instalando_o_insomnia)
-
----
-
-<a id="acesso_ao_projeto"></a>
-
-## 📁 Acesso ao projeto
-
-Entre na pasta do projeto pelo Visual Studio, Abra o terminal do visual Studio e
-vá para o diretório do projeto com o comando:
+Em seguida, instale as dependências:
 
 ```bash
-  cd vagas-api
-
-Instale as dependências
-
-```bash
-  npm i
+npm install
 ```
 
-Feito a instalação dos pacotes basta renomear o arquivo `.env.example` para `.env` e preencher com as suas informações do banco de dados, no caso estamos usando o PostgreSQL
-
-Arquivo .env
-
+Suba os containers docker na sua máquina via `docker compose`:
 ```bash
-PORT=3000 #Porta que seu projeto vai rodar na sua maquina
+docker compose up -d
+```
 
-# JWT
-SECRET_KEY= qualquerStringAqui #Uma string qualquer, chave para gerar o JWT
+Crie o arquivo `.env` seguindo o exemplo contido em `.env.example`.
 
-# TYPEORM_CONNECTION
-TYPEORM_CONNECTION=postgres
-TYPEORM_HOST= #Host name do seu banco (geralmente quando esta na sua maquina fica localhost)
-TYPEORM_PORT=5432 #A porta geralmente é 5432, se no seu caso for outra porta basta alterar
-TYPEORM_USERNAME= # Seu usuario do banco postgress
-TYPEORM_PASSWORD= # Sua senha do banco postgress
-TYPEORM_DATABASE= # Sua database do banco de dados.
+Aplique as **migrations** do TypeORM no seu banco de dados local:
+```bash
+npm run migration:run
+```
+
+Por fim, inicie o servidor:
+```bash
+npm run dev # ou npm run start:dev
 ```
 
 ---
 
-<a id="rodando_localmente"></a>
+<a id="documentação"></a>
 
-## 🌐 Rodando localmente
+## 📜 Documentação
 
-Inicie o servidor
+Quando você iniciar o seu servidor local, a documentação Swagger vai estar rodando em
 
 ```bash
-  npm run start:dev
+http://localhost:{PORT}/api
 ```
 
----
+Se você quiser testar as rotas no Insomnia ou Postman, importe o arquivo `Documentação_Sou_Junior.json` e as rotas serão configuradas automaticamente.
 
-
-Após a instalação do Wsl, vamos até a pasta do projeto e rodar o comando
-
-`docker-compose up -d`
-
-
-O projeto vai estar rodando em:
-
-`localhost:3000`
-  
 ---
 
 <a id="stack_utilizada"></a>
