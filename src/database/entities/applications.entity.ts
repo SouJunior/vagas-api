@@ -12,7 +12,7 @@ import { CurriculumEntity } from './curriculum.entity';
 import { JobsEntity } from './jobs.entity';
 import { UsersEntity } from './users.entity';
 import { IsUUID, IsNotEmpty } from 'class-validator';
-
+import { ApplicationStatus } from './enums/application-status.enum'; 
 
 @Entity('tb_applications')
 export class ApplicationEntity {
@@ -54,8 +54,10 @@ export class ApplicationEntity {
   @CreateDateColumn()
   created_date_time: Date;
 
-  @UpdateDateColumn({ update: true })
-  updated_date_tima: Date;
-  status: any;
+  @UpdateDateColumn({ update: true }) 
+  updated_date_time: Date; 
+  
+  @Column({ type: 'enum', enum: ApplicationStatus }) 
+  status: ApplicationStatus;
 
 }
