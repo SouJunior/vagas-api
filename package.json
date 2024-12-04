@@ -42,7 +42,7 @@
     "axios": "^1.7.7",
     "bcrypt": "^5.1.1",
     "class-transformer": "^0.5.1",
-    "class-validator": "^0.14.0",
+    "class-validator": "^0.14.1",
     "cpf-cnpj-validator": "^1.0.3",
     "dotenv": "^16.4.5",
     "handlebars": "^4.7.8",
