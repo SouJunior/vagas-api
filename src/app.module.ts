@@ -19,7 +19,7 @@ import { PassportModule } from '@nestjs/passport';
 import { UserRepository } from './modules/user/repository/user.repository';
 import { UsersEntity } from './database/entities/users.entity';
 import { AlertsModule } from './modules/alert/alerts.module';
-
+import { CandidacyModule } from './modules/candidacy/candidacy.module';
 
 @Module({
   imports: [
@@ -44,11 +44,9 @@ import { AlertsModule } from './modules/alert/alerts.module';
     ApplicationsModule,
     TypeOrmModule.forFeature([UsersEntity]),
     AlertsModule,
+    CandidacyModule,
   ],
   controllers: [AppController],
-  providers: [
-    AppService,
-    UserRepository
-  ],
+  providers: [AppService, UserRepository],
 })
 export class AppModule {}
