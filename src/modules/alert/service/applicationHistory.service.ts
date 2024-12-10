@@ -2,32 +2,41 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ApplicationEntity } from '../../../database/entities/applications.entity';
-import { JobsEntity } from '../../../database/entities/jobs.entity';
+import { ApplicationHistoryDto } from '../dtos/application-history.dto';
+import { ApplicationStatus } from 'src/database/entities/enums/application-status.enum';
+
 @Injectable()
 export class ApplicationHistoryService {
     constructor(
         @InjectRepository(ApplicationEntity)
         private applicationsRepository: Repository<ApplicationEntity>,
-        @InjectRepository(JobsEntity)
-        private jobsRepository: Repository<JobsEntity>,
+        
     ) { }
-    async getApplicationHistory(userId: string, status?: string, page: number = 1, limit: number = 10): Promise<any[]> {
-        const query = this.applicationsRepository.createQueryBuilder('application')
-            .where('application.userId = :userId', { userId })
-            .leftJoinAndSelect('application.job', 'job');
-        if (status) {
-            query.andWhere('application.status = :status', { status });
-        }
-        query.orderBy('application.createdAt', 'DESC')
-            .skip((page - 1) * limit)
-            .take(limit);
-        const applications = await query.getMany();
+    async getApplicationHistory(
+        userId: string, 
+        status?: ApplicationStatus,
+        page: number = 1, 
+        limit: number = 10
+    ): Promise<ApplicationHistoryDto[]> {
+        const applications = await this.applicationsRepository.find({
+            where: {
+                user_id: userId, 
+                ...(status && { status }),
+            },
+            relations: ['job'], 
+            order: { 
+                created_date_time: 'DESC', 
+            },
+            skip: (page -1) *limit,
+            take:limit, 
+        });
+       
         return applications.map(application => ({
             id: application.id,
             jobId: application.job.id,
             userId: application.user_id,
             status: application.status,
-            createdAt: application.created_at.toISOString(),
+            createdDT: application.created_date_time.toISOString(),
             jobTitle: application.job.title,
             jobDescription: application.job.description,
         }));
