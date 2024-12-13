@@ -15,7 +15,6 @@ import { AppService } from './app.service';
 import { SwaggerHealthCheck } from './shared/Swagger/decorators/app/health-check.swagger.decorator';
 import { Request, Response } from 'express';
 import { UpdateStatusDto } from './modules/applications/dtos/update-status.dto';
-import { Status } from './modules/applications/enums/status.enum';
 import { CustomBadRequestException } from './modules/applications/exceptions/bad-request.exception';
 import { CustomNotFoundException } from './modules/applications/exceptions/not-found.exception';
 
