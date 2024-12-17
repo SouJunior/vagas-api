@@ -4,6 +4,9 @@ import { ApplicationsRepository } from './repository/applications.repository';
 
 @Injectable()
 export class ApplicationsService {
+  findOne(applicationId: string, userId: string) {
+    throw new Error('Method not implemented.');
+  }
   constructor(
     private readonly applicationsRepository: ApplicationsRepository,
   ) {}

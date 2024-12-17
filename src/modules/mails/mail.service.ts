@@ -6,6 +6,9 @@ import { UsersEntity } from 'src/database/entities/users.entity';
 
 @Injectable()
 export class MailService {
+  checkEmail() {
+    throw new Error('Method not implemented.');
+  }
   constructor(private mailerService: MailerService) {}
 
   async sendUserConfirmation(user: UsersEntity): Promise<void> {

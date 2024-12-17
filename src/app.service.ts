@@ -1,14 +1,26 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { MailService } from './modules/mails/mail.service';
 import { UserRepository } from './modules/user/repository/user.repository';
 import { PageOptionsDto, Order } from './shared/pagination';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
   ApplicationEntity,
-  ApplicationStatus,
+  ApplicationStatus, 
 } from './database/entities/applications.entity';
 import { Repository } from 'typeorm';
 import { CustomBadRequestException } from './modules/applications/exceptions/bad-request.exception';
+
+class ApplicationNotFoundException extends HttpException {
+  constructor() {
+    super('Candidatura não encontrada.', HttpStatus.NOT_FOUND);
+  }
+}
+
+class InvalidStatusException extends HttpException {
+  constructor() {
+    super('Status inválido.', HttpStatus.BAD_REQUEST);
+  }
+}
 
 @Injectable()
 export class AppService {
@@ -19,42 +31,53 @@ export class AppService {
     private applicationRepository: Repository<ApplicationEntity>,
   ) {}
 
-  getAppStatus(baseUrl: string) {
-    return `<div style=text-align:center><a target="_blank" href="https://www.linkedin.com/company/soujunior/"><svg font-family="Times New Roman" font-size="16" height="299.96" viewBox="0 0 854 300" width="854.56" xmlns="http://www.w3.org/2000/svg" style="width:854.56px; height:299.96px; font-family:'Times New Roman'; font-size:16px; position:relative; z-index:1" xmlns:xlink="http://www.w3.org/1999/xlink"><style>.text {font-size: 90px;font-weight: 700;font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;}.desc {font-size: 20px;font-weight: 500;font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;}.text, .desc {animation: fadeIn 1.2s ease-in-out forwards;}@keyframes fadeIn { from {opacity: 0; } to {opacity: 1; }};</style><g transform="translate(427, 150) scale(1, 1) translate(-427, -150)"><path d="" fill="#2088f2" opacity="0.4"><animate attributeName="d" begin="0s" calcmod="spline" dur="20s" keySplines="0.2 0 0.2 1;0.2 0 0.2 1;0.2 0 0.2 1" keyTimes="0;0.333;0.667;1" repeatCount="indefinite" values="M0 0L 0 220Q 213.5 260 427 230T 854 255L 854 0 Z;M0 0L 0 245Q 213.5 260 427 240T 854 230L 854 0 Z;M0 0L 0 265Q 213.5 235 427 265T 854 230L 854 0 Z;M0 0L 0 220Q 213.5 260 427 230T 854 255L 854 0 Z" /></path><path d="" fill="#2088f2" opacity="0.4"><animate attributeName="d" begin="-10s" calcmod="spline" dur="20s" keySplines="0.2 0 0.2 1;0.2 0 0.2 1;0.2 0 0.2 1" keyTimes="0;0.333;0.667;1" repeatCount="indefinite" values="M0 0L 0 235Q 213.5 280 427 250T 854 260L 854 0 Z;M0 0L 0 250Q 213.5 220 427 220T 854 240L 854 0 Z;M0 0L 0 245Q 213.5 225 427 250T 854 265L 854 0 Z;M0 0L 0 235Q 213.5 280 427 250T 854 260L 854 0 Z" /></path></g><text alignment-baseline="middle" class="text" stroke="#none" stroke-width="1" text-anchor="middle" x="50%" y="38%" style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji'; font-size:90px; font-weight:700; alignment-baseline:middle; fill:#ffffff; stroke-width:1; text-anchor:middle">Sou Junior</text><text alignment-baseline="middle" class="desc" text-anchor="middle" x="52%" y="61%" style="font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji'; font-size:20px; font-weight:500; alignment-baseline:middle; fill:#ffffff; text-anchor:middle">Projeto Opensource para melhorar o match entre os profissionais Juniors e Empresas!</text></svg></a></div>`;
+  async getAppStatus() {
+    const databaseStatus = await this.checkDatabase();
+    const mailerStatus = await this.checkEmail();
+  
+    return {
+      application: 'Sou Junior',
+      version: '1.0.0',
+      environment: process.env.NODE_ENV || 'development',
+      status: 'OK',
+      uptime: process.uptime(), 
+      services: {
+        database: databaseStatus,
+        mailer: mailerStatus,
+      },
+      timestamp: new Date().toISOString(),
+    };
   }
 
   async getHealthCheck() {
     const databaseStatus = await this.checkDatabase();
     const mailerStatus = await this.checkEmail();
-    const data = {
-      databaseStatus,
-      mailerStatus,
-    };
+  
     return {
-      status: 201,
-      data,
+      status: 200,
+      data: {
+        databaseStatus,
+        mailerStatus,
+      },
     };
   }
 
-  private async checkDatabase() {
+  private async checkDatabase(): Promise<ApplicationStatus> { 
     try {
       const options: PageOptionsDto = {
         page: 1,
-        take: 10,
+        take: 1, 
         orderByColumn: 'id',
         order: Order.ASC,
       };
       const allUsers = await this.userRepository.getAllUsers(options);
-      if (allUsers == null || allUsers == undefined) {
-        return 'DOWN';
-      }
-      return 'OK';
+      return allUsers.length > 0 ? ApplicationStatus.PENDING : ApplicationStatus.REJECTED;
     } catch (error) {
-      return 'DOWN';
+      return ApplicationStatus.REJECTED; 
     }
   }
 
-  private async checkEmail() {
+  private async checkEmail(): Promise<ApplicationStatus> { 
     try {
       await this.mailService.sendMail({
         subject: 'HealthCheck',
@@ -65,9 +88,9 @@ export class AppService {
         },
         email: 'carteiro@soujunior.tech',
       });
-      return 'OK';
+      return ApplicationStatus.PENDING;
     } catch (error) {
-      return 'DOWN';
+      return ApplicationStatus.REJECTED;
     }
   }
 
@@ -76,19 +99,25 @@ export class AppService {
     applicationId: string,
     status: string,
   ): Promise<ApplicationEntity | null> {
+    const user = await this.userRepository.findOne(user_id);
+    
+    if (user === undefined || user === null) {
+      throw new CustomBadRequestException('User ID inválido.');
+    }
+
     const application = await this.applicationRepository.findOne({
       where: { id: applicationId, user_id },
     });
 
     if (!application) {
-      return null;
+      throw new ApplicationNotFoundException();
     }
 
     const validStatus = Object.values(ApplicationStatus).includes(
       status as ApplicationStatus,
     );
     if (!validStatus) {
-      throw new CustomBadRequestException('Status inválido');
+      throw new InvalidStatusException();
     }
 
     application.status = status as ApplicationStatus;

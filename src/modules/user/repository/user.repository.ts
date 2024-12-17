@@ -14,6 +14,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class UserRepository {
+  findOne(user_id: string) {
+    throw new Error('Method not implemented.');
+  }
   constructor(@InjectRepository(UsersEntity) private usersRepository: Repository<UsersEntity>) {}
 
   async createUser(data: CreateUserDto): Promise<UsersEntity> {
