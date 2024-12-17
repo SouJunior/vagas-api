@@ -1,11 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { MailService } from './modules/mails/mail.service';
 import { UserRepository } from './modules/user/repository/user.repository';
-import { PageOptionsDto } from './shared/pagination';
-import { Order } from './shared/pagination';
+import { PageOptionsDto, Order } from './shared/pagination';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ApplicationEntity } from './database/entities/applications.entity';
+import {
+  ApplicationEntity,
+  ApplicationStatus,
+} from './database/entities/applications.entity';
 import { Repository } from 'typeorm';
+import { CustomBadRequestException } from './modules/applications/exceptions/bad-request.exception';
 
 @Injectable()
 export class AppService {
@@ -81,7 +84,14 @@ export class AppService {
       return null;
     }
 
-    application.status = status;
+    const validStatus = Object.values(ApplicationStatus).includes(
+      status as ApplicationStatus,
+    );
+    if (!validStatus) {
+      throw new CustomBadRequestException('Status inválido');
+    }
+
+    application.status = status as ApplicationStatus;
     await this.applicationRepository.save(application);
     return application;
   }

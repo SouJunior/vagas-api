@@ -1,6 +1,5 @@
 export enum ApplicationStatus {
-    PENDING = 'PENDING',
-    APPROVED = 'APPROVED',
-    REJECTED = 'REJECTED',
-  }
-  
+  PENDING = 'PENDING',
+  APPROVED = 'APPROVED',
+  REJECTED = 'REJECTED',
+}
