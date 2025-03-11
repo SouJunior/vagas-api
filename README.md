@@ -93,6 +93,59 @@ Se você quiser testar as rotas no Insomnia ou Postman, importe o arquivo `Docum
 <img align="center" src="https://img.shields.io/badge/Visual_Studio_Code-0078D4?style=for-the-badge&logo=visual%20studio%20code&logoColor=white" alt="Visual Studio">
 <img align="center" src="https://img.shields.io/badge/-Docker-blue?style=for-the-badge&logo=docker&logoColor=white" alt="docker">
 
+## DevOps
+
+> [!WARNING]
+> Vagas Web App utiliza API disponível em https://motor-vagas.onrender.com/docs/
+> O que, pela URL, indica possibilidade do repo "vagas-api" não estar sendo utilizado
+
+> [!TIP]
+> Caso não esteja sendo utilizado, atualizar README apontando para o novo repositório e arquivar repositório vagas-api
+
+> [!CAUTION]
+> Pull Requests para main atualizam a imagem docker de produção
+
+> [!TIP]
+> Atualizar "Deploy to Production", removendo "on: pull_request: branches: [main]"
+
+> [!IMPORTANT]
+> Repositório possui github workflow para deploy de homologação, mas commit mais recente foi um PR direto para main
+
+> [!WARNING]
+> AWS ECR e Railway configurados para o mesmo repo
+
+```mermaid
+sequenceDiagram
+    actor Dev as Desenvolvedores
+    participant Git as GitHub
+    participant Rail as Railway
+    participant Actions as GitHub Actions
+    participant ECR as AWS ECR
+
+    Note over Dev,ECR: Fluxo de Deploy com Preview
+
+    Dev->>Git: Abre Pull Request (PR) para main
+    Git->>Actions: Novo Evento: PR criada
+    Actions->>Actions: Cria imagem Docker
+    Actions->>ECR: Atualiza imagem Docker "$REGISTRY/vagas:latest"
+    ECR->>Actions: Imagem "$REGISTRY/vagas:latest" atualizada
+    Actions-->>Git: Deploy de Produção atualizado
+
+    Note over Dev,ECR: Loop de desenvolvimento
+    
+    Dev->>Git: Aprova e mergeia PR para main
+    par
+        Git->>Rail: Novo Evento: Branch main atualizada
+        Rail-->>Git: Deploy de Produção "*.up.railway.app" atualizado
+    and
+        Git->>Actions: Novo Evento: Branch main atualizada
+        Actions->>Actions: Cria imagem Docker
+        Actions->>ECR: Atualiza imagem Docker "$REGISTRY/vagas:latest"
+        ECR-->>Actions: Imagem "$REGISTRY/vagas:latest" atualizada
+        Actions-->>Git: Deploy de Produção atualizado
+    end
+```
+
 ---
 
 <a id="equipe_do_backend"></a>
