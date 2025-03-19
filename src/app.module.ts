@@ -20,6 +20,7 @@ import { UserRepository } from './modules/user/repository/user.repository';
 import { UsersEntity } from './database/entities/users.entity';
 import { AlertsModule } from './modules/alert/alerts.module';
 import { CandidacyModule } from './modules/candidacy/candidacy.module';
+import { SavedJobsModule } from './modules/saved-jobs/saved-jobs.module';
 
 @Module({
   imports: [
@@ -45,6 +46,8 @@ import { CandidacyModule } from './modules/candidacy/candidacy.module';
     TypeOrmModule.forFeature([UsersEntity]),
     AlertsModule,
     CandidacyModule,
+    SavedJobsModule,
+    SavedJobsModule
   ],
   controllers: [AppController],
   providers: [AppService, UserRepository],

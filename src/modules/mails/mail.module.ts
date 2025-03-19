@@ -15,10 +15,7 @@ import { MailService } from './mail.service';
           port: config.get('MAIL_PORT'), 
           // secure: true,
           // secure: false,
-          auth: {
-            user: config.get('MAIL_USER'),
-            pass: config.get('MAIL_PASSWORD'),
-          },
+          
           // tls: {
           //   rejectUnauthorized: false,
           // },
