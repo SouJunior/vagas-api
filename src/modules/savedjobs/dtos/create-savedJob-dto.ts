@@ -5,6 +5,7 @@ export class CreateSavedJobDto {
   @IsNotEmpty()
   userId: string;
 
+  @IsUUID()
   @IsNotEmpty()
   jobId: string;
 }

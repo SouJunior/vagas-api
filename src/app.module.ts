@@ -23,6 +23,8 @@ import { AlertsModule } from './modules/alert/alerts.module';
 import { CandidacyModule } from './modules/candidacy/candidacy.module';
 import { SavedJobsService } from './modules/savedjobs/services/savedjobs.service';
 import { SavedJobsController } from './modules/savedjobs/savedjobs.controller'
+import { JobsEntity } from './database/entities/jobs.entity'; 
+import { SavedJobsModule } from './modules/savedjobs/savedjobs.module'
 
 @Module({
   imports: [
@@ -45,9 +47,10 @@ import { SavedJobsController } from './modules/savedjobs/savedjobs.controller'
     UploadModule,
     CurriculumModule,
     ApplicationsModule,
-    TypeOrmModule.forFeature([UsersEntity, SavedJobsEntity]),
+    TypeOrmModule.forFeature([UsersEntity, SavedJobsEntity, JobsEntity]),
     AlertsModule,
     CandidacyModule,
+    SavedJobsModule,
   ],
   controllers: [AppController, SavedJobsController],
   providers: [AppService, UserRepository, SavedJobsService],
