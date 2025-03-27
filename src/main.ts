@@ -30,7 +30,7 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, config);
 
-  if (process.env.SWAGGER_ENABLE == 'true') {
+  if (process.env.NODE_ENV == 'development') {
     SwaggerModule.setup('api', app, document);
     console.info(
       `Documentation running on http://localhost:${process.env.PORT || 3000}/api 🚀🚀`,

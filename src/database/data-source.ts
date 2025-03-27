@@ -9,7 +9,6 @@ const {
   TYPEORM_PASSWORD,
   TYPEORM_USERNAME,
   TYPEORM_DATABASE,
-  TYPEORM_ENABLE_SSL,
   CA_CERT,
 } = process.env;
 
@@ -26,7 +25,7 @@ export const typeormConfig: DataSourceOptions = {
     'dist/database/migrations/seeds/*.js',
   ],
   ssl:
-    TYPEORM_ENABLE_SSL == 'true'
+    NODE_ENV == 'production'
       ? {
           ca: CA_CERT,
           rejectUnauthorized: false,
