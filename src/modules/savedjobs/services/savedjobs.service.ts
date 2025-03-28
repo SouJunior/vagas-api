@@ -1,10 +1,15 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { SavedJobsEntity } from '../../../database/entities/savedjobs.entity';
 import { CreateSavedJobDto } from '../dtos/create-savedJob-dto';
 import { UsersEntity } from '../../../database/entities/users.entity';
-import { JobsEntity } from '../../../database/entities/jobs.entity'; 
+import { JobsEntity } from '../../../database/entities/jobs.entity';
+import { handleError } from 'src/shared/utils/handle-error.util';
 
 @Injectable()
 export class SavedJobsService {
@@ -14,10 +19,12 @@ export class SavedJobsService {
     @InjectRepository(UsersEntity)
     private usersRepository: Repository<UsersEntity>,
     @InjectRepository(JobsEntity)
-    private jobsRepository: Repository<JobsEntity>, 
+    private jobsRepository: Repository<JobsEntity>,
   ) {}
 
-  async saveJob(createSavedJobDto: CreateSavedJobDto): Promise<SavedJobsEntity> {
+  async saveJob(
+    createSavedJobDto: CreateSavedJobDto,
+  ): Promise<SavedJobsEntity> {
     const { userId, jobId } = createSavedJobDto;
 
     if (!userId || !jobId) {
@@ -40,5 +47,9 @@ export class SavedJobsService {
       savedAt: new Date(),
     });
     return this.savedJobsRepository.save(newSavedJob);
+  }
+
+  async getAllSavedJobs(): Promise<SavedJobsEntity[]> {
+    return this.savedJobsRepository.find().catch(handleError);
   }
 }
