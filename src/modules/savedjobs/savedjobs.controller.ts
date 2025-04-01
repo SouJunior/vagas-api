@@ -19,7 +19,9 @@ export class SavedJobsController {
   }
 
   @Get()
-
+  @SwaggerFindSavedJobs()
+  @ApiBearerAuth()
+  @UseGuards(AuthGuard())
   async getAllSavedJobs() {
     return this.savedJobsService.getAllSavedJobs();
   }
