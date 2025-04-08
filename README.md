@@ -156,7 +156,7 @@ sequenceDiagram
 
 
 
-## Devs 👨‍💻👨‍💻
+## Devs! 👨‍💻👨‍💻
 | [<img src="https://avatars.githubusercontent.com/u/129699975?v=4" width=115><br><sub>Larissa Sarapio</sub>](https://github.com/larisarapio) | [<img src="https://avatars.githubusercontent.com/u/18354026?v=4" width=115><br><sub>José Lázaro Moreira Passos Júnior</sub>](https://github.com/joselazarojunior) | [<img src="https://avatars.githubusercontent.com/u/23053276?v=4" width=115><br><sub>Lázaro Bodevan</sub>](https://github.com/lazarobodevan) | [<img src="https://avatars.githubusercontent.com/u/113060357?v=4" width=115><br><sub>Leidejane da Rosa</sub>](https://github.com/LeidejanedaRosa) | [<img src="https://avatars.githubusercontent.com/u/126430816?v=4" width=115><br><sub>Tiago Souza Dias</sub>](https://github.com/tiago0214)| [<img src="https://avatars.githubusercontent.com/u/117475547?v=4" width=115><br><sub>João Matos</sub>](https://github.com/joaovicttorbm) |
 | :----------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------: | :--------------------
 
