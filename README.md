@@ -64,6 +64,37 @@ npm run dev # ou npm run start:dev
 
 ---
 
+❗ Erro de autenticação no banco?
+
+Se ao rodar o projeto aparecer um erro relacionado ao banco de dados, siga os passos abaixo:
+
+🔐 Alterar a senha do usuário postgres:
+
+```bash
+psql -h localhost -p 5433 -U postgres -d postgres
+```
+
+E então, dentro do terminal do psql:
+
+```bash
+ALTER USER postgres WITH PASSWORD 'admin';
+```
+
+❗ Erro: banco de dados "vagas-api" não existe?
+Ainda no psql, crie o banco:
+
+```bash
+CREATE DATABASE "vagas-api";
+```
+
+✅ Agora sim, tudo certo? Siga com as migrations!
+
+```bash
+npm run migration:run
+```
+
+---
+
 <a id="documentação"></a>
 
 ## 📜 Documentação
