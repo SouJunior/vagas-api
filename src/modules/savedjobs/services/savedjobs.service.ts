@@ -9,7 +9,6 @@ import { SavedJobsEntity } from '../../../database/entities/savedjobs.entity';
 import { CreateSavedJobDto } from '../dtos/create-savedJob-dto';
 import { UsersEntity } from '../../../database/entities/users.entity';
 import { JobsEntity } from '../../../database/entities/jobs.entity';
-import { handleError } from 'src/shared/utils/handle-error.util';
 
 @Injectable()
 export class SavedJobsService {
@@ -49,7 +48,4 @@ export class SavedJobsService {
     return this.savedJobsRepository.save(newSavedJob);
   }
 
-  async getAllSavedJobs(): Promise<SavedJobsEntity[]> {
-    return this.savedJobsRepository.find().catch(handleError);
-  }
 }
