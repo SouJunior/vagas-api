@@ -210,24 +210,107 @@ sequenceDiagram
 ## 👨‍💻 Equipe Back-end
 
 ### 👑 Headers
-| ![Lucas Rigon](https://avatars.githubusercontent.com/u/12602062?v=4) <br> [Lucas Rigon](https://github.com/rigonlucas) | ![Ricardo Machado](https://avatars.githubusercontent.com/u/86207761?v=4) <br> [Ricardo Machado](https://github.com/wolwerr) |
-|:--:|:--:|
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="https://avatars.githubusercontent.com/u/12602062?v=4" width="100px" alt="Lucas Rigon"/><br/>
+      <a href="https://github.com/rigonlucas">Lucas Rigon</a>
+    </td>
+    <td align="center">
+      <img src="https://avatars.githubusercontent.com/u/86207761?v=4" width="100px" alt="Ricardo Machado"/><br/>
+      <a href="https://github.com/wolwerr">Ricardo Machado</a>
+    </td>
+  </tr>
+</table>
 
 ### 🚀 Devs
-| ![Larissa Sarapio](https://avatars.githubusercontent.com/u/129699975?v=4) <br> [Larissa Sarapio](https://github.com/larisarapio) | ![José Lázaro](https://avatars.githubusercontent.com/u/18354026?v=4) <br> [José Lázaro](https://github.com/joselazarojunior) | ![Lázaro Bodevan](https://avatars.githubusercontent.com/u/23053276?v=4) <br> [Lázaro Bodevan](https://github.com/lazarobodevan) | ![Leidejane da Rosa](https://avatars.githubusercontent.com/u/113060357?v=4) <br> [Leidejane da Rosa](https://github.com/LeidejanedaRosa) | ![Tiago Souza Dias](https://avatars.githubusercontent.com/u/126430816?v=4) <br> [Tiago Souza Dias](https://github.com/tiago0214) | ![João Matos](https://avatars.githubusercontent.com/u/117475547?v=4) <br> [João Matos](https://github.com/joaovicttorbm) |
-|:--:|:--:|:--:|:--:|:--:|:--:|
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="https://avatars.githubusercontent.com/u/129699975?v=4" width="100px" alt="Larissa Sarapio"/><br/>
+      <a href="https://github.com/larisarapio">Larissa Sarapio</a>
+    </td>
+    <td align="center">
+      <img src="https://avatars.githubusercontent.com/u/18354026?v=4" width="100px" alt="José Lázaro"/><br/>
+      <a href="https://github.com/joselazarojunior">José Lázaro</a>
+    </td>
+    <td align="center">
+      <img src="https://avatars.githubusercontent.com/u/23053276?v=4" width="100px" alt="Lázaro Bodevan"/><br/>
+      <a href="https://github.com/lazarobodevan">Lázaro Bodevan</a>
+    </td>
+    <td align="center">
+      <img src="https://avatars.githubusercontent.com/u/113060357?v=4" width="100px" alt="Leidejane da Rosa"/><br/>
+      <a href="https://github.com/LeidejanedaRosa">Leidejane da Rosa</a>
+    </td>
+    <td align="center">
+      <img src="https://avatars.githubusercontent.com/u/126430816?v=4" width="100px" alt="Tiago Souza Dias"/><br/>
+      <a href="https://github.com/tiago0214">Tiago Souza Dias</a>
+    </td>
+    <td align="center">
+      <img src="https://avatars.githubusercontent.com/u/117475547?v=4" width="100px" alt="João Matos"/><br/>
+      <a href="https://github.com/joaovicttorbm">João Matos</a>
+    </td>
+  </tr>
+</table>
 
 ### 🧠 Mentores
-| ![Mikael Melo](https://avatars.githubusercontent.com/u/85139137?v=4) <br> [Mikael Melo](https://github.com/MikaelMelo1) |
-|:--:|
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="https://avatars.githubusercontent.com/u/85139137?v=4" width="100px" alt="Mikael Melo"/><br/>
+      <a href="https://github.com/MikaelMelo1">Mikael Melo</a>
+    </td>
+  </tr>
+</table>
 
 ### 💼 Ex-contribuidores
-| ![Leonardo Monteiro](https://avatars.githubusercontent.com/u/75804508?v=4) <br> [Leonardo Monteiro](https://github.com/lmmagalhaes) | ![Daniel Vinhas](https://avatars.githubusercontent.com/u/95504029?v=4) <br> [Daniel Vinhas](https://github.com/vinhas93) | ![Joana D'arc](https://avatars.githubusercontent.com/u/95653155?s=96&v=4) <br> [Joana D'arc](https://github.com/Joanadarknes) | ![Audinéia Carmo](https://avatars.githubusercontent.com/u/56273265?v=4) <br> [Audinéia Carmo](https://github.com/audicarmo) | ![Bruno](https://avatars.githubusercontent.com/u/88730176?v=4) <br> [Bruno](https://github.com/brunodev21) | ![Leonardo Reis](https://avatars.githubusercontent.com/u/96137175?v=4) <br> [Leonardo Reis](https://github.com/LeonardoReis86) |
-|:--:|:--:|:--:|:--:|:--:|:--:|
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="https://avatars.githubusercontent.com/u/75804508?v=4" width="100px;" alt="Leonardo Monteiro"/>
+      <br />
+      <a href="https://github.com/lmmagalhaes">Leonardo Monteiro</a>
+    </td>
+    <td align="center">
+      <img src="https://avatars.githubusercontent.com/u/95504029?v=4" width="100px;" alt="Daniel Vinhas"/>
+      <br />
+      <a href="https://github.com/vinhas93">Daniel Vinhas</a>
+    </td>
+    <td align="center">
+      <img src="https://avatars.githubusercontent.com/u/95653155?v=4" width="100px;" alt="Joana D'arc"/>
+      <br />
+      <a href="https://github.com/Joanadarknes">Joana D'arc</a>
+    </td>
+    <td align="center">
+      <img src="https://avatars.githubusercontent.com/u/56273265?v=4" width="100px;" alt="Audinéia Carmo"/>
+      <br />
+      <a href="https://github.com/audicarmo">Audinéia Carmo</a>
+    </td>
+    <td align="center">
+      <img src="https://avatars.githubusercontent.com/u/88730176?v=4" width="100px;" alt="Bruno"/>
+      <br />
+      <a href="https://github.com/brunodev21">Bruno</a>
+    </td>
+    <td align="center">
+      <img src="https://avatars.githubusercontent.com/u/96137175?v=4" width="100px;" alt="Leonardo Reis"/>
+      <br />
+      <a href="https://github.com/LeonardoReis86">Leonardo Reis</a>
+    </td>
+  </tr>
+</table>
 
 ### 💡 Idealizador do projeto
-| ![Wouerner Brandão](https://avatars.githubusercontent.com/u/287287?v=4) <br> [Wouerner Brandão](https://github.com/) |
-|:--:|
+
+<p align="center">
+  <img src="https://avatars.githubusercontent.com/u/287287?v=4" width="150px" alt="Wouerner Brandão"/>
+  <br />
+  <a href="https://github.com/wouerner">Wouerner Brandão</a>
+</p>
+
 
 ---
 
