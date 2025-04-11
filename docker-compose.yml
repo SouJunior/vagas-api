@@ -6,7 +6,7 @@ services:
     container_name: vagas-api
     restart: always
     ports:
-      - 5433:5433
+      - 5432:5432
     environment:
       - POSTGRES_USER=${TYPEORM_USERNAME}
       - POSTGRES_PASSWORD=${TYPEORM_PASSWORD}
