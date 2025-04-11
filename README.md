@@ -2,11 +2,13 @@
 
 ![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=2088f2&style=for-the-badge)
 
-# <h1 align="center"> [![Typing SVG](<https://readme-typing-svg.herokuapp.com/?color=ffffff&size=35&center=true&vCenter=true&width=1000&lines=Seja+bem+vindo(a)+ao+vagas-backend!>)](https://git.io/typing-svg) </h1>
+<h1 align="center"> <a href="https://git.io/typing-svg"> 
 
-<img width=150% src="https://capsule-render.vercel.app/api?type=waving&width=150%&color=2088f2&fontColor=ffffff&height=300&section=header&text=Sou%20Junior&fontSize=90&animation=fadeIn&fontAlignY=38&desc=Projeto%20Opensource%20para%20melhorar%20o%20match%20entre%20os%20profissionais%20Juniors%20e%20Empresas!&descAlignY=61&descAlign=52" />
+<img src="https://readme-typing-svg.herokuapp.com/?color=ffffff&size=35&center=true&vCenter=true&width=1000&lines=Seja+bem+vindo(a)+ao+vagas-backend!" alt="Typing SVG" /> </a> </h1> 
 
-## <p align="center"> Visitantes: <img alingn="center"  src="https://profile-counter.glitch.me/SouJunior/count.svg" /></p>
+<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&width=100%&color=2088f2&fontColor=ffffff&height=300&section=header&text=Sou%20Junior&fontSize=90&animation=fadeIn&fontAlignY=38&desc=Projeto%20Opensource%20para%20melhorar%20o%20match%20entre%20profissionais%20Juniors%20e%20Empresas!&descAlignY=61&descAlign=52" /> 
+
+<p align="center">Visitantes: <img src="https://profile-counter.glitch.me/SouJunior/count.svg" /></p>
 
 ---
 
@@ -64,6 +66,33 @@ npm run dev # ou npm run start:dev
 
 ---
 
+## Configure o arquivo .env
+🔐 Crie um arquivo .env na raiz do projeto com as seguintes variáveis de ambiente:
+
+```bash
+PORT=3000
+DATABASE_URL=postgres://usuario:senha@localhost:5432/seu_banco
+JWT_SECRET=sua_chave_secreta
+```
+
+💡 Dica: nunca suba o arquivo .env no GitHub! Use sempre o .gitignore para evitar vazamentos de credenciais.
+
+
+---
+
+## 🖥️ Instruções por sistema operacional
+Tanto 🐧 Linux quanto 🪟 Windows são o mesmo processo
+
+```bash
+# Instale as dependências
+npm install
+
+# Rode o projeto
+npm run start:dev
+```
+
+---
+
 ❗ Erro de autenticação no banco?
 
 Se ao rodar o projeto aparecer um erro relacionado ao banco de dados, siga os passos abaixo:
@@ -71,7 +100,7 @@ Se ao rodar o projeto aparecer um erro relacionado ao banco de dados, siga os pa
 🔐 Alterar a senha do usuário postgres:
 
 ```bash
-psql -h localhost -p 5433 -U postgres -d postgres
+psql -h localhost -p 5432 -U postgres -d postgres
 ```
 
 E então, dentro do terminal do psql:
@@ -178,34 +207,27 @@ sequenceDiagram
 ```
 
 ---
+## 👨‍💻 Equipe Back-end
 
-<a id="equipe_do_backend"></a>
+### 👑 Headers
+| ![Lucas Rigon](https://avatars.githubusercontent.com/u/12602062?v=4) <br> [Lucas Rigon](https://github.com/rigonlucas) | ![Ricardo Machado](https://avatars.githubusercontent.com/u/86207761?v=4) <br> [Ricardo Machado](https://github.com/wolwerr) |
+|:--:|:--:|
 
-## Headers 🙎🏻‍♂️
-| [<img src="https://avatars.githubusercontent.com/u/12602062?v=4" width=115><br><sub>Lucas Rigon</sub>](https://github.com/rigonlucas/) | [<img src="https://avatars.githubusercontent.com/u/86207761?v=4" width=115><br><sub>Ricardo Machado</sub>](https://github.com/wolwerr) |
-|:----------------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------:|
+### 🚀 Devs
+| ![Larissa Sarapio](https://avatars.githubusercontent.com/u/129699975?v=4) <br> [Larissa Sarapio](https://github.com/larisarapio) | ![José Lázaro](https://avatars.githubusercontent.com/u/18354026?v=4) <br> [José Lázaro](https://github.com/joselazarojunior) | ![Lázaro Bodevan](https://avatars.githubusercontent.com/u/23053276?v=4) <br> [Lázaro Bodevan](https://github.com/lazarobodevan) | ![Leidejane da Rosa](https://avatars.githubusercontent.com/u/113060357?v=4) <br> [Leidejane da Rosa](https://github.com/LeidejanedaRosa) | ![Tiago Souza Dias](https://avatars.githubusercontent.com/u/126430816?v=4) <br> [Tiago Souza Dias](https://github.com/tiago0214) | ![João Matos](https://avatars.githubusercontent.com/u/117475547?v=4) <br> [João Matos](https://github.com/joaovicttorbm) |
+|:--:|:--:|:--:|:--:|:--:|:--:|
 
+### 🧠 Mentores
+| ![Mikael Melo](https://avatars.githubusercontent.com/u/85139137?v=4) <br> [Mikael Melo](https://github.com/MikaelMelo1) |
+|:--:|
 
+### 💼 Ex-contribuidores
+| ![Leonardo Monteiro](https://avatars.githubusercontent.com/u/75804508?v=4) <br> [Leonardo Monteiro](https://github.com/lmmagalhaes) | ![Daniel Vinhas](https://avatars.githubusercontent.com/u/95504029?v=4) <br> [Daniel Vinhas](https://github.com/vinhas93) | ![Joana D'arc](https://avatars.githubusercontent.com/u/95653155?s=96&v=4) <br> [Joana D'arc](https://github.com/Joanadarknes) | ![Audinéia Carmo](https://avatars.githubusercontent.com/u/56273265?v=4) <br> [Audinéia Carmo](https://github.com/audicarmo) | ![Bruno](https://avatars.githubusercontent.com/u/88730176?v=4) <br> [Bruno](https://github.com/brunodev21) | ![Leonardo Reis](https://avatars.githubusercontent.com/u/96137175?v=4) <br> [Leonardo Reis](https://github.com/LeonardoReis86) |
+|:--:|:--:|:--:|:--:|:--:|:--:|
 
-## Devs! 👨‍💻👨‍💻
-| [<img src="https://avatars.githubusercontent.com/u/129699975?v=4" width=115><br><sub>Larissa Sarapio</sub>](https://github.com/larisarapio) | [<img src="https://avatars.githubusercontent.com/u/18354026?v=4" width=115><br><sub>José Lázaro Moreira Passos Júnior</sub>](https://github.com/joselazarojunior) | [<img src="https://avatars.githubusercontent.com/u/23053276?v=4" width=115><br><sub>Lázaro Bodevan</sub>](https://github.com/lazarobodevan) | [<img src="https://avatars.githubusercontent.com/u/113060357?v=4" width=115><br><sub>Leidejane da Rosa</sub>](https://github.com/LeidejanedaRosa) | [<img src="https://avatars.githubusercontent.com/u/126430816?v=4" width=115><br><sub>Tiago Souza Dias</sub>](https://github.com/tiago0214)| [<img src="https://avatars.githubusercontent.com/u/117475547?v=4" width=115><br><sub>João Matos</sub>](https://github.com/joaovicttorbm) |
-| :----------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------: | :--------------------
-
-
-## Mentores 🙎🏻‍♂️
-
-| [<img src="https://avatars.githubusercontent.com/u/85139137?v=4" width=115><br><sub>Mikael Melo</sub>](https://github.com/MikaelMelo1) | 
-| :-----------------------------------------------------------------------------------------------------------------------------: |
-
-## Ex contribuidores 🙎🏻‍♂️🙎🏻
-
-| [<img src="https://avatars.githubusercontent.com/u/75804508?v=4" width=115><br><sub>Leonardo Monteiro</sub>](https://github.com/lmmagalhaes) | [<img src="https://avatars.githubusercontent.com/u/95504029?v=4" width=115><br><sub>Daniel Vinhas</sub>](https://github.com/vinhas93) | [<img src="https://avatars.githubusercontent.com/u/95653155?s=96&v=4" width=115><br><sub>Joana D'arc</sub>](https://github.com/Joanadarknes) | [<img src="https://avatars.githubusercontent.com/u/56273265?v=4" width=115><br><sub>Audinéia Carmo</sub>](https://github.com/audicarmo) | [<img src="https://avatars.githubusercontent.com/u/88730176?v=4" width=115><br><sub>Bruno</sub>](https://github.com/brunodev21)| [<img src="https://avatars.githubusercontent.com/u/96137175?v=4" width=115><br><sub>Leonardo Reis</sub>](https://github.com/LeonardoReis86) |
-| :----------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------: |
-
-## Idealizador do projeto 🙎🏻‍♂️
-
-| [<img src="https://avatars.githubusercontent.com/u/287287?v=4" width=115><br><sub>Wouerner</sub>](https://github.com/wouerner) |
-| :----------------------------------------------------------------------------------------------------------------------------: |
+### 💡 Idealizador do projeto
+| ![Wouerner Brandão](https://avatars.githubusercontent.com/u/287287?v=4) <br> [Wouerner Brandão](https://github.com/) |
+|:--:|
 
 ---
 
