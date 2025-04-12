@@ -12,7 +12,7 @@ export class GetAllSavedJobsDto {
     userId?: string;
   
     @IsOptional()
-    @IsString()
+    @IsUUID()
     @ApiProperty({
       required: false,
       description: 'ID da vaga salva',

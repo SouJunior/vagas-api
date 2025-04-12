@@ -15,7 +15,7 @@ import {
     @ManyToOne(() => UsersEntity, (user) => user.savedJobs)
     user: UsersEntity;
   
-    @Column()
+    @Column('uuid') 
     jobId: string;
   
     @CreateDateColumn()
