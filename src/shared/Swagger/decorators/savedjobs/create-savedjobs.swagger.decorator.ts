@@ -15,6 +15,11 @@ export function SwaggerCreateSavedJobs() {
       description: 'Requisição inválida. Verifique os campos enviados no corpo da requisição.',
       type: BadRequestSwagger,
     }),
+    ApiResponse({
+      status: HttpStatus.CONFLICT,  
+      description: 'Esta vaga já foi salva pelo usuário.',
+      type: BadRequestSwagger,
+    }),
     ApiOperation({
         description: 'Endpoint responsável por criar uma vaga salva. Requer dados obrigatórios no corpo da requisição.',
     }),

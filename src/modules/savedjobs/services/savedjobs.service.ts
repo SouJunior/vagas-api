@@ -27,17 +27,25 @@ export class SavedJobsService {
     const { userId, jobId } = createSavedJobDto;
 
     if (!userId || !jobId) {
-      throw new BadRequestException('User ID and Job ID must be provided');
+      throw new BadRequestException('O ID do usuário e o ID da vaga devem ser fornecidos');
     }
 
     const user = await this.usersRepository.findOneBy({ id: userId });
     if (!user) {
-      throw new NotFoundException('User not found');
+      throw new NotFoundException('Usuário não encontrado');
     }
 
     const job = await this.jobsRepository.findOneBy({ id: jobId });
     if (!job) {
-      throw new NotFoundException('Job not found');
+      throw new NotFoundException('Vaga não encontrada');
+    }
+
+    const existingSavedJob = await this.savedJobsRepository.findOne({
+      where: { user: user, jobId }
+    });
+
+    if (existingSavedJob) {
+      throw new BadRequestException('Este trabalho já foi salvo pelo usuário');
     }
 
     const newSavedJob = this.savedJobsRepository.create({
@@ -45,7 +53,7 @@ export class SavedJobsService {
       jobId,
       savedAt: new Date(),
     });
+
     return this.savedJobsRepository.save(newSavedJob);
   }
-
 }
