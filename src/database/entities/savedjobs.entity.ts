@@ -12,10 +12,13 @@ import {
     @PrimaryGeneratedColumn('uuid')
     id: string;
   
-    @ManyToOne(() => UsersEntity, (user) => user.savedJobs)
+    @ManyToOne(() => UsersEntity, (user) => user.savedJobs, {
+      onDelete: 'CASCADE',
+      nullable: false,
+    })
     user: UsersEntity;
   
-    @Column('uuid') 
+    @Column('uuid', { nullable: true })
     jobId: string;
   
     @CreateDateColumn()
