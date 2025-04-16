@@ -24,12 +24,12 @@ export class AuthLoginService {
       info = await this.userRepository.findOneByEmail(email);
     }
 
-    if (!info?.mailConfirm || !info) {
-      return {
-        status: 400,
-        data: { message: 'Email not validated' },
-      };
-    }
+    // if (!info?.mailConfirm || !info) {
+    //   return {
+    //     status: 400,
+    //     data: { message: 'Email not validated' },
+    //   };
+    // }
 
     const passwordIsValid = await bcrypt.compare(password, info.password);
 

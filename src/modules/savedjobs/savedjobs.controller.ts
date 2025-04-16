@@ -9,6 +9,7 @@ import { SwaggerCreateSavedJobs } from 'src/shared/Swagger/decorators/savedjobs/
 import { GetAllSavedJobsDto } from './dtos/get-all-savedjobs.dto';
 import { PageOptionsDto } from 'src/shared/pagination';
 import { FindAllSavedJobsService } from './services/find-all-savedjobs.service';
+import { log } from 'console';
 
 
 @ApiTags('saved-jobs')
@@ -28,6 +29,8 @@ export class SavedJobsController {
     @Body() createSavedJobDto: CreateSavedJobDto,
   ): Promise<SavedJobsEntity> {
     try {
+      console.log(createSavedJobDto);
+      
       return await this.savedJobsService.saveJob(createSavedJobDto);
     } catch (error) {
       throw new HttpException(

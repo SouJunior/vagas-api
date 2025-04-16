@@ -2,6 +2,7 @@ import {
     Column,
     CreateDateColumn,
     Entity,
+    JoinColumn,
     ManyToOne,
     PrimaryGeneratedColumn,
   } from 'typeorm';
@@ -16,6 +17,7 @@ import {
       onDelete: 'CASCADE',
       nullable: false,
     })
+    @JoinColumn({ name: 'userId' })
     user: UsersEntity;
   
     @Column('uuid', { nullable: true })

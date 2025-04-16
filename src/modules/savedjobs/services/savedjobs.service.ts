@@ -32,6 +32,8 @@ export class SavedJobsService {
 
     const user = await this.usersRepository.findOneBy({ id: userId });
     if (!user) {
+      console.log(user);
+      
       throw new NotFoundException('Usuário não encontrado');
     }
 
@@ -47,8 +49,10 @@ export class SavedJobsService {
     if (existingSavedJob) {
       throw new BadRequestException('Este trabalho já foi salvo pelo usuário');
     }
+    console.log(userId)
 
     const newSavedJob = this.savedJobsRepository.create({
+      
       user,
       jobId,
       savedAt: new Date(),
