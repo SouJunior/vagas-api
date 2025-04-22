@@ -15,6 +15,7 @@ import { JobsTypeEnum } from '../../modules/jobs/enums/job-type.enum';
 import { ApplicationEntity } from './applications.entity';
 import { CommentsEntity } from './comments.entity';
 import { CompaniesEntity } from './companies.entity';
+import { SavedJobsEntity } from './savedjobs.entity';
 
 @Entity('tb_jobs')
 export class JobsEntity {
@@ -135,4 +136,7 @@ export class JobsEntity {
 
   @Column({ nullable: true })
   content: string;
+
+  @OneToMany(() => SavedJobsEntity, (savedJob) => savedJob.user)
+    savedJobs: SavedJobsEntity[];
 }

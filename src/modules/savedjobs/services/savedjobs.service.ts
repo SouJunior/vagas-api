@@ -21,43 +21,51 @@ export class SavedJobsService {
     private jobsRepository: Repository<JobsEntity>,
   ) {}
 
-  async saveJob(
-    createSavedJobDto: CreateSavedJobDto,
-  ): Promise<SavedJobsEntity> {
+  async saveJob(createSavedJobDto: CreateSavedJobDto): Promise<SavedJobsEntity> {
     const { userId, jobId } = createSavedJobDto;
-
+ 
     if (!userId || !jobId) {
       throw new BadRequestException('O ID do usuário e o ID da vaga devem ser fornecidos');
     }
-
+  
     const user = await this.usersRepository.findOneBy({ id: userId });
     if (!user) {
-      console.log(user);
-      
       throw new NotFoundException('Usuário não encontrado');
     }
-
+  
     const job = await this.jobsRepository.findOneBy({ id: jobId });
+
     if (!job) {
       throw new NotFoundException('Vaga não encontrada');
     }
-
-    const existingSavedJob = await this.savedJobsRepository.findOne({
-      where: { user: user, jobId }
+  
+    const existing = await this.savedJobsRepository.findOne({
+      where: {
+        user: { id: userId },
+        job: { id: jobId} , 
+      },
     });
 
-    if (existingSavedJob) {
-      throw new BadRequestException('Este trabalho já foi salvo pelo usuário');
+    if (existing) {
+      throw new BadRequestException('Este trabalho já foi salvo por este usuário.');
     }
-    console.log(userId)
+  
+    const savedAt = new Date();
+    const expiresAt = new Date(savedAt);
+    expiresAt.setDate(savedAt.getDate() + 7);
 
     const newSavedJob = this.savedJobsRepository.create({
-      
       user,
-      jobId,
-      savedAt: new Date(),
+      job, 
+      savedAt,
+      expiresAt,
     });
 
-    return this.savedJobsRepository.save(newSavedJob);
+    const savedJob = await this.savedJobsRepository.save(newSavedJob);
+
+    return this.savedJobsRepository.findOne({
+      where: { id: savedJob.id },
+      relations: ['user', 'job'],
+    });
   }
 }

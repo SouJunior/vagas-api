@@ -1,7 +1,6 @@
 import { Body, Controller, Get, HttpException, HttpStatus, Post, Query, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { SavedJobsService } from '../savedjobs/services/savedjobs.service';
-import { SavedJobsEntity } from '../../database/entities/savedjobs.entity';
 import { CreateSavedJobDto } from '../savedjobs/dtos/create-savedJob-dto';
 import { AuthGuard } from '@nestjs/passport';
 import { SwaggerFindSavedJobs } from 'src/shared/Swagger/decorators/savedjobs/view-savedjobs.swagger.decorator';
@@ -9,8 +8,6 @@ import { SwaggerCreateSavedJobs } from 'src/shared/Swagger/decorators/savedjobs/
 import { GetAllSavedJobsDto } from './dtos/get-all-savedjobs.dto';
 import { PageOptionsDto } from 'src/shared/pagination';
 import { FindAllSavedJobsService } from './services/find-all-savedjobs.service';
-import { log } from 'console';
-
 
 @ApiTags('saved-jobs')
 @Controller('saved-jobs')
@@ -22,19 +19,24 @@ export class SavedJobsController {
 
   @Post()
   @ApiBearerAuth()
-  @UseGuards(AuthGuard()) 
+  @UseGuards(AuthGuard())
   @SwaggerCreateSavedJobs()
   @ApiOperation({ summary: 'Salvar vaga para um usuário' })
   async saveJob(
     @Body() createSavedJobDto: CreateSavedJobDto,
-  ): Promise<SavedJobsEntity> {
+  ): Promise<any> { 
     try {
-      console.log(createSavedJobDto);
-      
-      return await this.savedJobsService.saveJob(createSavedJobDto);
+      const savedJob = await this.savedJobsService.saveJob(createSavedJobDto);
+
+      return {
+        message: 'Sua vaga foi salva com sucesso!',
+        statusCode: HttpStatus.CREATED,
+        savedJob: savedJob,
+      };
     } catch (error) {
+      
       throw new HttpException(
-        'Erro ao salvar vaga',
+        `Erro ao salvar vaga: ${error.message || 'erro desconhecido'}`,
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
