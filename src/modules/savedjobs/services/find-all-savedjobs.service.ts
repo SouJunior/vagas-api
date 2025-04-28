@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable, InternalServerErrorException } from "@nestjs/common";
 import { SavedJobsEntity } from "src/database/entities/savedjobs.entity";
 import { PageDto, PageOptionsDto } from "src/shared/pagination";
 import { SavedJobsRepository } from "../repository/savedjobs.repository";
@@ -8,10 +8,14 @@ import { GetAllSavedJobsDto } from "../dtos/get-all-savedjobs.dto";
 export class FindAllSavedJobsService {
   constructor(private readonly savedJobsRepository: SavedJobsRepository) {}
 
-  async execute(
+  async getAllSavedJobs(
     pageOptionsDto: PageOptionsDto,
     filters: GetAllSavedJobsDto,
   ): Promise<PageDto<SavedJobsEntity>> {
-    return this.savedJobsRepository.getAllSavedJobs(pageOptionsDto, filters);
+    try {
+      return await this.savedJobsRepository.getAllSavedJobs(pageOptionsDto, filters);
+    } catch (error) {
+      throw new InternalServerErrorException(`Falha ao salvar os trabalhos salvos: ${error.message}`);
+    }
   }
 }
