@@ -1,14 +1,21 @@
 import { applyDecorators, HttpStatus } from "@nestjs/common";
-import { ApiOperation, ApiResponse } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiOperation, ApiResponse } from "@nestjs/swagger";
 import { NotFoundSwagger } from "../../not-found.swagger";
 import { BadRequestSwagger } from "../../bad-request.swagger";
+import { SavedJobsEntity } from "src/database/entities/savedjobs.entity";
+import { ConflictSwagger } from "../../conflict.swagger";
 
 export function SwaggerCreateSavedJobs() {
   return applyDecorators(
+    ApiBearerAuth(),
+    ApiOperation({
+      summary: 'Salvar uma vaga',
+      description: 'Cria um novo registro de vaga salva para o usuário autenticado. Requer dados obrigatórios no corpo da requisição.',
+    }),
     ApiResponse({
       status: HttpStatus.CREATED,
-      description: 'Cadastro realizado com sucesso. Retorna os dados do novo registro.',
-      type: NotFoundSwagger,
+      description: 'Vaga salva com sucesso. Retorna os dados do registro criado.',
+      type: SavedJobsEntity,
     }),
     ApiResponse({
       status: HttpStatus.BAD_REQUEST,
@@ -16,12 +23,14 @@ export function SwaggerCreateSavedJobs() {
       type: BadRequestSwagger,
     }),
     ApiResponse({
-      status: HttpStatus.CONFLICT,  
-      description: 'Esta vaga já foi salva pelo usuário.',
-      type: BadRequestSwagger,
+      status: HttpStatus.CONFLICT,
+      description: 'Esta vaga já foi salva anteriormente pelo usuário.',
+      type: ConflictSwagger,
     }),
-    ApiOperation({
-        description: 'Endpoint responsável por criar uma vaga salva. Requer dados obrigatórios no corpo da requisição.',
+    ApiResponse({
+      status: HttpStatus.NOT_FOUND,
+      description: 'Usuário ou vaga não encontrados.',
+      type: NotFoundSwagger,
     }),
   );
 }
