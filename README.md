@@ -16,17 +16,20 @@
 
 <a href="#rodando-localmente">Rodando localmente</a>
 
-<a href="#documentação">Documentação</a>
+<a href="#documentacao">Documentação</a>
 
 <a href="#stack_utilizada">Stack Utilizada</a>
+
+<a href="#como_contribuir">Como contribuir</a>
 
 <a href="#equipe_do_backend">Equipe Back-end</a>
 
 
 ### Pré-requisitos:
-* git
-* docker
-* insomnia
+* Git
+* Docker instalado
+* Banco de dados (ex: PostgreSQL) em execução
+* Insomnia ou outro que você prefira para fazer as requisições
 
 ---
 
@@ -38,7 +41,7 @@
 Clone o projeto ou o fork do projeto com o seguinte comando:
 
 ```bash
-git clone https://github.com/SouJunior/linkedin-backend.git
+git clone https://github.com/SouJunior/vagas-api
 ```
 
 Em seguida, instale as dependências:
@@ -51,18 +54,18 @@ Suba os containers docker na sua máquina via `docker compose`:
 ```bash
 docker compose up -d
 ```
+⚠️ Caso o comando acima não funcione, use com hífen:
+
+```bash
+docker-compose up -d
+```
+
+Para remover os containers:
+```bash
+docker compose down
+```
 
 Crie o arquivo `.env` seguindo o exemplo contido em `.env.example`.
-
-Aplique as **migrations** do TypeORM no seu banco de dados local:
-```bash
-npm run migration:run
-```
-
-Por fim, inicie o servidor:
-```bash
-npm run dev # ou npm run start:dev
-```
 
 ---
 
@@ -77,6 +80,23 @@ JWT_SECRET=sua_chave_secreta
 
 💡 Dica: nunca suba o arquivo .env no GitHub! Use sempre o .gitignore para evitar vazamentos de credenciais.
 
+
+Aplique as **migrations** do TypeORM no seu banco de dados local:
+```bash
+npm run migration:run
+```
+
+Por fim, inicie o servidor:
+```bash
+npm run dev # ou npm run start:dev
+```
+
+# Acesso à Aplicação
+
+Após subir a aplicação, acesse:
+```bash
+http://localhost:3000
+```
 
 ---
 
@@ -124,7 +144,7 @@ npm run migration:run
 
 ---
 
-<a id="documentação"></a>
+<a id="documentacao"></a>
 
 ## 📜 Documentação
 
@@ -207,6 +227,22 @@ sequenceDiagram
 ```
 
 ---
+<a id="como_contribuir"></a>
+## 👨‍💻 Como contribuir
+Ficaremos felizes com contribuições! Veja como participar:
+
+Crie uma issue com sugestões, dúvidas ou relatos de erro
+
+Faça um fork deste repositório
+
+Crie uma branch com sua funcionalidade ou correção
+
+Envie um Pull Request (PR) explicando suas alterações
+
+🔎 Siga boas práticas de versionamento e mantenha seus commits claros e objetivos!
+
+---
+<a id="equipe_do_backend"></a>
 ## 👨‍💻 Equipe Back-end
 
 ### 👑 Headers
