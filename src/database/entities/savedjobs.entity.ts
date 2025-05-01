@@ -2,6 +2,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  Index,
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
@@ -14,6 +15,7 @@ export class SavedJobsEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Index()
   @ManyToOne(() => UsersEntity, (user) => user.savedJobs, {
     onDelete: 'CASCADE',
     nullable: false,
@@ -21,7 +23,9 @@ export class SavedJobsEntity {
   @JoinColumn({ name: 'userId' })
   user: UsersEntity;
 
+  @Index()
   @ManyToOne(() => JobsEntity, (job) => job.savedJobs, { eager: false })
+  @JoinColumn({ name: 'jobId' })
   job: JobsEntity;
 
   @CreateDateColumn()
