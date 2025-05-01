@@ -20,6 +20,7 @@ export class SavedJobsRepository {
       const queryBuilder = this.savedJobsRepository
         .createQueryBuilder('savedJob')
         .leftJoinAndSelect('savedJob.user', 'user')
+        .leftJoinAndSelect('savedJob.job', 'job')
         .orderBy('savedJob.savedAt', pageOptionsDto.order)
         .skip((pageOptionsDto.page - 1) * pageOptionsDto.take)
         .take(pageOptionsDto.take);
@@ -29,16 +30,17 @@ export class SavedJobsRepository {
       }
 
       if (filters.jobId) {
-        queryBuilder.andWhere('savedJob.jobId = :jobId', { jobId: filters.jobId });
+        queryBuilder.andWhere('job.id = :jobId', { jobId: filters.jobId });
       }
 
       const [savedJobs, itemCount] = await queryBuilder.getManyAndCount();
 
       const pageMetaDto = new PageMetaDto({ itemCount, pageOptionsDto });
-
       return new PageDto(savedJobs, pageMetaDto);
     } catch (error) {
-      throw new InternalServerErrorException('Erro ao buscar vagas salvas');
+      throw new InternalServerErrorException(
+        `Erro ao buscar vagas salvas: ${error.message}`,
+      );
     }
   }
 }

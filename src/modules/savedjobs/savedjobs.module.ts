@@ -6,6 +6,7 @@ import { UsersEntity } from '../../database/entities/users.entity';
 import { JobsEntity } from '../../database/entities/jobs.entity';
 import { FindAllSavedJobsService } from './services/find-all-savedjobs.service';
 import { SavedJobsRepository } from './repository/savedjobs.repository';
+import { SavedJobsCleanerService } from './services/savedjobs-cleaner.service';
 
 @Module({
   imports: [
@@ -15,11 +16,13 @@ import { SavedJobsRepository } from './repository/savedjobs.repository';
     SavedJobsService,
     FindAllSavedJobsService,
     SavedJobsRepository, 
+    SavedJobsCleanerService
   ],
   exports: [
     SavedJobsService,
     FindAllSavedJobsService,
     SavedJobsRepository, 
+    SavedJobsCleanerService
   ],
 })
 export class SavedJobsModule {}

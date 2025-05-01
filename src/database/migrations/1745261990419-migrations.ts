@@ -5,7 +5,7 @@ export class Migrations1745261990419 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`ALTER TABLE "tb_saved_jobs" DROP CONSTRAINT "FK_3845b06bfda63ccc1da359b378a"`);
-        await queryRunner.query(`ALTER TABLE "tb_saved_jobs" ADD "expiresAt" TIMESTAMP NOT NULL DEFAULT now()`);
+        await queryRunner.query(`ALTER TABLE "tb_saved_jobs" ADD "expiresAt" TIMESTAMP NOT NULL DEFAULT now() + interval '7 days'`);
         await queryRunner.query(`ALTER TABLE "tb_saved_jobs" DROP COLUMN "jobId"`);
         await queryRunner.query(`ALTER TABLE "tb_saved_jobs" ADD "jobId" uuid`);
         await queryRunner.query(`ALTER TABLE "tb_saved_jobs" ALTER COLUMN "userId" SET NOT NULL`);

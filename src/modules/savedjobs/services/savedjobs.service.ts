@@ -1,7 +1,6 @@
 import {
   BadRequestException,
   Injectable,
-  NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -15,48 +14,49 @@ export class SavedJobsService {
   constructor(
     @InjectRepository(SavedJobsEntity)
     private savedJobsRepository: Repository<SavedJobsEntity>,
+
     @InjectRepository(UsersEntity)
     private usersRepository: Repository<UsersEntity>,
+
     @InjectRepository(JobsEntity)
     private jobsRepository: Repository<JobsEntity>,
+
   ) {}
 
   async saveJob(createSavedJobDto: CreateSavedJobDto): Promise<SavedJobsEntity> {
     const { userId, jobId } = createSavedJobDto;
- 
-    if (!userId || !jobId) {
-      throw new BadRequestException('O ID do usuário e o ID da vaga devem ser fornecidos');
-    }
-  
-    const user = await this.usersRepository.findOneBy({ id: userId });
-    if (!user) {
-      throw new NotFoundException('Usuário não encontrado');
-    }
-  
-    const job = await this.jobsRepository.findOneBy({ id: jobId });
 
-    if (!job) {
-      throw new NotFoundException('Vaga não encontrada');
+    const userExists = await this.usersRepository.exist({ where: { id: userId } });
+    if (!userExists) {
+      throw new BadRequestException('Usuário não encontrado.');
     }
-  
-    const existing = await this.savedJobsRepository.findOne({
+
+    const jobExists = await this.jobsRepository.exist({ where: { id: jobId } });
+    if (!jobExists) {
+      throw new BadRequestException('Vaga não encontrada.');
+    }
+
+    const alreadySaved = await this.savedJobsRepository.exist({
       where: {
         user: { id: userId },
-        job: { id: jobId} , 
+        job: { id: jobId },
       },
     });
 
-    if (existing) {
-      throw new BadRequestException('Este trabalho já foi salvo por este usuário.');
+    if (alreadySaved) {
+      throw new BadRequestException('Esta vaga já foi salva por este usuário.');
     }
-  
+
+    const user = await this.usersRepository.findOneBy({ id: userId });
+    const job = await this.jobsRepository.findOneBy({ id: jobId });
+
     const savedAt = new Date();
     const expiresAt = new Date(savedAt);
     expiresAt.setDate(savedAt.getDate() + 7);
 
     const newSavedJob = this.savedJobsRepository.create({
       user,
-      job, 
+      job,
       savedAt,
       expiresAt,
     });
