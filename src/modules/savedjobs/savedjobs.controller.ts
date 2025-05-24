@@ -1,5 +1,5 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Post, Query, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiTags, ApiResponse } from '@nestjs/swagger';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Query, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
+import { ApiBearerAuth, ApiOperation, ApiTags, ApiResponse, ApiParam } from '@nestjs/swagger';
 import { SavedJobsService } from '../savedjobs/services/savedjobs.service';
 import { CreateSavedJobDto } from '../savedjobs/dtos/create-savedJob-dto';
 import { AuthGuard } from '@nestjs/passport';
@@ -8,6 +8,10 @@ import { SwaggerCreateSavedJobs } from 'src/shared/Swagger/decorators/savedjobs/
 import { GetAllSavedJobsDto } from './dtos/get-all-savedjobs.dto';
 import { PageOptionsDto } from 'src/shared/pagination';
 import { FindAllSavedJobsService } from './services/find-all-savedjobs.service';
+import { UsersEntity } from 'src/database/entities/users.entity';
+import { LoggedUser } from '../auth/decorator/logged-user.decorator';
+import { DeleteSavedJobDto } from './dtos/delete-saved-job-dto';
+import { DeleteSavedJobsService } from './services/delete-saved-jobs.service';
 
 @ApiTags('saved-jobs')
 @Controller('saved-jobs')
@@ -15,6 +19,7 @@ export class SavedJobsController {
   constructor(
     private readonly savedJobsService: SavedJobsService,
     private readonly findAllSavedJobsService: FindAllSavedJobsService,
+    private readonly deleteSavedJobsService: DeleteSavedJobsService
   ) {}
 
   @Post()
@@ -54,6 +59,17 @@ export class SavedJobsController {
         HttpStatus.INTERNAL_SERVER_ERROR,
       );
     }
+  }
+  @Delete(':id')
+  @UseGuards(AuthGuard('jwt'))
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Delete a saved job' })
+  @ApiParam({ name: 'id', description: 'The ID of the saved job to delete' })
+  async deleteSavedJob(
+    @Param() deleteSavedJobDto: DeleteSavedJobDto,
+    @LoggedUser() user: UsersEntity,
+  ) {
+    return this.deleteSavedJobsService.execute(deleteSavedJobDto, user.id);
   }
 
   @Get()

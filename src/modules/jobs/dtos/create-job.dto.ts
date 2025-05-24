@@ -195,7 +195,6 @@ export class CreateJobDto {
   affirmativeType?: string;
 
   @IsOptional()
-  @Exclude()
   @IsString()
   company_id?: string;
 }
