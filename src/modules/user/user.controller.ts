@@ -122,7 +122,7 @@ export class UserController {
   @SwaggerDeleteUser()
   @UseGuards(AuthGuard())
   @ApiBearerAuth()
-  async deleteUser( @LoggedUser() user: UsersEntity) {
+  async deleteUser(@LoggedUser() user: UsersEntity) {
     return this.deleteUserService.execute(user.id);
   }
 
@@ -143,9 +143,8 @@ export class UserController {
     @Body() updatePassword: CreatePasswordHashDto,
     @Res() res: Response,
   ) {
-    const { data, status } = await this.updatePasswordByEmailService.execute(
-      updatePassword,
-    );
+    const { data, status } =
+      await this.updatePasswordByEmailService.execute(updatePassword);
     return res.status(status).send(data);
   }
 

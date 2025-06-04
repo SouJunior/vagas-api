@@ -7,28 +7,27 @@ import { JobRepository } from '../repository/job.repository';
 export class GetAllJobsFromLoggedCompanyService {
   constructor(
     private companyRepository: CompanyRepository,
-    private jobsRepository: JobRepository
-    ) {}
+    private jobsRepository: JobRepository,
+  ) {}
 
-  async execute(companyId: string
-  ): Promise<IJobsResponse> {
+  async execute(companyId: string): Promise<IJobsResponse> {
     const jobs = await this.jobsRepository.getAllJobsByCompanyId(companyId);
 
     if (!jobs) {
       return {
         status: 400,
-        data:{
-          message: "This company has no jobs yet."
-        }
-      }
+        data: {
+          message: 'This company has no jobs yet.',
+        },
+      };
     }
 
     return {
       status: 200,
-      data:{
-        message: "Logged company jobs listed successfully.",
-        content: jobs
-      }
+      data: {
+        message: 'Logged company jobs listed successfully.',
+        content: jobs,
+      },
     };
   }
 }

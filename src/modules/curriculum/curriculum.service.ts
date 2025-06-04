@@ -53,9 +53,8 @@ export class CurriculumService {
       user,
     };
 
-    const curriculuns = await this.curriculumRepository.saveCurriculum(
-      saveNewCurriculum,
-    );
+    const curriculuns =
+      await this.curriculumRepository.saveCurriculum(saveNewCurriculum);
 
     return {
       status: 200,

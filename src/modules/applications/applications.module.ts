@@ -6,9 +6,7 @@ import { ApplicationsRepository } from './repository/applications.repository';
 import { ApplicationEntity } from 'src/database/entities/applications.entity';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([ApplicationEntity]),
-  ],
+  imports: [TypeOrmModule.forFeature([ApplicationEntity])],
   controllers: [ApplicationsController],
   providers: [ApplicationsRepository, ApplicationsService],
 })

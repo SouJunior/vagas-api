@@ -19,18 +19,14 @@ import { UsersEntity } from 'src/database/entities/users.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([
-      CommentsEntity,
-      JobsEntity,
-      UsersEntity,
-    ]),
+    TypeOrmModule.forFeature([CommentsEntity, JobsEntity, UsersEntity]),
     ThrottlerModule.forRoot({
       throttlers: [
-         {
-           ttl: 10000,
-           limit: 4
-         }
-      ] 
+        {
+          ttl: 10000,
+          limit: 4,
+        },
+      ],
     }),
   ],
   controllers: [CommentController],

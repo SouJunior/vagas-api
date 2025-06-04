@@ -9,16 +9,21 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class ReportRepository {
-  constructor(@InjectRepository(ReportsEntity) private reportsRepository: Repository<ReportsEntity>) {}
+  constructor(
+    @InjectRepository(ReportsEntity)
+    private reportsRepository: Repository<ReportsEntity>,
+  ) {}
 
   async createReport(data: CreateReportDto): Promise<ReportsEntity> {
     return this.reportsRepository.save(data).catch(handleError);
   }
 
   async findByParams(params: ReportParamsType): Promise<ReportsEntity> {
-    const { job_id, user_id } = params
-    
-    return this.reportsRepository.findOneBy({ job_id, user_id}).catch(handleError);
+    const { job_id, user_id } = params;
+
+    return this.reportsRepository
+      .findOneBy({ job_id, user_id })
+      .catch(handleError);
   }
 
   async findAllRepots(): Promise<ReportsEntity[]> {
@@ -26,16 +31,20 @@ export class ReportRepository {
   }
 
   async findReportById(id: string): Promise<ReportsEntity> {
-    return this.reportsRepository.findOneBy({id}).catch(handleError);
+    return this.reportsRepository.findOneBy({ id }).catch(handleError);
   }
 
   async updateReport(id: string, data: UpdateReportDto) {
-    const report = await this.reportsRepository.findOneBy({id}).catch(handleError);
+    const report = await this.reportsRepository
+      .findOneBy({ id })
+      .catch(handleError);
 
-    return this.reportsRepository.save({
-      ...report,
-      ...data,
-    }).catch(handleError);
+    return this.reportsRepository
+      .save({
+        ...report,
+        ...data,
+      })
+      .catch(handleError);
   }
 
   async deleteReportById(id: string): Promise<object> {

@@ -14,7 +14,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class UserRepository {
-  constructor(@InjectRepository(UsersEntity) private usersRepository: Repository<UsersEntity>) {}
+  constructor(
+    @InjectRepository(UsersEntity)
+    private usersRepository: Repository<UsersEntity>,
+  ) {}
 
   async createUser(data: CreateUserDto): Promise<UsersEntity> {
     return this.usersRepository.save(data).catch(handleError);
@@ -40,17 +43,17 @@ export class UserRepository {
   }
 
   async searchUserByName(name: string): Promise<UsersEntity[]> {
-    return this.usersRepository.find({ select: { name: true } }).catch(handleError);
+    return this.usersRepository
+      .find({ select: { name: true } })
+      .catch(handleError);
   }
 
   async findOneById(id: string): Promise<UsersEntity> {
-    return this.usersRepository.findOneBy({id}).catch(handleError);
+    return this.usersRepository.findOneBy({ id }).catch(handleError);
   }
 
   async findOneByEmail(email: string): Promise<UsersEntity> {
-    return this.usersRepository.findOneBy({ email }).catch(
-      handleError,
-    );
+    return this.usersRepository.findOneBy({ email }).catch(handleError);
   }
 
   async updateUser(user: UsersEntity, data: UpdateUserDto) {
@@ -70,21 +73,26 @@ export class UserRepository {
   }
 
   async updateMyPassword(updateMyPasswordDto: UpdateMyPasswordDto, id) {
-    const user = await this.usersRepository.findOneBy({id}).catch(handleError);
+    const user = await this.usersRepository
+      .findOneBy({ id })
+      .catch(handleError);
 
     if (!user) {
       throw new NotFoundException('User not found');
     }
 
-    return this.usersRepository.update(id, updateMyPasswordDto)
+    return this.usersRepository
+      .update(id, updateMyPasswordDto)
       .then(() => {
-        return this.usersRepository.findOneBy({id});
+        return this.usersRepository.findOneBy({ id });
       })
       .catch(handleError);
   }
 
   async updateRecoveryPassword(id: string, recoverPasswordToken: string) {
-    const user = await this.usersRepository.findOneBy({id}).catch(handleError);
+    const user = await this.usersRepository
+      .findOneBy({ id })
+      .catch(handleError);
 
     user.recoverPasswordToken = recoverPasswordToken;
 
@@ -93,21 +101,29 @@ export class UserRepository {
   }
 
   async activateUser(id: string): Promise<UsersEntity> {
-    const user = await this.usersRepository.findOneBy({id}).catch(handleError);
+    const user = await this.usersRepository
+      .findOneBy({ id })
+      .catch(handleError);
 
     user.mailConfirm = true;
 
-    await this.usersRepository.update(id, { mailConfirm: true }).catch(handleError);
+    await this.usersRepository
+      .update(id, { mailConfirm: true })
+      .catch(handleError);
 
-    return this.usersRepository.findOneBy({id});
+    return this.usersRepository.findOneBy({ id });
   }
 
   async findByToken(recoverPasswordToken: string): Promise<UsersEntity> {
-    return this.usersRepository.findOneBy({ recoverPasswordToken}).catch(handleError);
+    return this.usersRepository
+      .findOneBy({ recoverPasswordToken })
+      .catch(handleError);
   }
 
   async updatePassword(id, password: string): Promise<UsersEntity> {
-    const user = await this.usersRepository.findOneBy({id}).catch(handleError);
+    const user = await this.usersRepository
+      .findOneBy({ id })
+      .catch(handleError);
     const data = {
       recoverPasswordToken: null,
       password,
@@ -115,11 +131,13 @@ export class UserRepository {
 
     delete user.password;
 
-    await this.usersRepository.update(id, {
-      ...user,
-      ...data,
-    }).catch(handleError);
+    await this.usersRepository
+      .update(id, {
+        ...user,
+        ...data,
+      })
+      .catch(handleError);
 
-    return this.usersRepository.findOneBy({id}).catch(handleError);
+    return this.usersRepository.findOneBy({ id }).catch(handleError);
   }
 }

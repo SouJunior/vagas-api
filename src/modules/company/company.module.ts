@@ -25,7 +25,7 @@ import { UsersEntity } from 'src/database/entities/users.entity';
   controllers: [CompanyController],
   providers: [
     CompanyRepository,
-     UserRepository,
+    UserRepository,
     CreateCompanyService,
     FindAllCompanyService,
     UpdateCompanyService,

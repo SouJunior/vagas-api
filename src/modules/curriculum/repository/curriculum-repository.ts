@@ -7,22 +7,30 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class CurriculumRepository {
-  constructor(@InjectRepository(CurriculumEntity) private curriculumRepository: Repository<CurriculumEntity>) {}
+  constructor(
+    @InjectRepository(CurriculumEntity)
+    private curriculumRepository: Repository<CurriculumEntity>,
+  ) {}
 
   async saveCurriculum(data: CreateCurriculumType): Promise<CurriculumEntity> {
-
     return this.curriculumRepository.save(data).catch(handleError);
   }
 
   async findOneByUserId(userId: string): Promise<CurriculumEntity> {
-    return this.curriculumRepository.findOneBy({user_id: userId}).catch(handleError);
+    return this.curriculumRepository
+      .findOneBy({ user_id: userId })
+      .catch(handleError);
   }
 
   async findAllCurriculum(id: string): Promise<CurriculumEntity[]> {
-    return this.curriculumRepository.find({ select: { user_id: true } }).catch(handleError);
+    return this.curriculumRepository
+      .find({ select: { user_id: true } })
+      .catch(handleError);
   }
 
   async deleteByKey(key: string): Promise<void> {
-    await this.curriculumRepository.softDelete({ fileKey: key }).catch(handleError);
+    await this.curriculumRepository
+      .softDelete({ fileKey: key })
+      .catch(handleError);
   }
 }
