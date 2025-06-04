@@ -14,20 +14,22 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class JobRepository {
-  constructor(@InjectRepository(JobsEntity) private jobsRepository: Repository<JobsEntity>) {}
+  constructor(
+    @InjectRepository(JobsEntity)
+    private jobsRepository: Repository<JobsEntity>,
+  ) {}
 
   async createNewJob(data: CreateJobDto): Promise<void> {
     await this.jobsRepository.save(data).catch(handleError);
     return;
   }
 
-  async getAllJobsByCompanyId(
-    companyId: string
-  ): Promise<JobsEntity[]> {
+  async getAllJobsByCompanyId(companyId: string): Promise<JobsEntity[]> {
+    const jobs = await this.jobsRepository.find({
+      where: { company_id: companyId },
+    });
 
-    const jobs = await this.jobsRepository.find({where: {company_id: companyId}})
-
-    return jobs
+    return jobs;
   }
 
   async getAllJobs(
@@ -65,7 +67,8 @@ export class JobRepository {
   }
 
   async findOneById(id: string): Promise<any> {
-    const queryBuilder = this.jobsRepository.createQueryBuilder('jobs')
+    const queryBuilder = this.jobsRepository
+      .createQueryBuilder('jobs')
       .leftJoinAndSelect('jobs.comments', 'comments')
       .leftJoinAndSelect('comments.user', 'user')
       .leftJoinAndSelect('jobs.company', 'company')
@@ -92,12 +95,14 @@ export class JobRepository {
   }
 
   async updateJob(id: string, data: UpdateJobDto) {
-    const job = await this.jobsRepository.findOneBy({id}).catch(handleError);
+    const job = await this.jobsRepository.findOneBy({ id }).catch(handleError);
 
-    return this.jobsRepository.save({
-      ...job,
-      ...data,
-    }).catch(handleError);
+    return this.jobsRepository
+      .save({
+        ...job,
+        ...data,
+      })
+      .catch(handleError);
   }
 
   async searchJobs(

@@ -20,13 +20,11 @@ export class CreateUserService {
 
     data['ip'] = req.ip;
 
-    const emailAlreadyInUseCompany = await this.companyRepository.findOneByEmail(
-      email,
-    );
+    const emailAlreadyInUseCompany =
+      await this.companyRepository.findOneByEmail(email);
 
-    const emailAlreadyInUseUser = await this.userRepository.findOneByEmail(
-      email,
-    );
+    const emailAlreadyInUseUser =
+      await this.userRepository.findOneByEmail(email);
 
     if (emailAlreadyInUseCompany || emailAlreadyInUseUser) {
       return {

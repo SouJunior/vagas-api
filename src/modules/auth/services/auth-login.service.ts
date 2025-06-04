@@ -18,7 +18,6 @@ export class AuthLoginService {
   async execute({ email, password, type }: UserLoginDto) {
     let info: any;
 
-
     if (type == LoginTypeEnum.COMPANY) {
       info = await this.companyRepository.findOneByEmail(email);
     } else {

@@ -68,7 +68,7 @@ export class UsersEntity {
   @JoinColumn()
   personalData: PersonalDataEntity;
 
-  @OneToMany(() => CurriculumEntity, (curriculum) => curriculum.user,)
+  @OneToMany(() => CurriculumEntity, (curriculum) => curriculum.user)
   curriculums: CurriculumEntity[];
 
   @OneToMany(() => ApplicationEntity, (application) => application.user)

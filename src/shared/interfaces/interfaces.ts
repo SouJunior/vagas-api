@@ -1,3 +1,3 @@
 export interface IGlobalResponse {
-    status: number;
+  status: number;
 }

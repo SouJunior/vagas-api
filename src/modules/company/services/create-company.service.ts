@@ -15,13 +15,11 @@ export class CreateCompanyService {
 
   async execute(data: CreateCompanyDto) {
     const { email, password, passwordConfirmation, cnpj } = data;
-    const emailAlreadyInUseCompany = await this.companyRepository.findOneByEmail(
-      email,
-    );
+    const emailAlreadyInUseCompany =
+      await this.companyRepository.findOneByEmail(email);
 
-    const emailAlreadyInUseUser = await this.userRepository.findOneByEmail(
-      email,
-    );
+    const emailAlreadyInUseUser =
+      await this.userRepository.findOneByEmail(email);
 
     if (emailAlreadyInUseCompany || emailAlreadyInUseUser) {
       return {

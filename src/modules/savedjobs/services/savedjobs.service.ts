@@ -1,7 +1,4 @@
-import {
-  BadRequestException,
-  Injectable,
-} from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { SavedJobsEntity } from '../../../database/entities/savedjobs.entity';
@@ -20,13 +17,16 @@ export class SavedJobsService {
 
     @InjectRepository(JobsEntity)
     private jobsRepository: Repository<JobsEntity>,
-
   ) {}
 
-  async saveJob(createSavedJobDto: CreateSavedJobDto): Promise<SavedJobsEntity> {
+  async saveJob(
+    createSavedJobDto: CreateSavedJobDto,
+  ): Promise<SavedJobsEntity> {
     const { userId, jobId } = createSavedJobDto;
 
-    const userExists = await this.usersRepository.exist({ where: { id: userId } });
+    const userExists = await this.usersRepository.exist({
+      where: { id: userId },
+    });
     if (!userExists) {
       throw new BadRequestException('Usuário não encontrado.');
     }

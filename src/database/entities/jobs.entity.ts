@@ -110,7 +110,7 @@ export class JobsEntity {
   })
   affirmativeType: string;
 
-  @ManyToOne(() => CompaniesEntity, { onDelete: "CASCADE"})
+  @ManyToOne(() => CompaniesEntity, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'company_id' })
   company: CompaniesEntity;
 
@@ -141,7 +141,6 @@ export class JobsEntity {
   content: string;
 
   @OneToMany(() => SavedJobsEntity, (savedJob) => savedJob.job)
-  @JoinColumn({name: "jobId"})
+  @JoinColumn({ name: 'jobId' })
   savedJobs: SavedJobsEntity[];
-
 }

@@ -48,7 +48,7 @@ export class JobsController {
     private updateJobService: UpdateJobService,
     private deleteJobService: DeleteJobService,
     private searchJobsService: SearchJobsService,
-    private getAllJobsFromLoggedCompany: GetAllJobsFromLoggedCompanyService
+    private getAllJobsFromLoggedCompany: GetAllJobsFromLoggedCompanyService,
   ) {}
 
   @Post()
@@ -79,10 +79,12 @@ export class JobsController {
   @Get('loggedCompanyJobs')
   async getAllLoggedCompanyJobs(
     @LoggedCompany() company: CompaniesEntity,
-    @Res() res: Response
+    @Res() res: Response,
   ) {
-    const { status, data } = await this.getAllJobsFromLoggedCompany.execute(company.id);
-    return res.status(status).json(data)
+    const { status, data } = await this.getAllJobsFromLoggedCompany.execute(
+      company.id,
+    );
+    return res.status(status).json(data);
   }
 
   @Get(':id')

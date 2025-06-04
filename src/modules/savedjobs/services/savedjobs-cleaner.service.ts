@@ -1,8 +1,8 @@
-import { Injectable, Logger } from "@nestjs/common";
-import { Cron, CronExpression } from "@nestjs/schedule";
-import { InjectRepository } from "@nestjs/typeorm";
-import { SavedJobsEntity } from "src/database/entities/savedjobs.entity";
-import { LessThan, Repository } from "typeorm";
+import { Injectable, Logger } from '@nestjs/common';
+import { Cron, CronExpression } from '@nestjs/schedule';
+import { InjectRepository } from '@nestjs/typeorm';
+import { SavedJobsEntity } from 'src/database/entities/savedjobs.entity';
+import { LessThan, Repository } from 'typeorm';
 
 @Injectable()
 export class SavedJobsCleanerService {

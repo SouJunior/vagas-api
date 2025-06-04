@@ -40,9 +40,9 @@ import { CurriculumEntity } from 'src/database/entities/curriculum.entity';
     UpdatePasswordByEmailService,
     UpdatePasswordService,
     ActivateUserService,
-    UserRepository, 
-    CompanyRepository, 
-    CurriculumRepository
+    UserRepository,
+    CompanyRepository,
+    CurriculumRepository,
   ],
   exports: [RecoveryPasswordByEmail],
 })

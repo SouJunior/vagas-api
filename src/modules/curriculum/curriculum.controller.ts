@@ -31,9 +31,8 @@ export class CurriculumController {
     @LoggedUser() user: UsersEntity,
     @Res() res: Response,
   ) {
-    const { data, status } = await this.curriculumService.getALlCurriculum(
-      user,
-    );
+    const { data, status } =
+      await this.curriculumService.getALlCurriculum(user);
 
     return res.status(status).send(data);
   }

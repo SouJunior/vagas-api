@@ -19,7 +19,7 @@ export class CurriculumEntity {
   @Column()
   user_id: string;
 
-  @ManyToOne(() => UsersEntity, {onDelete: "CASCADE"})
+  @ManyToOne(() => UsersEntity, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'user_id' })
   user: UsersEntity;
 

@@ -10,19 +10,19 @@ import { SavedJobsCleanerService } from './services/savedjobs-cleaner.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([SavedJobsEntity, UsersEntity, JobsEntity]), 
+    TypeOrmModule.forFeature([SavedJobsEntity, UsersEntity, JobsEntity]),
   ],
   providers: [
     SavedJobsService,
     FindAllSavedJobsService,
-    SavedJobsRepository, 
-    SavedJobsCleanerService
+    SavedJobsRepository,
+    SavedJobsCleanerService,
   ],
   exports: [
     SavedJobsService,
     FindAllSavedJobsService,
-    SavedJobsRepository, 
-    SavedJobsCleanerService
+    SavedJobsRepository,
+    SavedJobsCleanerService,
   ],
 })
 export class SavedJobsModule {}

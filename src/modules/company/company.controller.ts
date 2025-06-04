@@ -67,9 +67,8 @@ export class CompanyController {
     @Body() createcompany: CreateCompanyDto,
     @Res() res: Response,
   ) {
-    const { data, status } = await this.createCompanyService.execute(
-      createcompany,
-    );
+    const { data, status } =
+      await this.createCompanyService.execute(createcompany);
 
     return res.status(status).send(data);
   }
@@ -116,9 +115,8 @@ export class CompanyController {
     @Body() updatePassword: CreatePasswordHashDto,
     @Res() res: Response,
   ) {
-    const { data, status } = await this.updatePasswordByEmailService.execute(
-      updatePassword,
-    );
+    const { data, status } =
+      await this.updatePasswordByEmailService.execute(updatePassword);
     return res.status(status).send(data);
   }
 
