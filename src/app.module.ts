@@ -25,9 +25,11 @@ import { SavedJobsService } from './modules/savedjobs/services/savedjobs.service
 import { SavedJobsController } from './modules/savedjobs/savedjobs.controller'
 import { JobsEntity } from './database/entities/jobs.entity'; 
 import { SavedJobsModule } from './modules/savedjobs/savedjobs.module'
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
   imports: [
+    ScheduleModule.forRoot(),
     ConfigModule.forRoot({ isGlobal: true }),
 
     TypeOrmModule.forRootAsync({

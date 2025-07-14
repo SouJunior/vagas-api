@@ -2,11 +2,13 @@
 
 ![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=2088f2&style=for-the-badge)
 
-# <h1 align="center"> [![Typing SVG](<https://readme-typing-svg.herokuapp.com/?color=ffffff&size=35&center=true&vCenter=true&width=1000&lines=Seja+bem+vindo(a)+ao+vagas-backend!>)](https://git.io/typing-svg) </h1>
+<h1 align="center"> <a href="https://git.io/typing-svg"> 
 
-<img width=150% src="https://capsule-render.vercel.app/api?type=waving&width=150%&color=2088f2&fontColor=ffffff&height=300&section=header&text=Sou%20Junior&fontSize=90&animation=fadeIn&fontAlignY=38&desc=Projeto%20Opensource%20para%20melhorar%20o%20match%20entre%20os%20profissionais%20Juniors%20e%20Empresas!&descAlignY=61&descAlign=52" />
+<img src="https://readme-typing-svg.herokuapp.com/?color=ffffff&size=35&center=true&vCenter=true&width=1000&lines=Seja+bem+vindo(a)+ao+vagas-backend!" alt="Typing SVG" /> </a> </h1> 
 
-## <p align="center"> Visitantes: <img alingn="center"  src="https://profile-counter.glitch.me/SouJunior/count.svg" /></p>
+<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&width=100%&color=2088f2&fontColor=ffffff&height=300&section=header&text=Sou%20Junior&fontSize=90&animation=fadeIn&fontAlignY=38&desc=Projeto%20Opensource%20para%20melhorar%20o%20match%20entre%20profissionais%20Juniors%20e%20Empresas!&descAlignY=61&descAlign=52" /> 
+
+<p align="center">Visitantes: <img src="https://profile-counter.glitch.me/SouJunior/count.svg" /></p>
 
 ---
 
@@ -14,17 +16,20 @@
 
 <a href="#rodando-localmente">Rodando localmente</a>
 
-<a href="#documentação">Documentação</a>
+<a href="#documentacao">Documentação</a>
 
 <a href="#stack_utilizada">Stack Utilizada</a>
+
+<a href="#como_contribuir">Como contribuir</a>
 
 <a href="#equipe_do_backend">Equipe Back-end</a>
 
 
 ### Pré-requisitos:
-* git
-* docker
-* insomnia
+* Git
+* Docker instalado
+* Banco de dados (ex: PostgreSQL) em execução
+* Insomnia ou outro que você prefira para fazer as requisições
 
 ---
 
@@ -36,7 +41,7 @@
 Clone o projeto ou o fork do projeto com o seguinte comando:
 
 ```bash
-git clone https://github.com/SouJunior/linkedin-backend.git
+git clone https://github.com/SouJunior/vagas-api
 ```
 
 Em seguida, instale as dependências:
@@ -49,8 +54,32 @@ Suba os containers docker na sua máquina via `docker compose`:
 ```bash
 docker compose up -d
 ```
+⚠️ Caso o comando acima não funcione, use com hífen:
+
+```bash
+docker-compose up -d
+```
+
+Para remover os containers:
+```bash
+docker compose down
+```
 
 Crie o arquivo `.env` seguindo o exemplo contido em `.env.example`.
+
+---
+
+## Configure o arquivo .env
+🔐 Crie um arquivo .env na raiz do projeto com as seguintes variáveis de ambiente:
+
+```bash
+PORT=3000
+DATABASE_URL=postgres://usuario:senha@localhost:5432/seu_banco
+JWT_SECRET=sua_chave_secreta
+```
+
+💡 Dica: nunca suba o arquivo .env no GitHub! Use sempre o .gitignore para evitar vazamentos de credenciais.
+
 
 Aplique as **migrations** do TypeORM no seu banco de dados local:
 ```bash
@@ -62,9 +91,60 @@ Por fim, inicie o servidor:
 npm run dev # ou npm run start:dev
 ```
 
+# Acesso à Aplicação
+
+Após subir a aplicação, acesse:
+```bash
+http://localhost:3000
+```
+
 ---
 
-<a id="documentação"></a>
+## 🖥️ Instruções por sistema operacional
+Tanto 🐧 Linux quanto 🪟 Windows são o mesmo processo
+
+```bash
+# Instale as dependências
+npm install
+
+# Rode o projeto
+npm run start:dev
+```
+
+---
+
+❗ Erro de autenticação no banco?
+
+Se ao rodar o projeto aparecer um erro relacionado ao banco de dados, siga os passos abaixo:
+
+🔐 Alterar a senha do usuário postgres:
+
+```bash
+psql -h localhost -p 5432 -U postgres -d postgres
+```
+
+E então, dentro do terminal do psql:
+
+```bash
+ALTER USER postgres WITH PASSWORD 'admin';
+```
+
+❗ Erro: banco de dados "vagas-api" não existe?
+Ainda no psql, crie o banco:
+
+```bash
+CREATE DATABASE "vagas-api";
+```
+
+✅ Agora sim, tudo certo? Siga com as migrations!
+
+```bash
+npm run migration:run
+```
+
+---
+
+<a id="documentacao"></a>
 
 ## 📜 Documentação
 
@@ -147,34 +227,126 @@ sequenceDiagram
 ```
 
 ---
+<a id="como_contribuir"></a>
+## 👨‍💻 Como contribuir
+Ficaremos felizes com contribuições! Veja como participar:
 
+Crie uma issue com sugestões, dúvidas ou relatos de erro
+
+Faça um fork deste repositório
+
+Crie uma branch com sua funcionalidade ou correção
+
+Envie um Pull Request (PR) explicando suas alterações
+
+🔎 Siga boas práticas de versionamento e mantenha seus commits claros e objetivos!
+
+---
 <a id="equipe_do_backend"></a>
+## 👨‍💻 Equipe Back-end
 
-## Headers 🙎🏻‍♂️
-| [<img src="https://avatars.githubusercontent.com/u/12602062?v=4" width=115><br><sub>Lucas Rigon</sub>](https://github.com/rigonlucas/) | [<img src="https://avatars.githubusercontent.com/u/86207761?v=4" width=115><br><sub>Ricardo Machado</sub>](https://github.com/wolwerr) |
-|:----------------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------:|
+### 👑 Headers
 
+<table>
+  <tr>
+    <td align="center">
+      <img src="https://avatars.githubusercontent.com/u/12602062?v=4" width="100px" alt="Lucas Rigon"/><br/>
+      <a href="https://github.com/rigonlucas">Lucas Rigon</a>
+    </td>
+    <td align="center">
+      <img src="https://avatars.githubusercontent.com/u/86207761?v=4" width="100px" alt="Ricardo Machado"/><br/>
+      <a href="https://github.com/wolwerr">Ricardo Machado</a>
+    </td>
+  </tr>
+</table>
 
+### 🚀 Devs
 
-## Devs 👨‍💻👨‍💻
-| [<img src="https://avatars.githubusercontent.com/u/129699975?v=4" width=115><br><sub>Larissa Sarapio</sub>](https://github.com/larisarapio) | [<img src="https://avatars.githubusercontent.com/u/18354026?v=4" width=115><br><sub>José Lázaro Moreira Passos Júnior</sub>](https://github.com/joselazarojunior) | [<img src="https://avatars.githubusercontent.com/u/23053276?v=4" width=115><br><sub>Lázaro Bodevan</sub>](https://github.com/lazarobodevan) | [<img src="https://avatars.githubusercontent.com/u/113060357?v=4" width=115><br><sub>Leidejane da Rosa</sub>](https://github.com/LeidejanedaRosa) | [<img src="https://avatars.githubusercontent.com/u/126430816?v=4" width=115><br><sub>Tiago Souza Dias</sub>](https://github.com/tiago0214)| [<img src="https://avatars.githubusercontent.com/u/117475547?v=4" width=115><br><sub>João Matos</sub>](https://github.com/joaovicttorbm) |
-| :----------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------: | :--------------------
+<table>
+  <tr>
+    <td align="center">
+      <img src="https://avatars.githubusercontent.com/u/129699975?v=4" width="100px" alt="Larissa Sarapio"/><br/>
+      <a href="https://github.com/larisarapio">Larissa Sarapio</a>
+    </td>
+    <td align="center">
+      <img src="https://avatars.githubusercontent.com/u/18354026?v=4" width="100px" alt="José Lázaro"/><br/>
+      <a href="https://github.com/joselazarojunior">José Lázaro</a>
+    </td>
+    <td align="center">
+      <img src="https://avatars.githubusercontent.com/u/23053276?v=4" width="100px" alt="Lázaro Bodevan"/><br/>
+      <a href="https://github.com/lazarobodevan">Lázaro Bodevan</a>
+    </td>
+    <td align="center">
+      <img src="https://avatars.githubusercontent.com/u/113060357?v=4" width="100px" alt="Leidejane da Rosa"/><br/>
+      <a href="https://github.com/LeidejanedaRosa">Leidejane da Rosa</a>
+    </td>
+    <td align="center">
+      <img src="https://avatars.githubusercontent.com/u/126430816?v=4" width="100px" alt="Tiago Souza Dias"/><br/>
+      <a href="https://github.com/tiago0214">Tiago Souza Dias</a>
+    </td>
+    <td align="center">
+      <img src="https://avatars.githubusercontent.com/u/117475547?v=4" width="100px" alt="João Matos"/><br/>
+      <a href="https://github.com/joaovicttorbm">João Matos</a>
+    </td>
+  </tr>
+</table>
 
+### 🧠 Mentores
 
-## Mentores 🙎🏻‍♂️
+<table>
+  <tr>
+    <td align="center">
+      <img src="https://avatars.githubusercontent.com/u/85139137?v=4" width="100px" alt="Mikael Melo"/><br/>
+      <a href="https://github.com/MikaelMelo1">Mikael Melo</a>
+    </td>
+  </tr>
+</table>
 
-| [<img src="https://avatars.githubusercontent.com/u/85139137?v=4" width=115><br><sub>Mikael Melo</sub>](https://github.com/MikaelMelo1) | 
-| :-----------------------------------------------------------------------------------------------------------------------------: |
+### 💼 Ex-contribuidores
 
-## Ex contribuidores 🙎🏻‍♂️🙎🏻
+<table>
+  <tr>
+    <td align="center">
+      <img src="https://avatars.githubusercontent.com/u/75804508?v=4" width="100px;" alt="Leonardo Monteiro"/>
+      <br />
+      <a href="https://github.com/lmmagalhaes">Leonardo Monteiro</a>
+    </td>
+    <td align="center">
+      <img src="https://avatars.githubusercontent.com/u/95504029?v=4" width="100px;" alt="Daniel Vinhas"/>
+      <br />
+      <a href="https://github.com/vinhas93">Daniel Vinhas</a>
+    </td>
+    <td align="center">
+      <img src="https://avatars.githubusercontent.com/u/95653155?v=4" width="100px;" alt="Joana D'arc"/>
+      <br />
+      <a href="https://github.com/Joanadarknes">Joana D'arc</a>
+    </td>
+    <td align="center">
+      <img src="https://avatars.githubusercontent.com/u/56273265?v=4" width="100px;" alt="Audinéia Carmo"/>
+      <br />
+      <a href="https://github.com/audicarmo">Audinéia Carmo</a>
+    </td>
+    <td align="center">
+      <img src="https://avatars.githubusercontent.com/u/88730176?v=4" width="100px;" alt="Bruno"/>
+      <br />
+      <a href="https://github.com/brunodev21">Bruno</a>
+    </td>
+    <td align="center">
+      <img src="https://avatars.githubusercontent.com/u/96137175?v=4" width="100px;" alt="Leonardo Reis"/>
+      <br />
+      <a href="https://github.com/LeonardoReis86">Leonardo Reis</a>
+    </td>
+  </tr>
+</table>
 
-| [<img src="https://avatars.githubusercontent.com/u/75804508?v=4" width=115><br><sub>Leonardo Monteiro</sub>](https://github.com/lmmagalhaes) | [<img src="https://avatars.githubusercontent.com/u/95504029?v=4" width=115><br><sub>Daniel Vinhas</sub>](https://github.com/vinhas93) | [<img src="https://avatars.githubusercontent.com/u/95653155?s=96&v=4" width=115><br><sub>Joana D'arc</sub>](https://github.com/Joanadarknes) | [<img src="https://avatars.githubusercontent.com/u/56273265?v=4" width=115><br><sub>Audinéia Carmo</sub>](https://github.com/audicarmo) | [<img src="https://avatars.githubusercontent.com/u/88730176?v=4" width=115><br><sub>Bruno</sub>](https://github.com/brunodev21)| [<img src="https://avatars.githubusercontent.com/u/96137175?v=4" width=115><br><sub>Leonardo Reis</sub>](https://github.com/LeonardoReis86) |
-| :----------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------: |
+### 💡 Idealizador do projeto
 
-## Idealizador do projeto 🙎🏻‍♂️
+<p align="center">
+  <img src="https://avatars.githubusercontent.com/u/287287?v=4" width="150px" alt="Wouerner Brandão"/>
+  <br />
+  <a href="https://github.com/wouerner">Wouerner Brandão</a>
+</p>
 
-| [<img src="https://avatars.githubusercontent.com/u/287287?v=4" width=115><br><sub>Wouerner</sub>](https://github.com/wouerner) |
-| :----------------------------------------------------------------------------------------------------------------------------: |
 
 ---
 

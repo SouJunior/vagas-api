@@ -1,7 +1,6 @@
 import {
   BadRequestException,
   Injectable,
-  NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -9,47 +8,64 @@ import { SavedJobsEntity } from '../../../database/entities/savedjobs.entity';
 import { CreateSavedJobDto } from '../dtos/create-savedJob-dto';
 import { UsersEntity } from '../../../database/entities/users.entity';
 import { JobsEntity } from '../../../database/entities/jobs.entity';
-import { handleError } from 'src/shared/utils/handle-error.util';
 
 @Injectable()
 export class SavedJobsService {
   constructor(
     @InjectRepository(SavedJobsEntity)
     private savedJobsRepository: Repository<SavedJobsEntity>,
+
     @InjectRepository(UsersEntity)
     private usersRepository: Repository<UsersEntity>,
+
     @InjectRepository(JobsEntity)
     private jobsRepository: Repository<JobsEntity>,
+
   ) {}
 
-  async saveJob(
-    createSavedJobDto: CreateSavedJobDto,
-  ): Promise<SavedJobsEntity> {
+  async saveJob(createSavedJobDto: CreateSavedJobDto): Promise<SavedJobsEntity> {
     const { userId, jobId } = createSavedJobDto;
 
-    if (!userId || !jobId) {
-      throw new BadRequestException('User ID and Job ID must be provided');
+    const userExists = await this.usersRepository.exist({ where: { id: userId } });
+    if (!userExists) {
+      throw new BadRequestException('Usuário não encontrado.');
+    }
+
+    const jobExists = await this.jobsRepository.exist({ where: { id: jobId } });
+    if (!jobExists) {
+      throw new BadRequestException('Vaga não encontrada.');
+    }
+
+    const alreadySaved = await this.savedJobsRepository.exist({
+      where: {
+        user: { id: userId },
+        job: { id: jobId },
+      },
+    });
+
+    if (alreadySaved) {
+      throw new BadRequestException('Esta vaga já foi salva por este usuário.');
     }
 
     const user = await this.usersRepository.findOneBy({ id: userId });
-    if (!user) {
-      throw new NotFoundException('User not found');
-    }
-
     const job = await this.jobsRepository.findOneBy({ id: jobId });
-    if (!job) {
-      throw new NotFoundException('Job not found');
-    }
+
+    const savedAt = new Date();
+    const expiresAt = new Date(savedAt);
+    expiresAt.setDate(savedAt.getDate() + 7);
 
     const newSavedJob = this.savedJobsRepository.create({
       user,
-      jobId,
-      savedAt: new Date(),
+      job,
+      savedAt,
+      expiresAt,
     });
-    return this.savedJobsRepository.save(newSavedJob);
-  }
 
-  async getAllSavedJobs(): Promise<SavedJobsEntity[]> {
-    return this.savedJobsRepository.find().catch(handleError);
+    const savedJob = await this.savedJobsRepository.save(newSavedJob);
+
+    return this.savedJobsRepository.findOne({
+      where: { id: savedJob.id },
+      relations: ['user', 'job'],
+    });
   }
 }

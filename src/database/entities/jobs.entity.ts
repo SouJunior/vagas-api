@@ -15,6 +15,9 @@ import { JobsTypeEnum } from '../../modules/jobs/enums/job-type.enum';
 import { ApplicationEntity } from './applications.entity';
 import { CommentsEntity } from './comments.entity';
 import { CompaniesEntity } from './companies.entity';
+import { SavedJobsEntity } from './savedjobs.entity';
+import { StatusEnum } from 'src/shared/enums/status.enum';
+import { IsEnum } from 'class-validator';
 
 @Entity('tb_jobs')
 export class JobsEntity {
@@ -114,8 +117,9 @@ export class JobsEntity {
   @Column()
   company_id: string;
 
-  @Column({ nullable: false, default: 'ACTIVE' })
-  status: string;
+  @IsEnum(StatusEnum)
+  @Column({ nullable: false, default: StatusEnum.ACTIVE })
+  status: StatusEnum;
 
   @OneToMany(() => CommentsEntity, (comment) => comment.job, {
     cascade: true,
@@ -135,4 +139,9 @@ export class JobsEntity {
 
   @Column({ nullable: true })
   content: string;
+
+  @OneToMany(() => SavedJobsEntity, (savedJob) => savedJob.job)
+  @JoinColumn({name: "jobId"})
+  savedJobs: SavedJobsEntity[];
+
 }

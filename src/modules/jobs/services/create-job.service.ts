@@ -20,7 +20,7 @@ export class CreateJobService {
       );
     }
 
-    data.company_id = company.id;
+    //data.company_id = company.id;
     await this.jobRepository.createNewJob(data);
 
     const options = {
