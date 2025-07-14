@@ -18,8 +18,13 @@ import { typeormConfig } from './database/data-source';
 import { PassportModule } from '@nestjs/passport';
 import { UserRepository } from './modules/user/repository/user.repository';
 import { UsersEntity } from './database/entities/users.entity';
+import { SavedJobsEntity } from './database/entities/savedjobs.entity'
 import { AlertsModule } from './modules/alert/alerts.module';
 import { CandidacyModule } from './modules/candidacy/candidacy.module';
+import { SavedJobsService } from './modules/savedjobs/services/savedjobs.service';
+import { SavedJobsController } from './modules/savedjobs/savedjobs.controller'
+import { JobsEntity } from './database/entities/jobs.entity'; 
+import { SavedJobsModule } from './modules/savedjobs/savedjobs.module'
 
 @Module({
   imports: [
@@ -42,11 +47,12 @@ import { CandidacyModule } from './modules/candidacy/candidacy.module';
     UploadModule,
     CurriculumModule,
     ApplicationsModule,
-    TypeOrmModule.forFeature([UsersEntity]),
+    TypeOrmModule.forFeature([UsersEntity, SavedJobsEntity, JobsEntity]),
     AlertsModule,
     CandidacyModule,
+    SavedJobsModule,
   ],
-  controllers: [AppController],
-  providers: [AppService, UserRepository],
+  controllers: [AppController, SavedJobsController],
+  providers: [AppService, UserRepository, SavedJobsService],
 })
 export class AppModule {}

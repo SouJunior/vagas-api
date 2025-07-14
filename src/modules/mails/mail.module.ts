@@ -13,7 +13,7 @@ import { MailService } from './mail.service';
         transport: {
           host: config.get('MAIL_HOST'),
           port: config.get('MAIL_PORT'), 
-          // secure: true,
+          /*/ secure: true,
           // secure: false,
           auth: {
             user: config.get('MAIL_USER'),
@@ -21,7 +21,7 @@ import { MailService } from './mail.service';
           },
           // tls: {
           //   rejectUnauthorized: false,
-          // },
+          // },*/
         },
         defaults: {
           from: `no-reply <carteiro@soujunior.tech>`,

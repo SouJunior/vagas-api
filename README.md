@@ -150,22 +150,20 @@ sequenceDiagram
 
 <a id="equipe_do_backend"></a>
 
-## Head 🙎🏻‍♂️
-| [<img src="https://avatars.githubusercontent.com/u/81826043?s=96&v=4" width=115><br><sub>Wanderson Santos</sub>](https://github.com/wandersonDeve) |
-| :----------------------------------------------------------------------------------------------------------------------------: |
+## Headers 🙎🏻‍♂️
+| [<img src="https://avatars.githubusercontent.com/u/12602062?v=4" width=115><br><sub>Lucas Rigon</sub>](https://github.com/rigonlucas/) | [<img src="https://avatars.githubusercontent.com/u/86207761?v=4" width=115><br><sub>Ricardo Machado</sub>](https://github.com/wolwerr) |
+|:----------------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------------------------------:|
 
-## Team lead 🙎🏻
-| [<img src="https://cdn.discordapp.com/attachments/1011231850351558686/1047250060309712936/6E06CCD2-C5D1-445E-B9DE-F06FF1E797F7.png" width=115><br><sub>Amanda Fontes</sub>](#) |
-| :----------------------------------------------------------------------------------------------------------------------------: |
+
 
 ## Devs 👨‍💻👨‍💻
+| [<img src="https://avatars.githubusercontent.com/u/129699975?v=4" width=115><br><sub>Larissa Sarapio</sub>](https://github.com/larisarapio) | [<img src="https://avatars.githubusercontent.com/u/18354026?v=4" width=115><br><sub>José Lázaro Moreira Passos Júnior</sub>](https://github.com/joselazarojunior) | [<img src="https://avatars.githubusercontent.com/u/23053276?v=4" width=115><br><sub>Lázaro Bodevan</sub>](https://github.com/lazarobodevan) | [<img src="https://avatars.githubusercontent.com/u/113060357?v=4" width=115><br><sub>Leidejane da Rosa</sub>](https://github.com/LeidejanedaRosa) | [<img src="https://avatars.githubusercontent.com/u/126430816?v=4" width=115><br><sub>Tiago Souza Dias</sub>](https://github.com/tiago0214)| [<img src="https://avatars.githubusercontent.com/u/117475547?v=4" width=115><br><sub>João Matos</sub>](https://github.com/joaovicttorbm) |
+| :----------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------: | :--------------------
 
-| [<img src="https://avatars.githubusercontent.com/u/88009922?v=4" width=115><br><sub>Amaro Francisco</sub>](https://github.com/Amaro13) | [<img src="https://avatars.githubusercontent.com/u/100654478?v=4" width=115><br><sub>Ytallo Cesar</sub>](https://github.com/YtalloCesar2022) | [<img src="https://avatars.githubusercontent.com/u/98703647?v=4" width=115><br><sub>Pedro Igor</sub>](https://github.com/pedroigorsf)
-| :------------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------: |
 
 ## Mentores 🙎🏻‍♂️
 
-| [<img src="https://avatars.githubusercontent.com/u/54317829?v=4" width=115><br><sub>Thiago Rodrigues</sub>](https://github.com/thiagorcode) | 
+| [<img src="https://avatars.githubusercontent.com/u/85139137?v=4" width=115><br><sub>Mikael Melo</sub>](https://github.com/MikaelMelo1) | 
 | :-----------------------------------------------------------------------------------------------------------------------------: |
 
 ## Ex contribuidores 🙎🏻‍♂️🙎🏻
