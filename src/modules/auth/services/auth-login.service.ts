@@ -18,19 +18,18 @@ export class AuthLoginService {
   async execute({ email, password, type }: UserLoginDto) {
     let info: any;
 
-
     if (type == LoginTypeEnum.COMPANY) {
       info = await this.companyRepository.findOneByEmail(email);
     } else {
       info = await this.userRepository.findOneByEmail(email);
     }
 
-    // if (!info?.mailConfirm || !info) {
-    //   return {
-    //     status: 400,
-    //     data: { message: 'Email not validated' },
-    //   };
-    // }
+    if (!info?.mailConfirm || !info) {
+      return {
+        status: 400,
+        data: { message: 'Email not validated' },
+      };
+    }
 
     const passwordIsValid = await bcrypt.compare(password, info.password);
 

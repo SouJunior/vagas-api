@@ -6,7 +6,7 @@ services:
     container_name: vagas-api-db
     restart: always
     ports:
-      - 5432:5432
+      - '5432:5432'
     environment:
       - POSTGRES_USER=${TYPEORM_USERNAME}
       - POSTGRES_PASSWORD=${TYPEORM_PASSWORD}
@@ -14,22 +14,32 @@ services:
     volumes:
       - pgdata:/data/postgres
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready"]
+      test: ['CMD-SHELL', 'pg_isready -U ${TYPEORM_USERNAME}']
       interval: 10s
       timeout: 5s
       retries: 5
+
+  mailhog:
+    image: mailhog/mailhog
+    container_name: mailhog
+    restart: always
+    ports:
+      - '1025:1025'
+      - '8025:8025'
 
   app:
     build: .
     container_name: linkedin-backend
     restart: always
     ports:
-      - 3000:3000
+      - '3000:3000'
     volumes:
       - .:/usr/app
     depends_on:
       database_soujunior:
         condition: service_healthy
+      mailhog:
+        condition: service_started
     env_file:
       - .env
 
