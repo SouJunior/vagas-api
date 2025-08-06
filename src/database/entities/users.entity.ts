@@ -12,6 +12,7 @@ import { ApplicationEntity } from './applications.entity';
 import { CurriculumEntity } from './curriculum.entity';
 import { PersonalDataEntity } from './personal-data.entity';
 import { CandidacyEntity } from './candidacy.entity';
+import { SavedJobsEntity } from './savedjobs.entity';
 
 enum RolesEnum {
   ADMIN = 'ADMIN',
@@ -75,6 +76,9 @@ export class UsersEntity {
 
   @OneToMany(() => CandidacyEntity, (candidacy) => candidacy.user)
   candidacies: CandidacyEntity[];
+
+  @OneToMany(() => SavedJobsEntity, (savedJob) => savedJob.user)
+  savedJobs: SavedJobsEntity[];
 
   @CreateDateColumn()
   created_at: Date;

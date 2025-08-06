@@ -1,5 +1,4 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Exclude } from 'class-transformer';
 import {
   IsBoolean,
   IsEnum,
@@ -195,7 +194,6 @@ export class CreateJobDto {
   affirmativeType?: string;
 
   @IsOptional()
-  @Exclude()
   @IsString()
   company_id?: string;
 }

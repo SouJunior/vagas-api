@@ -3,33 +3,43 @@ version: '3.9'
 services:
   database_soujunior:
     image: postgres
-    container_name: database_soujunior
+    container_name: vagas-api-db
     restart: always
     ports:
-      - 5432:5432
+      - '5432:5432'
     environment:
-      - POSTGRES_USER=docker
-      - POSTGRES_PASSWORD=ignite
-      - POSTGRES_DB=linkedin_backend
+      - POSTGRES_USER=${TYPEORM_USERNAME}
+      - POSTGRES_PASSWORD=${TYPEORM_PASSWORD}
+      - POSTGRES_DB=${TYPEORM_DATABASE}
     volumes:
       - pgdata:/data/postgres
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready"]
+      test: ['CMD-SHELL', 'pg_isready -U ${TYPEORM_USERNAME}']
       interval: 10s
       timeout: 5s
       retries: 5
 
-  app:
-    build: .
-    container_name: linkedIn_Backend
+  mailhog:
+    image: mailhog/mailhog
+    container_name: mailhog
     restart: always
     ports:
-      - 3000:3000
+      - '1025:1025'
+      - '8025:8025'
+
+  app:
+    build: .
+    container_name: linkedin-backend
+    restart: always
+    ports:
+      - '3000:3000'
     volumes:
-      - .:/user/app
+      - .:/usr/app
     depends_on:
       database_soujunior:
         condition: service_healthy
+      mailhog:
+        condition: service_started
     env_file:
       - .env
 
