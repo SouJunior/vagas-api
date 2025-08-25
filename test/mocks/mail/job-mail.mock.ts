@@ -27,7 +27,6 @@ export const jobMailMock = (): JobsEntity => ({
   updatedAt: new Date('2023-01-01T00:00:00.000Z'),
   company: companyMailMock(),
   applications: [],
-  savedJobs: [],
   comments: [],
 });
 

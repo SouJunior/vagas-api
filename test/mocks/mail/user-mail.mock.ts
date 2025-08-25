@@ -22,7 +22,6 @@ export const userMailMock = (): UsersEntity => ({
   curriculums: [],
   applications: [],
   candidacies: [],
-  savedJobs: [],
 });
 
 export const userMailWithoutTokenMock = (): UsersEntity => ({
