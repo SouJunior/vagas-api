@@ -54,7 +54,7 @@ export const TEST_TOKENS = {
 // IDs para testes
 export const TEST_IDS = {
   USER_ID: '729c7919-583c-40a5-b0ca-137e282345d4',
-  COMPANY_ID: '729c7919-583c-40a5-b0ca-137e282345d4',
+  COMPANY_ID: '829c7919-583c-40a5-b0ca-137e282345d5',
 } as const;
 
 // IPs para testes - usando endereços de documentação RFC-compliant
@@ -77,10 +77,10 @@ export const TEST_IPS = {
 
 // Emails para testes
 export const TEST_EMAILS = {
-  USER: 'user@teste.com',
+  DEFAULT_USER: 'user@teste.com',
   COMPANY: 'company@test.com',
   UNCONFIRMED_COMPANY: 'unconfirmed@test.com',
-  VALID_USER: 'test@test.com',
+  VALID_LOGIN_USER: 'test@test.com',
   INVALID: 'invalid@test.com',
 } as const;
 
