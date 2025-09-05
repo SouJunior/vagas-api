@@ -3,6 +3,8 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
+  HttpStatus,
   Param,
   Patch,
   Post,
@@ -146,9 +148,9 @@ export class CompanyController {
   }
 
   @Delete(':id')
+  @HttpCode(HttpStatus.OK)
   @DeleteCompanyByIdSwagger()
-  async deleteCompanyById(@Param() { id }: CompanyIdDto, @Res() res: Response) {
-    const { data, status } = await this.deleteCompanyService.execute(id);
-    return res.status(status).send(data);
+  async deleteCompanyById(@Param() { id }: CompanyIdDto) {
+    return this.deleteCompanyService.execute(id);
   }
 }
