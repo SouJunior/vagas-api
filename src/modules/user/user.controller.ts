@@ -3,6 +3,8 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
+  HttpStatus,
   Param,
   Patch,
   Post,
@@ -67,17 +69,9 @@ export class UserController {
 
   @Post()
   @SwaggerCreateUser()
-  async createNewUser(
-    @Body() createUser: CreateUserDto,
-    @Res() res: Response,
-    @Req() req: Request,
-  ) {
-    const { data, status } = await this.createUserService.execute(
-      createUser,
-      req,
-    );
-
-    return res.status(status).send(data);
+  @HttpCode(HttpStatus.CREATED)
+  async createNewUser(@Body() createUser: CreateUserDto, @Req() req: Request) {
+    return this.createUserService.execute(createUser, req);
   }
 
   @Put('activate/:id')
@@ -101,7 +95,7 @@ export class UserController {
   @SwaggerGetUserAdm()
   @UseGuards(AuthGuard())
   @ApiBearerAuth()
-  async getOneUser(@Param('id') id: string, @LoggedUser() user: UsersEntity) {
+  async getOneUser(@Param('id') id: string) {
     return this.findOneUserService.execute(id);
   }
 
@@ -122,7 +116,7 @@ export class UserController {
   @SwaggerDeleteUser()
   @UseGuards(AuthGuard())
   @ApiBearerAuth()
-  async deleteUser( @LoggedUser() user: UsersEntity) {
+  async deleteUser(@LoggedUser() user: UsersEntity) {
     return this.deleteUserService.execute(user.id);
   }
 
@@ -143,9 +137,8 @@ export class UserController {
     @Body() updatePassword: CreatePasswordHashDto,
     @Res() res: Response,
   ) {
-    const { data, status } = await this.updatePasswordByEmailService.execute(
-      updatePassword,
-    );
+    const { data, status } =
+      await this.updatePasswordByEmailService.execute(updatePassword);
     return res.status(status).send(data);
   }
 

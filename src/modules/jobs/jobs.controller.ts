@@ -2,13 +2,13 @@ import {
   Body,
   Controller,
   Get,
-  NotFoundException,
+  HttpCode,
+  HttpStatus,
   Param,
   Patch,
   Post,
   Put,
   Query,
-  Res,
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
@@ -19,7 +19,6 @@ import { GetOneJobSwagger } from 'src/shared/Swagger/decorators/jobs/get-one-job
 import { SearchJobSwagger } from 'src/shared/Swagger/decorators/jobs/search-job.swagger';
 import { UpdateJobSwagger } from 'src/shared/Swagger/decorators/jobs/update-job.swagger';
 import { CompaniesEntity } from '../../database/entities/companies.entity';
-import { JobsEntity } from '../../database/entities/jobs.entity';
 import { PageOptionsDto } from '../../shared/pagination';
 import { LoggedCompany } from '../auth/decorator/logged-company.decorator';
 import { CreateJobDto } from './dtos/create-job.dto';
@@ -35,7 +34,6 @@ import { SearchJobsService } from './services/search-job.service';
 import { GetAllJobsOfLoggedCompanySwagger } from 'src/shared/Swagger/decorators/jobs/get-all-jobs-of-logged-company.swagger';
 import { GetAllJobsSwagger } from 'src/shared/Swagger/decorators/jobs/get-all-jobs-of-logged-company.swagger copy';
 import { GetAllJobsFromLoggedCompanyService } from './services/get-all-jobs-from-logged-company.service';
-import { Response } from 'express';
 import { DeleteJobService } from './services/delete-job.service';
 
 @ApiTags('Job')
@@ -48,7 +46,7 @@ export class JobsController {
     private updateJobService: UpdateJobService,
     private deleteJobService: DeleteJobService,
     private searchJobsService: SearchJobsService,
-    private getAllJobsFromLoggedCompany: GetAllJobsFromLoggedCompanyService
+    private getAllJobsFromLoggedCompany: GetAllJobsFromLoggedCompanyService,
   ) {}
 
   @Post()
@@ -77,12 +75,9 @@ export class JobsController {
   @ApiBearerAuth()
   @UseGuards(AuthGuard())
   @Get('loggedCompanyJobs')
-  async getAllLoggedCompanyJobs(
-    @LoggedCompany() company: CompaniesEntity,
-    @Res() res: Response
-  ) {
-    const { status, data } = await this.getAllJobsFromLoggedCompany.execute(company.id);
-    return res.status(status).json(data)
+  @HttpCode(HttpStatus.OK)
+  async getAllLoggedCompanyJobs(@LoggedCompany() company: CompaniesEntity) {
+    return this.getAllJobsFromLoggedCompany.execute(company.id);
   }
 
   @Get(':id')
