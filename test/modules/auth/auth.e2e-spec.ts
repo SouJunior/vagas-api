@@ -1,31 +1,24 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { INestApplication, ValidationPipe } from '@nestjs/common';
+import {
+  INestApplication,
+  ValidationPipe,
+  UnauthorizedException,
+} from '@nestjs/common';
 import * as request from 'supertest';
-import { JwtService } from '@nestjs/jwt';
 import { AuthController } from '../../../src/modules/auth/auth.controller';
 import { AuthLoginService } from '../../../src/modules/auth/services/auth-login.service';
-import { UserRepository } from '../../../src/modules/user/repository/user.repository';
-import { CompanyRepository } from '../../../src/modules/company/repository/company.repository';
 import {
   userLoginMock,
   companyLoginMock,
   invalidUserLoginMock,
 } from '../../mocks/auth/user-login.mock';
 import { userMock } from '../../mocks/user/user.mock';
-import { companyMock } from '../../mocks/auth/company.mock';
+import { publicCompanyMock } from '../../mocks/auth/company.mock';
 import { TEST_PASSWORDS, TEST_EMAILS } from '../../config/test-constants';
 
 describe('AuthController (e2e)', () => {
   let app: INestApplication;
   let authLoginService: any;
-
-  const mockUserRepository = {
-    findOneByEmail: jest.fn(),
-  };
-
-  const mockCompanyRepository = {
-    findOneByEmail: jest.fn(),
-  };
 
   beforeEach(async () => {
     const mockAuthLoginService = {
@@ -38,21 +31,6 @@ describe('AuthController (e2e)', () => {
         {
           provide: AuthLoginService,
           useValue: mockAuthLoginService,
-        },
-        {
-          provide: JwtService,
-          useValue: {
-            sign: jest.fn().mockReturnValue('fake-jwt-token'),
-            verify: jest.fn(),
-          },
-        },
-        {
-          provide: UserRepository,
-          useValue: mockUserRepository,
-        },
-        {
-          provide: CompanyRepository,
-          useValue: mockCompanyRepository,
         },
       ],
     }).compile();
@@ -77,11 +55,8 @@ describe('AuthController (e2e)', () => {
     it('should successfully login a user', async () => {
       const loginData = userLoginMock();
       const mockResponse = {
-        status: 200,
-        data: {
-          token: 'fake-jwt-token',
-          info: userMock(),
-        },
+        token: 'fake-jwt-token',
+        info: userMock(),
       };
 
       authLoginService.execute.mockResolvedValue(mockResponse);
@@ -99,11 +74,8 @@ describe('AuthController (e2e)', () => {
     it('should successfully login a company', async () => {
       const loginData = companyLoginMock();
       const mockResponse = {
-        status: 200,
-        data: {
-          token: 'fake-jwt-token',
-          info: companyMock(),
-        },
+        token: 'fake-jwt-token',
+        info: publicCompanyMock(),
       };
 
       authLoginService.execute.mockResolvedValue(mockResponse);
@@ -118,46 +90,43 @@ describe('AuthController (e2e)', () => {
       expect(authLoginService.execute).toHaveBeenCalledWith(loginData);
     });
 
-    it('should return 400 for invalid credentials', async () => {
+    it('should return 401 for invalid credentials', async () => {
       const loginData = invalidUserLoginMock();
-      const mockResponse = {
-        status: 400,
-        data: { message: 'Email not validated' },
-      };
+      const unauthorizedException = new UnauthorizedException(
+        'E-mail ou Senha não conferem',
+      );
 
-      authLoginService.execute.mockResolvedValue(mockResponse);
-
-      const response = await request(app.getHttpServer())
-        .post('/auth/login')
-        .send(loginData)
-        .expect(400);
-
-      expect(response.body).toHaveProperty('message', 'Email not validated');
-      expect(authLoginService.execute).toHaveBeenCalledWith(loginData);
-    });
-
-    it('should return 400 for unconfirmed email', async () => {
-      const loginData = userLoginMock();
-      const mockResponse = {
-        status: 400,
-        data: {
-          message: 'Please confirm your email before logging in',
-          code: 'EMAIL_NOT_CONFIRMED',
-        },
-      };
-
-      authLoginService.execute.mockResolvedValue(mockResponse);
+      authLoginService.execute.mockRejectedValue(unauthorizedException);
 
       const response = await request(app.getHttpServer())
         .post('/auth/login')
         .send(loginData)
-        .expect(400);
+        .expect(401);
 
       expect(response.body).toHaveProperty(
         'message',
-        'Please confirm your email before logging in',
+        'E-mail ou Senha não conferem',
       );
-      expect(response.body).toHaveProperty('code', 'EMAIL_NOT_CONFIRMED');
+      expect(authLoginService.execute).toHaveBeenCalledWith(loginData);
+    });
+
+    it('should return 401 for unconfirmed email', async () => {
+      const loginData = userLoginMock();
+      const unauthorizedException = new UnauthorizedException(
+        'E-mail ou Senha não conferem',
+      );
+
+      authLoginService.execute.mockRejectedValue(unauthorizedException);
+
+      const response = await request(app.getHttpServer())
+        .post('/auth/login')
+        .send(loginData)
+        .expect(401);
+
+      expect(response.body).toHaveProperty(
+        'message',
+        'E-mail ou Senha não conferem',
+      );
       expect(authLoginService.execute).toHaveBeenCalledWith(loginData);
     });
 
@@ -193,7 +162,7 @@ describe('AuthController (e2e)', () => {
 
     it('should return 400 for missing required fields', async () => {
       const incompleteLoginData = {
-        email: TEST_EMAILS.USER,
+        email: TEST_EMAILS.DEFAULT_USER,
       };
 
       const executeSpy = jest.spyOn(authLoginService, 'execute');

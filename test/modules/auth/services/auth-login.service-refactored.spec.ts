@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { JwtService } from '@nestjs/jwt';
+import { UnauthorizedException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { AuthLoginService } from '../../../../src/modules/auth/services/auth-login.service';
 import { UserRepository } from '../../../../src/modules/user/repository/user.repository';
@@ -11,7 +12,7 @@ import {
   userWithUnconfirmedEmailMock,
 } from '../../../mocks/auth/user-login.mock';
 import { userMock } from '../../../mocks/user/user.mock';
-import { companyMock } from '../../../mocks/auth/company.mock';
+import { publicCompanyMock } from '../../../mocks/auth/company.mock';
 import { TEST_PASSWORDS } from '../../../config/test-constants';
 
 jest.mock('bcrypt');
@@ -111,17 +112,16 @@ describe('AuthLoginService - Refactored with Individual Mocks', () => {
           mailConfirm: true,
         } as any;
 
-        userRepository.findOneByEmail.mockResolvedValue(user);
+        userRepository.findOneByEmail!.mockResolvedValue(user);
         bcryptMock.compare.mockResolvedValue(true as never);
-        jwtService.sign.mockReturnValue('fake-jwt-token');
+        jwtService.sign!.mockReturnValue('fake-jwt-token');
 
         const result = await service.execute(loginData);
 
-        expect(result.status).toBe(200);
-        expect(result.data.token).toBe('fake-jwt-token');
-        expect(result.data.info).toBeDefined();
-        expect(result.data.info.password).toBeUndefined();
-        expect(result.data.info.recoverPasswordToken).toBeUndefined();
+        expect(result.token).toBe('fake-jwt-token');
+        expect(result.info).toBeDefined();
+        expect(result.info).not.toHaveProperty('password');
+        expect(result.info).not.toHaveProperty('recoverPasswordToken');
         expect(userRepository.findOneByEmail).toHaveBeenCalledWith(
           loginData.email,
         );
@@ -131,7 +131,7 @@ describe('AuthLoginService - Refactored with Individual Mocks', () => {
         );
       });
 
-      it('should return error for user with unconfirmed email', async () => {
+      it('should throw UnauthorizedException for user with unconfirmed email', async () => {
         const loginData = userWithUnconfirmedEmailMock();
         const user = {
           ...userMock(),
@@ -139,28 +139,34 @@ describe('AuthLoginService - Refactored with Individual Mocks', () => {
           mailConfirm: false,
         } as any;
 
-        userRepository.findOneByEmail.mockResolvedValue(user);
+        userRepository.findOneByEmail!.mockResolvedValue(user);
         bcryptMock.compare.mockResolvedValue(true as never);
 
-        const result = await service.execute(loginData);
+        await expect(service.execute(loginData)).rejects.toThrow(
+          UnauthorizedException,
+        );
+        await expect(service.execute(loginData)).rejects.toThrow(
+          'E-mail ou Senha não conferem',
+        );
 
-        expect(result.status).toBe(400);
-        expect(result.data.message).toBe('Email not validated');
         expect(userRepository.findOneByEmail).toHaveBeenCalledWith(
           loginData.email,
         );
         expect(jwtService.sign).not.toHaveBeenCalled();
       });
 
-      it('should return error for invalid user credentials', async () => {
+      it('should throw UnauthorizedException for invalid user credentials', async () => {
         const loginData = invalidUserLoginMock();
 
-        userRepository.findOneByEmail.mockResolvedValue(null);
+        userRepository.findOneByEmail!.mockResolvedValue(null);
 
-        const result = await service.execute(loginData);
+        await expect(service.execute(loginData)).rejects.toThrow(
+          UnauthorizedException,
+        );
+        await expect(service.execute(loginData)).rejects.toThrow(
+          'E-mail ou Senha não conferem',
+        );
 
-        expect(result.status).toBe(400);
-        expect(result.data.message).toBe('Email not validated');
         expect(userRepository.findOneByEmail).toHaveBeenCalledWith(
           loginData.email,
         );
@@ -173,22 +179,21 @@ describe('AuthLoginService - Refactored with Individual Mocks', () => {
       it('should successfully login a company with valid credentials', async () => {
         const loginData = companyLoginMock();
         const company = {
-          ...companyMock(),
+          ...publicCompanyMock(),
           password: TEST_PASSWORDS.HASHED,
           mailConfirm: true,
         } as any;
 
-        userRepository.findOneByEmail.mockResolvedValue(null);
-        companyRepository.findOneByEmail.mockResolvedValue(company);
+        userRepository.findOneByEmail!.mockResolvedValue(null);
+        companyRepository.findOneByEmail!.mockResolvedValue(company);
         bcryptMock.compare.mockResolvedValue(true as never);
-        jwtService.sign.mockReturnValue('fake-company-jwt-token');
+        jwtService.sign!.mockReturnValue('fake-company-jwt-token');
 
         const result = await service.execute(loginData);
 
-        expect(result.status).toBe(200);
-        expect(result.data.token).toBe('fake-company-jwt-token');
-        expect(result.data.info).toBeDefined();
-        expect(result.data.info.password).toBeUndefined();
+        expect(result.token).toBe('fake-company-jwt-token');
+        expect(result.info).toBeDefined();
+        expect(result.info).not.toHaveProperty('password');
         expect(companyRepository.findOneByEmail).toHaveBeenCalledWith(
           loginData.email,
         );

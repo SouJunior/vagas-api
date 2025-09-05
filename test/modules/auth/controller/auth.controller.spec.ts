@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { Response } from 'express';
+import { UnauthorizedException } from '@nestjs/common';
 import { AuthController } from '../../../../src/modules/auth/auth.controller';
 import { AuthLoginService } from '../../../../src/modules/auth/services/auth-login.service';
 import {
@@ -10,20 +10,13 @@ import {
 import { userMock } from '../../../mocks/user/user.mock';
 import { companyEntityMock } from '../../../mocks/auth/company.mock';
 
-class AuthLoginServiceMock {
-  execute = jest.fn();
-}
-
-const mockResponse = () => {
-  const res: Partial<Response> = {};
-  res.status = jest.fn().mockReturnValue(res);
-  res.send = jest.fn().mockReturnValue(res);
-  return res as Response;
-};
+const authLoginServiceMock = () => ({
+  execute: jest.fn(),
+});
 
 describe('AuthController', () => {
   let controller: AuthController;
-  let authLoginService: jest.Mocked<AuthLoginService>;
+  let authLoginService: jest.Mocked<Partial<AuthLoginService>>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -31,14 +24,13 @@ describe('AuthController', () => {
       providers: [
         {
           provide: AuthLoginService,
-          useClass: AuthLoginServiceMock,
+          useValue: authLoginServiceMock(),
         },
       ],
     }).compile();
 
     controller = module.get<AuthController>(AuthController);
-    authLoginService =
-      module.get<jest.Mocked<AuthLoginService>>(AuthLoginService);
+    authLoginService = module.get(AuthLoginService);
 
     jest.clearAllMocks();
   });
@@ -48,94 +40,83 @@ describe('AuthController', () => {
   });
 
   describe('login', () => {
-    it('should successfully login user and return response with status 200', async () => {
+    it('should successfully login user and return token and info', async () => {
       const loginData = userLoginMock();
       const mockServiceResponse = {
-        status: 200,
-        data: {
-          token: 'fake-jwt-token',
-          info: userMock(),
-        },
+        token: 'fake-jwt-token',
+        info: userMock(),
       };
-      const res = mockResponse();
 
-      authLoginService.execute.mockResolvedValue(mockServiceResponse);
+      authLoginService.execute!.mockResolvedValue(mockServiceResponse);
 
-      await controller.login(loginData, res);
+      const result = await controller.login(loginData);
 
       expect(authLoginService.execute).toHaveBeenCalledWith(loginData);
-      expect(res.status).toHaveBeenCalledWith(200);
-      expect(res.send).toHaveBeenCalledWith(mockServiceResponse.data);
+      expect(result).toEqual(mockServiceResponse);
+      expect(result.token).toBe('fake-jwt-token');
+      expect(result.info).toEqual(userMock());
     });
 
-    it('should successfully login company and return response with status 200', async () => {
+    it('should successfully login company and return token and info', async () => {
       const loginData = companyLoginMock();
       const mockServiceResponse = {
-        status: 200,
-        data: {
-          token: 'fake-jwt-token',
-          info: companyEntityMock(),
-        },
+        token: 'fake-jwt-token',
+        info: companyEntityMock(),
       };
-      const res = mockResponse();
 
-      authLoginService.execute.mockResolvedValue(mockServiceResponse);
+      authLoginService.execute!.mockResolvedValue(mockServiceResponse);
 
-      await controller.login(loginData, res);
+      const result = await controller.login(loginData);
 
       expect(authLoginService.execute).toHaveBeenCalledWith(loginData);
-      expect(res.status).toHaveBeenCalledWith(200);
-      expect(res.send).toHaveBeenCalledWith(mockServiceResponse.data);
+      expect(result).toEqual(mockServiceResponse);
+      expect(result.token).toBe('fake-jwt-token');
+      expect(result.info).toEqual(companyEntityMock());
     });
 
-    it('should return error response with status 400 for invalid credentials', async () => {
+    it('should throw UnauthorizedException for invalid credentials', async () => {
       const loginData = invalidUserLoginMock();
-      const mockServiceResponse = {
-        status: 400,
-        data: { message: 'E-mail ou Senha não conferem' },
-      };
-      const res = mockResponse();
+      const error = new UnauthorizedException('E-mail ou Senha não conferem');
 
-      authLoginService.execute.mockResolvedValue(mockServiceResponse);
+      authLoginService.execute!.mockRejectedValue(error);
 
-      await controller.login(loginData, res);
+      await expect(controller.login(loginData)).rejects.toThrow(
+        UnauthorizedException,
+      );
+      await expect(controller.login(loginData)).rejects.toThrow(
+        'E-mail ou Senha não conferem',
+      );
 
       expect(authLoginService.execute).toHaveBeenCalledWith(loginData);
-      expect(res.status).toHaveBeenCalledWith(400);
-      expect(res.send).toHaveBeenCalledWith(mockServiceResponse.data);
     });
 
-    it('should return error response with status 400 for unconfirmed email', async () => {
+    it('should throw UnauthorizedException for unconfirmed email', async () => {
       const loginData = userLoginMock();
-      const mockServiceResponse = {
-        status: 400,
-        data: { message: 'Email not validated' },
-      };
-      const res = mockResponse();
+      const error = new UnauthorizedException('E-mail ou Senha não conferem');
 
-      authLoginService.execute.mockResolvedValue(mockServiceResponse);
+      authLoginService.execute!.mockRejectedValue(error);
 
-      await controller.login(loginData, res);
+      await expect(controller.login(loginData)).rejects.toThrow(
+        UnauthorizedException,
+      );
+      await expect(controller.login(loginData)).rejects.toThrow(
+        'E-mail ou Senha não conferem',
+      );
 
       expect(authLoginService.execute).toHaveBeenCalledWith(loginData);
-      expect(res.status).toHaveBeenCalledWith(400);
-      expect(res.send).toHaveBeenCalledWith(mockServiceResponse.data);
     });
 
     it('should handle service exceptions properly', async () => {
       const loginData = userLoginMock();
-      const res = mockResponse();
       const error = new Error('Service error');
 
-      authLoginService.execute.mockRejectedValue(error);
+      authLoginService.execute!.mockRejectedValue(error);
 
-      await expect(controller.login(loginData, res)).rejects.toThrow(
+      await expect(controller.login(loginData)).rejects.toThrow(
         'Service error',
       );
 
       expect(authLoginService.execute).toHaveBeenCalledWith(loginData);
-      expect(res.status).not.toHaveBeenCalled();
-      expect(res.send).not.toHaveBeenCalled();
     });
   });
 

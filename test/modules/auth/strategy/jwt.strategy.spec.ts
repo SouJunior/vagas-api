@@ -1,48 +1,35 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtStrategy } from '../../../../src/modules/auth/jwt/jwt.strategy';
 import { UserRepository } from '../../../../src/modules/user/repository/user.repository';
 import { CompanyRepository } from '../../../../src/modules/company/repository/company.repository';
-import {
-  jwtPayloadMock,
-  companyJwtPayloadMock,
-  invalidJwtPayloadMock,
-} from '../../../mocks/auth/jwt-payload.mock';
-import {
-  mapUserToPrincipal,
-  mapCompanyToPrincipal,
-} from '../../../../src/modules/auth/utils/principal.mapper';
+import { jwtPayloadMock } from '../../../mocks/auth/jwt-payload.mock';
 import {
   TEST_PASSWORDS,
-  TEST_EMAILS,
-  TEST_COMPANY_DATA,
   TEST_USER_DATA,
+  TEST_EMAILS,
 } from '../../../config/test-constants';
 
-const alphabeticalSort = (a: string, b: string): number => a.localeCompare(b);
+const createUserRepositoryMock = (): jest.Mocked<Partial<UserRepository>> => ({
+  findOneByEmail: jest.fn(),
+});
 
-jest.mock('../../../../src/shared/utils/handle-error.util', () => ({
-  handleError: jest.fn((error) => {
-    throw error;
-  }),
-}));
-
-class UserRepositoryMock {
-  findOneByEmail = jest.fn();
-}
-
-class CompanyRepositoryMock {
-  findOneByEmail = jest.fn();
-}
+const createCompanyRepositoryMock = (): jest.Mocked<
+  Partial<CompanyRepository>
+> => ({
+  findOneByEmail: jest.fn(),
+});
 
 describe('JwtStrategy', () => {
   let strategy: JwtStrategy;
-  let userRepository: UserRepositoryMock;
-  let companyRepository: CompanyRepositoryMock;
+  let userRepository: jest.Mocked<Partial<UserRepository>>;
+  let companyRepository: jest.Mocked<Partial<CompanyRepository>>;
 
   beforeEach(async () => {
     process.env.JWT_SECRET = 'test-secret-key';
+
+    userRepository = createUserRepositoryMock();
+    companyRepository = createCompanyRepositoryMock();
 
     const configServiceMock = {
       getOrThrow: jest.fn().mockReturnValue('test-secret-key'),
@@ -53,11 +40,11 @@ describe('JwtStrategy', () => {
         JwtStrategy,
         {
           provide: UserRepository,
-          useClass: UserRepositoryMock,
+          useValue: userRepository,
         },
         {
           provide: CompanyRepository,
-          useClass: CompanyRepositoryMock,
+          useValue: companyRepository,
         },
         {
           provide: ConfigService,
@@ -67,14 +54,10 @@ describe('JwtStrategy', () => {
     }).compile();
 
     strategy = module.get<JwtStrategy>(JwtStrategy);
-    userRepository = module.get(UserRepository);
-    companyRepository = module.get(CompanyRepository);
-
-    jest.clearAllMocks();
   });
 
   afterEach(() => {
-    delete process.env.JWT_SECRET;
+    jest.clearAllMocks();
   });
 
   it('should be defined', () => {
@@ -87,7 +70,7 @@ describe('JwtStrategy', () => {
       const user = {
         id: '729c7919-583c-40a5-b0ca-137e282345d4',
         name: 'Non-Admin for tests',
-        email: TEST_EMAILS.USER,
+        email: TEST_EMAILS.DEFAULT_USER,
         password: TEST_PASSWORDS.HASHED,
         type: 'USER',
         phone: TEST_USER_DATA.PHONE,
@@ -96,77 +79,64 @@ describe('JwtStrategy', () => {
         mainPhone: null,
         city: null,
         state: null,
-        profile: null,
-        profileKey: null,
-        personalData: null,
-        curriculums: [],
-        applications: [],
-        candidacies: [],
-        savedJobs: [],
+        street: null,
+        complement: null,
+        cep: '12345678',
+        birthDate: new Date('1990-01-01'),
+        bio: null,
         created_at: new Date(),
         updated_at: new Date(),
-        mailConfirm: false,
+        deleted_at: null,
+        mailConfirm: true,
         recoverPasswordToken: null,
       };
-      const expectedPrincipal = mapUserToPrincipal(user);
 
-      userRepository.findOneByEmail.mockResolvedValue(user);
+      userRepository.findOneByEmail!.mockResolvedValue(user as any);
+      companyRepository.findOneByEmail!.mockResolvedValue(null);
 
       const result = await strategy.validate(payload);
 
-      expect(result).toEqual(expectedPrincipal);
+      const expectedUserPrincipal = {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        type: user.type,
+        phone: user.phone,
+        userType: 'user',
+      };
 
-      expect(result).not.toHaveProperty('password');
-
-      const resultKeys = Object.keys(result);
-      const expectedKeys = Object.keys(expectedPrincipal);
-      expect(resultKeys.sort(alphabeticalSort)).toEqual(
-        expectedKeys.sort(alphabeticalSort),
-      );
-
+      expect(result).toEqual(expectedUserPrincipal);
       expect(userRepository.findOneByEmail).toHaveBeenCalledWith(payload.email);
       expect(companyRepository.findOneByEmail).not.toHaveBeenCalled();
     });
 
     it('should successfully validate and return company principal matching mapper output', async () => {
-      const payload = companyJwtPayloadMock();
+      const payload = jwtPayloadMock();
       const company = {
-        id: '729c7919-583c-40a5-b0ca-137e282345d4',
-        companyName: 'Test Company Ltd',
-        email: TEST_EMAILS.COMPANY,
-        password: TEST_PASSWORDS.HASHED,
-        cnpj: TEST_COMPANY_DATA.CNPJ,
-        jobs: [],
+        id: '829c7919-583c-40a5-b0ca-137e282345d5',
+        companyName: 'Test Company',
+        email: payload.email,
+        cnpj: '12345678901234',
         created_at: new Date(),
-        updated_at: new Date(),
         mailConfirm: true,
-        recoverPasswordToken: null,
-        companyType: null,
-        companySize: null,
-        uf: null,
-        companySite: null,
-        otherSite: null,
-        description: null,
-        profile: null,
-        profileKey: null,
+        password: TEST_PASSWORDS.HASHED,
+        type: 'COMPANY',
       };
-      const expectedPrincipal = mapCompanyToPrincipal(company);
 
-      userRepository.findOneByEmail.mockResolvedValue(null);
-      companyRepository.findOneByEmail.mockResolvedValue(company);
+      userRepository.findOneByEmail!.mockResolvedValue(null);
+      companyRepository.findOneByEmail!.mockResolvedValue(company as any);
 
       const result = await strategy.validate(payload);
 
-      expect(result).toEqual(expectedPrincipal);
+      const expectedCompanyPrincipal = {
+        id: company.id,
+        companyName: company.companyName,
+        email: company.email,
+        cnpj: company.cnpj,
+        userType: 'company',
+      };
 
-      expect(result).not.toHaveProperty('password');
-
-      const resultKeys = Object.keys(result);
-      const expectedKeys = Object.keys(expectedPrincipal);
-      expect(resultKeys.sort(alphabeticalSort)).toEqual(
-        expectedKeys.sort(alphabeticalSort),
-      );
-
+      expect(result).toEqual(expectedCompanyPrincipal);
       expect(userRepository.findOneByEmail).toHaveBeenCalledWith(payload.email);
       expect(companyRepository.findOneByEmail).toHaveBeenCalledWith(
         payload.email,
@@ -174,16 +144,12 @@ describe('JwtStrategy', () => {
     });
 
     it('should throw UnauthorizedException when neither user nor company is found', async () => {
-      const payload = invalidJwtPayloadMock();
+      const payload = jwtPayloadMock();
 
-      userRepository.findOneByEmail.mockResolvedValue(null);
-      companyRepository.findOneByEmail.mockResolvedValue(null);
+      userRepository.findOneByEmail!.mockResolvedValue(null);
+      companyRepository.findOneByEmail!.mockResolvedValue(null);
 
-      const promise = strategy.validate(payload);
-
-      await expect(promise).rejects.toBeInstanceOf(UnauthorizedException);
-      await expect(promise).rejects.toHaveProperty(
-        'message',
+      await expect(strategy.validate(payload)).rejects.toThrow(
         'User not found or not authorized!',
       );
 
@@ -198,7 +164,7 @@ describe('JwtStrategy', () => {
       const userWithExtraFields = {
         id: '729c7919-583c-40a5-b0ca-137e282345d4',
         name: 'Non-Admin for tests',
-        email: TEST_EMAILS.USER,
+        email: TEST_EMAILS.DEFAULT_USER,
         password: TEST_PASSWORDS.SENSITIVE,
         type: 'USER',
         phone: TEST_USER_DATA.PHONE,
@@ -207,93 +173,87 @@ describe('JwtStrategy', () => {
         mainPhone: null,
         city: null,
         state: null,
-        profile: null,
-        profileKey: null,
-        personalData: null,
-        curriculums: [],
-        applications: [],
-        candidacies: [],
-        savedJobs: [],
+        street: null,
+        complement: null,
+        cep: '12345678',
+        birthDate: new Date('1990-01-01'),
+        bio: null,
         created_at: new Date(),
         updated_at: new Date(),
-        mailConfirm: false,
-        recoverPasswordToken: null,
+        deleted_at: null,
+        mailConfirm: true,
+        recoverPasswordToken: 'sensitive-token',
+        extraSensitiveField: 'should-not-appear',
+        anotherField: 'also-sensitive',
+      };
 
-        secretKey: 'should-not-be-included',
-        internalData: 'should-not-be-included',
-        additionalField: 'should-not-be-included',
-      } as any;
+      userRepository.findOneByEmail!.mockResolvedValue(
+        userWithExtraFields as any,
+      );
+      companyRepository.findOneByEmail!.mockResolvedValue(null);
 
-      userRepository.findOneByEmail.mockResolvedValue(userWithExtraFields);
+      const userResult = await strategy.validate(payload);
 
-      const result = await strategy.validate(payload);
-      const expectedPrincipal = mapUserToPrincipal(userWithExtraFields);
+      const expectedUserFields = [
+        'id',
+        'name',
+        'email',
+        'type',
+        'phone',
+        'userType',
+      ];
+      const actualUserFields = Object.keys(userResult);
 
-      expect(result).toEqual(expectedPrincipal);
-
-      expect(result).not.toHaveProperty('password');
-      expect(result).not.toHaveProperty('secretKey');
-      expect(result).not.toHaveProperty('internalData');
-      expect(result).not.toHaveProperty('additionalField');
-
-      expect(result).toHaveProperty('id');
-      expect(result).toHaveProperty('name');
-      expect(result).toHaveProperty('email');
-      expect(result).toHaveProperty('type');
-      expect(result).toHaveProperty('userType');
-      expect(result.userType).toBe('user');
+      expect(actualUserFields).toEqual(expectedUserFields);
+      expect(userResult).not.toHaveProperty('password');
+      expect(userResult).not.toHaveProperty('recoverPasswordToken');
+      expect(userResult).not.toHaveProperty('extraSensitiveField');
+      expect(userResult).not.toHaveProperty('anotherField');
+      expect(userResult).not.toHaveProperty('ip');
+      expect(userResult).not.toHaveProperty('policies');
 
       expect(userRepository.findOneByEmail).toHaveBeenCalledWith(payload.email);
+      expect(companyRepository.findOneByEmail).not.toHaveBeenCalled();
     });
 
     it('should return company principal with exact fields from mapper, no additional fields', async () => {
-      const payload = companyJwtPayloadMock();
+      const payload = jwtPayloadMock();
       const companyWithExtraFields = {
-        id: '729c7919-583c-40a5-b0ca-137e282345d4',
-        companyName: 'Test Company Ltd',
-        email: TEST_EMAILS.COMPANY,
-        password: TEST_PASSWORDS.SENSITIVE,
-        cnpj: TEST_COMPANY_DATA.CNPJ,
-        jobs: [],
+        id: '829c7919-583c-40a5-b0ca-137e282345d5',
+        companyName: 'Test Company',
+        email: payload.email,
+        cnpj: '12345678901234',
         created_at: new Date(),
-        updated_at: new Date(),
         mailConfirm: true,
-        recoverPasswordToken: null,
-        companyType: null,
-        companySize: null,
-        uf: null,
-        companySite: null,
-        otherSite: null,
-        description: null,
-        profile: null,
-        profileKey: null,
+        password: TEST_PASSWORDS.SENSITIVE,
+        type: 'COMPANY',
+        extraSensitiveField: 'should-not-appear',
+        recoverPasswordToken: 'sensitive-token',
+        internalNotes: 'confidential',
+      };
 
-        secretInfo: 'should-not-be-included',
-        internalData: 'should-not-be-included',
-        additionalField: 'should-not-be-included',
-      } as any;
-
-      userRepository.findOneByEmail.mockResolvedValue(null);
-      companyRepository.findOneByEmail.mockResolvedValue(
-        companyWithExtraFields,
+      userRepository.findOneByEmail!.mockResolvedValue(null);
+      companyRepository.findOneByEmail!.mockResolvedValue(
+        companyWithExtraFields as any,
       );
 
-      const result = await strategy.validate(payload);
-      const expectedPrincipal = mapCompanyToPrincipal(companyWithExtraFields);
+      const companyResult = await strategy.validate(payload);
 
-      expect(result).toEqual(expectedPrincipal);
+      const expectedCompanyFields = [
+        'id',
+        'companyName',
+        'email',
+        'cnpj',
+        'userType',
+      ];
+      const actualCompanyFields = Object.keys(companyResult);
 
-      expect(result).not.toHaveProperty('password');
-      expect(result).not.toHaveProperty('secretInfo');
-      expect(result).not.toHaveProperty('internalData');
-      expect(result).not.toHaveProperty('additionalField');
-
-      expect(result).toHaveProperty('id');
-      expect(result).toHaveProperty('companyName');
-      expect(result).toHaveProperty('email');
-      expect(result).toHaveProperty('cnpj');
-      expect(result).toHaveProperty('userType');
-      expect(result.userType).toBe('company');
+      expect(actualCompanyFields).toEqual(expectedCompanyFields);
+      expect(companyResult).not.toHaveProperty('password');
+      expect(companyResult).not.toHaveProperty('recoverPasswordToken');
+      expect(companyResult).not.toHaveProperty('extraSensitiveField');
+      expect(companyResult).not.toHaveProperty('internalNotes');
+      expect(companyResult).not.toHaveProperty('mailConfirm');
 
       expect(userRepository.findOneByEmail).toHaveBeenCalledWith(payload.email);
       expect(companyRepository.findOneByEmail).toHaveBeenCalledWith(
@@ -302,27 +262,23 @@ describe('JwtStrategy', () => {
     });
 
     it('should throw UnauthorizedException for invalid payload without email', async () => {
-      const invalidPayload = { email: null } as any;
+      const invalidPayload = {};
 
-      const promise = strategy.validate(invalidPayload);
-
-      await expect(promise).rejects.toBeInstanceOf(UnauthorizedException);
-      await expect(promise).rejects.toHaveProperty(
-        'message',
+      await expect(strategy.validate(invalidPayload as any)).rejects.toThrow(
         'Invalid payload or email',
       );
+
+      expect(userRepository.findOneByEmail).not.toHaveBeenCalled();
+      expect(companyRepository.findOneByEmail).not.toHaveBeenCalled();
     });
 
     it('should throw UnauthorizedException for undefined payload', async () => {
-      const invalidPayload = undefined as any;
-
-      const promise = strategy.validate(invalidPayload);
-
-      await expect(promise).rejects.toBeInstanceOf(UnauthorizedException);
-      await expect(promise).rejects.toHaveProperty(
-        'message',
+      await expect(strategy.validate(undefined as any)).rejects.toThrow(
         'Invalid payload or email',
       );
+
+      expect(userRepository.findOneByEmail).not.toHaveBeenCalled();
+      expect(companyRepository.findOneByEmail).not.toHaveBeenCalled();
     });
   });
 });

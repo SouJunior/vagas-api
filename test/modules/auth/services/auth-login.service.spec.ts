@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { JwtService } from '@nestjs/jwt';
+import { UnauthorizedException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { AuthLoginService } from '../../../../src/modules/auth/services/auth-login.service';
 import { UserRepository } from '../../../../src/modules/user/repository/user.repository';
@@ -12,7 +13,7 @@ import {
 } from '../../../mocks/auth/user-login.mock';
 import { userMock } from '../../../mocks/user/user.mock';
 import {
-  companyMock,
+  publicCompanyMock,
   companyWithUnconfirmedEmailMock,
 } from '../../../mocks/auth/company.mock';
 import {
@@ -124,11 +125,15 @@ describe('AuthLoginService', () => {
 
         const result = await service.execute(loginData);
 
-        expect(result.status).toBe(200);
-        expect(result.data.token).toBe('fake-jwt-token');
-        expect(result.data.info).toBeDefined();
-        expect(result.data.info.password).toBeUndefined();
-        expect(result.data.info.recoverPasswordToken).toBeUndefined();
+        expect(result).toEqual({
+          token: 'fake-jwt-token',
+          info: expect.objectContaining({
+            ...userMock(),
+            mailConfirm: true,
+          }),
+        });
+        expect(result.info).not.toHaveProperty('password');
+        expect(result.info).not.toHaveProperty('recoverPasswordToken');
         expect(userRepository.findOneByEmail).toHaveBeenCalledWith(
           loginData.email,
         );
@@ -141,7 +146,7 @@ describe('AuthLoginService', () => {
         });
       });
 
-      it('should return error when user email is not confirmed', async () => {
+      it('should throw UnauthorizedException when user email is not confirmed', async () => {
         const loginData = userWithUnconfirmedEmailMock();
         const user = {
           ...userMock(),
@@ -151,10 +156,10 @@ describe('AuthLoginService', () => {
 
         userRepository.findOneByEmail.mockResolvedValue(user as any);
 
-        const result = await service.execute(loginData);
+        await expect(service.execute(loginData)).rejects.toThrow(
+          new UnauthorizedException('E-mail ou Senha não conferem'),
+        );
 
-        expect(result.status).toBe(400);
-        expect(result.data.message).toBe('Email not validated');
         expect(userRepository.findOneByEmail).toHaveBeenCalledWith(
           loginData.email,
         );
@@ -162,15 +167,15 @@ describe('AuthLoginService', () => {
         expect(jwtService.sign).not.toHaveBeenCalled();
       });
 
-      it('should return error when user does not exist', async () => {
+      it('should throw UnauthorizedException when user does not exist', async () => {
         const loginData = invalidUserLoginMock();
 
         userRepository.findOneByEmail.mockResolvedValue(null);
 
-        const result = await service.execute(loginData);
+        await expect(service.execute(loginData)).rejects.toThrow(
+          new UnauthorizedException('E-mail ou Senha não conferem'),
+        );
 
-        expect(result.status).toBe(400);
-        expect(result.data.message).toBe('Email not validated');
         expect(userRepository.findOneByEmail).toHaveBeenCalledWith(
           loginData.email,
         );
@@ -178,7 +183,7 @@ describe('AuthLoginService', () => {
         expect(jwtService.sign).not.toHaveBeenCalled();
       });
 
-      it('should return error when password is invalid', async () => {
+      it('should throw UnauthorizedException when password is invalid', async () => {
         const loginData = userLoginMock();
         const user = {
           ...userMock(),
@@ -189,10 +194,10 @@ describe('AuthLoginService', () => {
         userRepository.findOneByEmail.mockResolvedValue(user as any);
         bcryptMock.compare.mockResolvedValue(false as never);
 
-        const result = await service.execute(loginData);
+        await expect(service.execute(loginData)).rejects.toThrow(
+          new UnauthorizedException('E-mail ou Senha não conferem'),
+        );
 
-        expect(result.status).toBe(400);
-        expect(result.data.message).toBe('E-mail ou Senha não conferem');
         expect(userRepository.findOneByEmail).toHaveBeenCalledWith(
           loginData.email,
         );
@@ -208,7 +213,7 @@ describe('AuthLoginService', () => {
       it('should successfully login a company with valid credentials', async () => {
         const loginData = companyLoginMock();
         const company = {
-          ...companyMock(),
+          ...publicCompanyMock(),
           password: TEST_PASSWORDS.HASHED,
           mailConfirm: true,
         };
@@ -219,11 +224,12 @@ describe('AuthLoginService', () => {
 
         const result = await service.execute(loginData);
 
-        expect(result.status).toBe(200);
-        expect(result.data.token).toBe('fake-jwt-token');
-        expect(result.data.info).toBeDefined();
-        expect(result.data.info.password).toBeUndefined();
-        expect(result.data.info.recoverPasswordToken).toBeUndefined();
+        expect(result.token).toBe('fake-jwt-token');
+        expect(result.info).toBeDefined();
+        expect(result.info).not.toHaveProperty('password');
+        expect(result.info).not.toHaveProperty('recoverPasswordToken');
+        expect(result.info.companyName).toBe(publicCompanyMock().companyName);
+        expect(result.info.email).toBe(publicCompanyMock().email);
         expect(companyRepository.findOneByEmail).toHaveBeenCalledWith(
           loginData.email,
         );
@@ -236,7 +242,7 @@ describe('AuthLoginService', () => {
         });
       });
 
-      it('should return error when company email is not confirmed', async () => {
+      it('should throw UnauthorizedException when company email is not confirmed', async () => {
         const loginData = {
           ...companyLoginMock(),
           email: TEST_EMAILS.UNCONFIRMED_COMPANY,
@@ -245,10 +251,10 @@ describe('AuthLoginService', () => {
 
         companyRepository.findOneByEmail.mockResolvedValue(company as any);
 
-        const result = await service.execute(loginData);
+        await expect(service.execute(loginData)).rejects.toThrow(
+          new UnauthorizedException('E-mail ou Senha não conferem'),
+        );
 
-        expect(result.status).toBe(400);
-        expect(result.data.message).toBe('Email not validated');
         expect(companyRepository.findOneByEmail).toHaveBeenCalledWith(
           loginData.email,
         );
@@ -256,15 +262,15 @@ describe('AuthLoginService', () => {
         expect(jwtService.sign).not.toHaveBeenCalled();
       });
 
-      it('should return error when company does not exist', async () => {
+      it('should throw UnauthorizedException when company does not exist', async () => {
         const loginData = companyLoginMock();
 
         companyRepository.findOneByEmail.mockResolvedValue(null);
 
-        const result = await service.execute(loginData);
+        await expect(service.execute(loginData)).rejects.toThrow(
+          new UnauthorizedException('E-mail ou Senha não conferem'),
+        );
 
-        expect(result.status).toBe(400);
-        expect(result.data.message).toBe('Email not validated');
         expect(companyRepository.findOneByEmail).toHaveBeenCalledWith(
           loginData.email,
         );
@@ -272,10 +278,10 @@ describe('AuthLoginService', () => {
         expect(jwtService.sign).not.toHaveBeenCalled();
       });
 
-      it('should return error when company password is invalid', async () => {
+      it('should throw UnauthorizedException when company password is invalid', async () => {
         const loginData = companyLoginMock();
         const company = {
-          ...companyMock(),
+          ...publicCompanyMock(),
           password: TEST_PASSWORDS.HASHED,
           mailConfirm: true,
         };
@@ -283,10 +289,10 @@ describe('AuthLoginService', () => {
         companyRepository.findOneByEmail.mockResolvedValue(company as any);
         bcryptMock.compare.mockResolvedValue(false as never);
 
-        const result = await service.execute(loginData);
+        await expect(service.execute(loginData)).rejects.toThrow(
+          new UnauthorizedException('E-mail ou Senha não conferem'),
+        );
 
-        expect(result.status).toBe(400);
-        expect(result.data.message).toBe('E-mail ou Senha não conferem');
         expect(companyRepository.findOneByEmail).toHaveBeenCalledWith(
           loginData.email,
         );
@@ -316,17 +322,17 @@ describe('AuthLoginService', () => {
 
         const result = await service.execute(loginData);
 
-        expect(result.status).toBe(200);
-        expect(result.data.info.password).toBeUndefined();
-        expect(result.data.info.recoverPasswordToken).toBeUndefined();
-        expect(result.data.info.mailconfirm).toBeUndefined();
-        expect(result.data.info.ip).toBeUndefined();
+        expect(result.token).toBe('fake-jwt-token');
+        expect(result.info.password).toBeUndefined();
+        expect(result.info.recoverPasswordToken).toBeUndefined();
+        expect(result.info.mailconfirm).toBeUndefined();
+        expect(result.info.ip).toBeUndefined();
       });
 
       it('should remove sensitive fields from company response', async () => {
         const loginData = companyLoginMock();
         const company = {
-          ...companyMock(),
+          ...publicCompanyMock(),
           password: TEST_PASSWORDS.HASHED,
           recoverPasswordToken: TEST_PASSWORDS.TOKEN,
           mailconfirm: true,
@@ -340,11 +346,11 @@ describe('AuthLoginService', () => {
 
         const result = await service.execute(loginData);
 
-        expect(result.status).toBe(200);
-        expect(result.data.info.password).toBeUndefined();
-        expect(result.data.info.recoverPasswordToken).toBeUndefined();
-        expect(result.data.info.mailconfirm).toBeUndefined();
-        expect(result.data.info.ip).toBeUndefined();
+        expect(result.token).toBe('fake-jwt-token');
+        expect(result.info.password).toBeUndefined();
+        expect(result.info.recoverPasswordToken).toBeUndefined();
+        expect(result.info.mailconfirm).toBeUndefined();
+        expect(result.info.ip).toBeUndefined();
       });
     });
   });
