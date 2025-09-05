@@ -24,49 +24,80 @@ import {
 jest.mock('bcrypt');
 const bcryptMock = bcrypt as jest.Mocked<typeof bcrypt>;
 
-class UserRepositoryMock {
-  findOneByEmail = jest.fn();
-}
-
-class CompanyRepositoryMock {
-  findOneByEmail = jest.fn();
-}
-
-class JwtServiceMock {
-  sign = jest.fn();
-}
-
 describe('AuthLoginService', () => {
   let service: AuthLoginService;
-  let userRepository: UserRepositoryMock;
-  let companyRepository: CompanyRepositoryMock;
-  let jwtService: JwtServiceMock;
+  let userRepository: jest.Mocked<Partial<UserRepository>>;
+  let companyRepository: jest.Mocked<Partial<CompanyRepository>>;
+  let jwtService: jest.Mocked<Partial<JwtService>>;
+
+  const createUserRepositoryMock = (): jest.Mocked<
+    Partial<UserRepository>
+  > => ({
+    findOneByEmail: jest.fn(),
+    findOneById: jest.fn(),
+    createUser: jest.fn(),
+    getAllUsers: jest.fn(),
+    updateUser: jest.fn(),
+    updatePassword: jest.fn(),
+    updateRecoveryPassword: jest.fn(),
+    activateUser: jest.fn(),
+    deleteUserById: jest.fn(),
+    searchUserByName: jest.fn(),
+    updateMyPassword: jest.fn(),
+    findByToken: jest.fn(),
+  });
+
+  const createCompanyRepositoryMock = (): jest.Mocked<
+    Partial<CompanyRepository>
+  > => ({
+    findOneByEmail: jest.fn(),
+    findOneById: jest.fn(),
+    createCompany: jest.fn(),
+    findAllCompany: jest.fn(),
+    updateCompanyById: jest.fn(),
+    updateMyPassword: jest.fn(),
+    updateRecoveryPassword: jest.fn(),
+    activateCompany: jest.fn(),
+    deleteCompanyById: jest.fn(),
+    findCompanyById: jest.fn(),
+    findByToken: jest.fn(),
+    findOneByCnpj: jest.fn(),
+    updateCompany: jest.fn(),
+    updatePassword: jest.fn(),
+  });
+
+  const createJwtServiceMock = (): jest.Mocked<Partial<JwtService>> => ({
+    sign: jest.fn(),
+    signAsync: jest.fn(),
+    verify: jest.fn(),
+    verifyAsync: jest.fn(),
+    decode: jest.fn(),
+  });
 
   beforeEach(async () => {
+    userRepository = createUserRepositoryMock();
+    companyRepository = createCompanyRepositoryMock();
+    jwtService = createJwtServiceMock();
+
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         AuthLoginService,
         {
           provide: UserRepository,
-          useClass: UserRepositoryMock,
+          useValue: userRepository,
         },
         {
           provide: CompanyRepository,
-          useClass: CompanyRepositoryMock,
+          useValue: companyRepository,
         },
         {
           provide: JwtService,
-          useClass: JwtServiceMock,
+          useValue: jwtService,
         },
       ],
     }).compile();
 
     service = module.get<AuthLoginService>(AuthLoginService);
-    userRepository = module.get(UserRepository);
-    companyRepository = module.get(CompanyRepository);
-    jwtService = module.get(JwtService);
-
-    jest.clearAllMocks();
   });
 
   it('should be defined', () => {
@@ -74,6 +105,10 @@ describe('AuthLoginService', () => {
   });
 
   describe('execute', () => {
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
     describe('User Login', () => {
       it('should successfully login a user with valid credentials', async () => {
         const loginData = userLoginMock();
@@ -83,7 +118,7 @@ describe('AuthLoginService', () => {
           mailConfirm: true,
         };
 
-        userRepository.findOneByEmail.mockResolvedValue(user);
+        userRepository.findOneByEmail.mockResolvedValue(user as any);
         bcryptMock.compare.mockResolvedValue(true as never);
         jwtService.sign.mockReturnValue('fake-jwt-token');
 
@@ -114,7 +149,7 @@ describe('AuthLoginService', () => {
           mailConfirm: false,
         };
 
-        userRepository.findOneByEmail.mockResolvedValue(user);
+        userRepository.findOneByEmail.mockResolvedValue(user as any);
 
         const result = await service.execute(loginData);
 
@@ -151,7 +186,7 @@ describe('AuthLoginService', () => {
           mailConfirm: true,
         };
 
-        userRepository.findOneByEmail.mockResolvedValue(user);
+        userRepository.findOneByEmail.mockResolvedValue(user as any);
         bcryptMock.compare.mockResolvedValue(false as never);
 
         const result = await service.execute(loginData);
@@ -178,7 +213,7 @@ describe('AuthLoginService', () => {
           mailConfirm: true,
         };
 
-        companyRepository.findOneByEmail.mockResolvedValue(company);
+        companyRepository.findOneByEmail.mockResolvedValue(company as any);
         bcryptMock.compare.mockResolvedValue(true as never);
         jwtService.sign.mockReturnValue('fake-jwt-token');
 
@@ -208,7 +243,7 @@ describe('AuthLoginService', () => {
         };
         const company = companyWithUnconfirmedEmailMock();
 
-        companyRepository.findOneByEmail.mockResolvedValue(company);
+        companyRepository.findOneByEmail.mockResolvedValue(company as any);
 
         const result = await service.execute(loginData);
 
@@ -245,7 +280,7 @@ describe('AuthLoginService', () => {
           mailConfirm: true,
         };
 
-        companyRepository.findOneByEmail.mockResolvedValue(company);
+        companyRepository.findOneByEmail.mockResolvedValue(company as any);
         bcryptMock.compare.mockResolvedValue(false as never);
 
         const result = await service.execute(loginData);
@@ -275,7 +310,7 @@ describe('AuthLoginService', () => {
           mailConfirm: true,
         };
 
-        userRepository.findOneByEmail.mockResolvedValue(user);
+        userRepository.findOneByEmail.mockResolvedValue(user as any);
         bcryptMock.compare.mockResolvedValue(true as never);
         jwtService.sign.mockReturnValue('fake-jwt-token');
 
@@ -299,7 +334,7 @@ describe('AuthLoginService', () => {
           mailConfirm: true,
         };
 
-        companyRepository.findOneByEmail.mockResolvedValue(company);
+        companyRepository.findOneByEmail.mockResolvedValue(company as any);
         bcryptMock.compare.mockResolvedValue(true as never);
         jwtService.sign.mockReturnValue('fake-jwt-token');
 
