@@ -5,13 +5,7 @@ import { CompanyRepository } from '../repository/company.repository';
 export class DeleteCompanyService {
   constructor(private companyRepository: CompanyRepository) {}
 
-  async execute(id: string) {
-    // O repositório agora verifica a existência e lança NotFoundException se não encontrar
-    const result = await this.companyRepository.deleteCompanyById(id);
-
-    return {
-      status: 200,
-      data: result,
-    };
+  async execute(id: string): Promise<object> {
+    return this.companyRepository.deleteCompanyById(id);
   }
 }
