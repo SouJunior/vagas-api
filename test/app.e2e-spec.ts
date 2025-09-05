@@ -10,27 +10,22 @@ describe('AppController (e2e)', () => {
   let app: INestApplication;
 
   beforeEach(async () => {
-    const mockMailService = {
-      sendMail: jest.fn(),
-      checkConnection: jest.fn().mockResolvedValue(true),
-    };
-
-    const mockUserRepository = {
-      findAll: jest.fn(),
-      findOneByEmail: jest.fn(),
-    };
-
     const moduleFixture: TestingModule = await Test.createTestingModule({
       controllers: [AppController],
       providers: [
         AppService,
         {
           provide: MailService,
-          useValue: mockMailService,
+          useValue: {
+            sendMail: jest.fn(),
+            checkConnection: jest.fn().mockResolvedValue(true),
+          },
         },
         {
           provide: UserRepository,
-          useValue: mockUserRepository,
+          useValue: {
+            getAllUsers: jest.fn().mockResolvedValue({ data: [] }),
+          },
         },
       ],
     }).compile();
