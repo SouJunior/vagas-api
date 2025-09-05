@@ -4,27 +4,28 @@ import { FindAllUsersService } from '../../../../src/modules/user/services/find-
 import { Order, PageOptionsDto } from '../../../../src/shared/pagination';
 import { getAllUserMock } from '../../../mocks/user/get-all-user.mock';
 
-class UserRepositoryMock {
-  getAllUsers = jest.fn();
-}
+const createUserRepositoryMock = (): jest.Mocked<Partial<UserRepository>> => ({
+  getAllUsers: jest.fn(),
+});
 
 describe('FindAllUsersService', () => {
   let service: FindAllUsersService;
-  let userRepository: UserRepositoryMock;
+  let userRepository: jest.Mocked<Partial<UserRepository>>;
 
   beforeEach(async () => {
+    userRepository = createUserRepositoryMock();
+
     const module: TestingModule = await Test.createTestingModule({
       controllers: [FindAllUsersService],
       providers: [
         {
           provide: UserRepository,
-          useClass: UserRepositoryMock,
+          useValue: userRepository,
         },
       ],
     }).compile();
 
     service = module.get(FindAllUsersService);
-    userRepository = module.get(UserRepository);
   });
 
   it('should be defined', () => {

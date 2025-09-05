@@ -7,38 +7,39 @@ import {
   userUpdateRecoveryMock,
 } from '../../../mocks/user/user.mock';
 
-class UserRepositoryMock {
-  findOneByEmail = jest.fn();
-  updateRecoveryPassword = jest.fn();
-}
+const createUserRepositoryMock = (): jest.Mocked<Partial<UserRepository>> => ({
+  findOneByEmail: jest.fn(),
+  updateRecoveryPassword: jest.fn(),
+});
 
-class MailServiceMock {
-  sendUserConfirmation = jest.fn().mockResolvedValue('');
-}
+const createMailServiceMock = (): jest.Mocked<Partial<MailService>> => ({
+  sendUserConfirmation: jest.fn().mockResolvedValue(''),
+});
 
 describe('RecoveryPasswordByEmail', () => {
   let service: RecoveryPasswordByEmail;
-  let userRepository: UserRepositoryMock;
-  let mailService: MailServiceMock;
+  let userRepository: jest.Mocked<Partial<UserRepository>>;
+  let mailService: jest.Mocked<Partial<MailService>>;
 
   beforeEach(async () => {
+    userRepository = createUserRepositoryMock();
+    mailService = createMailServiceMock();
+
     const module: TestingModule = await Test.createTestingModule({
       controllers: [RecoveryPasswordByEmail],
       providers: [
         {
           provide: UserRepository,
-          useClass: UserRepositoryMock,
+          useValue: userRepository,
         },
         {
           provide: MailService,
-          useClass: MailServiceMock,
+          useValue: mailService,
         },
       ],
     }).compile();
 
     service = module.get(RecoveryPasswordByEmail);
-    userRepository = module.get(UserRepository);
-    mailService = module.get(MailService);
   });
 
   it('should be defined', () => {

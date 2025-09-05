@@ -6,38 +6,42 @@ import { userUpdateMock } from '../../../mocks/user/user-update.mock';
 import { TEST_USER_DATA } from '../../../config/test-constants';
 import { userMock, userEntityMock } from '../../../mocks/user/user.mock';
 
-class UserRepositoryMock {
-  findOneById = jest.fn();
-  updateUser = jest.fn();
-}
+const createUserRepositoryMock = (): jest.Mocked<Partial<UserRepository>> => ({
+  findOneById: jest.fn(),
+  updateUser: jest.fn(),
+});
 
-class FileUploadServiceMock {
-  upload = jest.fn();
-  uploadFile = this.upload;
-  deleteFile = jest.fn();
-}
+const createFileUploadServiceMock = (): jest.Mocked<
+  Partial<FileUploadService>
+> => ({
+  upload: jest.fn(),
+  deleteFile: jest.fn(),
+});
 
 describe('UpdateUserService', () => {
   let service: UpdateUserService;
-  let userRepository: UserRepositoryMock;
+  let userRepository: jest.Mocked<Partial<UserRepository>>;
+  let fileUploadService: jest.Mocked<Partial<FileUploadService>>;
 
   beforeEach(async () => {
+    userRepository = createUserRepositoryMock();
+    fileUploadService = createFileUploadServiceMock();
+
     const module: TestingModule = await Test.createTestingModule({
       controllers: [UpdateUserService],
       providers: [
         {
           provide: UserRepository,
-          useClass: UserRepositoryMock,
+          useValue: userRepository,
         },
         {
           provide: FileUploadService,
-          useClass: FileUploadServiceMock,
+          useValue: fileUploadService,
         },
       ],
     }).compile();
 
     service = module.get(UpdateUserService);
-    userRepository = module.get(UserRepository);
   });
 
   it('should be defined', () => {
