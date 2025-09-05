@@ -11,7 +11,7 @@ export const userMock = () => {
   return {
     id: TEST_IDS.USER_ID,
     name: TEST_USER_DATA.NAME,
-    email: TEST_EMAILS.USER,
+    email: TEST_EMAILS.DEFAULT_USER,
     cpf: TEST_USER_DATA.CPF,
     policies: true,
     created_at: '2023-02-21T00:25:07.000Z',
@@ -23,7 +23,7 @@ export const userUpdateRecoveryMock = () => {
   return {
     id: TEST_IDS.USER_ID,
     name: TEST_USER_DATA.NAME,
-    email: TEST_EMAILS.USER,
+    email: TEST_EMAILS.DEFAULT_USER,
     cpf: TEST_USER_DATA.CPF,
     policies: true,
     created_at: '2023-02-21T00:25:07.000Z',
@@ -36,7 +36,7 @@ export const userEntityMock = () => {
   return {
     id: TEST_IDS.USER_ID,
     name: TEST_USER_DATA.NAME,
-    email: TEST_EMAILS.USER,
+    email: TEST_EMAILS.DEFAULT_USER,
     cpf: TEST_USER_DATA.CPF,
     personal_data: null,
     policies: true,

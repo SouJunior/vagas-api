@@ -4,7 +4,7 @@ import { TEST_PASSWORDS, TEST_EMAILS } from '../../config/test-constants';
 
 export const userLoginMock = (): UserLoginDto => {
   return {
-    email: TEST_EMAILS.USER,
+    email: TEST_EMAILS.DEFAULT_USER,
     password: TEST_PASSWORDS.VALID_LOGIN,
     type: LoginTypeEnum.USER,
   };

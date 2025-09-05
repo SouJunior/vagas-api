@@ -9,7 +9,7 @@ import {
 export const createUserMock = (): CreateUserDto => {
   return {
     name: TEST_USER_DATA.NAME,
-    email: TEST_EMAILS.USER,
+    email: TEST_EMAILS.DEFAULT_USER,
     password: TEST_PASSWORDS.CREATE_USER,
     confirmPassword: TEST_PASSWORDS.CREATE_USER,
     type: UserRole.USER,
