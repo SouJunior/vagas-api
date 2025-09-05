@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { Request } from 'express';
 
@@ -27,12 +27,7 @@ export class CreateUserService {
       await this.userRepository.findOneByEmail(email);
 
     if (emailAlreadyInUseCompany || emailAlreadyInUseUser) {
-      return {
-        status: 404,
-        data: {
-          message: 'E-mail já cadastrado',
-        },
-      };
+      throw new ConflictException('E-mail já cadastrado');
     }
 
     data.password = await bcrypt.hash(password, 10);
@@ -47,9 +42,6 @@ export class CreateUserService {
 
     await this.mailService.sendUserCreationConfirmation(response);
 
-    return {
-      status: 201,
-      data: response,
-    };
+    return response;
   }
 }

@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { MailService } from 'src/modules/mails/mail.service';
 import { CreatePasswordHashDto } from '../dtos/update-my-password.dto';
@@ -19,17 +23,11 @@ export class UpdatePasswordByEmailService {
     const user = await this.userRepository.findByToken(recoverPasswordToken);
 
     if (!user) {
-      return {
-        status: 400,
-        data: { message: 'Usuário não encontrado!' },
-      };
+      throw new NotFoundException('Usuário não encontrado!');
     }
 
     if (password != confirmPassword) {
-      return {
-        status: 400,
-        data: { message: 'As senhas não conferem!' },
-      };
+      throw new BadRequestException('As senhas não conferem!');
     }
     const passwordHash = await bcrypt.hash(password, 10);
 
