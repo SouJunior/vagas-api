@@ -36,11 +36,20 @@ export class AuthLoginService {
 
     delete info.password;
     delete info.recoverPasswordToken;
-    delete info.mailconfirm;
+    delete info.mailConfirm;
     delete info?.ip;
 
+    const jwtPayload = {
+      sub: info.id,
+      email: info.email,
+      type:
+        type === LoginTypeEnum.COMPANY
+          ? LoginTypeEnum.COMPANY
+          : LoginTypeEnum.USER,
+    };
+
     return {
-      token: this.jwt.sign({ email }),
+      token: this.jwt.sign(jwtPayload),
       info,
     };
   }

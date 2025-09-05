@@ -28,8 +28,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: { email: string }) {
-    if (!payload || !payload.email) {
+  async validate(payload: { sub: string; email: string; type: string }) {
+    if (!payload || !payload.email || !payload.sub) {
       throw new UnauthorizedException('Invalid payload or email');
     }
 

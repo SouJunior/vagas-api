@@ -129,11 +129,11 @@ describe('AuthLoginService', () => {
           token: 'fake-jwt-token',
           info: expect.objectContaining({
             ...userMock(),
-            mailConfirm: true,
           }),
         });
         expect(result.info).not.toHaveProperty('password');
         expect(result.info).not.toHaveProperty('recoverPasswordToken');
+        expect(result.info).not.toHaveProperty('mailConfirm');
         expect(userRepository.findOneByEmail).toHaveBeenCalledWith(
           loginData.email,
         );
@@ -142,7 +142,9 @@ describe('AuthLoginService', () => {
           TEST_PASSWORDS.HASHED,
         );
         expect(jwtService.sign).toHaveBeenCalledWith({
+          sub: userMock().id,
           email: loginData.email,
+          type: 'USER',
         });
       });
 
@@ -238,7 +240,9 @@ describe('AuthLoginService', () => {
           TEST_PASSWORDS.HASHED,
         );
         expect(jwtService.sign).toHaveBeenCalledWith({
+          sub: publicCompanyMock().id,
           email: loginData.email,
+          type: 'COMPANY',
         });
       });
 
@@ -311,7 +315,6 @@ describe('AuthLoginService', () => {
           ...userMock(),
           password: TEST_PASSWORDS.HASHED,
           recoverPasswordToken: TEST_PASSWORDS.TOKEN,
-          mailconfirm: true,
           ip: TEST_IPS.DOCUMENTATION_IP,
           mailConfirm: true,
         };
@@ -325,7 +328,7 @@ describe('AuthLoginService', () => {
         expect(result.token).toBe('fake-jwt-token');
         expect(result.info.password).toBeUndefined();
         expect(result.info.recoverPasswordToken).toBeUndefined();
-        expect(result.info.mailconfirm).toBeUndefined();
+        expect(result.info.mailConfirm).toBeUndefined();
         expect(result.info.ip).toBeUndefined();
       });
 
@@ -335,7 +338,6 @@ describe('AuthLoginService', () => {
           ...publicCompanyMock(),
           password: TEST_PASSWORDS.HASHED,
           recoverPasswordToken: TEST_PASSWORDS.TOKEN,
-          mailconfirm: true,
           ip: TEST_IPS.DOCUMENTATION_IP,
           mailConfirm: true,
         };
@@ -349,7 +351,7 @@ describe('AuthLoginService', () => {
         expect(result.token).toBe('fake-jwt-token');
         expect(result.info.password).toBeUndefined();
         expect(result.info.recoverPasswordToken).toBeUndefined();
-        expect(result.info.mailconfirm).toBeUndefined();
+        expect(result.info.mailConfirm).toBeUndefined();
         expect(result.info.ip).toBeUndefined();
       });
     });
