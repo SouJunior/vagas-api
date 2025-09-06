@@ -6,11 +6,7 @@ import {
   userMock,
   userUpdateRecoveryMock,
 } from '../../../mocks/user/user.mock';
-
-const createUserRepositoryMock = (): jest.Mocked<Partial<UserRepository>> => ({
-  findOneByEmail: jest.fn(),
-  updateRecoveryPassword: jest.fn(),
-});
+import { createUserRepositoryMock } from '../../../shared/repository-mocks';
 
 const createMailServiceMock = (): jest.Mocked<Partial<MailService>> => ({
   sendUserConfirmation: jest.fn().mockResolvedValue(''),

@@ -12,16 +12,10 @@ import {
   TEST_EMAILS,
   TEST_IPS,
 } from '../../../config/test-constants';
-
-const userRepositoryMock = () => ({
-  createUser: jest.fn(),
-  findOneByEmail: jest.fn(),
-  findOneByCpf: jest.fn(),
-});
-
-const companyRepositoryMock = () => ({
-  findOneByEmail: jest.fn(),
-});
+import {
+  createUserRepositoryMock,
+  createCompanyRepositoryMock,
+} from '../../../shared/repository-mocks';
 
 const mailServiceMock = () => ({
   sendUserCreationConfirmation: jest.fn(),
@@ -39,15 +33,16 @@ describe('CreateUserService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [CreateUserService],
+      controllers: [],
       providers: [
+        CreateUserService,
         {
           provide: UserRepository,
-          useValue: userRepositoryMock(),
+          useValue: createUserRepositoryMock(),
         },
         {
           provide: CompanyRepository,
-          useValue: companyRepositoryMock(),
+          useValue: createCompanyRepositoryMock(),
         },
         {
           provide: MailService,

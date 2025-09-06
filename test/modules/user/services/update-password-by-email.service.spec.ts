@@ -5,11 +5,7 @@ import { MailService } from '../../../../src/modules/mails/mail.service';
 import { UpdatePasswordByEmailService } from '../../../../src/modules/user/services/update-password-by-email.service';
 import { userMock } from '../../../mocks/user/user.mock';
 import { TEST_PASSWORDS, TEST_IDS } from '../../../config/test-constants';
-
-const createUserRepositoryMock = (): jest.Mocked<Partial<UserRepository>> => ({
-  findByToken: jest.fn(),
-  updatePassword: jest.fn(),
-});
+import { createUserRepositoryMock } from '../../../shared/repository-mocks';
 
 const createMailServiceMock = (): jest.Mocked<Partial<MailService>> => ({
   sendUserConfirmation: jest.fn(),

@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { JwtService } from '@nestjs/jwt';
 import { UnauthorizedException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { AuthLoginService } from '../../../../src/modules/auth/services/auth-login.service';
 import { UserRepository } from '../../../../src/modules/user/repository/user.repository';
 import { CompanyRepository } from '../../../../src/modules/company/repository/company.repository';
+import { JwtService } from '@nestjs/jwt';
 import {
   userLoginMock,
   companyLoginMock,
@@ -21,9 +21,47 @@ import {
   TEST_EMAILS,
   TEST_IPS,
 } from '../../../config/test-constants';
+import {
+  createUserRepositoryMock,
+  createCompanyRepositoryMock,
+  createJwtServiceMock,
+} from '../../../shared/repository-mocks';
 
 jest.mock('bcrypt');
 const bcryptMock = bcrypt as jest.Mocked<typeof bcrypt>;
+
+const setupAuthLoginService = async () => {
+  const userRepository = createUserRepositoryMock();
+  const companyRepository = createCompanyRepositoryMock();
+  const jwtService = createJwtServiceMock();
+
+  const module: TestingModule = await Test.createTestingModule({
+    providers: [
+      AuthLoginService,
+      {
+        provide: UserRepository,
+        useValue: userRepository,
+      },
+      {
+        provide: CompanyRepository,
+        useValue: companyRepository,
+      },
+      {
+        provide: JwtService,
+        useValue: jwtService,
+      },
+    ],
+  }).compile();
+
+  const service = module.get<AuthLoginService>(AuthLoginService);
+
+  return {
+    service,
+    userRepository,
+    companyRepository,
+    jwtService,
+  };
+};
 
 describe('AuthLoginService', () => {
   let service: AuthLoginService;
@@ -31,74 +69,12 @@ describe('AuthLoginService', () => {
   let companyRepository: jest.Mocked<Partial<CompanyRepository>>;
   let jwtService: jest.Mocked<Partial<JwtService>>;
 
-  const createUserRepositoryMock = (): jest.Mocked<
-    Partial<UserRepository>
-  > => ({
-    findOneByEmail: jest.fn(),
-    findOneById: jest.fn(),
-    createUser: jest.fn(),
-    getAllUsers: jest.fn(),
-    updateUser: jest.fn(),
-    updatePassword: jest.fn(),
-    updateRecoveryPassword: jest.fn(),
-    activateUser: jest.fn(),
-    deleteUserById: jest.fn(),
-    searchUserByName: jest.fn(),
-    updateMyPassword: jest.fn(),
-    findByToken: jest.fn(),
-  });
-
-  const createCompanyRepositoryMock = (): jest.Mocked<
-    Partial<CompanyRepository>
-  > => ({
-    findOneByEmail: jest.fn(),
-    findOneById: jest.fn(),
-    createCompany: jest.fn(),
-    findAllCompany: jest.fn(),
-    updateCompanyById: jest.fn(),
-    updateMyPassword: jest.fn(),
-    updateRecoveryPassword: jest.fn(),
-    activateCompany: jest.fn(),
-    deleteCompanyById: jest.fn(),
-    findCompanyById: jest.fn(),
-    findByToken: jest.fn(),
-    findOneByCnpj: jest.fn(),
-    updateCompany: jest.fn(),
-    updatePassword: jest.fn(),
-  });
-
-  const createJwtServiceMock = (): jest.Mocked<Partial<JwtService>> => ({
-    sign: jest.fn(),
-    signAsync: jest.fn(),
-    verify: jest.fn(),
-    verifyAsync: jest.fn(),
-    decode: jest.fn(),
-  });
-
   beforeEach(async () => {
-    userRepository = createUserRepositoryMock();
-    companyRepository = createCompanyRepositoryMock();
-    jwtService = createJwtServiceMock();
-
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [
-        AuthLoginService,
-        {
-          provide: UserRepository,
-          useValue: userRepository,
-        },
-        {
-          provide: CompanyRepository,
-          useValue: companyRepository,
-        },
-        {
-          provide: JwtService,
-          useValue: jwtService,
-        },
-      ],
-    }).compile();
-
-    service = module.get<AuthLoginService>(AuthLoginService);
+    const setup = await setupAuthLoginService();
+    service = setup.service;
+    userRepository = setup.userRepository;
+    companyRepository = setup.companyRepository;
+    jwtService = setup.jwtService;
   });
 
   it('should be defined', () => {

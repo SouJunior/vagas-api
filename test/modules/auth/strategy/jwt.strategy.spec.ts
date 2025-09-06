@@ -3,23 +3,20 @@ import { ConfigService } from '@nestjs/config';
 import { JwtStrategy } from '../../../../src/modules/auth/jwt/jwt.strategy';
 import { UserRepository } from '../../../../src/modules/user/repository/user.repository';
 import { CompanyRepository } from '../../../../src/modules/company/repository/company.repository';
-import { jwtPayloadMock } from '../../../mocks/auth/jwt-payload.mock';
+import {
+  jwtPayloadMock,
+  companyJwtPayloadMock,
+} from '../../../mocks/auth/jwt-payload.mock';
 import {
   TEST_PASSWORDS,
   TEST_USER_DATA,
   TEST_EMAILS,
   TEST_TOKENS,
 } from '../../../config/test-constants';
-
-const createUserRepositoryMock = (): jest.Mocked<Partial<UserRepository>> => ({
-  findOneByEmail: jest.fn(),
-});
-
-const createCompanyRepositoryMock = (): jest.Mocked<
-  Partial<CompanyRepository>
-> => ({
-  findOneByEmail: jest.fn(),
-});
+import {
+  createUserRepositoryMock,
+  createCompanyRepositoryMock,
+} from '../../../shared/repository-mocks';
 
 describe('JwtStrategy', () => {
   let strategy: JwtStrategy;
@@ -92,8 +89,7 @@ describe('JwtStrategy', () => {
         recoverPasswordToken: null,
       };
 
-      userRepository.findOneByEmail!.mockResolvedValue(user as any);
-      companyRepository.findOneByEmail!.mockResolvedValue(null);
+      userRepository.findOneById!.mockResolvedValue(user as any);
 
       const result = await strategy.validate(payload);
 
@@ -107,12 +103,11 @@ describe('JwtStrategy', () => {
       };
 
       expect(result).toEqual(expectedUserPrincipal);
-      expect(userRepository.findOneByEmail).toHaveBeenCalledWith(payload.email);
-      expect(companyRepository.findOneByEmail).not.toHaveBeenCalled();
+      expect(userRepository.findOneById).toHaveBeenCalledWith(payload.sub);
     });
 
     it('should successfully validate and return company principal matching mapper output', async () => {
-      const payload = jwtPayloadMock();
+      const payload = companyJwtPayloadMock();
       const company = {
         id: '829c7919-583c-40a5-b0ca-137e282345d5',
         companyName: 'Test Company',
@@ -124,8 +119,7 @@ describe('JwtStrategy', () => {
         type: 'COMPANY',
       };
 
-      userRepository.findOneByEmail!.mockResolvedValue(null);
-      companyRepository.findOneByEmail!.mockResolvedValue(company as any);
+      companyRepository.findOneById!.mockResolvedValue(company as any);
 
       const result = await strategy.validate(payload);
 
@@ -138,26 +132,19 @@ describe('JwtStrategy', () => {
       };
 
       expect(result).toEqual(expectedCompanyPrincipal);
-      expect(userRepository.findOneByEmail).toHaveBeenCalledWith(payload.email);
-      expect(companyRepository.findOneByEmail).toHaveBeenCalledWith(
-        payload.email,
-      );
+      expect(companyRepository.findOneById).toHaveBeenCalledWith(payload.sub);
     });
 
-    it('should throw UnauthorizedException when neither user nor company is found', async () => {
+    it('should throw UnauthorizedException when user is not found', async () => {
       const payload = jwtPayloadMock();
 
-      userRepository.findOneByEmail!.mockResolvedValue(null);
-      companyRepository.findOneByEmail!.mockResolvedValue(null);
+      userRepository.findOneById!.mockResolvedValue(null);
 
       await expect(strategy.validate(payload)).rejects.toThrow(
-        'User not found or not authorized!',
+        'User not found',
       );
 
-      expect(userRepository.findOneByEmail).toHaveBeenCalledWith(payload.email);
-      expect(companyRepository.findOneByEmail).toHaveBeenCalledWith(
-        payload.email,
-      );
+      expect(userRepository.findOneById).toHaveBeenCalledWith(payload.sub);
     });
 
     it('should return user principal with exact fields from mapper, no additional fields', async () => {
@@ -188,10 +175,7 @@ describe('JwtStrategy', () => {
         anotherField: 'also-sensitive',
       };
 
-      userRepository.findOneByEmail!.mockResolvedValue(
-        userWithExtraFields as any,
-      );
-      companyRepository.findOneByEmail!.mockResolvedValue(null);
+      userRepository.findOneById!.mockResolvedValue(userWithExtraFields as any);
 
       const userResult = await strategy.validate(payload);
 
@@ -213,12 +197,11 @@ describe('JwtStrategy', () => {
       expect(userResult).not.toHaveProperty('ip');
       expect(userResult).not.toHaveProperty('policies');
 
-      expect(userRepository.findOneByEmail).toHaveBeenCalledWith(payload.email);
-      expect(companyRepository.findOneByEmail).not.toHaveBeenCalled();
+      expect(userRepository.findOneById).toHaveBeenCalledWith(payload.sub);
     });
 
     it('should return company principal with exact fields from mapper, no additional fields', async () => {
-      const payload = jwtPayloadMock();
+      const payload = companyJwtPayloadMock();
       const companyWithExtraFields = {
         id: '829c7919-583c-40a5-b0ca-137e282345d5',
         companyName: 'Test Company',
@@ -233,8 +216,7 @@ describe('JwtStrategy', () => {
         internalNotes: 'confidential',
       };
 
-      userRepository.findOneByEmail!.mockResolvedValue(null);
-      companyRepository.findOneByEmail!.mockResolvedValue(
+      companyRepository.findOneById!.mockResolvedValue(
         companyWithExtraFields as any,
       );
 
@@ -255,31 +237,27 @@ describe('JwtStrategy', () => {
       expect(companyResult).not.toHaveProperty('extraSensitiveField');
       expect(companyResult).not.toHaveProperty('internalNotes');
       expect(companyResult).not.toHaveProperty('mailConfirm');
-
-      expect(userRepository.findOneByEmail).toHaveBeenCalledWith(payload.email);
-      expect(companyRepository.findOneByEmail).toHaveBeenCalledWith(
-        payload.email,
-      );
+      expect(companyRepository.findOneById).toHaveBeenCalledWith(payload.sub);
     });
 
-    it('should throw UnauthorizedException for invalid payload without email', async () => {
+    it('should throw UnauthorizedException for invalid payload without required fields', async () => {
       const invalidPayload = {};
 
       await expect(strategy.validate(invalidPayload as any)).rejects.toThrow(
-        'Invalid payload or email',
+        'Invalid payload: missing required fields',
       );
 
-      expect(userRepository.findOneByEmail).not.toHaveBeenCalled();
-      expect(companyRepository.findOneByEmail).not.toHaveBeenCalled();
+      expect(userRepository.findOneById).not.toHaveBeenCalled();
+      expect(companyRepository.findOneById).not.toHaveBeenCalled();
     });
 
     it('should throw UnauthorizedException for undefined payload', async () => {
       await expect(strategy.validate(undefined as any)).rejects.toThrow(
-        'Invalid payload or email',
+        'Invalid payload: missing required fields',
       );
 
-      expect(userRepository.findOneByEmail).not.toHaveBeenCalled();
-      expect(companyRepository.findOneByEmail).not.toHaveBeenCalled();
+      expect(userRepository.findOneById).not.toHaveBeenCalled();
+      expect(companyRepository.findOneById).not.toHaveBeenCalled();
     });
   });
 });

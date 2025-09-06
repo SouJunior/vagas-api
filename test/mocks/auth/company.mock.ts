@@ -6,12 +6,23 @@ import {
   TEST_USER_DATA,
 } from '../../config/test-constants';
 
+const STABLE_HASHED_PASSWORD =
+  '$2b$10$K8gF4Z.vH5P.qL2N3mR8qOzGJ5jH9xW2pM6rQ7sT4uV8yA3bC1dE6';
+
+const getTestPassword = () => {
+  try {
+    return TEST_PASSWORDS.HASHED_BCRYPT;
+  } catch (error) {
+    return STABLE_HASHED_PASSWORD;
+  }
+};
+
 export const companyEntityMock = () => {
   return {
     id: TEST_IDS.COMPANY_ID,
     companyName: TEST_COMPANY_DATA.NAME,
     email: TEST_EMAILS.COMPANY,
-    password: TEST_PASSWORDS.HASHED_BCRYPT,
+    password: getTestPassword(),
     cnpj: TEST_COMPANY_DATA.CNPJ,
     about: 'A test company for unit tests',
     phone: TEST_USER_DATA.PHONE,
@@ -19,7 +30,7 @@ export const companyEntityMock = () => {
     city: 'Test City',
     state: 'Test State',
     cep: '12345-678',
-    website: 'https://testcompany.com',
+    companySite: 'https://testcompany.com',
     mailConfirm: true,
     policies: true,
     recoverPasswordToken: null,
@@ -41,7 +52,7 @@ export const publicCompanyMock = () => {
     city: 'Test City',
     state: 'Test State',
     cep: '12345-678',
-    website: 'https://testcompany.com',
+    companySite: 'https://testcompany.com',
     mailConfirm: true,
     policies: true,
     created_at: '2023-02-21T00:25:07.000Z',

@@ -1,15 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { BadRequestException } from '@nestjs/common';
 import { UserRepository } from '../../../../src/modules/user/repository/user.repository';
 import { UpdateUserService } from '../../../../src/modules/user/services/update-user.service';
 import { FileUploadService } from '../../../../src/modules/upload/upload.service';
 import { userUpdateMock } from '../../../mocks/user/user-update.mock';
 import { TEST_USER_DATA } from '../../../config/test-constants';
 import { userMock, userEntityMock } from '../../../mocks/user/user.mock';
-
-const createUserRepositoryMock = (): jest.Mocked<Partial<UserRepository>> => ({
-  findOneById: jest.fn(),
-  updateUser: jest.fn(),
-});
+import { createUserRepositoryMock } from '../../../shared/repository-mocks';
 
 const createFileUploadServiceMock = (): jest.Mocked<
   Partial<FileUploadService>
@@ -28,8 +25,9 @@ describe('UpdateUserService', () => {
     fileUploadService = createFileUploadServiceMock();
 
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [UpdateUserService],
+      controllers: [],
       providers: [
+        UpdateUserService,
         {
           provide: UserRepository,
           useValue: userRepository,
@@ -49,7 +47,7 @@ describe('UpdateUserService', () => {
   });
 
   describe('execute', () => {
-    it('should return error when file is provided but profileKey is missing', async () => {
+    it('should throw BadRequestException when file is provided but profileKey is missing', async () => {
       const updateUserSpy = jest.spyOn(userRepository, 'updateUser');
 
       const updateDto = {
@@ -65,18 +63,12 @@ describe('UpdateUserService', () => {
         buffer: Buffer.from('test'),
       };
 
-      const response = await service.execute(
-        userEntityMock() as any,
-        updateDto as any,
-        mockFile,
+      await expect(
+        service.execute(userEntityMock() as any, updateDto as any, mockFile),
+      ).rejects.toThrow(
+        new BadRequestException('profileKey is required when a file is sent'),
       );
 
-      expect(response).toEqual({
-        status: 400,
-        data: {
-          message: 'profileKey is required when file is send',
-        },
-      });
       expect(updateUserSpy).not.toHaveBeenCalled();
     });
 

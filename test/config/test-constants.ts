@@ -3,6 +3,9 @@
  * Configurações centralizadas para todos os mocks e testes
  */
 
+// Carrega variáveis de ambiente do arquivo .env
+import 'dotenv/config';
+
 // Senhas para testes - centralizadas para evitar hardcoding
 export const TEST_PASSWORDS = {
   // Senha válida para testes de login

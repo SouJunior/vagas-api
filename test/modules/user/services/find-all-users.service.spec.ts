@@ -3,10 +3,7 @@ import { UserRepository } from '../../../../src/modules/user/repository/user.rep
 import { FindAllUsersService } from '../../../../src/modules/user/services/find-all-users.service';
 import { Order, PageOptionsDto } from '../../../../src/shared/pagination';
 import { getAllUserMock } from '../../../mocks/user/get-all-user.mock';
-
-const createUserRepositoryMock = (): jest.Mocked<Partial<UserRepository>> => ({
-  getAllUsers: jest.fn(),
-});
+import { createUserRepositoryMock } from '../../../shared/repository-mocks';
 
 describe('FindAllUsersService', () => {
   let service: FindAllUsersService;
