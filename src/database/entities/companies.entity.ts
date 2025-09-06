@@ -17,7 +17,7 @@ export class CompaniesEntity {
   @Column()
   companyName: string;
 
-  @Column({ unique: true })
+  @Column()
   email: string;
 
   @Column()
