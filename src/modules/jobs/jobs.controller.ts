@@ -2,7 +2,6 @@ import {
   Body,
   Controller,
   Get,
-  NotFoundException,
   Param,
   Patch,
   Post,
@@ -13,13 +12,13 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Response } from 'express';
 import { ArchiveJobSwagger } from 'src/shared/Swagger/decorators/jobs/archive-job.swagger';
 import { CreateNewJobSwagger } from 'src/shared/Swagger/decorators/jobs/create-new-job.swagger';
 import { GetOneJobSwagger } from 'src/shared/Swagger/decorators/jobs/get-one-job.swagger';
 import { SearchJobSwagger } from 'src/shared/Swagger/decorators/jobs/search-job.swagger';
 import { UpdateJobSwagger } from 'src/shared/Swagger/decorators/jobs/update-job.swagger';
 import { CompaniesEntity } from '../../database/entities/companies.entity';
-import { JobsEntity } from '../../database/entities/jobs.entity';
 import { PageOptionsDto } from '../../shared/pagination';
 import { LoggedCompany } from '../auth/decorator/logged-company.decorator';
 import { CreateJobDto } from './dtos/create-job.dto';
@@ -35,7 +34,6 @@ import { SearchJobsService } from './services/search-job.service';
 import { GetAllJobsOfLoggedCompanySwagger } from 'src/shared/Swagger/decorators/jobs/get-all-jobs-of-logged-company.swagger';
 import { GetAllJobsSwagger } from 'src/shared/Swagger/decorators/jobs/get-all-jobs-of-logged-company.swagger copy';
 import { GetAllJobsFromLoggedCompanyService } from './services/get-all-jobs-from-logged-company.service';
-import { Response } from 'express';
 import { DeleteJobService } from './services/delete-job.service';
 
 @ApiTags('Job')
@@ -48,7 +46,7 @@ export class JobsController {
     private updateJobService: UpdateJobService,
     private deleteJobService: DeleteJobService,
     private searchJobsService: SearchJobsService,
-    private getAllJobsFromLoggedCompany: GetAllJobsFromLoggedCompanyService
+    private getAllJobsFromLoggedCompany: GetAllJobsFromLoggedCompanyService,
   ) {}
 
   @Post()
@@ -79,10 +77,12 @@ export class JobsController {
   @Get('loggedCompanyJobs')
   async getAllLoggedCompanyJobs(
     @LoggedCompany() company: CompaniesEntity,
-    @Res() res: Response
+    @Res() res: Response,
   ) {
-    const { status, data } = await this.getAllJobsFromLoggedCompany.execute(company.id);
-    return res.status(status).json(data)
+    const { data, status } = await this.getAllJobsFromLoggedCompany.execute(
+      company.id,
+    );
+    return res.status(status).send(data);
   }
 
   @Get(':id')

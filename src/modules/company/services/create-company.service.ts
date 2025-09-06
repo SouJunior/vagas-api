@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { MailService } from 'src/modules/mails/mail.service';
 import { CreateCompanyDto } from '../dtos/create-company.dto';
-import { CompanyRepository } from '../repository/company-repository';
+import { CompanyRepository } from '../repository/company.repository';
 import { UserRepository } from 'src/modules/user/repository/user.repository';
 
 @Injectable()
@@ -15,13 +15,15 @@ export class CreateCompanyService {
 
   async execute(data: CreateCompanyDto) {
     const { email, password, passwordConfirmation, cnpj } = data;
-    const emailAlreadyInUseCompany = await this.companyRepository.findOneByEmail(
-      email,
-    );
 
-    const emailAlreadyInUseUser = await this.userRepository.findOneByEmail(
-      email,
-    );
+    // Normalize email: trim whitespace and convert to lowercase
+    const normalizedEmail = email.trim().toLowerCase();
+
+    const emailAlreadyInUseCompany =
+      await this.companyRepository.findOneByEmail(normalizedEmail);
+
+    const emailAlreadyInUseUser =
+      await this.userRepository.findOneByEmail(normalizedEmail);
 
     if (emailAlreadyInUseCompany || emailAlreadyInUseUser) {
       return {
@@ -53,17 +55,32 @@ export class CreateCompanyService {
     }
 
     data.password = await bcrypt.hash(password, 10);
+    data.email = normalizedEmail; // Use normalized email for insert
 
-    const response = await this.companyRepository.createCompany(data);
+    try {
+      const response = await this.companyRepository.createCompany(data);
 
-    delete response.password;
-    delete response.recoverPasswordToken;
+      delete response.password;
+      delete response.recoverPasswordToken;
 
-    await this.mailService.sendCompanyCreationConfirmation(response);
+      await this.mailService.sendCompanyCreationConfirmation(response);
 
-    return {
-      status: 201,
-      data: response,
-    };
+      return {
+        status: 201,
+        data: response,
+      };
+    } catch (error) {
+      // Handle PostgreSQL unique violation error (23505)
+      if (error.code === '23505') {
+        return {
+          status: 409,
+          data: {
+            message: 'E-mail já cadastrado',
+          },
+        };
+      }
+      // Re-throw other errors
+      throw error;
+    }
   }
 }

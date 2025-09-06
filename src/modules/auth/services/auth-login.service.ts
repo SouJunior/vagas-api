@@ -1,7 +1,7 @@
 import * as bcrypt from 'bcrypt';
-import { CompanyRepository } from './../../company/repository/company-repository';
+import { CompanyRepository } from '../../company/repository/company.repository';
 
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UserRepository } from '../../../modules/user/repository/user.repository';
 import { UserLoginDto } from '../dtos/user-login.dto';
@@ -25,32 +25,32 @@ export class AuthLoginService {
     }
 
     if (!info?.mailConfirm || !info) {
-      return {
-        status: 400,
-        data: { message: 'Email not validated' },
-      };
+      throw new UnauthorizedException('E-mail ou Senha não conferem');
     }
 
     const passwordIsValid = await bcrypt.compare(password, info.password);
 
     if (!passwordIsValid) {
-      return {
-        status: 400,
-        data: { message: 'E-mail ou Senha não conferem' },
-      };
+      throw new UnauthorizedException('E-mail ou Senha não conferem');
     }
 
     delete info.password;
     delete info.recoverPasswordToken;
-    delete info.mailconfirm;
+    delete info.mailConfirm;
     delete info?.ip;
 
+    const jwtPayload = {
+      sub: info.id,
+      email: info.email,
+      type:
+        type === LoginTypeEnum.COMPANY
+          ? LoginTypeEnum.COMPANY
+          : LoginTypeEnum.USER,
+    };
+
     return {
-      status: 200,
-      data: {
-        token: this.jwt.sign({ email }),
-        info,
-      },
+      token: this.jwt.sign(jwtPayload),
+      info,
     };
   }
 }

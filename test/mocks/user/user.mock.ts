@@ -1,11 +1,18 @@
 import { UserRole } from '../../../src/shared/utils/userRole/userRole';
+import {
+  TEST_IDS,
+  TEST_EMAILS,
+  TEST_USER_DATA,
+  TEST_PASSWORDS,
+  TEST_TOKENS,
+} from '../../config/test-constants';
 
 export const userMock = () => {
   return {
-    id: '729c7919-583c-40a5-b0ca-137e282345d4',
-    name: 'Non-Admin for tests',
-    email: 'user@teste.com',
-    cpf: '12345678910',
+    id: TEST_IDS.USER_ID,
+    name: TEST_USER_DATA.NAME,
+    email: TEST_EMAILS.DEFAULT_USER,
+    cpf: TEST_USER_DATA.CPF,
     policies: true,
     created_at: '2023-02-21T00:25:07.000Z',
     updated_at: '2023-02-21T00:25:07.000Z',
@@ -14,26 +21,26 @@ export const userMock = () => {
 
 export const userUpdateRecoveryMock = () => {
   return {
-    id: '729c7919-583c-40a5-b0ca-137e282345d4',
-    name: 'Non-Admin for tests',
-    email: 'user@teste.com',
-    cpf: '12345678910',
+    id: TEST_IDS.USER_ID,
+    name: TEST_USER_DATA.NAME,
+    email: TEST_EMAILS.DEFAULT_USER,
+    cpf: TEST_USER_DATA.CPF,
     policies: true,
     created_at: '2023-02-21T00:25:07.000Z',
     updated_at: '2023-02-21T00:25:07.000Z',
-    recoverPasswordToken: '729c7919-583c-40a5-b0ca-137e282345d4',
+    recoverPasswordToken: TEST_TOKENS.RECOVERY_TOKEN,
   };
 };
 
 export const userEntityMock = () => {
   return {
-    id: '729c7919-583c-40a5-b0ca-137e282345d4',
-    name: 'Non-Admin for tests',
-    email: 'user@teste.com',
-    cpf: '12345678910',
+    id: TEST_IDS.USER_ID,
+    name: TEST_USER_DATA.NAME,
+    email: TEST_EMAILS.DEFAULT_USER,
+    cpf: TEST_USER_DATA.CPF,
     personal_data: null,
     policies: true,
-    password: '1234',
+    password: TEST_PASSWORDS.BASIC,
     type: UserRole.USER,
     created_at: new Date(),
     updated_at: new Date(),

@@ -6,39 +6,36 @@ import {
   userMock,
   userUpdateRecoveryMock,
 } from '../../../mocks/user/user.mock';
+import { createUserRepositoryMock } from '../../../shared/repository-mocks';
 
-class UserRepositoryMock {
-  findOneByEmail = jest.fn();
-  updateRecoveryPassword = jest.fn();
-}
-
-class MailServiceMock {
-  sendUserConfirmation = jest.fn().mockResolvedValue('');
-}
+const createMailServiceMock = (): jest.Mocked<Partial<MailService>> => ({
+  sendUserConfirmation: jest.fn().mockResolvedValue(''),
+});
 
 describe('RecoveryPasswordByEmail', () => {
   let service: RecoveryPasswordByEmail;
-  let userRepository: UserRepositoryMock;
-  let mailService: MailServiceMock;
+  let userRepository: jest.Mocked<Partial<UserRepository>>;
+  let mailService: jest.Mocked<Partial<MailService>>;
 
   beforeEach(async () => {
+    userRepository = createUserRepositoryMock();
+    mailService = createMailServiceMock();
+
     const module: TestingModule = await Test.createTestingModule({
       controllers: [RecoveryPasswordByEmail],
       providers: [
         {
           provide: UserRepository,
-          useClass: UserRepositoryMock,
+          useValue: userRepository,
         },
         {
           provide: MailService,
-          useClass: MailServiceMock,
+          useValue: mailService,
         },
       ],
     }).compile();
 
     service = module.get(RecoveryPasswordByEmail);
-    userRepository = module.get(UserRepository);
-    mailService = module.get(MailService);
   });
 
   it('should be defined', () => {
@@ -55,7 +52,8 @@ describe('RecoveryPasswordByEmail', () => {
       );
       const { status, data } = await service.execute('teste@teste.com');
       const result = {
-        message: 'If email exists a email to recovery password was send',
+        message:
+          'Caso esse e-mail esteja cadastrado no sistema, será encaminhado para ele uma mensagem de orientação sobre os próximos passos para a redefinição da senha.',
       };
       expect(status).toEqual(200);
       expect(data).toEqual(result);
@@ -77,7 +75,8 @@ describe('RecoveryPasswordByEmail', () => {
       );
       const { status, data } = await service.execute('teste@teste.com');
       const result = {
-        message: 'If email exists a email to recovery password was send',
+        message:
+          'Caso esse e-mail esteja cadastrado no sistema, será encaminhado para ele uma mensagem de orientação sobre os próximos passos para a redefinição da senha.',
       };
       expect(status).toEqual(200);
       expect(data).toEqual(result);

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { MailService } from 'src/modules/mails/mail.service';
 import { UpdateMyPasswordDto } from '../dtos/update-my-password.dto';
-import { CompanyRepository } from '../repository/company-repository';
+import { CompanyRepository } from '../repository/company.repository';
 import { CompaniesEntity } from 'src/database/entities/companies.entity';
 
 @Injectable()

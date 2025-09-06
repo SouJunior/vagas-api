@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { MailService } from 'src/modules/mails/mail.service';
 import { CreatePasswordHashDto } from '../dtos/update-my-password.dto';
-import { CompanyRepository } from '../repository/company-repository';
+import { CompanyRepository } from '../repository/company.repository';
 
 @Injectable()
 export class UpdatePasswordByEmailService {
@@ -16,9 +16,8 @@ export class UpdatePasswordByEmailService {
     password,
     confirmPassword,
   }: CreatePasswordHashDto) {
-    const company = await this.companyRepository.findByToken(
-      recoverPasswordToken,
-    );
+    const company =
+      await this.companyRepository.findByToken(recoverPasswordToken);
 
     if (!company) {
       return {

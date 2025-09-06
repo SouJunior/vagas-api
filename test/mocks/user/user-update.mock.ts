@@ -1,8 +1,14 @@
+import {
+  TEST_EMAILS,
+  TEST_USER_DATA,
+  TEST_PASSWORDS,
+} from '../../config/test-constants';
+
 export const userUpdateMock = () => {
   return {
-    name: 'Non-Admin for tests',
-    email: 'user@teste.com',
-    cpf: '12345678910',
-    password: 'password',
+    name: TEST_USER_DATA.NAME,
+    email: TEST_EMAILS.DEFAULT_USER,
+    cpf: TEST_USER_DATA.CPF,
+    password: TEST_PASSWORDS.GENERIC,
   };
 };

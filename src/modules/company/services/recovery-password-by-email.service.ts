@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import * as crypto from 'crypto';
 import { MailService } from '../../mails/mail.service';
-import { CompanyRepository } from '../repository/company-repository';
+import { CompanyRepository } from '../repository/company.repository';
 
 @Injectable()
 export class RecoveryCompanyPasswordByEmail {

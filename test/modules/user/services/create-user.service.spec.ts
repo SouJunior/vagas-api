@@ -1,42 +1,59 @@
+import { ConflictException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
+import { Request } from 'express';
 import { MailService } from '../../../../src/modules/mails/mail.service';
 import { UserRepository } from '../../../../src/modules/user/repository/user.repository';
+import { CompanyRepository } from '../../../../src/modules/company/repository/company.repository';
 import { CreateUserService } from '../../../../src/modules/user/services';
 import { createUserMock } from '../../../mocks/user/create-user.mock';
 import { userMock } from '../../../mocks/user/user.mock';
+import {
+  TEST_PASSWORDS,
+  TEST_EMAILS,
+  TEST_IPS,
+} from '../../../config/test-constants';
+import {
+  createUserRepositoryMock,
+  createCompanyRepositoryMock,
+} from '../../../shared/repository-mocks';
 
-class UserRepositoryMock {
-  createUser = jest.fn();
-  findOneByEmail = jest.fn();
-  findOneByCpf = jest.fn();
-}
+const mailServiceMock = () => ({
+  sendUserCreationConfirmation: jest.fn(),
+});
 
-class MailServiceMock {
-  sendUserCreationConfirmation = jest.fn();
-}
+const mockRequest = (): Partial<Request> => ({
+  ip: TEST_IPS.LOCALHOST,
+});
 
 describe('CreateUserService', () => {
   let service: CreateUserService;
-  let userRepository: UserRepositoryMock;
-  let mailService: MailServiceMock;
+  let userRepository: jest.Mocked<Partial<UserRepository>>;
+  let companyRepository: jest.Mocked<Partial<CompanyRepository>>;
+  let mailService: jest.Mocked<Partial<MailService>>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [CreateUserService],
+      controllers: [],
       providers: [
+        CreateUserService,
         {
           provide: UserRepository,
-          useClass: UserRepositoryMock,
+          useValue: createUserRepositoryMock(),
+        },
+        {
+          provide: CompanyRepository,
+          useValue: createCompanyRepositoryMock(),
         },
         {
           provide: MailService,
-          useClass: MailServiceMock,
+          useValue: mailServiceMock(),
         },
       ],
     }).compile();
 
     service = module.get(CreateUserService);
     userRepository = module.get(UserRepository);
+    companyRepository = module.get(CompanyRepository);
     mailService = module.get(MailService);
   });
 
@@ -45,82 +62,87 @@ describe('CreateUserService', () => {
   });
 
   describe('execute', () => {
-    it('should be able to return a error when email exists', async () => {
-      userRepository.findOneByEmail = jest
-        .fn()
-        .mockResolvedValue(createUserMock());
-      const sendUserConfirmationSpy = jest.spyOn(
-        mailService,
-        'sendUserCreationConfirmation',
-      );
-      const findOneByEmailSpy = jest.spyOn(userRepository, 'findOneByEmail');
-      const findOneByCpfSpy = jest.spyOn(userRepository, 'findOneByCpf');
-      const createUserSpy = jest.spyOn(userRepository, 'createUser');
+    it('should throw ConflictException when user email already exists', async () => {
+      companyRepository.findOneByEmail!.mockResolvedValue(null);
+      userRepository.findOneByEmail!.mockResolvedValue(userMock() as any);
+
       const createUserDto = createUserMock();
-      const { data, status } = await service.execute(createUserDto);
-      expect(status).toEqual(404);
-      expect(data).toEqual({
-        message: 'Email already exists',
-      });
-      expect(findOneByEmailSpy).toBeCalled();
-      expect(findOneByEmailSpy).toBeCalledTimes(1);
-      expect(findOneByCpfSpy).not.toBeCalled();
-      expect(createUserSpy).not.toBeCalled();
-      expect(sendUserConfirmationSpy).not.toBeCalled();
+      const req = mockRequest() as Request;
+
+      await expect(service.execute(createUserDto, req)).rejects.toThrow(
+        ConflictException,
+      );
+      await expect(service.execute(createUserDto, req)).rejects.toThrow(
+        'E-mail já cadastrado',
+      );
+
+      expect(userRepository.findOneByEmail).toHaveBeenCalledWith(
+        createUserDto.email,
+      );
+      expect(userRepository.createUser).not.toHaveBeenCalled();
+      expect(mailService.sendUserCreationConfirmation).not.toHaveBeenCalled();
     });
 
-    it('should be able to return a error when cpf exists', async () => {
-      userRepository.findOneByEmail = jest.fn().mockResolvedValue('');
-      userRepository.findOneByCpf = jest
-        .fn()
-        .mockResolvedValue(createUserMock());
-      const sendUserConfirmationSpy = jest.spyOn(
-        mailService,
-        'sendUserCreationConfirmation',
-      );
-      const findOneByEmailSpy = jest.spyOn(userRepository, 'findOneByEmail');
-      const findOneByCpfSpy = jest.spyOn(userRepository, 'findOneByCpf');
-      const createUserSpy = jest.spyOn(userRepository, 'createUser');
+    it('should throw ConflictException when company email already exists', async () => {
+      companyRepository.findOneByEmail!.mockResolvedValue({
+        id: '1',
+        email: TEST_EMAILS.COMPANY,
+      } as any);
+      userRepository.findOneByEmail!.mockResolvedValue(null);
+
       const createUserDto = createUserMock();
-      const { data, status } = await service.execute(createUserDto);
-      expect(status).toEqual(404);
-      expect(data).toEqual({
-        message: `This CPF is already in use`,
-      });
-      expect(findOneByEmailSpy).toBeCalled();
-      expect(findOneByEmailSpy).toBeCalledTimes(1);
-      expect(findOneByCpfSpy).toBeCalled();
-      expect(findOneByCpfSpy).toBeCalledTimes(1);
-      expect(createUserSpy).not.toBeCalled();
-      expect(sendUserConfirmationSpy).not.toBeCalled();
+      const req = mockRequest() as Request;
+
+      await expect(service.execute(createUserDto, req)).rejects.toThrow(
+        ConflictException,
+      );
+      await expect(service.execute(createUserDto, req)).rejects.toThrow(
+        'E-mail já cadastrado',
+      );
+
+      expect(companyRepository.findOneByEmail).toHaveBeenCalledWith(
+        createUserDto.email,
+      );
+      expect(userRepository.createUser).not.toHaveBeenCalled();
     });
 
-    it('should be able to create an user', async () => {
-      userRepository.findOneByEmail = jest.fn().mockResolvedValue('');
-      userRepository.findOneByCpf = jest.fn().mockResolvedValue('');
-      userRepository.createUser = jest.fn().mockResolvedValue(userMock());
-      mailService.sendUserCreationConfirmation = jest
-        .fn()
-        .mockResolvedValue('');
-      const sendUserConfirmationSpy = jest.spyOn(
-        mailService,
-        'sendUserCreationConfirmation',
+    it('should successfully create a user and send confirmation email', async () => {
+      companyRepository.findOneByEmail!.mockResolvedValue(null);
+      userRepository.findOneByEmail!.mockResolvedValue(null);
+
+      const userWithSensitiveData = {
+        ...userMock(),
+        password: TEST_PASSWORDS.HASHED,
+        recoverPasswordToken: TEST_PASSWORDS.TOKEN,
+        ip: TEST_IPS.LOCALHOST,
+      };
+
+      userRepository.createUser!.mockResolvedValue(
+        userWithSensitiveData as any,
       );
-      const findOneByEmailSpy = jest.spyOn(userRepository, 'findOneByEmail');
-      const findOneByCpfSpy = jest.spyOn(userRepository, 'findOneByCpf');
-      const createUserSpy = jest.spyOn(userRepository, 'createUser');
+      mailService.sendUserCreationConfirmation!.mockResolvedValue(undefined);
+
       const createUserDto = createUserMock();
-      const { data, status } = await service.execute(createUserDto);
-      expect(status).toEqual(201);
-      expect(data).toEqual(userMock());
-      expect(findOneByEmailSpy).toBeCalled();
-      expect(findOneByEmailSpy).toBeCalledTimes(1);
-      expect(findOneByCpfSpy).toBeCalled();
-      expect(findOneByCpfSpy).toBeCalledTimes(1);
-      expect(createUserSpy).toBeCalled();
-      expect(createUserSpy).toBeCalledTimes(1);
-      expect(sendUserConfirmationSpy).toBeCalled();
-      expect(sendUserConfirmationSpy).toBeCalledTimes(1);
+      const req = mockRequest() as Request;
+
+      const result = await service.execute(createUserDto, req);
+
+      expect(result).toEqual(userMock());
+      expect(result).not.toHaveProperty('password');
+      expect(result).not.toHaveProperty('recoverPasswordToken');
+      expect(result).not.toHaveProperty('ip');
+
+      expect(userRepository.findOneByEmail).toHaveBeenCalledWith(
+        createUserDto.email,
+      );
+      expect(userRepository.createUser).toHaveBeenCalledWith({
+        ...createUserDto,
+        ip: TEST_IPS.LOCALHOST,
+        password: expect.any(String),
+      });
+      expect(mailService.sendUserCreationConfirmation).toHaveBeenCalledWith(
+        userMock(),
+      );
     });
   });
 });

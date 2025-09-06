@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UploadModule } from '../upload/upload.module';
 import { UserRepository } from '../user/repository/user.repository';
 import { CompanyController } from './company.controller';
-import { CompanyRepository } from './repository/company-repository';
+import { CompanyRepository } from './repository/company.repository';
 import {
   CreateCompanyService,
   DeleteCompanyService,
@@ -25,7 +25,7 @@ import { UsersEntity } from 'src/database/entities/users.entity';
   controllers: [CompanyController],
   providers: [
     CompanyRepository,
-     UserRepository,
+    UserRepository,
     CreateCompanyService,
     FindAllCompanyService,
     UpdateCompanyService,

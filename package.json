@@ -16,8 +16,8 @@
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
-    "test:watch": "jest --watch",
-    "test:cov": "jest --coverage",
+    "test:watch": "node -r tsconfig-paths/register node_modules/.bin/jest --watch",
+    "test:cov": "node -r tsconfig-paths/register node_modules/.bin/jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "typeorm": "typeorm-ts-node-commonjs",
@@ -91,6 +91,24 @@
     "typescript": "^5.2.2"
   },
   "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "ts"
+    ],
+    "rootDir": ".",
+    "testRegex": ".*\\.spec\\.ts$",
+    "transform": {
+      "^.+\\.(t|j)s$": "ts-jest"
+    },
+    "collectCoverageFrom": [
+      "src/**/*.{ts,js}"
+    ],
+    "coverageDirectory": "./coverage",
+    "testEnvironment": "node",
+    "moduleNameMapper": {
+      "^src/(.*)$": "<rootDir>/src/$1"
+    },
     "coverageThreshold": {
       "global": {
         "branches": 85,
@@ -98,9 +116,6 @@
         "lines": 85,
         "statements": 85
       }
-    },
-    "transform": {
-      "^.+\\.(t|j)s$": "ts-jest"
     }
   },
   "pre-push": [

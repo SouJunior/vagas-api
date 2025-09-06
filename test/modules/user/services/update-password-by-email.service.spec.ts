@@ -1,30 +1,41 @@
+import { NotFoundException, BadRequestException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { UserRepository } from '../../../../src/modules/user/repository/user.repository';
+import { MailService } from '../../../../src/modules/mails/mail.service';
 import { UpdatePasswordByEmailService } from '../../../../src/modules/user/services/update-password-by-email.service';
 import { userMock } from '../../../mocks/user/user.mock';
+import { TEST_PASSWORDS, TEST_IDS } from '../../../config/test-constants';
+import { createUserRepositoryMock } from '../../../shared/repository-mocks';
 
-class UserRepositoryMock {
-  findByToken = jest.fn();
-  updatePassword = jest.fn();
-}
+const createMailServiceMock = (): jest.Mocked<Partial<MailService>> => ({
+  sendUserConfirmation: jest.fn(),
+});
 
 describe('UpdatePasswordByEmailService', () => {
   let service: UpdatePasswordByEmailService;
-  let userRepository: UserRepositoryMock;
+  let userRepository: jest.Mocked<Partial<UserRepository>>;
+  let mailService: jest.Mocked<Partial<MailService>>;
 
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      controllers: [UpdatePasswordByEmailService],
+    userRepository = createUserRepositoryMock();
+    mailService = createMailServiceMock();
+
+    const testingModule: TestingModule = await Test.createTestingModule({
+      controllers: [],
       providers: [
+        UpdatePasswordByEmailService,
         {
           provide: UserRepository,
-          useClass: UserRepositoryMock,
+          useValue: userRepository,
+        },
+        {
+          provide: MailService,
+          useValue: mailService,
         },
       ],
     }).compile();
 
-    service = module.get(UpdatePasswordByEmailService);
-    userRepository = module.get(UserRepository);
+    service = testingModule.get(UpdatePasswordByEmailService);
   });
 
   it('should be defined', () => {
@@ -32,54 +43,61 @@ describe('UpdatePasswordByEmailService', () => {
   });
 
   describe('execute', () => {
-    it('should be able to return an error when user not exists', async () => {
+    it('should throw NotFoundException when user does not exist', async () => {
       userRepository.findByToken = jest.fn().mockResolvedValue('');
-      const findByTokenSpy = jest.spyOn(userRepository, 'findByToken');
-      const updatePassword = jest.spyOn(userRepository, 'updatePassword');
-      const { status, data } = await service.execute({
-        recoverPasswordToken: '123',
-        password: 'password',
-        confirmPassword: 'password',
-      });
-      expect(status).toEqual(400);
-      expect(data).toEqual({ message: 'User not found' });
-      expect(findByTokenSpy).toBeCalled();
-      expect(findByTokenSpy).toBeCalledTimes(1);
-      expect(updatePassword).not.toBeCalled();
+
+      await expect(
+        service.execute({
+          recoverPasswordToken: TEST_PASSWORDS.TOKEN,
+          password: TEST_PASSWORDS.SIMPLE,
+          confirmPassword: TEST_PASSWORDS.SIMPLE,
+        }),
+      ).rejects.toThrow(new NotFoundException('Usuário não encontrado!'));
+
+      expect(userRepository.findByToken).toHaveBeenCalledWith(
+        TEST_PASSWORDS.TOKEN,
+      );
+      expect(userRepository.updatePassword).not.toHaveBeenCalled();
     });
 
-    it('should be able to return an error when password mismatch', async () => {
+    it('should throw BadRequestException when passwords do not match', async () => {
       userRepository.findByToken = jest.fn().mockResolvedValue(userMock());
-      const findByTokenSpy = jest.spyOn(userRepository, 'findByToken');
-      const updatePassword = jest.spyOn(userRepository, 'updatePassword');
-      const { status, data } = await service.execute({
-        recoverPasswordToken: '123',
-        password: 'password',
-        confirmPassword: 'teste',
-      });
-      expect(status).toEqual(400);
-      expect(data).toEqual({ message: 'Password mismatch' });
-      expect(findByTokenSpy).toBeCalled();
-      expect(findByTokenSpy).toBeCalledTimes(1);
-      expect(updatePassword).not.toBeCalled();
+
+      await expect(
+        service.execute({
+          recoverPasswordToken: TEST_PASSWORDS.TOKEN,
+          password: TEST_PASSWORDS.SIMPLE,
+          confirmPassword: TEST_PASSWORDS.DIFFERENT,
+        }),
+      ).rejects.toThrow(new BadRequestException('As senhas não conferem!'));
+
+      expect(userRepository.findByToken).toHaveBeenCalledWith(
+        TEST_PASSWORDS.TOKEN,
+      );
+      expect(userRepository.updatePassword).not.toHaveBeenCalled();
     });
 
-    it('should be able to return an updated user', async () => {
+    it('should successfully update user password and send confirmation', async () => {
+      const updatedUser = userMock();
       userRepository.findByToken = jest.fn().mockResolvedValue(userMock());
-      userRepository.updatePassword = jest.fn().mockResolvedValue(userMock());
-      const findByTokenSpy = jest.spyOn(userRepository, 'findByToken');
-      const updatePassword = jest.spyOn(userRepository, 'updatePassword');
+      userRepository.updatePassword = jest.fn().mockResolvedValue(updatedUser);
+
       const { status, data } = await service.execute({
-        recoverPasswordToken: '123',
-        password: 'password',
-        confirmPassword: 'password',
+        recoverPasswordToken: TEST_PASSWORDS.TOKEN,
+        password: TEST_PASSWORDS.SIMPLE,
+        confirmPassword: TEST_PASSWORDS.SIMPLE,
       });
+
       expect(status).toEqual(200);
-      expect(data).toEqual(userMock());
-      expect(findByTokenSpy).toBeCalled();
-      expect(findByTokenSpy).toBeCalledTimes(1);
-      expect(updatePassword).toBeCalled();
-      expect(updatePassword).toBeCalledTimes(1);
+      expect(data).toEqual({ message: 'Senha redefinida com sucesso!' });
+
+      expect(userRepository.findByToken).toHaveBeenCalledWith(
+        TEST_PASSWORDS.TOKEN,
+      );
+      expect(userRepository.updatePassword).toHaveBeenCalledWith(
+        TEST_IDS.USER_ID,
+        expect.any(String),
+      );
     });
   });
 });

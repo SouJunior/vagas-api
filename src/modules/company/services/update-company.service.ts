@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CompaniesEntity } from '../../../database/entities/companies.entity';
 import { FileUploadService } from '../../upload/upload.service';
 import { UpdateCompanyDto } from '../dtos/update-company.dto';
-import { CompanyRepository } from '../repository/company-repository';
+import { CompanyRepository } from '../repository/company.repository';
 
 @Injectable()
 export class UpdateCompanyService {
@@ -30,7 +30,7 @@ export class UpdateCompanyService {
 
     delete data.file;
 
-    await this.companyRepository.UpdateCompanyById(company.id, data);
+    await this.companyRepository.updateCompanyById(company.id, data);
 
     return {
       status: 200,

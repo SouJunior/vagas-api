@@ -20,7 +20,7 @@ import { Response } from 'express';
 import { CompaniesEntity } from 'src/database/entities/companies.entity';
 import { ActivateCompanySwagger } from 'src/shared/Swagger/decorators/company/activate-company.swagger';
 import { CreateCompanySwagger } from 'src/shared/Swagger/decorators/company/create-company.swagger';
-import { DeleteCompanyByIdSwagger } from 'src/shared/Swagger/decorators/company/delete-company-by-id.swagger';
+import { DeleteCompanyMeSwagger } from 'src/shared/Swagger/decorators/company/delete-company-me.swagger';
 import { GetAllCompaniesSwagger } from 'src/shared/Swagger/decorators/company/get-all-companies.swagger';
 import { RecoverPasswordByEmailSwagger } from 'src/shared/Swagger/decorators/company/recovery-password-by-email.swagger';
 import { UpdateCompanyByIdSwagger } from 'src/shared/Swagger/decorators/company/update-company-by-id.swagger';
@@ -29,7 +29,6 @@ import { UpdatePasswordSwagger } from 'src/shared/Swagger/decorators/company/upd
 import { PageOptionsDto } from '../../shared/pagination';
 import { LoggedCompany } from '../auth/decorator/logged-company.decorator';
 import { EmailDto } from '../user/dtos/email-user.dto';
-import { CompanyIdDto } from './dtos/company-id.dto';
 import { CreateCompanyDto } from './dtos/create-company.dto';
 import { UpdateCompanyDto } from './dtos/update-company.dto';
 import {
@@ -67,9 +66,8 @@ export class CompanyController {
     @Body() createcompany: CreateCompanyDto,
     @Res() res: Response,
   ) {
-    const { data, status } = await this.createCompanyService.execute(
-      createcompany,
-    );
+    const { data, status } =
+      await this.createCompanyService.execute(createcompany);
 
     return res.status(status).send(data);
   }
@@ -116,9 +114,8 @@ export class CompanyController {
     @Body() updatePassword: CreatePasswordHashDto,
     @Res() res: Response,
   ) {
-    const { data, status } = await this.updatePasswordByEmailService.execute(
-      updatePassword,
-    );
+    const { data, status } =
+      await this.updatePasswordByEmailService.execute(updatePassword);
     return res.status(status).send(data);
   }
 
@@ -145,10 +142,17 @@ export class CompanyController {
     return res.status(status).send(data);
   }
 
-  @Delete(':id')
-  @DeleteCompanyByIdSwagger()
-  async deleteCompanyById(@Param() { id }: CompanyIdDto, @Res() res: Response) {
-    const { data, status } = await this.deleteCompanyService.execute(id);
+  @Delete('me')
+  @DeleteCompanyMeSwagger()
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
+  async deleteCompanyById(
+    @LoggedCompany() company: CompaniesEntity,
+    @Res() res: Response,
+  ) {
+    const { data, status } = await this.deleteCompanyService.execute(
+      company.id,
+    );
     return res.status(status).send(data);
   }
 }

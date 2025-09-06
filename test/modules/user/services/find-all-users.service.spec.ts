@@ -3,28 +3,26 @@ import { UserRepository } from '../../../../src/modules/user/repository/user.rep
 import { FindAllUsersService } from '../../../../src/modules/user/services/find-all-users.service';
 import { Order, PageOptionsDto } from '../../../../src/shared/pagination';
 import { getAllUserMock } from '../../../mocks/user/get-all-user.mock';
-
-class UserRepositoryMock {
-  getAllUsers = jest.fn();
-}
+import { createUserRepositoryMock } from '../../../shared/repository-mocks';
 
 describe('FindAllUsersService', () => {
   let service: FindAllUsersService;
-  let userRepository: UserRepositoryMock;
+  let userRepository: jest.Mocked<Partial<UserRepository>>;
 
   beforeEach(async () => {
+    userRepository = createUserRepositoryMock();
+
     const module: TestingModule = await Test.createTestingModule({
       controllers: [FindAllUsersService],
       providers: [
         {
           provide: UserRepository,
-          useClass: UserRepositoryMock,
+          useValue: userRepository,
         },
       ],
     }).compile();
 
     service = module.get(FindAllUsersService);
-    userRepository = module.get(UserRepository);
   });
 
   it('should be defined', () => {
@@ -42,7 +40,6 @@ describe('FindAllUsersService', () => {
         page: 1,
         take: 5,
         order: Order.ASC,
-        skip: 0,
       };
       const response = await service.execute(pageOptionsDto);
       expect(response).toEqual(getAllUserMock());

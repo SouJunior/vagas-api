@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CompaniesEntity } from '../../../database/entities/companies.entity';
 import { PageDto, PageOptionsDto } from '../../../shared/pagination';
 
-import { CompanyRepository } from '../repository/company-repository';
+import { CompanyRepository } from '../repository/company.repository';
 
 @Injectable()
 export class FindAllCompanyService {
