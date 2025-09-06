@@ -2,17 +2,17 @@ import {
   Body,
   Controller,
   Get,
-  HttpCode,
-  HttpStatus,
   Param,
   Patch,
   Post,
   Put,
   Query,
+  Res,
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Response } from 'express';
 import { ArchiveJobSwagger } from 'src/shared/Swagger/decorators/jobs/archive-job.swagger';
 import { CreateNewJobSwagger } from 'src/shared/Swagger/decorators/jobs/create-new-job.swagger';
 import { GetOneJobSwagger } from 'src/shared/Swagger/decorators/jobs/get-one-job.swagger';
@@ -75,9 +75,14 @@ export class JobsController {
   @ApiBearerAuth()
   @UseGuards(AuthGuard())
   @Get('loggedCompanyJobs')
-  @HttpCode(HttpStatus.OK)
-  async getAllLoggedCompanyJobs(@LoggedCompany() company: CompaniesEntity) {
-    return this.getAllJobsFromLoggedCompany.execute(company.id);
+  async getAllLoggedCompanyJobs(
+    @LoggedCompany() company: CompaniesEntity,
+    @Res() res: Response,
+  ) {
+    const { data, status } = await this.getAllJobsFromLoggedCompany.execute(
+      company.id,
+    );
+    return res.status(status).send(data);
   }
 
   @Get(':id')
