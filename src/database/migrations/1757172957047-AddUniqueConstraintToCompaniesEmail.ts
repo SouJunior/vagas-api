@@ -20,6 +20,7 @@ export class AddUniqueConstraintToCompaniesEmail1757172957047
     await queryRunner.query(`
       CREATE UNIQUE INDEX CONCURRENTLY IF NOT EXISTS UQ_companies_normalized_email 
       ON tb_companies (LOWER(TRIM(email)))
+      WHERE email IS NOT NULL AND TRIM(email) != ''
     `);
   }
 

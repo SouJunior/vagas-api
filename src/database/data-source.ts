@@ -131,6 +131,7 @@ export const typeormConfig: DataSourceOptions = isTestEnvironment
       database: TYPEORM_DATABASE,
       entities: getEntityPaths(),
       migrations: getMigrationPaths(),
+      migrationsTransactionMode: 'none',
       synchronize: DB_SYNCHRONIZE === 'true',
       ssl: createSSLConfig(),
     };
