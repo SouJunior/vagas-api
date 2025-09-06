@@ -16,35 +16,64 @@ const {
   DB_SSL_REJECT_UNAUTHORIZED,
 } = process.env;
 
-/**
- * Normalizes CA certificate from environment variable
- * Replaces escaped newlines with actual newlines
- * @param caCert - Raw CA certificate string from environment
- * @returns Normalized CA certificate or undefined if empty
- */
 const normalizeCACert = (caCert: string | undefined): string | undefined => {
   if (!caCert || caCert.trim() === '') return undefined;
   return caCert.replace(/\\n/g, '\n');
 };
 
-/**
- * Creates SSL configuration for production environment
- * Uses strict security defaults with option to override via explicit env flag
- * @returns SSL configuration object or undefined
- */
+const validateDatabasePort = (
+  portString: string | undefined,
+  defaultPort: number = 5432,
+): number => {
+  const port = parseInt(portString || defaultPort.toString(), 10);
+
+  if (isNaN(port)) {
+    throw new Error(
+      `Invalid database port: "${portString}". Port must be a valid number.`,
+    );
+  }
+
+  if (port < 1 || port > 65535) {
+    throw new Error(
+      `Invalid database port: ${port}. Port must be between 1 and 65535.`,
+    );
+  }
+
+  return port;
+};
+
+const validatePostgreSQLEnvironment = (): void => {
+  const requiredVars = [
+    'TYPEORM_HOST',
+    'TYPEORM_USERNAME',
+    'TYPEORM_PASSWORD',
+    'TYPEORM_DATABASE',
+  ];
+
+  const missingVars = requiredVars.filter((varName) => {
+    const value = process.env[varName];
+    return !value || value.trim() === '';
+  });
+
+  if (missingVars.length > 0) {
+    throw new Error(
+      `Missing required PostgreSQL environment variables: ${missingVars.join(', ')}. ` +
+        'Please set these variables before starting the application.',
+    );
+  }
+};
+
 const createSSLConfig = () => {
   if (NODE_ENV !== 'production') return undefined;
 
   const normalizedCACert = normalizeCACert(CA_CERT);
   if (!normalizedCACert) return undefined;
 
-  // Default to secure setting (reject unauthorized certificates)
   const rejectUnauthorized =
     DB_SSL_REJECT_UNAUTHORIZED === 'false' || DB_SSL_REJECT_UNAUTHORIZED === '0'
       ? false
       : true;
 
-  // Log security warning when using insecure setting
   if (!rejectUnauthorized) {
     console.warn(
       '⚠️  WARNING: Database SSL is configured with rejectUnauthorized: false. ' +
@@ -61,6 +90,10 @@ const createSSLConfig = () => {
 
 const isTestEnvironment = DB_TYPE === 'sqlite' && DB_DATABASE === ':memory:';
 
+if (!isTestEnvironment) {
+  validatePostgreSQLEnvironment();
+}
+
 export const typeormConfig: DataSourceOptions = isTestEnvironment
   ? {
       type: 'sqlite',
@@ -72,7 +105,7 @@ export const typeormConfig: DataSourceOptions = isTestEnvironment
   : {
       type: 'postgres',
       host: TYPEORM_HOST,
-      port: parseInt(TYPEORM_PORT),
+      port: validateDatabasePort(TYPEORM_PORT),
       username: TYPEORM_USERNAME,
       password: TYPEORM_PASSWORD,
       database: TYPEORM_DATABASE,
