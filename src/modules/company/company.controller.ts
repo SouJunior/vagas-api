@@ -145,6 +145,8 @@ export class CompanyController {
 
   @Delete(':id')
   @DeleteCompanyByIdSwagger()
+  @UseGuards(AuthGuard())
+  @ApiBearerAuth()
   async deleteCompanyById(@Param() { id }: CompanyIdDto, @Res() res: Response) {
     const { data, status } = await this.deleteCompanyService.execute(id);
     return res.status(status).send(data);
