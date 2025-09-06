@@ -3,8 +3,6 @@ import {
   Controller,
   Delete,
   Get,
-  HttpCode,
-  HttpStatus,
   Param,
   Patch,
   Post,
@@ -69,9 +67,8 @@ export class CompanyController {
     @Body() createcompany: CreateCompanyDto,
     @Res() res: Response,
   ) {
-    const { data, status } = await this.createCompanyService.execute(
-      createcompany,
-    );
+    const { data, status } =
+      await this.createCompanyService.execute(createcompany);
 
     return res.status(status).send(data);
   }
@@ -118,9 +115,8 @@ export class CompanyController {
     @Body() updatePassword: CreatePasswordHashDto,
     @Res() res: Response,
   ) {
-    const { data, status } = await this.updatePasswordByEmailService.execute(
-      updatePassword,
-    );
+    const { data, status } =
+      await this.updatePasswordByEmailService.execute(updatePassword);
     return res.status(status).send(data);
   }
 
@@ -148,9 +144,9 @@ export class CompanyController {
   }
 
   @Delete(':id')
-  @HttpCode(HttpStatus.OK)
   @DeleteCompanyByIdSwagger()
-  async deleteCompanyById(@Param() { id }: CompanyIdDto) {
-    return this.deleteCompanyService.execute(id);
+  async deleteCompanyById(@Param() { id }: CompanyIdDto, @Res() res: Response) {
+    const { data, status } = await this.deleteCompanyService.execute(id);
+    return res.status(status).send(data);
   }
 }

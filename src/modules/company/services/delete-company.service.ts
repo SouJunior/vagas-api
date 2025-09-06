@@ -5,7 +5,11 @@ import { CompanyRepository } from '../repository/company.repository';
 export class DeleteCompanyService {
   constructor(private companyRepository: CompanyRepository) {}
 
-  async execute(id: string): Promise<object> {
-    return this.companyRepository.deleteCompanyById(id);
+  async execute(id: string): Promise<{ data: object; status: number }> {
+    const data = await this.companyRepository.deleteCompanyById(id);
+    return {
+      data,
+      status: 200,
+    };
   }
 }
