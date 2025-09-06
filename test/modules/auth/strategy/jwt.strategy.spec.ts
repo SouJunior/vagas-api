@@ -8,6 +8,7 @@ import {
   TEST_PASSWORDS,
   TEST_USER_DATA,
   TEST_EMAILS,
+  TEST_TOKENS,
 } from '../../../config/test-constants';
 
 const createUserRepositoryMock = (): jest.Mocked<Partial<UserRepository>> => ({
@@ -26,13 +27,13 @@ describe('JwtStrategy', () => {
   let companyRepository: jest.Mocked<Partial<CompanyRepository>>;
 
   beforeEach(async () => {
-    process.env.JWT_SECRET = 'test-secret-key';
+    process.env.JWT_SECRET = TEST_TOKENS.JWT_SECRET;
 
     userRepository = createUserRepositoryMock();
     companyRepository = createCompanyRepositoryMock();
 
     const configServiceMock = {
-      getOrThrow: jest.fn().mockReturnValue('test-secret-key'),
+      getOrThrow: jest.fn().mockReturnValue(TEST_TOKENS.JWT_SECRET),
     };
 
     const module: TestingModule = await Test.createTestingModule({
