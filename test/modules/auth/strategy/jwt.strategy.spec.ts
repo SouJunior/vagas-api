@@ -170,7 +170,7 @@ describe('JwtStrategy', () => {
         updated_at: new Date(),
         deleted_at: null,
         mailConfirm: true,
-        recoverPasswordToken: 'sensitive-token',
+        recoverPasswordToken: TEST_TOKENS.RECOVERY_TOKEN,
         extraSensitiveField: 'should-not-appear',
         anotherField: 'also-sensitive',
       };
@@ -212,7 +212,7 @@ describe('JwtStrategy', () => {
         password: TEST_PASSWORDS.SENSITIVE,
         type: 'COMPANY',
         extraSensitiveField: 'should-not-appear',
-        recoverPasswordToken: 'sensitive-token',
+        recoverPasswordToken: TEST_TOKENS.RECOVERY_TOKEN,
         internalNotes: 'confidential',
       };
 
