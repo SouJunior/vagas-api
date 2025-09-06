@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { UsersEntity } from '../../../database/entities/users.entity';
 import { FileUploadService } from '../../upload/upload.service';
@@ -14,12 +14,9 @@ export class UpdateUserService {
 
   async execute(user: UsersEntity, data: UpdateUserDto, file) {
     if (file && !data.profileKey) {
-      return {
-        status: 400,
-        data: {
-          message: 'profileKey is required when file is send',
-        },
-      };
+      throw new BadRequestException(
+        'profileKey is required when a file is sent',
+      );
     }
 
     if (file) {

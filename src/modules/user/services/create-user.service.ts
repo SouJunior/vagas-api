@@ -18,30 +18,40 @@ export class CreateUserService {
   async execute(data: CreateUserDto, req: Request) {
     const { email, password } = data;
 
+    const normalizedEmail = email.trim().toLowerCase();
+
     data['ip'] = req.ip;
 
     const emailAlreadyInUseCompany =
-      await this.companyRepository.findOneByEmail(email);
+      await this.companyRepository.findOneByEmail(normalizedEmail);
 
     const emailAlreadyInUseUser =
-      await this.userRepository.findOneByEmail(email);
+      await this.userRepository.findOneByEmail(normalizedEmail);
 
     if (emailAlreadyInUseCompany || emailAlreadyInUseUser) {
       throw new ConflictException('E-mail já cadastrado');
     }
 
     data.password = await bcrypt.hash(password, 10);
+    data.email = normalizedEmail; // Use normalized email for insert
 
     delete data.confirmPassword;
 
-    const response = await this.userRepository.createUser(data);
+    try {
+      const response = await this.userRepository.createUser(data);
 
-    delete response.password;
-    delete response.recoverPasswordToken;
-    delete response.ip;
+      delete response.password;
+      delete response.recoverPasswordToken;
+      delete response.ip;
 
-    await this.mailService.sendUserCreationConfirmation(response);
+      await this.mailService.sendUserCreationConfirmation(response);
 
-    return response;
+      return response;
+    } catch (error) {
+      if (error.code === '23505') {
+        throw new ConflictException('E-mail já cadastrado');
+      }
+      throw error;
+    }
   }
 }
