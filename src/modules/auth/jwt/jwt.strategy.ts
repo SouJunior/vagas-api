@@ -35,35 +35,51 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       );
     }
 
+    if (typeof payload.sub !== 'string') {
+      throw new UnauthorizedException('Invalid payload: sub must be a string');
+    }
+    if (typeof payload.email !== 'string') {
+      throw new UnauthorizedException(
+        'Invalid payload: email must be a string',
+      );
+    }
+    if (typeof payload.type !== 'string') {
+      throw new UnauthorizedException('Invalid payload: type must be a string');
+    }
+
+    const normalizedSub = payload.sub.trim();
+    const normalizedEmail = payload.email.trim();
+    const normalizedType = payload.type.trim();
+
     if (
-      payload.sub.trim() === '' ||
-      payload.email.trim() === '' ||
-      payload.type.trim() === ''
+      normalizedSub === '' ||
+      normalizedEmail === '' ||
+      normalizedType === ''
     ) {
       throw new UnauthorizedException('Invalid payload: empty required fields');
     }
 
     try {
-      if (payload.type === 'USER') {
-        const user = await this.userRepository.findOneById(payload.sub);
+      if (normalizedType === 'USER') {
+        const user = await this.userRepository.findOneById(normalizedSub);
 
         if (!user) {
           throw new UnauthorizedException('User not found');
         }
 
-        if (user.email !== payload.email) {
+        if (user.email !== normalizedEmail) {
           throw new UnauthorizedException('Email mismatch');
         }
 
         return mapUserToPrincipal(user);
-      } else if (payload.type === 'COMPANY') {
-        const company = await this.companyRepository.findOneById(payload.sub);
+      } else if (normalizedType === 'COMPANY') {
+        const company = await this.companyRepository.findOneById(normalizedSub);
 
         if (!company) {
           throw new UnauthorizedException('Company not found');
         }
 
-        if (company.email !== payload.email) {
+        if (company.email !== normalizedEmail) {
           throw new UnauthorizedException('Email mismatch');
         }
 
