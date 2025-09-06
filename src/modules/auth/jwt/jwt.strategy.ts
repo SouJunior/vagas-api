@@ -29,31 +29,53 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: { sub: string; email: string; type: string }) {
-    if (!payload || !payload.email || !payload.sub) {
-      throw new UnauthorizedException('Invalid payload or email');
+    if (!payload || !payload.sub || !payload.email || !payload.type) {
+      throw new UnauthorizedException(
+        'Invalid payload: missing required fields',
+      );
+    }
+
+    if (
+      payload.sub.trim() === '' ||
+      payload.email.trim() === '' ||
+      payload.type.trim() === ''
+    ) {
+      throw new UnauthorizedException('Invalid payload: empty required fields');
     }
 
     try {
-      const user = await this.userRepository.findOneByEmail(payload.email);
+      if (payload.type === 'USER') {
+        const user = await this.userRepository.findOneById(payload.sub);
 
-      if (user) {
+        if (!user) {
+          throw new UnauthorizedException('User not found');
+        }
+
+        if (user.email !== payload.email) {
+          throw new UnauthorizedException('Email mismatch');
+        }
+
         return mapUserToPrincipal(user);
-      }
+      } else if (payload.type === 'COMPANY') {
+        const company = await this.companyRepository.findOneById(payload.sub);
 
-      const company = await this.companyRepository.findOneByEmail(
-        payload.email,
-      );
+        if (!company) {
+          throw new UnauthorizedException('Company not found');
+        }
 
-      if (company) {
+        if (company.email !== payload.email) {
+          throw new UnauthorizedException('Email mismatch');
+        }
+
         return mapCompanyToPrincipal(company);
+      } else {
+        throw new UnauthorizedException('Invalid payload type');
       }
-
-      throw new UnauthorizedException('User not found or not authorized!');
     } catch (error) {
       if (error instanceof UnauthorizedException) {
         throw error;
       }
-      throw error;
+      throw new UnauthorizedException('Authentication failed');
     }
   }
 }
