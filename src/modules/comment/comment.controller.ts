@@ -40,8 +40,8 @@ export class CommentController {
   @Throttle({
     createCommentary: {
       ttl: 2000,
-      limit: 30
-    }
+      limit: 30,
+    },
   })
   @Post()
   @CreateCommentSwagger()

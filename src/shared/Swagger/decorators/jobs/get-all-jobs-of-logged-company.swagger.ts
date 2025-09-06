@@ -1,5 +1,5 @@
 import { applyDecorators } from '@nestjs/common';
-import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiOperation } from '@nestjs/swagger';
 
 export function GetAllJobsOfLoggedCompanySwagger() {
   return applyDecorators(

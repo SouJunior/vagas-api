@@ -5,10 +5,8 @@ import {
   IsNotEmpty,
   IsOptional,
   IsString,
-  Length,
   Matches,
   MaxLength,
-  Validate,
 } from 'class-validator';
 import { UserRole } from '../../../shared/utils/userRole/userRole';
 import { Match } from '../decorators/match.decorator';
@@ -34,13 +32,10 @@ export class CreateUserDto {
 
   @IsNotEmpty()
   @IsString()
-  @Matches(
-    /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)[a-zA-Z\d\W]{8,}$/,
-    {
-      message:
-        'Senha inválida. Deve conter pelo menos 8 caracteres, uma letra maiúscula, uma letra minúscula, um número e um caractere especial.',
-    },
-  )
+  @Matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)[a-zA-Z\d\W]{8,}$/, {
+    message:
+      'Senha inválida. Deve conter pelo menos 8 caracteres, uma letra maiúscula, uma letra minúscula, um número e um caractere especial.',
+  })
   @ApiProperty({
     description: 'Senha de Login',
     example: 'Abcd@1234',

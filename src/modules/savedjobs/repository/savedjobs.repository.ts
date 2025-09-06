@@ -1,9 +1,9 @@
-import { Injectable, InternalServerErrorException } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { SavedJobsEntity } from "src/database/entities/savedjobs.entity";
-import { PageDto, PageMetaDto, PageOptionsDto } from "src/shared/pagination";
-import { Repository } from "typeorm";
-import { GetAllSavedJobsDto } from "../dtos/get-all-savedjobs.dto";
+import { Injectable, InternalServerErrorException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { SavedJobsEntity } from 'src/database/entities/savedjobs.entity';
+import { PageDto, PageMetaDto, PageOptionsDto } from 'src/shared/pagination';
+import { Repository } from 'typeorm';
+import { GetAllSavedJobsDto } from '../dtos/get-all-savedjobs.dto';
 
 @Injectable()
 export class SavedJobsRepository {

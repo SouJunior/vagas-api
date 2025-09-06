@@ -1,5 +1,24 @@
-import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Query, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiTags, ApiResponse, ApiParam } from '@nestjs/swagger';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpException,
+  HttpStatus,
+  Param,
+  Post,
+  Query,
+  UseGuards,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiTags,
+  ApiResponse,
+  ApiParam,
+} from '@nestjs/swagger';
 import { SavedJobsService } from '../savedjobs/services/savedjobs.service';
 import { CreateSavedJobDto } from '../savedjobs/dtos/create-savedJob-dto';
 import { AuthGuard } from '@nestjs/passport';
@@ -19,13 +38,13 @@ export class SavedJobsController {
   constructor(
     private readonly savedJobsService: SavedJobsService,
     private readonly findAllSavedJobsService: FindAllSavedJobsService,
-    private readonly deleteSavedJobsService: DeleteSavedJobsService
+    private readonly deleteSavedJobsService: DeleteSavedJobsService,
   ) {}
 
   @Post()
   @ApiBearerAuth()
   @UseGuards(AuthGuard())
-  @UsePipes(new ValidationPipe())  
+  @UsePipes(new ValidationPipe())
   @SwaggerCreateSavedJobs()
   @ApiOperation({ summary: 'Salvar vaga para um usuário' })
   @ApiResponse({
@@ -35,7 +54,9 @@ export class SavedJobsController {
       example: {
         message: 'Sua vaga foi salva com sucesso!',
         statusCode: HttpStatus.CREATED,
-        savedJob: { /* exemplo do objeto salvo */ },
+        savedJob: {
+          /* exemplo do objeto salvo */
+        },
       },
     },
   })
@@ -43,9 +64,7 @@ export class SavedJobsController {
     status: HttpStatus.INTERNAL_SERVER_ERROR,
     description: 'Erro ao salvar vaga',
   })
-  async saveJob(
-    @Body() createSavedJobDto: CreateSavedJobDto,
-  ): Promise<any> {
+  async saveJob(@Body() createSavedJobDto: CreateSavedJobDto): Promise<any> {
     try {
       const savedJob = await this.savedJobsService.saveJob(createSavedJobDto);
       return {
@@ -76,13 +95,17 @@ export class SavedJobsController {
   @ApiBearerAuth()
   @UseGuards(AuthGuard())
   @SwaggerFindSavedJobs()
-  @ApiOperation({ summary: 'Obtenha todos os trabalhos salvos com filtros e paginação.' })
+  @ApiOperation({
+    summary: 'Obtenha todos os trabalhos salvos com filtros e paginação.',
+  })
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Lista de trabalhos salvos',
     schema: {
       example: {
-        items: [/* exemplo de lista de jobs */],
+        items: [
+          /* exemplo de lista de jobs */
+        ],
         total: 10,
         page: 1,
         pageSize: 10,
@@ -98,7 +121,10 @@ export class SavedJobsController {
     @Query() query: GetAllSavedJobsDto,
   ) {
     try {
-      const savedJobs = await this.findAllSavedJobsService.getAllSavedJobs(pageOptionsDto, query);
+      const savedJobs = await this.findAllSavedJobsService.getAllSavedJobs(
+        pageOptionsDto,
+        query,
+      );
       return savedJobs;
     } catch (error) {
       throw new HttpException(

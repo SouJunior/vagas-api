@@ -15,6 +15,11 @@ import { UsersEntity } from 'src/database/entities/users.entity';
     PassportModule.register({ defaultStrategy: 'jwt' }),
   ],
   controllers: [CurriculumController],
-  providers: [CurriculumService, FileUploadService, CurriculumRepository, UserRepository],
+  providers: [
+    CurriculumService,
+    FileUploadService,
+    CurriculumRepository,
+    UserRepository,
+  ],
 })
 export class CurriculumModule {}

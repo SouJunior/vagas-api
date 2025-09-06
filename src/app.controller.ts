@@ -24,8 +24,8 @@ export class AppController {
   @ApiOperation({
     summary: 'Retorna status dos serviços de email e banco de dados',
   })
-  async getHealthCheck(@Res() res: Response){
-    const {status, data} =  await this.appService.getHealthCheck();
+  async getHealthCheck(@Res() res: Response) {
+    const { status, data } = await this.appService.getHealthCheck();
     return res.status(status).send(data);
   }
 }

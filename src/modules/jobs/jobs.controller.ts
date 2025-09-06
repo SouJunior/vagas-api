@@ -2,7 +2,6 @@ import {
   Body,
   Controller,
   Get,
-  NotFoundException,
   Param,
   Patch,
   Post,
@@ -19,7 +18,6 @@ import { GetOneJobSwagger } from 'src/shared/Swagger/decorators/jobs/get-one-job
 import { SearchJobSwagger } from 'src/shared/Swagger/decorators/jobs/search-job.swagger';
 import { UpdateJobSwagger } from 'src/shared/Swagger/decorators/jobs/update-job.swagger';
 import { CompaniesEntity } from '../../database/entities/companies.entity';
-import { JobsEntity } from '../../database/entities/jobs.entity';
 import { PageOptionsDto } from '../../shared/pagination';
 import { LoggedCompany } from '../auth/decorator/logged-company.decorator';
 import { CreateJobDto } from './dtos/create-job.dto';
@@ -48,7 +46,7 @@ export class JobsController {
     private updateJobService: UpdateJobService,
     private deleteJobService: DeleteJobService,
     private searchJobsService: SearchJobsService,
-    private getAllJobsFromLoggedCompany: GetAllJobsFromLoggedCompanyService
+    private getAllJobsFromLoggedCompany: GetAllJobsFromLoggedCompanyService,
   ) {}
 
   @Post()
@@ -79,10 +77,12 @@ export class JobsController {
   @Get('loggedCompanyJobs')
   async getAllLoggedCompanyJobs(
     @LoggedCompany() company: CompaniesEntity,
-    @Res() res: Response
+    @Res() res: Response,
   ) {
-    const { status, data } = await this.getAllJobsFromLoggedCompany.execute(company.id);
-    return res.status(status).json(data)
+    const { status, data } = await this.getAllJobsFromLoggedCompany.execute(
+      company.id,
+    );
+    return res.status(status).json(data);
   }
 
   @Get(':id')

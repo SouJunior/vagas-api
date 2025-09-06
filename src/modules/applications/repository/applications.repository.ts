@@ -7,7 +7,10 @@ import { DataApplicationDto } from '../dtos/data-application.dto';
 
 @Injectable()
 export class ApplicationsRepository {
-  constructor(@InjectRepository(ApplicationEntity) private applicationsRepository: Repository<ApplicationEntity>) {}
+  constructor(
+    @InjectRepository(ApplicationEntity)
+    private applicationsRepository: Repository<ApplicationEntity>,
+  ) {}
 
   async saveApplication(data: DataApplicationDto): Promise<ApplicationEntity> {
     return this.applicationsRepository.save(data).catch(handleError);
