@@ -20,7 +20,7 @@ import { Response } from 'express';
 import { CompaniesEntity } from 'src/database/entities/companies.entity';
 import { ActivateCompanySwagger } from 'src/shared/Swagger/decorators/company/activate-company.swagger';
 import { CreateCompanySwagger } from 'src/shared/Swagger/decorators/company/create-company.swagger';
-import { DeleteCompanyByIdSwagger } from 'src/shared/Swagger/decorators/company/delete-company-by-id.swagger';
+import { DeleteCompanyMeSwagger } from 'src/shared/Swagger/decorators/company/delete-company-me.swagger';
 import { GetAllCompaniesSwagger } from 'src/shared/Swagger/decorators/company/get-all-companies.swagger';
 import { RecoverPasswordByEmailSwagger } from 'src/shared/Swagger/decorators/company/recovery-password-by-email.swagger';
 import { UpdateCompanyByIdSwagger } from 'src/shared/Swagger/decorators/company/update-company-by-id.swagger';
@@ -143,7 +143,7 @@ export class CompanyController {
   }
 
   @Delete('me')
-  @DeleteCompanyByIdSwagger()
+  @DeleteCompanyMeSwagger()
   @UseGuards(AuthGuard())
   @ApiBearerAuth()
   async deleteCompanyById(
