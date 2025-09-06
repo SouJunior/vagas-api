@@ -95,7 +95,7 @@ export class UserController {
   @SwaggerGetUserAdm()
   @UseGuards(AuthGuard())
   @ApiBearerAuth()
-  async getOneUser(@Param('id') id: string) {
+  async getOneUser(@LoggedAdmin() user: UsersEntity, @Param('id') id: string) {
     return this.findOneUserService.execute(id);
   }
 
