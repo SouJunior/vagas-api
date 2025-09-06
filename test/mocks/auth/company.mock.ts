@@ -6,14 +6,14 @@ import {
   TEST_USER_DATA,
 } from '../../config/test-constants';
 
-const STABLE_HASHED_PASSWORD =
-  '$2b$10$K8gF4Z.vH5P.qL2N3mR8qOzGJ5jH9xW2pM6rQ7sT4uV8yA3bC1dE6';
-
 const getTestPassword = () => {
   try {
     return TEST_PASSWORDS.HASHED_BCRYPT;
   } catch (error) {
-    return STABLE_HASHED_PASSWORD;
+    return (
+      TEST_PASSWORDS.HASHED ||
+      '$2b$10$K8gF4Z.vH5P.qL2N3mR8qOzGJ5jH9xW2pM6rQ7sT4uV8yA3bC1dE6'
+    );
   }
 };
 
