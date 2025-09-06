@@ -27,8 +27,14 @@ export const TEST_PASSWORDS = {
   HASHED: process.env.TEST_HASHED_PASSWORD || 'hashedPassword',
 
   // Senha hasheada com bcrypt simulada
+  // Requer um hash bcrypt válido; sem fallback para evitar testes frágeis
   HASHED_BCRYPT:
-    process.env.TEST_HASHED_BCRYPT_PASSWORD || '$2b$10$hashedpassword',
+    process.env.TEST_HASHED_BCRYPT_PASSWORD ??
+    (() => {
+      throw new Error(
+        'Defina TEST_HASHED_BCRYPT_PASSWORD com um hash bcrypt válido (ex.: $2b$10$..., 60 chars).',
+      );
+    })(),
 
   // Senha sensível para testes de filtro
   SENSITIVE: process.env.TEST_SENSITIVE_PASSWORD || 'sensitivePassword',

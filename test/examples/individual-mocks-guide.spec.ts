@@ -1,9 +1,12 @@
 import { UserRepository } from '../../src/modules/user/repository/user.repository';
+import { userMock } from '../mocks/user/user.mock';
 
 describe('ExampleService - Individual Mocks Pattern', () => {
   let userRepository: jest.Mocked<Partial<UserRepository>>;
 
-  const createUserRepositoryMock = () => ({
+  const createUserRepositoryMock = (): jest.Mocked<
+    Partial<UserRepository>
+  > => ({
     findOneById: jest.fn(),
     createUser: jest.fn(),
     updateUser: jest.fn(),
@@ -16,12 +19,12 @@ describe('ExampleService - Individual Mocks Pattern', () => {
 
   describe('findUser example', () => {
     it('should find user successfully', async () => {
-      const mockUser = { id: '123', name: 'Test User', email: 'test@test.com' };
-      userRepository.findOneByEmail.mockResolvedValue(mockUser as any);
+      const mockUser = userMock();
+      userRepository.findOneByEmail!.mockResolvedValue(mockUser as any);
 
-      const result = userRepository.findOneByEmail('test@test.com');
-
-      expect(result).resolves.toEqual(mockUser);
+      await expect(
+        userRepository.findOneByEmail!('test@test.com'),
+      ).resolves.toEqual(mockUser);
       expect(userRepository.findOneByEmail).toHaveBeenCalledWith(
         'test@test.com',
       );
@@ -29,9 +32,9 @@ describe('ExampleService - Individual Mocks Pattern', () => {
     });
 
     it('should handle user not found', async () => {
-      userRepository.findOneByEmail.mockResolvedValue(null);
+      userRepository.findOneByEmail!.mockResolvedValue(null);
 
-      const result = await userRepository.findOneByEmail(
+      const result = await userRepository.findOneByEmail!(
         'nonexistent@test.com',
       );
 
@@ -47,11 +50,11 @@ describe('ExampleService - Individual Mocks Pattern', () => {
       const newUserData = { name: 'New User', email: 'new@test.com' };
       const createdUser = { id: '456', ...newUserData };
 
-      userRepository.findOneByEmail.mockResolvedValue(null);
-      userRepository.createUser.mockResolvedValue(createdUser as any);
+      userRepository.findOneByEmail!.mockResolvedValue(null);
+      userRepository.createUser!.mockResolvedValue(createdUser as any);
 
-      const emailCheck = await userRepository.findOneByEmail('new@test.com');
-      const result = await userRepository.createUser(newUserData as any);
+      const emailCheck = await userRepository.findOneByEmail!('new@test.com');
+      const result = await userRepository.createUser!(newUserData as any);
 
       expect(emailCheck).toBeNull();
       expect(result).toEqual(createdUser);
@@ -62,12 +65,12 @@ describe('ExampleService - Individual Mocks Pattern', () => {
     });
 
     it('should handle when email already exists', async () => {
-      const existingUser = { id: '789', email: 'existing@test.com' };
+      const existingUser = userMock();
 
-      userRepository.findOneByEmail.mockResolvedValue(existingUser as any);
+      userRepository.findOneByEmail!.mockResolvedValue(existingUser as any);
 
       const emailCheck =
-        await userRepository.findOneByEmail('existing@test.com');
+        await userRepository.findOneByEmail!('existing@test.com');
 
       expect(emailCheck).toEqual(existingUser);
       expect(userRepository.findOneByEmail).toHaveBeenCalledWith(

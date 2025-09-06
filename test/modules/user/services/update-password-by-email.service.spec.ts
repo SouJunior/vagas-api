@@ -24,9 +24,10 @@ describe('UpdatePasswordByEmailService', () => {
     userRepository = createUserRepositoryMock();
     mailService = createMailServiceMock();
 
-    const module: TestingModule = await Test.createTestingModule({
-      controllers: [UpdatePasswordByEmailService],
+    const testingModule: TestingModule = await Test.createTestingModule({
+      controllers: [],
       providers: [
+        UpdatePasswordByEmailService,
         {
           provide: UserRepository,
           useValue: userRepository,
@@ -38,7 +39,7 @@ describe('UpdatePasswordByEmailService', () => {
       ],
     }).compile();
 
-    service = module.get(UpdatePasswordByEmailService);
+    service = testingModule.get(UpdatePasswordByEmailService);
   });
 
   it('should be defined', () => {
