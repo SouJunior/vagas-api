@@ -23,18 +23,20 @@ const normalizeCACert = (caCert: string | undefined): string | undefined => {
 
 const validateDatabasePort = (
   portString: string | undefined,
-  defaultPort: number = 5432,
+  defaultPort = 5432,
 ): number => {
-  const port = parseInt(portString || defaultPort.toString(), 10);
+  if (portString === undefined) return defaultPort;
 
-  if (isNaN(port)) {
-    throw new Error(
-      `Invalid database port: "${portString}". Port must be a valid number.`,
+  const trimmed = portString.trim();
+  if (trimmed.length === 0 || !/^\d+$/.test(trimmed)) {
+    throw new TypeError(
+      `Invalid database port: "${portString}". Port must be an integer between 1 and 65535.`,
     );
   }
 
+  const port = Number(trimmed);
   if (port < 1 || port > 65535) {
-    throw new Error(
+    throw new RangeError(
       `Invalid database port: ${port}. Port must be between 1 and 65535.`,
     );
   }
