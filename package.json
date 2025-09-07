@@ -101,7 +101,19 @@
     },
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
-    }
+    },
+    "collectCoverageFrom": [
+      "src/**/*.{ts,js}",
+      "!src/**/*.spec.ts",
+      "!src/**/*.test.ts",
+      "!src/**/*.d.ts"
+    ],
+    "coverageDirectory": "coverage",
+    "coverageReporters": [
+      "text",
+      "lcov",
+      "clover"
+    ]
   },
   "pre-push": [
     "test:cov"

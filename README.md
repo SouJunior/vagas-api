@@ -226,6 +226,26 @@ sequenceDiagram
     end
 ```
 
+### SonarCloud
+
+> [!NOTE]
+> SonarCloud está configurado para análise automatizada de qualidade do código
+
+A configuração do SonarCloud permite:
+- Análise automática de qualidade do código em PRs e pushes
+- Relatórios de cobertura de testes
+- Detecção de bugs, vulnerabilidades e code smells
+- Métricas de manutenibilidade
+
+**Configuração:**
+- `sonar-project.properties`: Configurações principais do projeto
+- `.github/workflows/sonarcloud.yml`: Workflow para análise automática
+- Cobertura de testes via Jest com formato LCOV
+
+**Requisitos:**
+- Token SonarCloud configurado em `SONAR_TOKEN` nos secrets do GitHub
+- Projeto configurado no SonarCloud com chave `SouJunior_vagas-api`
+
 ---
 <a id="como_contribuir"></a>
 ## 👨‍💻 Como contribuir
