@@ -27,8 +27,8 @@ export class CurriculumController {
   constructor(private curriculumService: CurriculumService) {}
 
   @Get()
-  async getAllCurriculum() {
-    return await this.curriculumService.getAllCurriculum();
+  async getAllCurriculum(@LoggedUser() user: UsersEntity) {
+    return await this.curriculumService.getAllCurriculum(user);
   }
 
   @UploadCurriculumSwagger()
