@@ -60,6 +60,10 @@ export class CompanyRepository {
       .findOneBy({ id })
       .catch(handleError);
 
+    if (!company) {
+      throw new NotFoundException('Empresa não encontrada');
+    }
+
     await this.companyRepository
       .update(id, {
         ...company,
@@ -92,21 +96,17 @@ export class CompanyRepository {
     return this.companyRepository.findOneBy({ cnpj }).catch(handleError);
   }
 
-  async updateMyPassword(updateMyPasswordDto: UpdateMyPasswordDto, id) {
+  async updateMyPassword(updateMyPasswordDto: UpdateMyPasswordDto, id: string) {
     const company = await this.companyRepository
       .findOneBy({ id })
       .catch(handleError);
-
     if (!company) {
       throw new NotFoundException('Company not found');
     }
-
-    return this.companyRepository
+    await this.companyRepository
       .update(id, updateMyPasswordDto)
-      .then(() => {
-        return this.companyRepository.findOneBy({ id });
-      })
       .catch(handleError);
+    return this.companyRepository.findOneBy({ id }).catch(handleError);
   }
 
   async updateRecoveryPassword(
@@ -143,24 +143,23 @@ export class CompanyRepository {
   }
 
   async updatePassword(id, password: string): Promise<CompaniesEntity> {
-    const company = await this.companyRepository
-      .findOneBy({ id })
-      .catch(handleError);
-    const data = {
-      recoverPasswordToken: null,
-      password,
-    };
+    try {
+      const company = await this.companyRepository
+        .findOneBy({ id })
+        .catch(handleError);
 
-    delete company.password;
-
-    await this.companyRepository
-      .update(id, {
-        ...company,
-        ...data,
-      })
-      .catch(handleError);
-
-    return this.companyRepository.findOneBy({ id }).catch(handleError);
+      if (!company) {
+        throw new NotFoundException('Empresa não encontrada');
+      }
+      const data = {
+        recoverPasswordToken: null,
+        password,
+      };
+      await this.companyRepository.update(id, data);
+      return await this.companyRepository.findOneBy({ id });
+    } catch (error) {
+      handleError(error);
+    }
   }
 
   async deleteCompanyById(id: string): Promise<object> {
