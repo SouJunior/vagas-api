@@ -5,6 +5,7 @@ import { UpdateCommentDto } from '../dtos/update-comment.dto';
 import { CreateCommentDto } from './../dtos/create-comment.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
+import { NotFoundException } from '@nestjs/common';
 
 @Injectable()
 export class CommentRepository {
@@ -31,8 +32,12 @@ export class CommentRepository {
 
   async updateComment(id: string, data: UpdateCommentDto) {
     const comment = await this.commentsRepository
-      .findOneBy({ id })
+      .findOneBy({ id, desativated_at: null })
       .catch(handleError);
+
+    if (!comment) {
+      throw new NotFoundException('Comentário não encontrado ou desativado');
+    }
 
     return this.commentsRepository
       .save({
@@ -43,9 +48,13 @@ export class CommentRepository {
   }
 
   async deleteComment(id: string): Promise<object> {
-    await this.commentsRepository
+    const result = await this.commentsRepository
       .update(id, { desativated_at: new Date() })
       .catch(handleError);
+
+    if (!result || result.affected === 0) {
+      throw new NotFoundException('Comentário não encontrado para exclusão');
+    }
 
     return { message: 'Comment deleted successfully' };
   }
