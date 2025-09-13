@@ -16,9 +16,10 @@ services:
       - 'traefik.http.routers.vagas-backend.entrypoints=websecure'
       - 'traefik.http.routers.vagas-backend.tls.certresolver=myresolver'
       - 'traefik.http.services.vagas-backend.loadbalancer.server.port=3000'
-      - 'traefik.http.middlewares.traefik-headers.headers.sslRedirect=true'
-      - 'traefik.http.middlewares.traefik-headers.headers.sslForceHost=true'
-      - 'traefik.http.middlewares.traefik-headers.headers.sslProxyHeaders.X-Forwarded-Proto=https'
+      - 'traefik.http.middlewares.traefik-headers.headers.sslredirect=true'
+      - 'traefik.http.middlewares.traefik-headers.headers.sslforcehost=true'
+      - 'traefik.http.middlewares.traefik-headers.headers.sslhost=vagas-backend.soujunior.tech'
+      - 'traefik.http.middlewares.traefik-headers.headers.sslproxyheaders.X-Forwarded-Proto=https'
       - 'traefik.docker.network=traefik'
 
 networks:
