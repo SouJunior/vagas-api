@@ -10,6 +10,8 @@ import { CreateJobDto } from '../dtos/create-job.dto';
 import { GetAllJobsDto } from '../dtos/get-all-jobs.dto';
 import { UpdateJobDto } from '../dtos/update-job.dto';
 import { Injectable } from '@nestjs/common';
+import { NotFoundException } from '@nestjs/common';
+import { StatusEnum } from 'src/shared/enums/status.enum';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
@@ -26,9 +28,8 @@ export class JobRepository {
 
   async getAllJobsByCompanyId(companyId: string): Promise<JobsEntity[]> {
     const jobs = await this.jobsRepository.find({
-      where: { company_id: companyId },
+      where: { company_id: companyId, status: StatusEnum.ACTIVE },
     });
-
     return jobs;
   }
 
@@ -95,8 +96,13 @@ export class JobRepository {
   }
 
   async updateJob(id: string, data: UpdateJobDto) {
-    const job = await this.jobsRepository.findOneBy({ id }).catch(handleError);
+    const job = await this.jobsRepository
+      .findOneBy({ id, status: StatusEnum.ACTIVE })
+      .catch(handleError);
 
+    if (!job) {
+      throw new NotFoundException('Vaga não encontrada ou inativa');
+    }
     return this.jobsRepository
       .save({
         ...job,
@@ -115,8 +121,8 @@ export class JobRepository {
     queryBuilder
       .leftJoin('job.company', 'company')
       .select(['job', 'company.id', 'company.companyName', 'company.profile'])
-      .andWhere(`job.title ILIKE '%${searchQuery}%'`)
-      .andWhere(`job.status = 'ACTIVE'`)
+      .andWhere('job.title ILIKE :title', { title: `%${searchQuery}%` })
+      .andWhere('job.status = :status', { status: StatusEnum.ACTIVE })
       .orderBy(`job.${pageOptionsDto.orderByColumn}`, pageOptionsDto.order)
       .skip((pageOptionsDto.page - 1) * pageOptionsDto.take)
       .take(pageOptionsDto.take);

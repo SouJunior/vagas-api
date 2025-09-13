@@ -1,10 +1,10 @@
 import { applyDecorators } from '@nestjs/common';
 import { ApiOperation } from '@nestjs/swagger';
 
-export function GetAllJobsOfLoggedCompanySwagger() {
+export function GetAllJobsSwagger() {
   return applyDecorators(
     ApiOperation({
-      summary: 'Buscar todas as vagas da empresa logada.',
+      summary: 'Buscar todas as vagas.',
     }),
   );
 }
