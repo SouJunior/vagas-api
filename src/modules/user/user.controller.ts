@@ -101,7 +101,12 @@ export class UserController {
   @SwaggerGetUserAdm()
   @UseGuards(AuthGuard())
   @ApiBearerAuth()
-  async getOneUser(@Param('id') id: string) {
+  async getOneUser(@Param('id') id: string, @LoggedUser() user: UsersEntity) {
+    if (user.id !== id && user.type !== 'admin') {
+      throw new (await import('@nestjs/common')).ForbiddenException(
+        'Acesso negado.',
+      );
+    }
     return this.findOneUserService.execute(id);
   }
 

@@ -57,12 +57,17 @@ export class UserRepository {
   }
 
   async updateUser(user: UsersEntity, data: UpdateUserDto) {
+    const userExists = await this.usersRepository
+      .findOneBy({ id: user.id })
+      .catch(handleError);
+    if (!userExists) {
+      throw new NotFoundException('User not found');
+    }
     const bodyToUpdate = {
-      ...user,
+      ...userExists,
       ...data,
     };
     await this.usersRepository.save(bodyToUpdate).catch(handleError);
-
     return;
   }
 
@@ -72,7 +77,7 @@ export class UserRepository {
     return;
   }
 
-  async updateMyPassword(updateMyPasswordDto: UpdateMyPasswordDto, id) {
+  async updateMyPassword(updateMyPasswordDto: UpdateMyPasswordDto, id: string) {
     const user = await this.usersRepository
       .findOneBy({ id })
       .catch(handleError);
@@ -93,9 +98,10 @@ export class UserRepository {
     const user = await this.usersRepository
       .findOneBy({ id })
       .catch(handleError);
-
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
     user.recoverPasswordToken = recoverPasswordToken;
-
     await this.usersRepository.update(id, user).catch(handleError);
     return user;
   }
@@ -105,13 +111,15 @@ export class UserRepository {
       .findOneBy({ id })
       .catch(handleError);
 
-    user.mailConfirm = true;
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
 
     await this.usersRepository
       .update(id, { mailConfirm: true })
       .catch(handleError);
 
-    return this.usersRepository.findOneBy({ id });
+    return this.usersRepository.findOneBy({ id }).catch(handleError);
   }
 
   async findByToken(recoverPasswordToken: string): Promise<UsersEntity> {
@@ -120,24 +128,19 @@ export class UserRepository {
       .catch(handleError);
   }
 
-  async updatePassword(id, password: string): Promise<UsersEntity> {
+  async updatePassword(id: string, password: string): Promise<UsersEntity> {
     const user = await this.usersRepository
       .findOneBy({ id })
       .catch(handleError);
-    const data = {
-      recoverPasswordToken: null,
-      password,
-    };
-
-    delete user.password;
-
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
     await this.usersRepository
       .update(id, {
-        ...user,
-        ...data,
+        password,
+        recoverPasswordToken: null,
       })
       .catch(handleError);
-
     return this.usersRepository.findOneBy({ id }).catch(handleError);
   }
 }
