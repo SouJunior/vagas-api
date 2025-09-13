@@ -6,6 +6,7 @@ import {
   IsOptional,
   IsString,
   IsStrongPassword,
+  Matches,
   MaxLength,
 } from 'class-validator';
 import { UserRole } from '../../../shared/utils/userRole/userRole';
@@ -31,6 +32,9 @@ export class CreateUserDto {
 
   @IsNotEmpty()
   @IsString()
+  @IsString()
+  @MaxLength(128)
+  @Matches(/^\S+$/, { message: 'A senha não pode conter espaços em branco.' })
   @IsStrongPassword(
     {
       minLength: 8,
@@ -41,7 +45,7 @@ export class CreateUserDto {
     },
     {
       message:
-        'Senha inválida. Deve conter pelo menos 8 caracteres, uma letra maiúscula, uma letra minúscula, um número, um caractere especial e não pode conter espaços.',
+        'Senha inválida. Deve conter pelo menos 8 caracteres, uma letra maiúscula, uma letra minúscula, um número e um caractere especial.',
     },
   )
   @ApiProperty({
