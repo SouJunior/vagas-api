@@ -12,11 +12,12 @@ export class GetAllSavedJobsDto {
   userId?: string;
 
   @IsOptional()
-  @IsUUID()
+  @IsUUID('4')
   @ApiProperty({
     required: false,
-    description: 'ID da vaga salva',
-    example: 'job_abc123',
+    description: 'ID da vaga salva (UUID v4)',
+    example: '9f6a2e6a-4e9b-4b1e-9b7f-1a2b3c4d5e6f',
+    format: 'uuid',
   })
   jobId?: string;
 }
