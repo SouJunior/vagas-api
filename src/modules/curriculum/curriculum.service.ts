@@ -11,12 +11,8 @@ export class CurriculumService {
     private curriculumRepository: CurriculumRepository,
   ) {}
 
-  async getALlCurriculum(
-    user: UsersEntity,
-  ): Promise<{ status: number; data: any }> {
-    const curriculuns = await this.curriculumRepository.findAllCurriculum(
-      user.id,
-    );
+  async getAllCurriculum(): Promise<{ status: number; data: any }> {
+    const curriculuns = await this.curriculumRepository.findAllCurriculum();
 
     return {
       status: 200,

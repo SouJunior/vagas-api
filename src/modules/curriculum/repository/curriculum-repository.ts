@@ -22,9 +22,9 @@ export class CurriculumRepository {
       .catch(handleError);
   }
 
-  async findAllCurriculum(): Promise<CurriculumEntity[]> {
+  async findAllCurriculum(userId: string): Promise<CurriculumEntity[]> {
     return this.curriculumRepository
-      .find({ select: { user_id: true } })
+      .find({ where: { user_id: userId } })
       .catch(handleError);
   }
 
