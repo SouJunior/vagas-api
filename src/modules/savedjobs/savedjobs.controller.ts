@@ -100,6 +100,14 @@ export class SavedJobsController {
   @Get()
   @ApiBearerAuth()
   @UseGuards(AuthGuard('jwt'))
+  @UsePipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+      transformOptions: { enableImplicitConversion: true },
+    }),
+  )
   @SwaggerFindSavedJobs()
   @ApiOperation({
     summary: 'Obtenha todos os trabalhos salvos com filtros e paginação.',
