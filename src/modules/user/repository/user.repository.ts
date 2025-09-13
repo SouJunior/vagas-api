@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { Repository, ILike } from 'typeorm';
 import { UsersEntity } from '../../../database/entities/users.entity';
 import {
   PageDto,
@@ -42,9 +42,11 @@ export class UserRepository {
     return new PageDto(entities, pageMetaDto);
   }
 
-  async searchUserByName(): Promise<UsersEntity[]> {
+  async searchUserByName(name: string): Promise<UsersEntity[]> {
     return this.usersRepository
-      .find({ select: { name: true } })
+      .find({
+        where: { name: ILike(`%${name}%`) },
+      })
       .catch(handleError);
   }
 
