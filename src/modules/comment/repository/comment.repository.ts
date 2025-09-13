@@ -1,4 +1,4 @@
-import { Repository } from 'typeorm';
+import { IsNull, Repository } from 'typeorm';
 import { CommentsEntity } from '../../../database/entities/comments.entity';
 import { handleError } from '../../../shared/utils/handle-error.util';
 import { UpdateCommentDto } from '../dtos/update-comment.dto';
@@ -25,9 +25,13 @@ export class CommentRepository {
   }
 
   async getCommentById(id: string): Promise<CommentsEntity> {
-    return this.commentsRepository
-      .findOneBy({ id, desativated_at: null })
+    const comment = await this.commentsRepository
+      .findOneBy({ id, desativated_at: IsNull() })
       .catch(handleError);
+    if (!comment) {
+      throw new NotFoundException('Comentário não encontrado ou desativado');
+    }
+    return comment;
   }
 
   async updateComment(id: string, data: UpdateCommentDto) {
