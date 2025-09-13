@@ -1,9 +1,9 @@
-import { Controller, Get, Req, Res } from '@nestjs/common';
+import { Controller, Get, Res } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AppService } from './app.service';
 import { SwaggerHealthCheck } from './shared/Swagger/decorators/app/health-check.swagger.decorator';
 
-import { Request, Response } from 'express';
+import { Response } from 'express';
 
 @ApiTags('Status')
 @Controller()
@@ -14,9 +14,8 @@ export class AppController {
   @ApiOperation({
     summary: 'Show status of operation',
   })
-  getAppStatus(@Req() req: Request) {
-    const baseUrl = req.protocol + '://' + req.get('host');
-    return this.appService.getAppStatus(baseUrl);
+  getAppStatus() {
+    return this.appService.getAppStatus();
   }
 
   @Get('/health-check')

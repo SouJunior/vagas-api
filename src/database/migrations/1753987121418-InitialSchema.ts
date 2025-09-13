@@ -4,6 +4,7 @@ export class InitialSchema1753987121418 implements MigrationInterface {
   name = 'InitialSchema1753987121418';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.query(`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`);
     await queryRunner.query(
       `CREATE TABLE "tb_certifications" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" character varying NOT NULL, "institution" character varying NOT NULL, "description" character varying NOT NULL, "personal_data_id" uuid NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_8e804f03029586ca2415f68aa40" PRIMARY KEY ("id"))`,
     );
