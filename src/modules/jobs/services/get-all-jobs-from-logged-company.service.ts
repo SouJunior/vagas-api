@@ -13,11 +13,12 @@ export class GetAllJobsFromLoggedCompanyService {
   async execute(companyId: string): Promise<IJobsResponse> {
     const jobs = await this.jobsRepository.getAllJobsByCompanyId(companyId);
 
-    if (!jobs) {
+    if (!jobs || (Array.isArray(jobs) && jobs.length === 0)) {
       return {
-        status: 400,
+        status: 200,
         data: {
           message: 'This company has no jobs yet.',
+          content: [],
         },
       };
     }
