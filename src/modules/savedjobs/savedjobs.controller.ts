@@ -11,13 +11,14 @@ import {
   UseGuards,
   UsePipes,
   ValidationPipe,
+  ParseUUIDPipe,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
-  ApiOperation,
   ApiTags,
   ApiResponse,
   ApiParam,
+  ApiOperation,
 } from '@nestjs/swagger';
 import { SavedJobsService } from '../savedjobs/services/savedjobs.service';
 import { CreateSavedJobDto } from '../savedjobs/dtos/create-savedJob-dto';
@@ -29,7 +30,6 @@ import { PageOptionsDto } from 'src/shared/pagination';
 import { FindAllSavedJobsService } from './services/find-all-savedjobs.service';
 import { UsersEntity } from 'src/database/entities/users.entity';
 import { LoggedUser } from '../auth/decorator/logged-user.decorator';
-import { DeleteSavedJobDto } from './dtos/delete-saved-job-dto';
 import { DeleteSavedJobsService } from './services/delete-saved-jobs.service';
 
 @ApiTags('saved-jobs')
@@ -43,8 +43,14 @@ export class SavedJobsController {
 
   @Post()
   @ApiBearerAuth()
-  @UseGuards(AuthGuard())
-  @UsePipes(new ValidationPipe())
+  @UseGuards(AuthGuard('jwt'))
+  @UsePipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+    }),
+  )
   @SwaggerCreateSavedJobs()
   @ApiOperation({ summary: 'Salvar vaga para um usuário' })
   @ApiResponse({
@@ -85,15 +91,15 @@ export class SavedJobsController {
   @ApiOperation({ summary: 'Delete a saved job' })
   @ApiParam({ name: 'id', description: 'The ID of the saved job to delete' })
   async deleteSavedJob(
-    @Param() deleteSavedJobDto: DeleteSavedJobDto,
+    @Param('id', new ParseUUIDPipe()) id: string,
     @LoggedUser() user: UsersEntity,
   ) {
-    return this.deleteSavedJobsService.execute(deleteSavedJobDto, user.id);
+    return this.deleteSavedJobsService.execute({ id }, user.id);
   }
 
   @Get()
   @ApiBearerAuth()
-  @UseGuards(AuthGuard())
+  @UseGuards(AuthGuard('jwt'))
   @SwaggerFindSavedJobs()
   @ApiOperation({
     summary: 'Obtenha todos os trabalhos salvos com filtros e paginação.',

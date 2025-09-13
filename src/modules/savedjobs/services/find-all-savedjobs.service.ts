@@ -19,7 +19,7 @@ export class FindAllSavedJobsService {
       );
     } catch (error) {
       throw new InternalServerErrorException(
-        `Falha ao salvar os trabalhos salvos: ${error.message}`,
+        `Erro ao buscar vagas salvas: ${error.message}`,
       );
     }
   }
