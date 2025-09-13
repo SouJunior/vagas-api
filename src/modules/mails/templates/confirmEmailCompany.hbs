@@ -1,79 +1,110 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link
-            href="https://fonts.googleapis.com/css?family=Radio Canada"
-            rel="stylesheet"
-        />
-        <title>Confirma e-mail</title>
-    </head>
-    <body style='font-family: "Radio Canada", sans-serif'>
-        <div style="display: block; text-align: center; justify-content: center">
-            <header style="padding-top: 70px; padding-bottom: 40px">
-                <img src="https://i.imgur.com/HjfJAQd.png" alt="Logo" />
-            </header>
-            <main>
-                <div style="border: 1px solid #ccc; width: 90vmin; padding-bottom: 50px; position: relative; margin: auto; margin-bottom: 10px">
-                    <div style="background-color: #CBE0F4">
-                        <img
-                            class="img"
-                            src="https://i.imgur.com/dlfEPPQ.png"
-                            alt="Gráfico de pizza"
-                            style="position: relative; top: 10px"
-                        />
-                    </div>
-                    <div style="padding: 30px">
-                        <h1 style="color: #046AD0">
-                            Confirmação de cadastro de empresa
-                        </h1>
-                        <div style="font-size: 24px; line-height: 32px; opacity: 0.8; padding-bottom: 30px">
-                            <p style="margin: 0">Olá, {{name}}!</p>
-                            <p style="margin: 0">
-                                Este e-mail foi cadastrado no Portal de Vagas
-                                <strong>SouJunior</strong>. Para sua
-                                <strong>segurança</strong>, confirme a operação:
-                            </p>
-                        </div>
-                    </div>
-                    <a style="background-color: #046AD0; color: #D7D9D7; padding: 12px 16px; border-style: none; border-radius: 8px; text-decoration: none; cursor: pointer" href="{{url}}" target='_blank'>
-                       Confirmar meu e-mail
-                    </a>
-                </div>
-            </main>
-            <footer>
-            <small>
-                <div>
-                    <div style="color: #5D5F5D; line-height: 22px">
-                        <strong>Não foi você?</strong>
-                        <p style="margin: 0">
-                            Se não realizou nenhuma solicitação para recuperar sua senha na plataforma SouJunior, por favor, desconsidere este e-mail.
-                        </p>
-                    </div>
-                    <div>
-                        <p style="color: #5D5F5D; line-height: 22px">Nos acompanhe nas redes sociais</p>
-                        <a href="https://www.instagram.com/soujunior.tech/" style="margin-right: 20px; text-decoration: none">
-                            <img src="https://vagas-dev.s3.amazonaws.com/1683044119369instagram.png" alt="Instagram">
-                        </a>
-                        <a href="https://www.youtube.com/@soujuniortech" style="margin-right: 20px; text-decoration: none">
-                            <img src="https://vagas-dev.s3.amazonaws.com/1683055682396youtube.jpg" alt="YouTube">
-                        </a>
-                        <a href="https://www.linkedin.com/company/soujunior/" style="text-decoration: none">
-                            <img src="https://vagas-dev.s3.amazonaws.com/1683055899782linkedin.jpg" alt="LinkedIn">
-                        </a>
-                    </div>
-                    <div style="padding-top: 20px; padding-bottom: 20px">
-                        <a style="color: #5D5F5D; line-height: 22px; text-decoration: none" href="https://www.soujunior.tech/">
-                            https://www.soujunior.tech/
-                        </a>
-                    </div>
-                </div>
-                <div style="color: #C1292E; font-size: 14px; font-weight: 600">
-                    <p>Esta é uma mensagem automática. Por favor não responda este e-mail.</p>
-                </div>
-            </small>
-        </footer>
+<html lang='pt-br'>
+  <head>
+    <meta charset='utf-8' />
+    <meta name='viewport' content='width=device-width, initial-scale=1' />
+    <link
+      href='https://fonts.googleapis.com/css?family=Radio Canada'
+      rel='stylesheet'
+    />
+    <title>Confirma e-mail</title>
+  </head>
+  <body style='font-family: "Radio Canada", sans-serif'>
+    <div style='display: block; text-align: center; justify-content: center'>
+      <header style='padding-top: 70px; padding-bottom: 40px'>
+        <img src='https://i.imgur.com/HjfJAQd.png' alt='Logo' />
+      </header>
+      <main>
+        <div
+          style='border: 1px solid #ccc; width: 90vmin; padding-bottom: 50px; position: relative; margin: auto; margin-bottom: 10px'
+        >
+          <div style='background-color: #CBE0F4'>
+            <img
+              class='img'
+              src='https://i.imgur.com/dlfEPPQ.png'
+              alt='Gráfico de pizza'
+              style='position: relative; top: 10px'
+            />
+          </div>
+          <div style='padding: 30px'>
+            <h1 style='color: #046AD0'>
+              Confirmação de cadastro de empresa
+            </h1>
+            <div
+              style='font-size: 24px; line-height: 32px; opacity: 0.8; padding-bottom: 30px'
+            >
+              <p style='margin: 0'>Olá, {{name}}!</p>
+              <p style='margin: 0'>
+                Este e-mail foi cadastrado no Portal de Vagas
+                <strong>SouJunior</strong>. Para sua
+                <strong>segurança</strong>, confirme a operação:
+              </p>
+            </div>
+          </div>
+          <a
+            style='background-color: #046AD0; color: #D7D9D7; padding: 12px 16px; border-style: none; border-radius: 8px; text-decoration: none; cursor: pointer'
+            href='{{url}}'
+            target='_blank'
+          >
+            Confirmar meu e-mail
+          </a>
         </div>
-    </body>
+      </main>
+      <footer>
+        <small>
+          <div>
+            <div style='color: #5D5F5D; line-height: 22px'>
+              <strong>Não foi você?</strong>
+              <p style='margin: 0'>
+                Se não realizou nenhuma solicitação para recuperar sua senha na
+                plataforma SouJunior, por favor, desconsidere este e-mail.
+              </p>
+            </div>
+            <div>
+              <p style='color: #5D5F5D; line-height: 22px'>Nos acompanhe nas
+                redes sociais</p>
+              <a
+                href='https://www.instagram.com/soujunior.tech/'
+                style='margin-right: 20px; text-decoration: none'
+              >
+                <img
+                  src='https://vagas-dev.s3.amazonaws.com/1683044119369instagram.png'
+                  alt='Instagram'
+                />
+              </a>
+              <a
+                href='https://www.youtube.com/@soujuniortech'
+                style='margin-right: 20px; text-decoration: none'
+              >
+                <img
+                  src='https://vagas-dev.s3.amazonaws.com/1683055682396youtube.jpg'
+                  alt='YouTube'
+                />
+              </a>
+              <a
+                href='https://www.linkedin.com/company/soujunior/'
+                style='text-decoration: none'
+              >
+                <img
+                  src='https://vagas-dev.s3.amazonaws.com/1683055899782linkedin.jpg'
+                  alt='LinkedIn'
+                />
+              </a>
+            </div>
+            <div style='padding-top: 20px; padding-bottom: 20px'>
+              <a
+                style='color: #5D5F5D; line-height: 22px; text-decoration: none'
+                href='https://www.soujunior.tech/'
+              >
+                https://www.soujunior.tech/
+              </a>
+            </div>
+          </div>
+          <div style='color: #C1292E; font-size: 14px; font-weight: 600'>
+            <p>Esta é uma mensagem automática. Por favor não responda este
+              e-mail.</p>
+          </div>
+        </small>
+      </footer>
+    </div>
+  </body>
 </html>
