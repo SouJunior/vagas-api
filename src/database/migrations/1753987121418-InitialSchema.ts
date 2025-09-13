@@ -21,16 +21,16 @@ export class InitialSchema1753987121418 implements MigrationInterface {
       `CREATE TABLE "tb_courses" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" character varying NOT NULL, "type" "public"."tb_courses_type_enum" NOT NULL DEFAULT 'FREE', "duration" "public"."tb_courses_duration_enum" NOT NULL DEFAULT 'FAST', "institution" character varying NOT NULL, "start_date" TIMESTAMP NOT NULL, "status" "public"."tb_courses_status_enum" NOT NULL DEFAULT 'COMPLETED', "end_date" TIMESTAMP NOT NULL, "description" character varying, "personal_data_id" uuid NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_ead041f447c63ddcd1037c98450" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
-      `CREATE TYPE "public"."tb_languages_writing_enum" AS ENUM('BASIC', 'INTERMEDITE', 'ADVANCED', 'FLUENT')`,
+      `CREATE TYPE "public"."tb_languages_writing_enum" AS ENUM('BASIC', 'INTERMEDIATE', 'ADVANCED', 'FLUENT')`,
     );
     await queryRunner.query(
-      `CREATE TYPE "public"."tb_languages_reading_enum" AS ENUM('BASIC', 'INTERMEDITE', 'ADVANCED', 'FLUENT')`,
+      `CREATE TYPE "public"."tb_languages_reading_enum" AS ENUM('BASIC', 'INTERMEDIATE', 'ADVANCED', 'FLUENT')`,
     );
     await queryRunner.query(
-      `CREATE TYPE "public"."tb_languages_listening_enum" AS ENUM('BASIC', 'INTERMEDITE', 'ADVANCED', 'FLUENT')`,
+      `CREATE TYPE "public"."tb_languages_listening_enum" AS ENUM('BASIC', 'INTERMEDIATE', 'ADVANCED', 'FLUENT')`,
     );
     await queryRunner.query(
-      `CREATE TYPE "public"."tb_languages_speaking_enum" AS ENUM('BASIC', 'INTERMEDITE', 'ADVANCED', 'FLUENT')`,
+      `CREATE TYPE "public"."tb_languages_speaking_enum" AS ENUM('BASIC', 'INTERMEDIATE', 'ADVANCED', 'FLUENT')`,
     );
     await queryRunner.query(
       `CREATE TABLE "tb_languages" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "language" character varying NOT NULL, "writing" "public"."tb_languages_writing_enum" NOT NULL DEFAULT 'BASIC', "reading" "public"."tb_languages_reading_enum" NOT NULL DEFAULT 'BASIC', "listening" "public"."tb_languages_listening_enum" NOT NULL DEFAULT 'BASIC', "speaking" "public"."tb_languages_speaking_enum" NOT NULL DEFAULT 'BASIC', "personal_data_id" uuid NOT NULL, "created_at" TIMESTAMP NOT NULL DEFAULT now(), "updated_at" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_5e33d6387caef545eea9a74573c" PRIMARY KEY ("id"))`,
@@ -126,7 +126,7 @@ export class InitialSchema1753987121418 implements MigrationInterface {
       `ALTER TABLE "tb_saved_jobs" ADD CONSTRAINT "FK_3845b06bfda63ccc1da359b378a" FOREIGN KEY ("userId") REFERENCES "tb_users"("id") ON DELETE CASCADE ON UPDATE NO ACTION`,
     );
     await queryRunner.query(
-      `ALTER TABLE "tb_saved_jobs" ADD CONSTRAINT "FK_9bbd9a1f3bb4942f0471816b111" FOREIGN KEY ("jobId") REFERENCES "tb_jobs"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
+      `ALTER TABLE "tb_saved_jobs" ADD CONSTRAINT "FK_9bbd9a1f3bb4942f0471816b111" FOREIGN KEY ("jobId") REFERENCES "tb_jobs"("id") ON DELETE CASCADE ON UPDATE NO ACTION`,
     );
     await queryRunner.query(
       `ALTER TABLE "tb_jobs" ADD CONSTRAINT "FK_a64a855331c54d698baddb03b6f" FOREIGN KEY ("company_id") REFERENCES "tb_companies"("id") ON DELETE CASCADE ON UPDATE NO ACTION`,
@@ -141,10 +141,10 @@ export class InitialSchema1753987121418 implements MigrationInterface {
       `ALTER TABLE "tb_applications" ADD CONSTRAINT "FK_f3502a850c1b2b75a5dbe2c04ee" FOREIGN KEY ("curriculum_id") REFERENCES "tb_curriculum"("id") ON DELETE CASCADE ON UPDATE NO ACTION`,
     );
     await queryRunner.query(
-      `ALTER TABLE "tb_candidacies" ADD CONSTRAINT "FK_1662288d1b8caf94c572bfabbc6" FOREIGN KEY ("user_id") REFERENCES "tb_users"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
+      `ALTER TABLE "tb_candidacies" ADD CONSTRAINT "FK_1662288d1b8caf94c572bfabbc6" FOREIGN KEY ("user_id") REFERENCES "tb_users"("id") ON DELETE CASCADE ON UPDATE NO ACTION`,
     );
     await queryRunner.query(
-      `ALTER TABLE "tb_candidacies" ADD CONSTRAINT "FK_5c4eb146c25019655e75d6c1e58" FOREIGN KEY ("job_id") REFERENCES "tb_jobs"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
+      `ALTER TABLE "tb_candidacies" ADD CONSTRAINT "FK_5c4eb146c25019655e75d6c1e58" FOREIGN KEY ("job_id") REFERENCES "tb_jobs"("id") ON DELETE CASCADE ON UPDATE NO ACTION`,
     );
     await queryRunner.query(
       `ALTER TABLE "tb_users" ADD CONSTRAINT "FK_0afe3b230cbd95a08c72f9df3f0" FOREIGN KEY ("personalDataId") REFERENCES "tb_personal_data"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,
