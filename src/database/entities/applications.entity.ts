@@ -2,9 +2,11 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  Index,
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
+  RelationId,
   UpdateDateColumn,
 } from 'typeorm';
 import { CurriculumEntity } from './curriculum.entity';
@@ -23,13 +25,13 @@ export class ApplicationEntity {
   @Column()
   job_id: string;
 
-  @ManyToOne(() => UsersEntity, { onDelete: 'CASCADE' })
+  @Index('idx_applications_user_id')
+  @ManyToOne(() => UsersEntity, { onDelete: 'CASCADE', nullable: false })
   @JoinColumn({ name: 'user_id' })
   user: UsersEntity;
 
-  @Column()
+  @RelationId((app: ApplicationEntity) => app.user)
   user_id: string;
-
   @ManyToOne(() => CurriculumEntity, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'curriculum_id' })
   curriculum: CurriculumEntity;
