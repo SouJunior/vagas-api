@@ -96,19 +96,13 @@ export class JobRepository {
   }
 
   async updateJob(id: string, data: UpdateJobDto) {
-    const job = await this.jobsRepository
-      .findOneBy({ id, status: StatusEnum.ACTIVE })
+    const result = await this.jobsRepository
+      .update({ id, status: StatusEnum.ACTIVE }, data)
       .catch(handleError);
-
-    if (!job) {
+    if (!result?.affected) {
       throw new NotFoundException('Vaga não encontrada ou inativa');
     }
-    return this.jobsRepository
-      .save({
-        ...job,
-        ...data,
-      })
-      .catch(handleError);
+    return this.jobsRepository.findOneBy({ id }).catch(handleError);
   }
 
   async searchJobs(
