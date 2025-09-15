@@ -38,34 +38,18 @@ export class CreateUserService {
     data.password = await bcrypt.hash(password, 10);
 
     delete data.confirmPassword;
-    try {
-      const response = await this.userRepository.createUser(data);
 
-      delete response.password;
-      delete response.recoverPasswordToken;
-      delete response.ip;
+    const response = await this.userRepository.createUser(data);
 
-      await this.mailService.sendUserCreationConfirmation(response);
+    delete response.password;
+    delete response.recoverPasswordToken;
+    delete response.ip;
 
-      return {
-        status: 201,
-        data: response,
-      };
-    } catch (error) {
-      // Postgres: 23505 | MySQL: ER_DUP_ENTRY
-      if (
-        error?.code === '23505' ||
-        error?.code === 'ER_DUP_ENTRY' ||
-        error?.errno === 1062 // MySQL
-      ) {
-        return {
-          status: 409,
-          data: {
-            message: 'E-mail já cadastrado',
-          },
-        };
-      }
-      throw error;
-    }
+    await this.mailService.sendUserCreationConfirmation(response);
+
+    return {
+      status: 201,
+      data: response,
+    };
   }
 }
