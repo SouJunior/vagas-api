@@ -2,11 +2,11 @@
 
 ![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=2088f2&style=for-the-badge)
 
-<h1 align="center"> <a href="https://git.io/typing-svg">
+<h1 align="center"> <a href="https://git.io/typing-svg"> 
 
-<img src="https://readme-typing-svg.herokuapp.com/?color=ffffff&size=35&center=true&vCenter=true&width=1000&lines=Seja+bem+vindo(a)+ao+vagas-backend!" alt="Typing SVG" /> </a> </h1>
+<img src="https://readme-typing-svg.herokuapp.com/?color=ffffff&size=35&center=true&vCenter=true&width=1000&lines=Seja+bem+vindo(a)+ao+vagas-backend!" alt="Typing SVG" /> </a> </h1> 
 
-<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&width=100%&color=2088f2&fontColor=ffffff&height=300&section=header&text=Sou%20Junior&fontSize=90&animation=fadeIn&fontAlignY=38&desc=Projeto%20Opensource%20para%20melhorar%20o%20match%20entre%20profissionais%20Juniors%20e%20Empresas!&descAlignY=61&descAlign=52" />
+<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&width=100%&color=2088f2&fontColor=ffffff&height=300&section=header&text=Sou%20Junior&fontSize=90&animation=fadeIn&fontAlignY=38&desc=Projeto%20Opensource%20para%20melhorar%20o%20match%20entre%20profissionais%20Juniors%20e%20Empresas!&descAlignY=61&descAlign=52" /> 
 
 <p align="center">Visitantes: <img src="https://profile-counter.glitch.me/SouJunior/count.svg" /></p>
 
@@ -24,18 +24,19 @@
 
 <a href="#equipe_do_backend">Equipe Back-end</a>
 
-### Pré-requisitos:
 
-- Git
-- Docker instalado
-- Banco de dados (ex: PostgreSQL) em execução
-- Insomnia ou outro que você prefira para fazer as requisições
+### Pré-requisitos:
+* Git
+* Docker instalado
+* Banco de dados (ex: PostgreSQL) em execução
+* Insomnia ou outro que você prefira para fazer as requisições
 
 ---
 
 <a id="rodando-localmente"></a>
 
 ## 🛠️ Rodando localmente
+
 
 Clone o projeto ou o fork do projeto com o seguinte comando:
 
@@ -50,11 +51,9 @@ npm install
 ```
 
 Suba os containers docker na sua máquina via `docker compose`:
-
 ```bash
 docker compose up -d
 ```
-
 ⚠️ Caso o comando acima não funcione, use com hífen:
 
 ```bash
@@ -62,7 +61,6 @@ docker-compose up -d
 ```
 
 Para remover os containers:
-
 ```bash
 docker compose down
 ```
@@ -72,7 +70,6 @@ Crie o arquivo `.env` seguindo o exemplo contido em `.env.example`.
 ---
 
 ## Configure o arquivo .env
-
 🔐 Crie um arquivo .env na raiz do projeto com as seguintes variáveis de ambiente:
 
 ```bash
@@ -83,14 +80,13 @@ JWT_SECRET=sua_chave_secreta
 
 💡 Dica: nunca suba o arquivo .env no GitHub! Use sempre o .gitignore para evitar vazamentos de credenciais.
 
-Aplique as **migrations** do TypeORM no seu banco de dados local:
 
+Aplique as **migrations** do TypeORM no seu banco de dados local:
 ```bash
 npm run migration:run
 ```
 
 Por fim, inicie o servidor:
-
 ```bash
 npm run dev # ou npm run start:dev
 ```
@@ -98,7 +94,6 @@ npm run dev # ou npm run start:dev
 # Acesso à Aplicação
 
 Após subir a aplicação, acesse:
-
 ```bash
 http://localhost:3000
 ```
@@ -106,7 +101,6 @@ http://localhost:3000
 ---
 
 ## 🖥️ Instruções por sistema operacional
-
 Tanto 🐧 Linux quanto 🪟 Windows são o mesmo processo
 
 ```bash
@@ -218,7 +212,7 @@ sequenceDiagram
     Actions-->>Git: Deploy de Produção atualizado
 
     Note over Dev,ECR: Loop de desenvolvimento
-
+    
     Dev->>Git: Aprova e mergeia PR para main
     par
         Git->>Rail: Novo Evento: Branch main atualizada
@@ -233,11 +227,8 @@ sequenceDiagram
 ```
 
 ---
-
 <a id="como_contribuir"></a>
-
 ## 👨‍💻 Como contribuir
-
 Ficaremos felizes com contribuições! Veja como participar:
 
 Crie uma issue com sugestões, dúvidas ou relatos de erro
@@ -251,9 +242,7 @@ Envie um Pull Request (PR) explicando suas alterações
 🔎 Siga boas práticas de versionamento e mantenha seus commits claros e objetivos!
 
 ---
-
 <a id="equipe_do_backend"></a>
-
 ## 👨‍💻 Equipe Back-end
 
 ### 👑 Headers
@@ -357,6 +346,7 @@ Envie um Pull Request (PR) explicando suas alterações
   <br />
   <a href="https://github.com/wouerner">Wouerner Brandão</a>
 </p>
+
 
 ---
 
