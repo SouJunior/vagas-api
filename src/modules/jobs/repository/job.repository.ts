@@ -10,24 +10,27 @@ import { CreateJobDto } from '../dtos/create-job.dto';
 import { GetAllJobsDto } from '../dtos/get-all-jobs.dto';
 import { UpdateJobDto } from '../dtos/update-job.dto';
 import { Injectable } from '@nestjs/common';
+import { NotFoundException } from '@nestjs/common';
+import { StatusEnum } from 'src/shared/enums/status.enum';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class JobRepository {
-  constructor(@InjectRepository(JobsEntity) private jobsRepository: Repository<JobsEntity>) {}
+  constructor(
+    @InjectRepository(JobsEntity)
+    private jobsRepository: Repository<JobsEntity>,
+  ) {}
 
   async createNewJob(data: CreateJobDto): Promise<void> {
     await this.jobsRepository.save(data).catch(handleError);
     return;
   }
 
-  async getAllJobsByCompanyId(
-    companyId: string
-  ): Promise<JobsEntity[]> {
-
-    const jobs = await this.jobsRepository.find({where: {company_id: companyId}})
-
-    return jobs
+  async getAllJobsByCompanyId(companyId: string): Promise<JobsEntity[]> {
+    const jobs = await this.jobsRepository.find({
+      where: { company_id: companyId, status: StatusEnum.ACTIVE },
+    });
+    return jobs;
   }
 
   async getAllJobs(
@@ -65,7 +68,8 @@ export class JobRepository {
   }
 
   async findOneById(id: string): Promise<any> {
-    const queryBuilder = this.jobsRepository.createQueryBuilder('jobs')
+    const queryBuilder = this.jobsRepository
+      .createQueryBuilder('jobs')
       .leftJoinAndSelect('jobs.comments', 'comments')
       .leftJoinAndSelect('comments.user', 'user')
       .leftJoinAndSelect('jobs.company', 'company')
@@ -92,12 +96,13 @@ export class JobRepository {
   }
 
   async updateJob(id: string, data: UpdateJobDto) {
-    const job = await this.jobsRepository.findOneBy({id}).catch(handleError);
-
-    return this.jobsRepository.save({
-      ...job,
-      ...data,
-    }).catch(handleError);
+    const result = await this.jobsRepository
+      .update({ id, status: StatusEnum.ACTIVE }, data)
+      .catch(handleError);
+    if (!result?.affected) {
+      throw new NotFoundException('Vaga não encontrada ou inativa');
+    }
+    return this.jobsRepository.findOneBy({ id }).catch(handleError);
   }
 
   async searchJobs(
@@ -110,8 +115,8 @@ export class JobRepository {
     queryBuilder
       .leftJoin('job.company', 'company')
       .select(['job', 'company.id', 'company.companyName', 'company.profile'])
-      .andWhere(`job.title ILIKE '%${searchQuery}%'`)
-      .andWhere(`job.status = 'ACTIVE'`)
+      .andWhere('job.title ILIKE :title', { title: `%${searchQuery}%` })
+      .andWhere('job.status = :status', { status: StatusEnum.ACTIVE })
       .orderBy(`job.${pageOptionsDto.orderByColumn}`, pageOptionsDto.order)
       .skip((pageOptionsDto.page - 1) * pageOptionsDto.take)
       .take(pageOptionsDto.take);

@@ -102,6 +102,11 @@ export class UserController {
   @UseGuards(AuthGuard())
   @ApiBearerAuth()
   async getOneUser(@Param('id') id: string, @LoggedUser() user: UsersEntity) {
+    if (user.id !== id && user.type !== 'admin') {
+      throw new (await import('@nestjs/common')).ForbiddenException(
+        'Acesso negado.',
+      );
+    }
     return this.findOneUserService.execute(id);
   }
 
@@ -122,7 +127,7 @@ export class UserController {
   @SwaggerDeleteUser()
   @UseGuards(AuthGuard())
   @ApiBearerAuth()
-  async deleteUser( @LoggedUser() user: UsersEntity) {
+  async deleteUser(@LoggedUser() user: UsersEntity) {
     return this.deleteUserService.execute(user.id);
   }
 
@@ -143,9 +148,8 @@ export class UserController {
     @Body() updatePassword: CreatePasswordHashDto,
     @Res() res: Response,
   ) {
-    const { data, status } = await this.updatePasswordByEmailService.execute(
-      updatePassword,
-    );
+    const { data, status } =
+      await this.updatePasswordByEmailService.execute(updatePassword);
     return res.status(status).send(data);
   }
 

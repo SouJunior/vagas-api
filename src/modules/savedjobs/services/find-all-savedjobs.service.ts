@@ -1,8 +1,14 @@
-import { Injectable, InternalServerErrorException } from "@nestjs/common";
-import { SavedJobsEntity } from "src/database/entities/savedjobs.entity";
-import { PageDto, PageOptionsDto } from "src/shared/pagination";
-import { SavedJobsRepository } from "../repository/savedjobs.repository";
-import { GetAllSavedJobsDto } from "../dtos/get-all-savedjobs.dto";
+import {
+  Injectable,
+  InternalServerErrorException,
+  HttpException,
+  Logger,
+} from '@nestjs/common';
+const logger = new Logger('FindAllSavedJobsService');
+import { SavedJobsEntity } from 'src/database/entities/savedjobs.entity';
+import { PageDto, PageOptionsDto } from 'src/shared/pagination';
+import { SavedJobsRepository } from '../repository/savedjobs.repository';
+import { GetAllSavedJobsDto } from '../dtos/get-all-savedjobs.dto';
 
 @Injectable()
 export class FindAllSavedJobsService {
@@ -13,9 +19,19 @@ export class FindAllSavedJobsService {
     filters: GetAllSavedJobsDto,
   ): Promise<PageDto<SavedJobsEntity>> {
     try {
-      return await this.savedJobsRepository.getAllSavedJobs(pageOptionsDto, filters);
+      return await this.savedJobsRepository.getAllSavedJobs(
+        pageOptionsDto,
+        filters,
+      );
     } catch (error) {
-      throw new InternalServerErrorException(`Falha ao salvar os trabalhos salvos: ${error.message}`);
+      if (error instanceof HttpException) {
+        throw error;
+      }
+      logger.error(
+        'Erro inesperado ao buscar vagas salvas',
+        error?.stack || error,
+      );
+      throw new InternalServerErrorException('Internal server error');
     }
   }
 }

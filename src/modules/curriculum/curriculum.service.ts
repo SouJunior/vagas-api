@@ -11,13 +11,12 @@ export class CurriculumService {
     private curriculumRepository: CurriculumRepository,
   ) {}
 
-  async getALlCurriculum(
+  async getAllCurriculum(
     user: UsersEntity,
   ): Promise<{ status: number; data: any }> {
     const curriculuns = await this.curriculumRepository.findAllCurriculum(
       user.id,
     );
-
     return {
       status: 200,
       data: curriculuns,
@@ -53,9 +52,8 @@ export class CurriculumService {
       user,
     };
 
-    const curriculuns = await this.curriculumRepository.saveCurriculum(
-      saveNewCurriculum,
-    );
+    const curriculuns =
+      await this.curriculumRepository.saveCurriculum(saveNewCurriculum);
 
     return {
       status: 200,

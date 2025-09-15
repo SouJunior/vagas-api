@@ -5,14 +5,13 @@ import {
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
-  Timestamp,
   UpdateDateColumn,
 } from 'typeorm';
 import { PersonalDataEntity } from './personal-data.entity';
 
 enum ProficenceEnum {
   BASIC = 'BASIC',
-  INTERMEDITE = 'INTERMEDITE',
+  INTERMEDIATE = 'INTERMEDIATE',
   ADVANCED = 'ADVANCED',
   FLUENT = 'FLUENT',
 }

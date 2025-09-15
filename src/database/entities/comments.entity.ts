@@ -7,6 +7,7 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
+  RelationId,
 } from 'typeorm';
 import { JobsEntity } from './jobs.entity';
 import { UsersEntity } from './users.entity';
@@ -19,14 +20,14 @@ export class CommentsEntity {
   @Column({ length: 500 })
   comment: string;
 
-  @ManyToOne(() => UsersEntity, { onDelete: "CASCADE"})
+  @ManyToOne(() => UsersEntity, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'user_id' })
   user: UsersEntity;
 
-  @Column()
-  user_id: string;
+  @RelationId((comment: CommentsEntity) => comment.user)
+  userId: string;
 
-  @ManyToOne(() => JobsEntity, (job) => job.comments, { onDelete: "CASCADE"})
+  @ManyToOne(() => JobsEntity, (job) => job.comments, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'job_id' })
   job: JobsEntity;
 

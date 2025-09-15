@@ -7,7 +7,7 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { ApiExcludeController, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiExcludeController, ApiTags } from '@nestjs/swagger';
 import { CreateReportDto } from './dtos/create-report.dto';
 import { ReportIdDto } from './dtos/get-report-by-id.dto';
 import { UpdateReportDto } from './dtos/update-report.dto';

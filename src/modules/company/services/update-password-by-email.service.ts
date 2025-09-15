@@ -16,9 +16,8 @@ export class UpdatePasswordByEmailService {
     password,
     confirmPassword,
   }: CreatePasswordHashDto) {
-    const company = await this.companyRepository.findByToken(
-      recoverPasswordToken,
-    );
+    const company =
+      await this.companyRepository.findByToken(recoverPasswordToken);
 
     if (!company) {
       return {

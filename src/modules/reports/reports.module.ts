@@ -16,9 +16,7 @@ import { UsersEntity } from 'src/database/entities/users.entity';
 import { JobsEntity } from 'src/database/entities/jobs.entity';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([ReportsEntity, UsersEntity, JobsEntity]),
-  ],
+  imports: [TypeOrmModule.forFeature([ReportsEntity, UsersEntity, JobsEntity])],
   controllers: [ReportsController],
   providers: [
     JobRepository,

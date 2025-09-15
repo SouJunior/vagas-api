@@ -35,7 +35,7 @@ import { DeleteJobService } from './services/delete-job.service';
     DeleteJobService,
     SearchJobsService,
     JobRepository,
-    CompanyRepository
+    CompanyRepository,
   ],
 })
 export class JobsModule {}

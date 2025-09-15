@@ -6,7 +6,7 @@ export class FindAllReportsService {
   constructor(private reportRepository: ReportRepository) {}
 
   async execute() {
-    const reports = await this.reportRepository.findAllRepots();
+    const reports = await this.reportRepository.findAllReports();
 
     if (reports.length <= 0) {
       return { message: 'Reports is empty' };

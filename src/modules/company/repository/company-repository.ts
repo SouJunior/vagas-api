@@ -9,8 +9,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class CompanyRepository {
-
-  constructor(@InjectRepository(CompaniesEntity) private companyRepository: Repository<CompaniesEntity>) {}
+  constructor(
+    @InjectRepository(CompaniesEntity)
+    private companyRepository: Repository<CompaniesEntity>,
+  ) {}
 
   async createCompany(data: CreateCompanyDto): Promise<CompaniesEntity> {
     delete data.passwordConfirmation;
@@ -42,24 +44,34 @@ export class CompanyRepository {
     if (!id) {
       throw new NotFoundException('Invalid company ID');
     }
-      const company = await this.companyRepository.findOneBy({id}).catch(handleError);
-  
-      if (!company) {
-        throw new NotFoundException('Company not found');
-      }
-  
-      return company;
+    const company = await this.companyRepository
+      .findOneBy({ id })
+      .catch(handleError);
+
+    if (!company) {
+      throw new NotFoundException('Company not found');
     }
 
+    return company;
+  }
+
   async UpdateCompanyById(id: string, data: any) {
-    const company = await this.companyRepository.findOneBy({id}).catch(handleError);
+    const company = await this.companyRepository
+      .findOneBy({ id })
+      .catch(handleError);
 
-    await this.companyRepository.update(id, {
-      ...company,
-      ...data,
-    }).catch(handleError);
+    if (!company) {
+      throw new NotFoundException('Empresa não encontrada');
+    }
 
-    return this.companyRepository.findOneBy({id}).catch(handleError);
+    await this.companyRepository
+      .update(id, {
+        ...company,
+        ...data,
+      })
+      .catch(handleError);
+
+    return this.companyRepository.findOneBy({ id }).catch(handleError);
   }
 
   async findOneByEmail(email: string): Promise<CompaniesEntity> {
@@ -71,36 +83,39 @@ export class CompanyRepository {
   }
 
   async findByToken(recoverPasswordToken: string): Promise<CompaniesEntity> {
-    return this.companyRepository.findOneBy({ recoverPasswordToken }).catch(handleError);
+    return this.companyRepository
+      .findOneBy({ recoverPasswordToken })
+      .catch(handleError);
   }
 
   async findOneById(id: string): Promise<CompaniesEntity> {
-    return this.companyRepository.findOneBy({id}).catch(handleError);
+    return this.companyRepository.findOneBy({ id }).catch(handleError);
   }
 
   async findOneByCnpj(cnpj: string): Promise<CompaniesEntity> {
-    return this.companyRepository.findOneBy({cnpj}).catch(handleError);
+    return this.companyRepository.findOneBy({ cnpj }).catch(handleError);
   }
 
-  async updateMyPassword(updateMyPasswordDto: UpdateMyPasswordDto, id) {
-    const company = await this.companyRepository.findOneBy({id}).catch(handleError);
-
+  async updateMyPassword(updateMyPasswordDto: UpdateMyPasswordDto, id: string) {
+    const company = await this.companyRepository
+      .findOneBy({ id })
+      .catch(handleError);
     if (!company) {
       throw new NotFoundException('Company not found');
     }
-
-    return this.companyRepository.update(id, updateMyPasswordDto)
-      .then(() => {
-        return this.companyRepository.findOneBy({id});
-      })
+    await this.companyRepository
+      .update(id, updateMyPasswordDto)
       .catch(handleError);
+    return this.companyRepository.findOneBy({ id }).catch(handleError);
   }
 
   async updateRecoveryPassword(
     id,
     recoverPasswordToken,
   ): Promise<CompaniesEntity> {
-    const company = await this.companyRepository.findOneBy({id}).catch(handleError);
+    const company = await this.companyRepository
+      .findOneBy({ id })
+      .catch(handleError);
 
     company.recoverPasswordToken = recoverPasswordToken;
 
@@ -116,7 +131,9 @@ export class CompanyRepository {
   }
 
   async activateCompany(id: string) {
-    const company = await this.companyRepository.findOneBy({id}).catch(handleError);
+    const company = await this.companyRepository
+      .findOneBy({ id })
+      .catch(handleError);
 
     company.mailConfirm = true;
 
@@ -126,20 +143,23 @@ export class CompanyRepository {
   }
 
   async updatePassword(id, password: string): Promise<CompaniesEntity> {
-    const company = await this.companyRepository.findOneBy({id}).catch(handleError);
-    const data = {
-      recoverPasswordToken: null,
-      password,
-    };
+    try {
+      const company = await this.companyRepository
+        .findOneBy({ id })
+        .catch(handleError);
 
-    delete company.password;
-
-    await this.companyRepository.update(id, {
-      ...company,
-      ...data,
-    }).catch(handleError);
-
-    return this.companyRepository.findOneBy({id}).catch(handleError);
+      if (!company) {
+        throw new NotFoundException('Empresa não encontrada');
+      }
+      const data = {
+        recoverPasswordToken: null,
+        password,
+      };
+      await this.companyRepository.update(id, data);
+      return await this.companyRepository.findOneBy({ id });
+    } catch (error) {
+      handleError(error);
+    }
   }
 
   async deleteCompanyById(id: string): Promise<object> {
