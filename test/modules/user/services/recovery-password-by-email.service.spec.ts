@@ -55,7 +55,7 @@ describe('RecoveryPasswordByEmail', () => {
       );
       const { status, data } = await service.execute('teste@teste.com');
       const result = {
-        message: 'If email exists a email to recovery password was send',
+        message: 'Caso esse e-mail esteja cadastrado no sistema, será encaminhado para ele uma mensagem de orientação sobre os próximos passos para a redefinição da senha.',
       };
       expect(status).toEqual(200);
       expect(data).toEqual(result);
@@ -77,7 +77,7 @@ describe('RecoveryPasswordByEmail', () => {
       );
       const { status, data } = await service.execute('teste@teste.com');
       const result = {
-        message: 'If email exists a email to recovery password was send',
+        message: 'Caso esse e-mail esteja cadastrado no sistema, será encaminhado para ele uma mensagem de orientação sobre os próximos passos para a redefinição da senha.',
       };
       expect(status).toEqual(200);
       expect(data).toEqual(result);

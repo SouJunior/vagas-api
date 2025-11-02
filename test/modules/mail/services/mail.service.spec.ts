@@ -1,7 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { MailerService } from '@nestjs-modules/mailer';
 import { ConfigModule } from '@nestjs/config';
-import { MailService } from '../../../../src/modules/mails/mail.service';
 import {
   userMailMock,
   userMailWithoutTokenMock,
@@ -15,6 +14,7 @@ import {
   jobMailMock,
 } from '../../../mocks/mail/job-mail.mock';
 import { mailOptionsMock } from '../../../mocks/mail/mail-options.mock';
+import { MailService } from '../../../../src/modules/mails/mail.service';
 
 const mailerServiceMock = {
   sendMail: jest.fn(),
@@ -162,7 +162,7 @@ describe('MailService', () => {
       expect(mailerService.sendMail).toHaveBeenCalledTimes(1);
       expect(mailerService.sendMail).toHaveBeenCalledWith({
         to: company.email,
-        subject: 'Empresa criado!',
+        subject: 'Empresa criada!',
         template: './confirmEmailCompany',
         context: {
           name: company.companyName,

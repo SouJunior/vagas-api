@@ -1,25 +1,32 @@
+import { Chance } from 'chance';
 import { CompaniesEntity } from '../../../src/database/entities/companies.entity';
 
+const chance = new Chance();
+
 export const companyMailMock = (): CompaniesEntity => ({
-  id: '123e4567-e89b-12d3-a456-426614174000',
-  companyName: 'Test Company LTDA',
-  email: 'company@example.com',
+  id: chance.guid(),
+  companyName: chance.company(),
+  email: chance.email(),
   cnpj: '12345678000199',
-  password: 'hashedPassword123',
-  recoverPasswordToken: 'company-recover-token-456',
+  password: chance.hash({ length: 60 }),
+  recoverPasswordToken: chance.string({
+    length: 32,
+    alpha: true,
+    numeric: true,
+  }),
   mailConfirm: false,
-  created_at: new Date('2023-01-01T00:00:00.000Z'),
-  updated_at: new Date('2023-01-01T00:00:00.000Z'),
+  created_at: new Date(),
+  updated_at: new Date(),
   companyType: 'Tecnologia',
   companySize: 'SMALL_SIZE',
   uf: 'SP',
   otherSite: {
-    instagran: 'https://instagram.com/testcompany',
-    linkedin: 'https://linkedin.com/company/testcompany',
-    twitter: 'https://twitter.com/testcompany',
+    instagram: chance.url(),
+    linkedin: chance.url(),
+    twitter: chance.url(),
   },
-  companySite: 'https://testcompany.com.br',
-  description: 'Empresa de tecnologia focada em soluções inovadoras',
+  companySite: chance.url(),
+  description: chance.sentence(),
   profile: null,
   profileKey: null,
   jobs: [],

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
-import { MailService } from 'src/modules/mails/mail.service';
+import { MailService } from '../../mails/mail.service';
 import { CreatePasswordHashDto } from '../dtos/update-my-password.dto';
 import { UserRepository } from '../repository/user.repository';
 

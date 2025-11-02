@@ -63,7 +63,7 @@ export class CompaniesEntity {
 
   @Column({ type: 'json', nullable: true })
   otherSite: {
-    instagran: string;
+    instagram: string;
     linkedin: string;
     twitter: string;
   };

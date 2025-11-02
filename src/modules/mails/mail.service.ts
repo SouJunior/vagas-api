@@ -87,7 +87,7 @@ export class MailService {
 
     await this.mailerService.sendMail({
       to: email,
-      subject: 'Empresa criado!',
+      subject: 'Empresa criada!',
       template: './confirmEmailCompany',
       context: {
         name: companyName,
