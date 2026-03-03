@@ -48,8 +48,6 @@ export class CompanyRepository {
         throw new NotFoundException('Company not found');
       }
   
-      console.log('Company with jobs:', company);
-  
       return company;
     }
 
