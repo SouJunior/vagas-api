@@ -17,6 +17,11 @@ import { GetAllJobsFromLoggedCompanyService } from './services/get-all-jobs-from
 import { JobsEntity } from 'src/database/entities/jobs.entity';
 import { CompaniesEntity } from 'src/database/entities/companies.entity';
 import { DeleteJobService } from './services/delete-job.service';
+import { CreateJobDraftService } from './services/create-job-draft.service';
+import { PublishJobService } from './services/publish-job.service';
+import { CancelJobService } from './services/cancel-job.service';
+import { DeleteJobDraftService } from './services/delete-job-draft.service';
+import { JobOwnerGuard } from './guards/job-owner.guard';
 
 @Module({
   imports: [
@@ -35,7 +40,12 @@ import { DeleteJobService } from './services/delete-job.service';
     DeleteJobService,
     SearchJobsService,
     JobRepository,
-    CompanyRepository
+    CompanyRepository,
+    CreateJobDraftService,
+    PublishJobService,
+    CancelJobService,
+    DeleteJobDraftService,
+    JobOwnerGuard,
   ],
 })
 export class JobsModule {}

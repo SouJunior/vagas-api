@@ -12,6 +12,7 @@ import { JobsAffirmativeTypeEnum } from '../../modules/jobs/enums/job-affirmativ
 import { JobsTypeContractEnum } from '../../modules/jobs/enums/job-contract-type.enum';
 import { JobsModalityEnum } from '../../modules/jobs/enums/job-modality.enum';
 import { JobsTypeEnum } from '../../modules/jobs/enums/job-type.enum';
+import { JobStatus } from '../../modules/jobs/enums/job-status.enum';
 import { ApplicationEntity } from './applications.entity';
 import { CommentsEntity } from './comments.entity';
 import { CompaniesEntity } from './companies.entity';
@@ -27,10 +28,10 @@ export class JobsEntity {
   @Column()
   title: string;
 
-  @Column()
+  @Column({ nullable: true })
   description: string;
 
-  @Column()
+  @Column({ nullable: true })
   prerequisites: string;
 
   @Column({ nullable: true })
@@ -44,7 +45,7 @@ export class JobsEntity {
       JobsTypeEnum.TRAINEE,
       JobsTypeEnum.INTERNSHIP,
     ],
-    default: JobsTypeEnum.JUNIOR,
+    nullable: true,
   })
   type: string;
 
@@ -55,7 +56,6 @@ export class JobsEntity {
       JobsTypeContractEnum.PJ,
       JobsTypeContractEnum.OTHER,
     ],
-    default: JobsTypeContractEnum.CLT,
     nullable: true,
   })
   typeContract: string;
@@ -83,18 +83,16 @@ export class JobsEntity {
   @Column({ nullable: true })
   city: string;
 
-  @Column({
-    default: true,
-  })
+  @Column({ default: true, nullable: true })
   openEndedContract: boolean;
 
   @Column({ nullable: true })
   contractType: string;
 
   @Column({ nullable: true })
-  contractText?: string;
+  contractText: string;
 
-  @Column({ default: true })
+  @Column({ default: true, nullable: true })
   affirmative: boolean;
 
   @Column({
@@ -120,6 +118,19 @@ export class JobsEntity {
   @IsEnum(StatusEnum)
   @Column({ nullable: false, default: StatusEnum.ACTIVE })
   status: StatusEnum;
+
+  @Column({
+    type: 'enum',
+    enum: JobStatus,
+    default: JobStatus.DRAFT,
+  })
+  jobStatus: JobStatus;
+
+  @Column({ nullable: true })
+  publishedAt: Date;
+
+  @Column({ nullable: true })
+  canceledAt: Date;
 
   @OneToMany(() => CommentsEntity, (comment) => comment.job, {
     cascade: true,
