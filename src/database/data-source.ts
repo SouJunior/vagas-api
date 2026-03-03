@@ -1,4 +1,4 @@
-import 'dotenv/config'
+import 'dotenv/config';
 import { DataSource, DataSourceOptions } from 'typeorm';
 import 'reflect-metadata';
 
@@ -19,10 +19,10 @@ export const typeormConfig: DataSourceOptions = {
   username: TYPEORM_USERNAME,
   password: TYPEORM_PASSWORD,
   database: TYPEORM_DATABASE,
-  entities: ['dist/database/entities/*.entity.js'],
+  entities: [__dirname + '/entities/*.entity.{js,ts}'],
   migrations: [
-    'dist/database/migrations/*.js',
-    'dist/database/migrations/seeds/*.js',
+    __dirname + '/migrations/*.{js,ts}',
+    __dirname + '/migrations/seeds/*.{js,ts}',
   ],
   ssl:
     NODE_ENV == 'production'

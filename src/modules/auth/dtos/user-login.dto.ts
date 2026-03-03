@@ -22,9 +22,6 @@ export class UserLoginDto {
 
   @IsString()
   @Length(8, 20)
-  @Matches(/((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, {
-    message: 'Senha muito fraca',
-  })
   @ApiProperty({
     description: 'Senha de Login',
     example: 'Abcd@1234',

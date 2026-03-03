@@ -33,7 +33,14 @@ export class CreateJobService {
       email: company.email,
     };
 
-    await this.mailService.sendMail(options);
+    // try {
+    //   await this.mailService.sendMail(options);
+    // } catch (error: any) {
+    //   console.error(
+    //     'Falha ao enviar e-mail de confirmação da vaga:',
+    //     error.message,
+    //   );
+    // }
 
     return 'Vaga publicada com sucesso';
   }
